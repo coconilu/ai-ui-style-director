@@ -1,0 +1,4205 @@
+{
+  "generatedAt": "2026-07-07T16:02:59.769Z",
+  "sources": [
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/README.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/__blocks__.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/__components__.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/__index__.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/_legacy-base-colors.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/_legacy-colors.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/_legacy-styles.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/_legacy-themes.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/base-colors.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/bases.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/calendar.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/config.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/config.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/directory.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/fonts.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/accordion-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/alert-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/alert-destructive.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/alert-dialog-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/aspect-ratio-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/avatar-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/badge-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/badge-destructive.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/badge-outline.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/badge-secondary.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/breadcrumb-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/breadcrumb-dropdown.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/breadcrumb-ellipsis.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/breadcrumb-link.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/breadcrumb-responsive.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/breadcrumb-separator.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-as-child.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-default.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-destructive.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-ghost.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-dropdown.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-input-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-input.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-nested.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-orientation.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-popover.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-select.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-separator.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-size.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-group-split.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-icon.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-link.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-loading.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-outline.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-rounded.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-secondary.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-size.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/button-with-icon.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/examples/calendar-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/hooks/_registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/hooks/use-mobile.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/_registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-controlled.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-footer.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-group-action.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-group-collapsible.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-header.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-menu-action.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-menu-badge.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-menu-collapsible.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-menu-sub.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-menu.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/internal/sidebar-rsc.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/lib/_registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/lib/utils.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/_registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/accordion.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/alert-dialog.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/alert.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/aspect-ratio.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/attachment.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/avatar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/badge.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/breadcrumb.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/bubble.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/button-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/calendar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/carousel.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/checkbox.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/collapsible.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/combobox.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/command.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/context-menu.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/dialog.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/direction.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/drawer.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/dropdown-menu.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/empty.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/field.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/form.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/hover-card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/input-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/input-otp.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/input.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/item.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/kbd.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/label.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/marker.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/menubar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/message-scroller.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/message.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/navigation-menu.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/pagination.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/popover.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/progress.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/radio-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/resizable.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/scroll-area.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/select.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/separator.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/sheet.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/sidebar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/skeleton.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/slider.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/sonner.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/spinner.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/switch.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/table.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/tabs.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/textarea.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/toggle-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/toggle.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/new-york-v4/ui/tooltip.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/styles.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "apps/v4/registry/themes.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/commands/registry/add.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/commands/registry/build.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/commands/registry/index.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/commands/registry/mcp.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/commands/registry/validate.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/commands/registry/validate.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/preflights/preflight-registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/address.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/address.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/api.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/api.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/builder.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/builder.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/config.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/config.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/constants.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/context.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/env.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/env.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/errors.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/fetcher.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/fetcher.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/github-ref.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/github-ref.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/github.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/github.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/index.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/loader.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/loader.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/namespaces.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/namespaces.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/parser.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/parser.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/proxy.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/resolver.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/resolver.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/schema.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/schema.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/search.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/search.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/source.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/utils.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/utils.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/validate.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/validate.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/validator.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/src/registry/validator.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/shadcn/test/utils/registry.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-at-property.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-component.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-env-vars.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-item-to-root.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-item.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-style.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-target-alias-child.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-target-alias-parent.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-target-alias-type-mismatch.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/fixtures/registry/example-target-aliases.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "packages/tests/src/utils/registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "path": "skills/shadcn/registry.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-01.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-02.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-03.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-04.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-05.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-06.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-07.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-08.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-09.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-10.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-100.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-101.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-102.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-103.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-104.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-105.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-106.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-107.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-108.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-109.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-11.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-110.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-111.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-112.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-113.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-114.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-115.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-116.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-117.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-118.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-119.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-12.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-120.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-121.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-122.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-123.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-124.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-125.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-126.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-127.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-128.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-129.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-13.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-130.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-131.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-132.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-133.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-134.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-135.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-136.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-137.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-138.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-139.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-14.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-140.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-141.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-142.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-143.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-144.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-145.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-146.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-147.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-148.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-149.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-15.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-150.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-151.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-152.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-153.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-154.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-155.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-156.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-157.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-158.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-159.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-16.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-160.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-161.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-162.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-163.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-164.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-165.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-166.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-167.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-168.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-169.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-17.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-170.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-171.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-172.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-173.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-174.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-175.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-176.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-177.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-178.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-179.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-18.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-180.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-181.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-182.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-183.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-184.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-185.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-186.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-187.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-188.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-189.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-19.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-190.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-191.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-192.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-193.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-194.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-195.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-196.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-197.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-198.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-199.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-20.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-200.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-201.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-202.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-203.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-204.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-205.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-206.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-207.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-208.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-209.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-21.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-210.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-211.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-212.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-213.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-214.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-215.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-216.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-217.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-218.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-219.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-22.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-220.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-221.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-222.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-223.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-224.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-225.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/components/comp-226.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/hooks/use-character-limit.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/hooks/use-file-upload.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/hooks/use-pagination.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/hooks/use-slider-with-input.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/hooks/use-toast.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/lib/utils.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/accordion.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/alert-dialog.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/avatar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/badge.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/breadcrumb.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/calendar-rac.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/calendar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/checkbox-tree.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/checkbox.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/collapsible.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/command.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/cropper.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/datefield-rac.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/dialog.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/dropdown-menu.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/hover-card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/input.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/label.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/multiselect.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/navigation-menu.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/pagination.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/popover.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/progress.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/radio-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/resizable.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/scroll-area.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/select-native.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/select.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/slider.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/sonner.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/stepper.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/switch.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/table.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/tabs.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/textarea.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/timeline.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/toast.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/toaster.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/toggle-group.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/toggle.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/tooltip.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/default/ui/tree.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "origin-ui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "path": "registry/registry-tags.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry.json",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/__index__.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/android-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/android-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/android-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-beam-bidirectional.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-beam-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-beam-multiple-inputs.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-beam-multiple-outputs.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-beam-unidirectional.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-circular-progress-bar-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-gradient-text-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-gradient-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-grid-pattern-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-list-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-shiny-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-diamond-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-hexagon-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-next-themes-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-rectangle-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-square-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-star-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/animated-theme-toggler-triangle-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/aurora-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/avatar-circles-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/backlight-image-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/backlight-svg-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/backlight-video-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/bento-demo-vertical.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/bento-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/blur-fade-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/blur-fade-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/border-beam-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/border-beam-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/border-beam-demo-4.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/border-beam-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/code-comparison-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/comic-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-basic-cannon.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-custom-shapes.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-emoji.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-fireworks.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-random-direction.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-side-cannons.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/confetti-stars.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/cool-mode-custom.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/cool-mode-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dia-text-reveal-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dia-text-reveal-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dia-text-reveal-demo-4.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dia-text-reveal-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dock-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dock-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dock-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dot-pattern-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dot-pattern-linear-gradient.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dot-pattern-with-glow-effect.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dotted-map-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dotted-map-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/dotted-map-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/file-tree-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/flickering-grid-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/flickering-grid-rounded-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/glare-hover-demo-alert.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/glare-hover-demo-cta.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/glare-hover-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/globe-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/glyph-matrix-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/grid-pattern-dashed.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/grid-pattern-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/grid-pattern-linear-gradient.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hero-video-dialog-demo-top-in-bottom-out.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hero-video-dialog-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hexagon-pattern-dashed.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hexagon-pattern-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hexagon-pattern-linear-gradient.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hexagon-pattern-spacing.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/highlighter-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/hyper-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/icon-cloud-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/icon-cloud-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/icon-cloud-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/interactive-grid-pattern-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/interactive-grid-pattern-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/interactive-hover-button-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/iphone-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/iphone-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/iphone-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/kinetic-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/lens-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/lens-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/lens-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/light-rays-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/line-shadow-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/magic-card-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/magic-card-demo2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/marquee-3d.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/marquee-demo-vertical.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/marquee-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/marquee-logos.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/meteors-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/morphing-text-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/neon-gradient-card-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/noise-texture-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/noise-texture-demo-3.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/noise-texture-demo-4.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/noise-texture-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/number-ticker-decimal-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/number-ticker-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/number-ticker-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/orbiting-circles-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/particles-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/pixel-image-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/example/pointer-demo-1.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/index.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/lib/utils.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/android.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-beam.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-circular-progress-bar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-gradient-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-grid-pattern.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-list.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-shiny-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-subscribe-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/animated-theme-toggler.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/aurora-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/avatar-circles.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/backlight.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/bento-grid.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/blur-fade.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/border-beam.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/client-tweet-card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/code-comparison.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/comic-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/confetti.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/cool-mode.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/dia-text-reveal.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/dock.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/dot-pattern.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/dotted-map.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/file-tree.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/flickering-grid.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/glare-hover.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/globe.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/glyph-matrix.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/grid-pattern.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/hero-video-dialog.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/hexagon-pattern.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/highlighter.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/hyper-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/icon-cloud.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/interactive-grid-pattern.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/interactive-hover-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/iphone.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/kinetic-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/lens.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/light-rays.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/line-shadow-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/magic-card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/marquee.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/meteors.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/morphing-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/neon-gradient-card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/noise-texture.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/number-ticker.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/orbiting-circles.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/particles.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/pixel-image.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/pointer.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/progressive-blur.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/pulsating-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/rainbow-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/retro-grid.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/ripple-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/ripple.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/safari.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/scroll-based-velocity.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/scroll-progress.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/shimmer-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/shine-border.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/shiny-button.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/smooth-cursor.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/sparkles-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/spinning-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/striped-pattern.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/terminal.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/text-3d-flip.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/text-animate.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/text-reveal.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/tweet-card.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/typing-animation.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/video-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/warp-background.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/magicui/word-rotate.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/registry-examples.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/registry-lib.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "apps/www/registry/registry-ui.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "repo": "magicuidesign/magicui",
+      "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
+      "path": "registry.json",
+      "sourceType": "registry"
+    }
+  ]
+}

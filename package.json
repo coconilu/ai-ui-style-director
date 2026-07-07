@@ -1,0 +1,26 @@
+{
+  "name": "ai-ui-style-director",
+  "version": "0.1.0",
+  "description": "Agent workflow for recommending UI style directions, locking DESIGN.md, and guiding website generation.",
+  "type": "module",
+  "bin": {
+    "ai-ui-style-director": "./bin/ai-ui-style-director.mjs"
+  },
+  "scripts": {
+    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --test",
+    "test": "node --test",
+    "recommend:demo": "node bin/ai-ui-style-director.mjs recommend --brief \"AI developer tool website\" --count 5"
+  },
+  "keywords": [
+    "design-md",
+    "ai-agent",
+    "ui-generation",
+    "shadcn",
+    "design-system"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
+

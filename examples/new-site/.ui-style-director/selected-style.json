@@ -1,0 +1,75 @@
+{
+  "selectedAt": "2026-07-06T15:10:35.776Z",
+  "brief": "AI SDK landing page for developers",
+  "style": {
+    "id": "developer-product-minimal",
+    "name": "Developer Product Minimal",
+    "sourceProvider": "awesome-design-md",
+    "sourceSlug": "vercel-like",
+    "family": "developer",
+    "pageTypes": [
+      "landing",
+      "product-site",
+      "docs",
+      "api-platform"
+    ],
+    "audiences": [
+      "developers",
+      "technical-founders",
+      "engineering-teams"
+    ],
+    "goals": [
+      "signup",
+      "docs-adoption",
+      "explain-product"
+    ],
+    "density": "medium",
+    "tones": [
+      "precise",
+      "technical",
+      "clean",
+      "credible"
+    ],
+    "keywords": [
+      "ai",
+      "developer",
+      "sdk",
+      "api",
+      "open source",
+      "platform",
+      "tool",
+      "docs",
+      "github",
+      "terminal"
+    ],
+    "bestFor": [
+      "AI SDKs",
+      "developer tools",
+      "API platforms",
+      "open-source launches"
+    ],
+    "avoidFor": [
+      "luxury consumer brands",
+      "visual-heavy event pages"
+    ],
+    "firstViewport": "Sharp headline, terse product explanation, command/code or product preview, direct docs/signup action.",
+    "layoutRules": [
+      "Prioritize product proof over decoration.",
+      "Use code-native UI, docs links, and crisp grid alignment."
+    ],
+    "palette": [
+      "true white",
+      "near black",
+      "cool gray",
+      "one restrained accent"
+    ],
+    "typography": "Tight, highly legible, technical, with controlled heading scale.",
+    "componentKits": [
+      "shadcn-ui",
+      "origin-ui"
+    ],
+    "risks": [
+      "Can feel generic if the product preview is weak."
+    ]
+  }
+}

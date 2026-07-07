@@ -1,0 +1,523 @@
+{
+  "generatedAt": "2026-07-07T16:02:59.769Z",
+  "sources": [
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/airbnb/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/airtable/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/apple/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/binance/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/bmw-m/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/bmw/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/bugatti/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/cal/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/claude/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/clay/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/clickhouse/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/cohere/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/coinbase/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/composio/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/cursor/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/dell-1996/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/elevenlabs/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/expo/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/ferrari/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/figma/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/framer/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/hashicorp/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/hp/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/ibm/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/intercom/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/kraken/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/lamborghini/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/linear.app/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/lovable/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/mastercard/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/meta/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/minimax/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/mintlify/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/miro/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/mistral.ai/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/mongodb/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/nike/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/nintendo-2001/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/notion/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/nvidia/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/ollama/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/opencode.ai/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/pinterest/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/playstation/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/posthog/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/raycast/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/renault/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/replicate/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/resend/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/revolut/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/runwayml/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/sanity/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/sentry/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/shopify/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/slack/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/spacex/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/spotify/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/starbucks/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/stripe/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/supabase/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/superhuman/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/tesla/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/theverge/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/together.ai/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/uber/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/vercel/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/vodafone/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/voltagent/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/warp/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/webflow/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/wired/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/wise/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/x.ai/DESIGN.md",
+      "sourceType": "design-md"
+    },
+    {
+      "providerId": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "path": "design-md/zapier/DESIGN.md",
+      "sourceType": "design-md"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+---
+name: web-style-director
+description: Recommend and lock UI style directions before building or redesigning websites. Use when the user asks to create a new website, landing page, SaaS/product site, dashboard, docs site, portfolio, ecommerce page, or to redesign/restyle an existing website. This skill must present five relevant UI style options from the style catalog, wait for user selection or reroll, generate a project DESIGN.md, and only then proceed to UI code.
+---
+
+# Web Style Director
+
+Use this skill as the style-selection gate before website UI implementation.
+
+## Core Rule
+
+Do not write UI code until the user has selected one recommended style and a project `DESIGN.md` has been generated or updated.
+
+## Workflow
+
+1. Determine whether the user wants a new website or a redesign.
+2. If the scenario is underspecified, ask only the minimum necessary questions from `references/context-questions.md`.
+3. Run the style recommender:
+
+   ```bash
+   node skills/web-style-director/scripts/style-director.mjs recommend --brief "<brief>" --count 5
+   ```
+
+4. Present exactly five UI style options when available. Include: style name, fit reason, first-viewport shape, component kits, and risk.
+5. Wait for the user's selection. The user may choose by number or style id.
+6. If the user rejects the options, rerun with `--again`:
+
+   ```bash
+   node skills/web-style-director/scripts/style-director.mjs recommend --brief "<brief>" --again --count 5
+   ```
+
+7. After selection, generate the target project's `DESIGN.md`:
+
+   ```bash
+   node skills/web-style-director/scripts/style-director.mjs apply --style <style-id> --project <project-path> --brief "<brief>"
+   ```
+
+8. Read the generated `DESIGN.md` before coding. Treat it as the implementation contract.
+9. Implement the UI using the target repo's framework. Use the recommended component kits only when they fit the repo stack and user constraints.
+10. Verify the rendered UI against `DESIGN.md`; record intentional deviations.
+
+## New Website Intake
+
+For new websites, the minimum useful brief is:
+
+- website type
+- audience
+- primary conversion or workflow goal
+- desired density
+- required stack or target project path, if any
+
+If the user gives enough context, do not ask more questions before recommending styles.
+
+## Redesign Intake
+
+For redesigns, inspect the existing source first when available:
+
+- URL
+- screenshot
+- local project path
+- existing brand assets
+- constraints on what must be preserved
+
+If none is provided, ask for at least one source before recommending.
+
+## Recommendation Output
+
+Use the concise format in `references/recommendation-format.md`. Do not overload the user with raw catalog fields.
+
+## Selection Rules
+
+- Accept a number, exact style id, or clear natural-language selection.
+- If the user asks for a hybrid direction, pick the dominant style and record secondary inspiration in the brief before applying.
+- If the user says "not satisfied", "change another batch", "reroll", or similar, use `--again`.
+- If fewer than five unseen styles remain, say that the catalog is exhausted for this session and show the remaining options.
+
+## Implementation Rules
+
+- Read `DESIGN.md` immediately before editing UI code.
+- Preserve the selected visual direction's density, first viewport, component model, typography, and palette.
+- Do not copy upstream logos, screenshots, brand names, or exact proprietary layouts.
+- Do not introduce a new visual direction during coding unless the user selects a new style.
+- For multi-section sites, keep section rhythm consistent with the selected style instead of mixing unrelated UI kits.
+
+## Resources
+
+- `scripts/style-director.mjs`: wrapper around the repository CLI.
+- `references/context-questions.md`: context questions for underspecified requests.
+- `references/recommendation-format.md`: output format for style options.
+- `references/design-md-contract.md`: what to do after `DESIGN.md` is generated.
+

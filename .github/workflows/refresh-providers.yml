@@ -1,0 +1,55 @@
+name: Refresh Providers
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh provider indexes
+        run: node bin/ai-ui-style-director.mjs update --clone
+
+      - name: Validate
+        run: npm run check
+
+      - name: Detect generated changes
+        id: changes
+        shell: bash
+        run: |
+          if [ -n "$(git status --short -- catalog/generated)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open refresh pull request
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          branch="automation/refresh-providers-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add catalog/generated
+          git commit -m "chore: refresh provider indexes"
+          git push origin "$branch"
+          gh pr create \
+            --title "chore: refresh provider indexes" \
+            --body "Automated daily refresh of provider-derived indexes." \
+            --base "${GITHUB_REF_NAME:-main}" \
+            --head "$branch"
+

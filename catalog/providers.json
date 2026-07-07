@@ -1,0 +1,51 @@
+[
+  {
+    "id": "awesome-design-md",
+    "type": "design-md-corpus",
+    "repo": "VoltAgent/awesome-design-md",
+    "url": "https://github.com/VoltAgent/awesome-design-md",
+    "role": "style-corpus",
+    "license": "Check upstream repository"
+  },
+  {
+    "id": "design-md-flow",
+    "type": "workflow-reference",
+    "repo": "Harzva/design-md-flow",
+    "url": "https://github.com/Harzva/design-md-flow",
+    "role": "selection-and-validation-workflow",
+    "license": "Check upstream repository"
+  },
+  {
+    "id": "shadcn-ui",
+    "type": "component-registry",
+    "repo": "shadcn-ui/ui",
+    "url": "https://github.com/shadcn-ui/ui",
+    "role": "base-components",
+    "license": "MIT"
+  },
+  {
+    "id": "origin-ui",
+    "type": "component-registry",
+    "repo": "shadcn/originui",
+    "url": "https://github.com/shadcn/originui",
+    "role": "app-and-marketing-blocks",
+    "license": "MIT"
+  },
+  {
+    "id": "magic-ui",
+    "type": "component-registry",
+    "repo": "magicuidesign/magicui",
+    "url": "https://github.com/magicuidesign/magicui",
+    "role": "motion-rich-marketing-components",
+    "license": "MIT"
+  },
+  {
+    "id": "tremor",
+    "type": "component-library",
+    "repo": "tremorlabs/tremor",
+    "url": "https://github.com/tremorlabs/tremor",
+    "role": "dashboard-and-chart-components",
+    "license": "Apache-2.0"
+  }
+]
+

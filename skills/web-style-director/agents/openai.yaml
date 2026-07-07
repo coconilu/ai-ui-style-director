@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Style Director"
+  short_description: "Recommend and lock UI styles before building websites"
+  default_prompt: "Use this skill to recommend five UI style directions, wait for my selection, then generate a project DESIGN.md before coding."

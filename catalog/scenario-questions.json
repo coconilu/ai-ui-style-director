@@ -1,0 +1,33 @@
+[
+  {
+    "id": "mode",
+    "question": "Is this a new website or a redesign of an existing website?",
+    "requiredWhen": "always"
+  },
+  {
+    "id": "site_type",
+    "question": "What type of surface is it: landing page, SaaS product site, dashboard, docs site, portfolio, ecommerce, or internal tool?",
+    "requiredWhen": "missing-site-type"
+  },
+  {
+    "id": "audience",
+    "question": "Who is the primary audience: developers, enterprise buyers, consumers, creators, operators, students, or another group?",
+    "requiredWhen": "missing-audience"
+  },
+  {
+    "id": "goal",
+    "question": "What is the primary goal: signup, purchase, book a call, explain a product, show work, or support daily operation?",
+    "requiredWhen": "missing-goal"
+  },
+  {
+    "id": "density",
+    "question": "Should the page feel sparse, balanced, or information-dense?",
+    "requiredWhen": "missing-density"
+  },
+  {
+    "id": "redesign_source",
+    "question": "For redesigns, provide the existing URL, screenshot, or local project path, and say what must be preserved.",
+    "requiredWhen": "redesign"
+  }
+]
+
