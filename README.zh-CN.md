@@ -131,6 +131,12 @@ Codex 兼容的 skill 位于：
 skills/web-style-director/
 ```
 
+如果想让 Codex 或其他 agent 通过提示词自动安装，直接使用：
+
+```text
+docs/INSTALL_PROMPTS.md
+```
+
 这个 skill 强制执行一条规则：
 
 > 用户选择一个推荐风格并生成项目 `DESIGN.md` 之前，不能开始写 UI 代码。

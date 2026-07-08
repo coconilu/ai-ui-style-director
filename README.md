@@ -129,6 +129,12 @@ The Codex-compatible skill lives at:
 skills/web-style-director/
 ```
 
+For prompt-based installation, see:
+
+```text
+docs/INSTALL_PROMPTS.md
+```
+
 The skill enforces this rule:
 
 > Do not start writing UI code until the user has selected one recommended style and a project `DESIGN.md` has been generated.
