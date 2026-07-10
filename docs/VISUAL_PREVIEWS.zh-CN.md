@@ -30,7 +30,15 @@ npm run previews:check
 
 ## 推荐行为
 
-支持视觉展示的 agent 会嵌入 5 张本地 SVG 卡片并附上主要 Light/Dark 链接；纯终端客户端则输出本地路径和链接。当用户需要更多比较时，还可以查看另外两个参考标签。
+支持视觉展示的 agent 会嵌入 5 张本地 SVG 卡片并附上主要 Light/Dark
+链接。每次成功推荐还会生成自包含的
+`.ui-style-director/recommendations.html` 画廊，把 5 张卡片作为 data URI
+内嵌其中。纯终端客户端会输出它的 `file://` 地址，并可通过
+`preview --open` 打开。当用户需要更多比较时，还可以查看另外两个参考标签。
+
+画廊是 TUI、SSH 与无图形界面工作流的可移植降级方案，不依赖 Kitty
+graphics、Sixel 等特定终端图片协议。没有本地图形环境时，可以复制或下载
+HTML 后在其他设备打开；结构化文字和在线参考链接仍然可用。
 
 ## 项目草图
 

@@ -34,7 +34,10 @@ updated, and the user has confirmed the draft direction.
 
 4. Present exactly five UI style options when available. For each option, show
    its local SVG preview card, primary Light/Dark live-reference links, fit
-   reason, first-viewport shape, component kits, and risk. Follow
+   reason, first-viewport shape, component kits, and risk. The command also
+   generates a self-contained recommendation gallery. If the client cannot
+   render local images, provide the printed `file://` gallery URL and mention
+   that it can be opened with `preview --open`. Follow
    `references/recommendation-format.md`.
 5. Wait for the user's selection. The user may choose by number or style id.
 6. If the user rejects the options, rerun with `--again`:
@@ -88,7 +91,8 @@ If none is provided, ask for at least one source before recommending.
 
 Use the visual format in `references/recommendation-format.md`. Keep the text
 concise so five preview cards remain scannable. Do not overload the user with
-raw catalog fields.
+raw catalog fields. For terminal-only clients, prefer the generated HTML
+gallery over asking the user to open five SVG files separately.
 
 ## Selection Rules
 

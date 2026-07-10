@@ -19,6 +19,11 @@ Catalog 保存标准化设计知识：
 
 `src/preview.mjs` 把标准化视觉元数据渲染为确定性的 SVG 线框草图。`scripts/generate-style-previews.mjs` 生成并验证 12 张提交到仓库的风格卡片；同一个渲染器在选定后生成项目级 `first-viewport-draft.svg`。
 
+`src/core.mjs` 会把每一组推荐打包为自包含的
+`.ui-style-director/recommendations.html` 画廊。生成式 SVG 卡片以 data URI
+内嵌，因此纯终端或远程用户只需复制或下载一个可移植预览文件。CLI 通过
+`preview` 命令暴露该画廊，并提供可选的跨平台 `--open` 操作。
+
 视觉预览层把本地中性草图与外部 Light/Dark 参考分开：上游预览只用于比较，不能作为 vendored 或发布资产。
 
 ## 3. 推荐核心

@@ -40,9 +40,16 @@ require network access, and must never be copied into generated websites.
 ## Recommendation behavior
 
 A visual-capable agent embeds all five local SVG cards and adds the primary
-Light/Dark links. A terminal-only client prints the local path and links. Two
-secondary reference labels remain available when the user wants to compare
-more sources.
+Light/Dark links. Every successful recommendation also writes a self-contained
+`.ui-style-director/recommendations.html` gallery with the five generated cards
+embedded as data URIs. A terminal-only client prints its `file://` URL and can
+open it through `preview --open`. Two secondary reference labels remain
+available when the user wants to compare more sources.
+
+The gallery is the portable fallback for TUI, SSH, and headless workflows. It
+does not depend on terminal-specific image protocols such as Kitty graphics or
+Sixel. Without a local graphical session, users can copy or download the HTML
+and open it elsewhere; the structured text output and live links remain usable.
 
 ## Project draft
 

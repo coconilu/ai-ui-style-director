@@ -41,6 +41,13 @@ One prompt becomes five comparable directions before any UI code is written:
 
 ![Web Style Director recommending five admin dashboard directions](docs/assets/admin-dashboard-example.en.png)
 
+Terminal-only client? Every recommendation also writes a self-contained
+`.ui-style-director/recommendations.html` gallery. Open it with:
+
+```bash
+node bin/ai-ui-style-director.mjs preview --open
+```
+
 ## Update
 
 Codex:

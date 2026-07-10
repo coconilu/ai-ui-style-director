@@ -16,6 +16,15 @@ the wrapper automatically discovers the matching repository location, and the
 layout is covered by automated tests. It does not imply support for every
 historical release of the host agent.
 
+## TUI and headless clients
+
+Hosts that can render Markdown images may embed the generated SVG cards
+directly. Terminal-only hosts receive structured text, local card paths, live
+reference links, and a self-contained `recommendations.html` gallery. A local
+TUI can open the gallery through `preview --open`; SSH or headless users can
+copy or download the single HTML file and view it elsewhere. Terminal-specific
+image protocols are optional enhancements, not a compatibility requirement.
+
 ## Codex layout
 
 New personal installations use:

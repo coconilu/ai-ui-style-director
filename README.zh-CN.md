@@ -41,6 +41,13 @@ agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Da
 
 ![Web Style Director 推荐五种管理台 UI 方向](docs/assets/admin-dashboard-example.zh-CN.png)
 
+使用纯终端客户端时，每次推荐还会生成自包含的
+`.ui-style-director/recommendations.html` 画廊。可以这样打开：
+
+```bash
+node bin/ai-ui-style-director.mjs preview --open
+```
+
 ## 更新
 
 Codex：

@@ -22,6 +22,12 @@ wireframes. `scripts/generate-style-previews.mjs` generates and verifies the 12
 committed style cards. The same renderer creates a project-level
 `first-viewport-draft.svg` after selection.
 
+`src/core.mjs` packages each recommendation set into a self-contained
+`.ui-style-director/recommendations.html` gallery. Generated SVG cards are
+embedded as data URIs so terminal-only and remote users can copy or download a
+single portable preview file. The CLI exposes the gallery through `preview`
+and an optional cross-platform `--open` action.
+
 The preview layer keeps generated neutral cards separate from external
 Light/Dark references. Upstream previews are links for comparison, not assets
 to vendor or ship.

@@ -23,6 +23,7 @@ node bin/ai-ui-style-director.mjs recommend \
 - `--again`：排除当前 session 已展示过的风格。
 - `--session <path>`：指定 session 状态文件。
 - `--count <number>`：指定最多返回多少个结果。
+- `--open`：使用系统默认浏览器打开生成的推荐画廊。
 - `--json`：输出机器可读 JSON。
 
 如果 brief 缺少必要信息，命令会返回针对性的补充问题，而不是直接推荐。
@@ -32,6 +33,27 @@ node bin/ai-ui-style-director.mjs recommend \
 - 本地生成的 SVG 草图绝对路径；
 - 主要上游参考的 Light/Dark 实时预览；
 - 两个额外视觉参考标签。
+
+命令还会在 session 文件旁自动生成自包含的
+`.ui-style-director/recommendations.html`，并在文本输出中提供本地路径与
+`file://` 地址。
+
+## `preview`
+
+查看或打开最近一次生成的推荐画廊：
+
+```bash
+node bin/ai-ui-style-director.mjs preview --open
+```
+
+参数：
+
+- `--path <file>`：指定默认 `.ui-style-director/` 目录之外的画廊。
+- `--open`：使用操作系统默认浏览器打开画廊。
+- `--json`：以 JSON 输出画廊路径、URL 和打开状态。
+
+不加 `--open` 时，命令只打印 `file://` 地址，适合无图形界面或 SSH
+环境。HTML 已内嵌全部 SVG 卡片，因此可以单独复制或下载，不依赖原工具安装目录。
 
 ## `apply`
 

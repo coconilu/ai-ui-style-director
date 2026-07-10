@@ -3,6 +3,8 @@ import { resolve } from "node:path";
 import {
   applyStyle,
   loadScenarioQuestions,
+  openRecommendationGallery,
+  recommendationGalleryInfo,
   renderContextQuestions,
   renderRecommendations,
   recommendStyles,
@@ -34,7 +36,8 @@ function usage() {
   return `ai-ui-style-director
 
 Commands:
-  recommend --brief <text> [--count 5] [--again] [--session <path>] [--json]
+  recommend --brief <text> [--count 5] [--again] [--session <path>] [--open] [--json]
+  preview [--path <recommendations.html>] [--open] [--json]
   apply --style <id> --project <path> [--brief <text>] [--force] [--json]
   sync [--cache-dir <path>] [--clone] [--json]
   refresh-catalog [--cache-dir <path>] [--generated-dir <path>] [--clone] [--json]
@@ -46,6 +49,8 @@ Compatibility aliases:
 Examples:
   ai-ui-style-director recommend --brief "AI developer tool website"
   ai-ui-style-director recommend --brief "AI developer tool website" --again
+  ai-ui-style-director recommend --brief "B2B operations dashboard" --open
+  ai-ui-style-director preview --open
   ai-ui-style-director apply --style developer-product-minimal --project ./my-site --brief "AI SDK landing page"
   ai-ui-style-director refresh-catalog --clone
 `;
@@ -79,9 +84,26 @@ async function main() {
         again: Boolean(args.again),
         sessionPath: args.session ? resolve(args.session) : resolve(".ui-style-director", "session.json")
       });
+      if (args.open && !result.needsContext) {
+        Object.assign(result, openRecommendationGallery(result.galleryPath));
+      }
       if (args.json) printJson(result);
       else process.stdout.write(renderRecommendations(result));
       process.exitCode = 0;
+      return;
+    }
+
+    if (command === "preview") {
+      const galleryPath = args.path ? resolve(args.path) : resolve(".ui-style-director", "recommendations.html");
+      const result = args.open
+        ? openRecommendationGallery(galleryPath)
+        : { ...recommendationGalleryInfo(galleryPath), opened: false };
+      if (args.json) {
+        printJson(result);
+      } else {
+        process.stdout.write(`Preview gallery: ${result.galleryUrl}\n`);
+        process.stdout.write(`${result.opened ? "Opened in the default browser." : "Pass --open to open it in the default browser."}\n`);
+      }
       return;
     }
 

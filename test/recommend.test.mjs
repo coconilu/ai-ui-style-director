@@ -10,7 +10,10 @@ import {
   isBriefInsufficient,
   loadStyleProfiles,
   loadStyleVisuals,
+  openRecommendationGallery,
+  previewOpenCommand,
   recommendStyles,
+  renderRecommendationGalleryHtml,
   renderRecommendations,
   updateCatalog
 } from "../src/core.mjs";
@@ -81,6 +84,25 @@ test("recommends five styles for an AI developer product", () => {
   assert.equal(existsSync(result.recommendations[0].visual.previewCardPath), true);
   assert.equal(result.recommendations[0].visual.references.length, 3);
   assert.match(result.recommendations[0].visual.references[0].lightPreviewUrl, /getdesign\.md/);
+  assert.equal(existsSync(result.galleryPath), true);
+  assert.match(result.galleryUrl, /^file:\/\//);
+});
+
+test("recommendation gallery is a self-contained offline HTML preview", () => {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-gallery-"));
+  const result = recommendStyles({
+    brief: "面向运营团队的内部管理后台 dashboard",
+    count: 2,
+    sessionPath: join(dir, "session.json")
+  });
+  const gallery = readFileSync(result.galleryPath, "utf8");
+
+  assert.equal(renderRecommendationGalleryHtml(result), gallery);
+  assert.match(gallery, /<html lang="zh-CN">/);
+  assert.match(gallery, /data:image\/svg\+xml;base64,/);
+  assert.match(gallery, /<link rel="icon" href="data:,">/);
+  assert.match(gallery, /选择一个 UI 方向/);
+  assert.doesNotMatch(gallery, /catalog\/previews\//);
 });
 
 test("every style has a generated preview and three real visual references", () => {
@@ -121,6 +143,55 @@ test("rendered recommendations expose the local card and live previews", () => {
   assert.match(rendered, /Preview card: .*developer-product-minimal\.svg/);
   assert.match(rendered, /Live preview: Vercel/);
   assert.match(rendered, /preview-dark\.html/);
+  assert.match(rendered, /Preview gallery: file:\/\//);
+  assert.match(rendered, /preview --open --path/);
+});
+
+test("preview command reports the generated gallery for terminal clients", () => {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-cli-preview-"));
+  const recommendation = recommendStyles({
+    brief: "B2B operations dashboard for internal teams",
+    sessionPath: join(dir, "session.json")
+  });
+  const result = spawnSync(process.execPath, [
+    binPath,
+    "preview",
+    "--path",
+    recommendation.galleryPath,
+    "--json"
+  ], { encoding: "utf8" });
+
+  assert.equal(result.status, 0, result.stderr);
+  const output = JSON.parse(result.stdout);
+  assert.equal(output.galleryPath, recommendation.galleryPath);
+  assert.equal(output.galleryUrl, recommendation.galleryUrl);
+  assert.equal(output.opened, false);
+});
+
+test("preview opener uses shell-free platform commands", () => {
+  const path = join(tmpdir(), "recommendations.html");
+  assert.equal(previewOpenCommand(path, "win32").command, "rundll32.exe");
+  assert.equal(previewOpenCommand(path, "darwin").command, "open");
+  assert.equal(previewOpenCommand(path, "linux").command, "xdg-open");
+
+  const dir = mkdtempSync(join(tmpdir(), "style-director-open-preview-"));
+  const recommendation = recommendStyles({
+    brief: "Analytics dashboard for a finance operations team",
+    sessionPath: join(dir, "session.json")
+  });
+  let invocation;
+  const opened = openRecommendationGallery(recommendation.galleryPath, {
+    platform: "linux",
+    run(command, args, options) {
+      invocation = { command, args, options };
+      return { status: 0, stderr: "" };
+    }
+  });
+
+  assert.equal(invocation.command, "xdg-open");
+  assert.deepEqual(invocation.args, [recommendation.galleryPath]);
+  assert.equal(invocation.options.windowsHide, true);
+  assert.equal(opened.opened, true);
 });
 
 test("again excludes styles shown in the same session", () => {

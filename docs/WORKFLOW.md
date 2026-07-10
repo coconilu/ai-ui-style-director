@@ -4,7 +4,7 @@ Web Style Director adds a style-selection gate before website implementation:
 
 1. Understand whether the user wants a new website or a redesign.
 2. Ask only for essential missing context.
-3. Recommend five relevant UI directions with brand-neutral SVG cards and upstream Light/Dark live previews.
+3. Recommend five relevant UI directions with brand-neutral SVG cards, an offline HTML gallery, and upstream Light/Dark live previews.
 4. Let the user select one direction or request another unseen set.
 5. Generate a project-specific `DESIGN.md` and first-viewport draft.
 6. Wait for the user to confirm the draft direction.
@@ -42,7 +42,8 @@ Inspect at least one real source before recommending a redesign direction:
 Each recommendation gives the user enough information to choose without
 exposing raw catalog data: a generated SVG card, primary Light/Dark live
 previews, the direction name, why it fits, its first viewport, useful component
-kits, and the main risk.
+kits, and the main risk. Terminal-only clients also receive a self-contained
+HTML gallery URL so all five directions can be compared in a regular browser.
 
 If the user rejects the set, the skill excludes directions already shown in the
 session and recommends another set. It reports when unseen catalog options are

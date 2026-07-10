@@ -12,6 +12,14 @@ Web Style Director 只维护一份兼容 Agent Skills 的 `SKILL.md`，不同编
 
 “一等支持”表示仓库明确记录个人 skill 布局、wrapper 能自动找到对应仓库位置，并且该布局有自动化测试覆盖；不代表兼容宿主 agent 的所有历史版本。
 
+## TUI 与无图形界面客户端
+
+能够渲染 Markdown 图片的宿主可以直接嵌入生成式 SVG 卡片。纯终端宿主会拿到
+结构化文字、本地卡片路径、在线参考链接，以及一个自包含的
+`recommendations.html` 画廊。本机 TUI 可以通过 `preview --open` 打开画廊；
+SSH 或无图形界面用户可以复制或下载这一个 HTML 文件后在其他设备查看。
+特定终端的图片协议只是可选增强，不是兼容前提。
+
 ## Codex 布局
 
 新的个人安装使用：

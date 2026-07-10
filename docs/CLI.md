@@ -24,6 +24,7 @@ Options:
 - `--again`: exclude styles already shown in the current session.
 - `--session <path>`: choose the session-state file.
 - `--count <number>`: choose the maximum number of results.
+- `--open`: open the generated recommendation gallery in the default browser.
 - `--json`: emit machine-readable JSON.
 
 If the brief lacks essential context, the command returns targeted questions
@@ -31,7 +32,27 @@ instead of recommendations.
 
 Each recommendation also returns the absolute path to a generated local SVG
 card, the primary upstream Light/Dark live previews, and two additional visual
-reference labels.
+reference labels. A self-contained gallery is written next to the session file
+as `.ui-style-director/recommendations.html`; the text output includes both its
+local path and a `file://` URL.
+
+## `preview`
+
+Inspect or open the most recently generated recommendation gallery:
+
+```bash
+node bin/ai-ui-style-director.mjs preview --open
+```
+
+Options:
+
+- `--path <file>`: use a gallery outside the default `.ui-style-director/` directory.
+- `--open`: open the gallery with the operating system's default browser.
+- `--json`: emit the gallery path, URL, and opened state as JSON.
+
+Without `--open`, the command only prints the `file://` URL. This is safe for
+headless or SSH sessions. The HTML embeds all five SVG cards, so it can be
+copied or downloaded and viewed without the original tool installation.
 
 ## `apply`
 
