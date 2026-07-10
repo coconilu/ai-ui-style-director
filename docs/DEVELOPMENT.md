@@ -51,6 +51,7 @@ Keep these surfaces consistent when installation layout or lifecycle behavior
 changes:
 
 - root `INSTALL.md`;
+- `docs/PLATFORMS.md` and `docs/PLATFORMS.zh-CN.md`;
 - `skills/web-style-director/SKILL.md`;
 - `skills/web-style-director/references/lifecycle.md`;
 - `skills/web-style-director/scripts/style-director.mjs`;
@@ -59,3 +60,11 @@ changes:
 An installed copy uses the repository as the CLI source and a separately
 registered skill folder. Updating therefore refreshes the repository, redeploys
 the skill folder, and verifies the installed wrapper.
+
+The wrapper must keep these first-class discovery paths covered by tests:
+
+- Codex repository under `$HOME/.codex/tools` with the skill under
+  `$HOME/.agents/skills`;
+- existing Codex skill installations under `$HOME/.codex/skills`;
+- Claude Code repository and skill under `CLAUDE_CONFIG_DIR`, or `$HOME/.claude`
+  when that variable is unset.

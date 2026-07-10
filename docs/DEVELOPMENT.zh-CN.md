@@ -48,9 +48,16 @@ npm run check
 安装结构或生命周期行为变化时，应保持以下入口一致：
 
 - 根目录 `INSTALL.md`；
+- `docs/PLATFORMS.md` 与 `docs/PLATFORMS.zh-CN.md`；
 - `skills/web-style-director/SKILL.md`；
 - `skills/web-style-director/references/lifecycle.md`；
 - `skills/web-style-director/scripts/style-director.mjs`；
 - 两份 README 中展示的四个操作。
 
 安装后的工具以仓库作为 CLI 来源，并在 agent 目录注册一份独立 skill。因此更新时需要刷新仓库、重新部署 skill，再验证已安装的 wrapper。
+
+wrapper 必须通过测试覆盖以下一等发现路径：
+
+- Codex 仓库位于 `$HOME/.codex/tools`，skill 位于 `$HOME/.agents/skills`；
+- 已安装在 `$HOME/.codex/skills` 的旧 Codex skill；
+- Claude Code 仓库与 skill 位于 `CLAUDE_CONFIG_DIR`，未设置该变量时位于 `$HOME/.claude`。

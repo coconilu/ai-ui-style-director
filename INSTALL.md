@@ -20,18 +20,64 @@ https://github.com/coconilu/ai-ui-style-director
 Do not interpret “delete” as permission to delete a website project,
 `DESIGN.md`, or `.ui-style-director/` project state.
 
+## Supported agents
+
+This installer and the bundled wrapper provide first-class layouts for:
+
+- Codex on Windows, macOS, and Linux.
+- Claude Code on Windows, macOS, and Linux.
+
+For another Agent Skills-compatible coding agent, discover its documented
+personal skill directory and treat the installation as best effort. Do not
+claim that an unlisted agent is verified.
+
+## Detect the agent
+
+1. Use the agent named by the user, when provided.
+2. Otherwise inspect the current agent's documented configuration roots and
+   environment.
+3. If both Codex and Claude Code installations are present and the active agent
+   cannot be determined, ask which one to configure before writing files.
+4. Install into only one active skill directory unless the user explicitly asks
+   to configure more than one agent.
+
 ## Paths
 
-For Codex, use these defaults unless the user explicitly chooses other paths:
+### Codex
+
+Use these defaults for a new Codex installation:
 
 | Purpose | Windows | macOS/Linux |
 |---|---|---|
-| Repository | `%USERPROFILE%\.codex\tools\ai-ui-style-director` | `~/.codex/tools/ai-ui-style-director` |
-| Skill | `%USERPROFILE%\.codex\skills\web-style-director` | `~/.codex/skills/web-style-director` |
+| Repository | `%USERPROFILE%\.codex\tools\ai-ui-style-director` | `$HOME/.codex/tools/ai-ui-style-director` |
+| Skill | `%USERPROFILE%\.agents\skills\web-style-director` | `$HOME/.agents/skills/web-style-director` |
 
-For another coding agent, discover its documented skill directory. Keep the
-repository and registered skill as separate paths, and report both paths when
-finished.
+`$HOME/.agents/skills` is the preferred Codex skill root. If an existing
+installation is found under the legacy `$HOME/.codex/skills` root, update it in
+place instead of creating a duplicate. Migrate it only when the user explicitly
+requests migration.
+
+### Claude Code
+
+First resolve the Claude Code configuration root:
+
+- Use `CLAUDE_CONFIG_DIR` when it is set.
+- Otherwise use `%USERPROFILE%\.claude` on Windows.
+- Otherwise use `$HOME/.claude` on macOS/Linux.
+
+Then use:
+
+| Purpose | Path under the resolved Claude configuration root |
+|---|---|
+| Repository | `tools/ai-ui-style-director` |
+| Skill | `skills/web-style-director` |
+
+For example, the default Windows skill path is
+`%USERPROFILE%\.claude\skills\web-style-director`, and the default macOS/Linux
+skill path is `$HOME/.claude/skills/web-style-director`.
+
+Keep the repository and registered skill as separate paths. Report the detected
+agent and both absolute paths when finished.
 
 ## Prerequisites
 
@@ -44,26 +90,31 @@ If a prerequisite is missing, stop and tell the user exactly what is missing.
 
 ## Install
 
-1. Resolve the repository and skill paths for the current agent.
-2. If the repository path already exists:
+1. Detect the current agent and resolve its repository and skill paths using
+   the rules above.
+2. Search the supported current and legacy locations for an existing copy. If
+   multiple copies could be active, stop and report them instead of creating
+   another copy.
+3. If the repository path already exists:
    - verify that it is a Git repository;
    - verify that `origin` points to the canonical repository;
    - follow **Update** instead of cloning over it.
-3. Otherwise, create only the required parent directory and clone the canonical
+4. Otherwise, create only the required parent directory and clone the canonical
    repository into the repository path.
-4. Confirm that `<repository>/skills/web-style-director/SKILL.md` exists.
-5. Install the skill folder at the agent's skill path. Stage the new copy in a
+5. Confirm that `<repository>/skills/web-style-director/SKILL.md` exists.
+6. Install the skill folder at the agent's skill path. Stage the new copy in a
    temporary sibling directory first, then replace only the resolved
    `web-style-director` skill directory.
-6. Run **Verify**.
-7. Report the repository path, skill path, detected version or commit, and
-   verification result. Tell the user to restart the agent if its skill list is
-   cached.
+7. Run **Verify**.
+8. Report the agent, repository path, skill path, detected version or commit,
+   and verification result. Tell the user to restart the agent if the new skill
+   is not discovered in the current session.
 
 ## Update
 
-1. Resolve the existing repository and skill paths. Do not guess a deletion or
-   replacement target.
+1. Detect the agent and resolve the existing repository and skill paths. Keep an
+   existing supported or legacy layout in place unless migration was requested.
+   Do not guess a replacement target.
 2. Verify that the repository is a Git checkout of the canonical repository.
 3. Check the repository and installed skill for local modifications. If either
    contains user changes, stop and report them instead of overwriting them.
@@ -74,7 +125,7 @@ If a prerequisite is missing, stop and tell the user exactly what is missing.
    sibling directory, then replace only the installed `web-style-director`
    directory.
 7. Run **Verify**.
-8. Report the previous and current commit, both installed paths, and the
+8. Report the agent, previous and current commit, both installed paths, and the
    verification result.
 
 Updating Web Style Director is different from refreshing its provider catalog.
@@ -82,7 +133,8 @@ The developer command for the latter is documented in `docs/CLI.md`.
 
 ## Uninstall
 
-1. Resolve and display the exact repository and skill paths.
+1. Detect the agent, then resolve and display the exact repository and skill
+   paths.
 2. Confirm that the skill path identifies `web-style-director` and the
    repository path identifies the canonical repository.
 3. Check both locations for user modifications. If modifications exist, stop
@@ -93,8 +145,8 @@ The developer command for the latter is documented in `docs/CLI.md`.
 5. Remove `AI_UI_STYLE_DIRECTOR_HOME` only if its value points to the removed
    repository. Do not change unrelated environment variables.
 6. Verify that the two installation paths no longer exist.
-7. Report what was removed. Tell the user to restart the agent if its skill list
-   is cached.
+7. Report the agent and what was removed. Tell the user to restart the agent if
+   its skill list still shows the removed skill.
 
 Never remove `DESIGN.md`, `.ui-style-director/`, provider caches inside user
 projects, or any project source code during uninstall.

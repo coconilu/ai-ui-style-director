@@ -1,13 +1,58 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { applyStyle, isBriefInsufficient, recommendStyles, updateCatalog } from "../src/core.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
+const wrapperPath = fileURLToPath(
+  new URL("../skills/web-style-director/scripts/style-director.mjs", import.meta.url)
+);
+
+function writeFakeRepository(repositoryDir, marker) {
+  const fakeBin = join(repositoryDir, "bin", "ai-ui-style-director.mjs");
+  mkdirSync(dirname(fakeBin), { recursive: true });
+  writeFileSync(
+    fakeBin,
+    `process.stdout.write(JSON.stringify({ marker: ${JSON.stringify(marker)}, args: process.argv.slice(2) }));\n`,
+    "utf8"
+  );
+}
+
+function runInstalledWrapper({
+  homeDir,
+  skillDir,
+  repositoryDir,
+  claudeConfigDir,
+  marker,
+  additionalRepositories = []
+}) {
+  const installedWrapper = join(skillDir, "scripts", "style-director.mjs");
+  mkdirSync(dirname(installedWrapper), { recursive: true });
+  copyFileSync(wrapperPath, installedWrapper);
+  writeFakeRepository(repositoryDir, marker);
+  for (const repository of additionalRepositories) {
+    writeFakeRepository(repository.path, repository.marker);
+  }
+
+  const env = {
+    ...process.env,
+    HOME: homeDir,
+    USERPROFILE: homeDir,
+    AI_UI_STYLE_DIRECTOR_HOME: "",
+    CLAUDE_CONFIG_DIR: claudeConfigDir || ""
+  };
+  const result = spawnSync(process.execPath, [installedWrapper, "recommend", "--brief", "test"], {
+    encoding: "utf8",
+    env
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  return JSON.parse(result.stdout);
+}
 
 test("detects missing scenario context", () => {
   assert.equal(isBriefInsufficient("make a website"), true);
@@ -108,4 +153,94 @@ test("update remains a compatibility alias for refresh-catalog", () => {
   assert.equal(result.status, 0, result.stderr);
   const output = JSON.parse(result.stdout);
   assert.equal(output.generatedFiles.length, 3);
+});
+
+test("installed wrapper finds the Codex repository from an .agents skill", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-codex-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".agents", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
+    marker: "codex"
+  });
+
+  assert.equal(output.marker, "codex");
+  assert.deepEqual(output.args, ["recommend", "--brief", "test"]);
+});
+
+test("installed wrapper keeps the legacy .codex skill layout working", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-legacy-codex-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".codex", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
+    marker: "legacy-codex"
+  });
+
+  assert.equal(output.marker, "legacy-codex");
+  assert.deepEqual(output.args, ["recommend", "--brief", "test"]);
+});
+
+test("installed wrapper honors CLAUDE_CONFIG_DIR for Claude Code", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-claude-home-"));
+  const claudeConfigDir = join(homeDir, "custom-claude-config");
+  const output = runInstalledWrapper({
+    homeDir,
+    claudeConfigDir,
+    skillDir: join(claudeConfigDir, "skills", "web-style-director"),
+    repositoryDir: join(claudeConfigDir, "tools", "ai-ui-style-director"),
+    marker: "claude-code"
+  });
+
+  assert.equal(output.marker, "claude-code");
+  assert.deepEqual(output.args, ["recommend", "--brief", "test"]);
+});
+
+test("installed wrapper finds the default Claude Code repository", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-default-claude-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".claude", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".claude", "tools", "ai-ui-style-director"),
+    marker: "default-claude-code"
+  });
+
+  assert.equal(output.marker, "default-claude-code");
+  assert.deepEqual(output.args, ["recommend", "--brief", "test"]);
+});
+
+test("Claude Code skill prefers its repository when Codex is also installed", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-dual-agent-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".claude", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".claude", "tools", "ai-ui-style-director"),
+    marker: "claude-code",
+    additionalRepositories: [
+      {
+        path: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
+        marker: "codex"
+      }
+    ]
+  });
+
+  assert.equal(output.marker, "claude-code");
+});
+
+test("Codex skill prefers its repository when Claude Code is also installed", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-dual-agent-codex-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".agents", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
+    marker: "codex",
+    additionalRepositories: [
+      {
+        path: join(homeDir, ".claude", "tools", "ai-ui-style-director"),
+        marker: "claude-code"
+      }
+    ]
+  });
+
+  assert.equal(output.marker, "codex");
 });

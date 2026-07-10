@@ -4,6 +4,8 @@
 
 AI UI Style Director is a UI-direction workflow for coding agents. Before a new website or redesign is implemented, it recommends five relevant visual directions. After you choose one, it generates a project-specific `DESIGN.md` and lets the agent start building from that contract.
 
+Codex and Claude Code have first-class support on Windows, macOS, and Linux. Other Agent Skills-compatible tools are supported on a best-effort basis.
+
 ## Install
 
 Send this to your coding agent:
@@ -19,19 +21,29 @@ Installation requires Git and Node.js 20 or newer.
 
 ## Use
 
-```text
-/web-style-director I want to build an AI developer tool website
-```
-
-For agents without slash commands, use the explicit skill name or natural language:
+Codex:
 
 ```text
 $web-style-director I want to build an AI developer tool website
 ```
 
+Claude Code:
+
+```text
+/web-style-director I want to build an AI developer tool website
+```
+
 Choose one of the five directions, or ask for another set. The agent then generates `DESIGN.md` and implements the website from it.
 
 ## Update
+
+Codex:
+
+```text
+$web-style-director update
+```
+
+Claude Code:
 
 ```text
 /web-style-director update
@@ -40,6 +52,14 @@ Choose one of the five directions, or ask for another set. The agent then genera
 You can also say: `Update web-style-director and verify it afterward.`
 
 ## Uninstall
+
+Codex:
+
+```text
+$web-style-director uninstall
+```
+
+Claude Code:
 
 ```text
 /web-style-director uninstall
@@ -50,6 +70,7 @@ You can also say: `Update web-style-director and verify it afterward.`
 ## Documentation
 
 - [Workflow](docs/WORKFLOW.md)
+- [Supported platforms](docs/PLATFORMS.md)
 - [CLI reference](docs/CLI.md)
 - [Providers and source boundaries](docs/PROVIDERS.md)
 - [Architecture](docs/ARCHITECTURE.md)

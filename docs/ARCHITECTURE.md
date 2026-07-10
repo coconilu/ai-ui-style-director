@@ -56,7 +56,9 @@ Agents should implement UI from this file instead of improvising a new direction
 5. Generate `DESIGN.md`.
 6. Only then write UI code.
 
-The skill can be used directly from this repository or copied into a Codex skill directory.
+The skill can be used directly from this repository or copied into a supported
+Codex or Claude Code personal skill directory. Both agents use the same
+`SKILL.md`; only installation paths and explicit invocation syntax differ.
 It also routes explicit update and uninstall requests to the lifecycle contract
 in the root `INSTALL.md`, keeping installed-tool updates separate from provider
 catalog maintenance.

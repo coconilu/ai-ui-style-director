@@ -10,10 +10,17 @@ Locate the repository in this order:
 1. `AI_UI_STYLE_DIRECTOR_HOME`, when set.
 2. The repository containing the active skill, when the skill runs in place.
 3. `~/.codex/tools/ai-ui-style-director` for the default Codex layout.
+4. `${CLAUDE_CONFIG_DIR:-~/.claude}/tools/ai-ui-style-director` for Claude
+   Code.
 
-Resolve the active skill directory separately. Before changing anything,
-confirm that the repository contains `INSTALL.md` and
-`bin/ai-ui-style-director.mjs`.
+Resolve the active skill directory separately:
+
+- Codex: `$HOME/.agents/skills/web-style-director`, or the existing legacy
+  `$HOME/.codex/skills/web-style-director` installation.
+- Claude Code: `${CLAUDE_CONFIG_DIR:-~/.claude}/skills/web-style-director`.
+
+Before changing anything, confirm that the repository contains `INSTALL.md`
+and `bin/ai-ui-style-director.mjs`.
 
 ## Execute the request
 

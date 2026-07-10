@@ -3,6 +3,9 @@
 The canonical agent-readable installation, update, and uninstall procedure now
 lives at [`../INSTALL.md`](../INSTALL.md).
 
+That procedure detects Codex or Claude Code, selects the matching personal
+skill layout, and treats other Agent Skills-compatible clients as best-effort.
+
 Send this prompt to a coding agent:
 
 ```text
