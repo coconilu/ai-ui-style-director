@@ -1,11 +1,20 @@
 ---
 name: web-style-director
-description: Recommend and lock UI style directions before building or redesigning websites. Use when the user asks to create a new website, landing page, SaaS/product site, dashboard, docs site, portfolio, ecommerce page, or to redesign/restyle an existing website. This skill must present five relevant UI style options from the style catalog, wait for user selection or reroll, generate a project DESIGN.md, and only then proceed to UI code.
+description: Recommend and lock UI style directions before building or redesigning websites, and manage this skill's installed lifecycle. Use when the user asks to create or restyle a website, landing page, SaaS/product site, dashboard, docs site, portfolio, or ecommerce page; or explicitly asks to update, upgrade, uninstall, remove, or delete web-style-director. For website work, present five relevant UI directions, wait for selection or reroll, generate a project DESIGN.md, and only then proceed to UI code.
 ---
 
 # Web Style Director
 
 Use this skill as the style-selection gate before website UI implementation.
+
+## Request Routing
+
+- For an explicit update, upgrade, uninstall, remove, or delete request about
+  `web-style-director`, read `references/lifecycle.md` and perform only that
+  lifecycle operation. Do not enter the website workflow.
+- Treat `delete` as uninstall only when it clearly names this tool. Never infer
+  permission to delete a user project or generated project files.
+- For website creation or redesign, continue with the workflow below.
 
 ## Core Rule
 
@@ -88,4 +97,4 @@ Use the concise format in `references/recommendation-format.md`. Do not overload
 - `references/context-questions.md`: context questions for underspecified requests.
 - `references/recommendation-format.md`: output format for style options.
 - `references/design-md-contract.md`: what to do after `DESIGN.md` is generated.
-
+- `references/lifecycle.md`: update and safe-uninstall routing.

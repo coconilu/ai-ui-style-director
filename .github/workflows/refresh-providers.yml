@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Refresh provider indexes
-        run: node bin/ai-ui-style-director.mjs update --clone
+        run: node bin/ai-ui-style-director.mjs refresh-catalog --clone
 
       - name: Validate
         run: npm run check
@@ -52,4 +52,3 @@ jobs:
             --body "Automated daily refresh of provider-derived indexes." \
             --base "${GITHUB_REF_NAME:-main}" \
             --head "$branch"
-

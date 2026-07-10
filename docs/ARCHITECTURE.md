@@ -57,6 +57,9 @@ Agents should implement UI from this file instead of improvising a new direction
 6. Only then write UI code.
 
 The skill can be used directly from this repository or copied into a Codex skill directory.
+It also routes explicit update and uninstall requests to the lifecycle contract
+in the root `INSTALL.md`, keeping installed-tool updates separate from provider
+catalog maintenance.
 
 ## Why Provider Adapters
 
@@ -68,4 +71,3 @@ This keeps the project legally and technically cleaner:
 - licenses can be checked per provider
 - upstream updates can be synced
 - generated websites use inspired style contracts, not brand clones
-

@@ -22,6 +22,8 @@ if (!repoRoot) {
   process.stderr.write("- Clone the repo to ~/.codex/tools/ai-ui-style-director\n");
   process.stderr.write("- Or set AI_UI_STYLE_DIRECTOR_HOME to the cloned repo path\n");
   process.stderr.write("- Or keep this skill inside the repository at skills/web-style-director\n");
+  process.stderr.write("\nInstall instructions:\n");
+  process.stderr.write("https://raw.githubusercontent.com/coconilu/ai-ui-style-director/main/INSTALL.md\n");
   process.exit(1);
 }
 

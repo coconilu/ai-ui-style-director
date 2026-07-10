@@ -37,14 +37,17 @@ Commands:
   recommend --brief <text> [--count 5] [--again] [--session <path>] [--json]
   apply --style <id> --project <path> [--brief <text>] [--force] [--json]
   sync [--cache-dir <path>] [--clone] [--json]
-  update [--cache-dir <path>] [--generated-dir <path>] [--clone] [--json]
+  refresh-catalog [--cache-dir <path>] [--generated-dir <path>] [--clone] [--json]
   questions [--json]
+
+Compatibility aliases:
+  update              Alias for refresh-catalog; does not update the installed skill
 
 Examples:
   ai-ui-style-director recommend --brief "AI developer tool website"
   ai-ui-style-director recommend --brief "AI developer tool website" --again
   ai-ui-style-director apply --style developer-product-minimal --project ./my-site --brief "AI SDK landing page"
-  ai-ui-style-director update --clone
+  ai-ui-style-director refresh-catalog --clone
 `;
 }
 
@@ -114,7 +117,7 @@ async function main() {
       return;
     }
 
-    if (command === "update") {
+    if (command === "refresh-catalog" || command === "update") {
       const result = updateCatalog({
         cacheDir: args["cache-dir"] ? resolve(args["cache-dir"]) : resolve(".ui-style-director", "cache", "providers"),
         generatedDir: args["generated-dir"] ? resolve(args["generated-dir"]) : undefined,
