@@ -33,7 +33,7 @@ Claude Code:
 /web-style-director I want to build an AI developer tool website
 ```
 
-Choose one of the five directions, or ask for another set. The agent then generates `DESIGN.md` and implements the website from it.
+The agent shows a brand-neutral SVG draft and upstream Light/Dark live-preview links for each of the five directions. After selection, it generates a project-specific `DESIGN.md` and first-viewport draft, then implements only after confirmation.
 
 ## Update
 
@@ -70,6 +70,7 @@ Claude Code:
 ## Documentation
 
 - [Workflow](docs/WORKFLOW.md)
+- [Visual previews](docs/VISUAL_PREVIEWS.md)
 - [Supported platforms](docs/PLATFORMS.md)
 - [CLI reference](docs/CLI.md)
 - [Providers and source boundaries](docs/PROVIDERS.md)

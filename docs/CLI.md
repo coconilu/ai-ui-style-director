@@ -29,6 +29,10 @@ Options:
 If the brief lacks essential context, the command returns targeted questions
 instead of recommendations.
 
+Each recommendation also returns the absolute path to a generated local SVG
+card, the primary upstream Light/Dark live previews, and two additional visual
+reference labels.
+
 ## `apply`
 
 Generate the project design contract after the user selects a style:
@@ -54,10 +58,14 @@ Generated files:
 my-site/
   DESIGN.md
   .ui-style-director/
+    first-viewport-draft.svg
     selected-style.json
     recommended-components.json
     source-attribution.json
 ```
+
+`first-viewport-draft.svg` is the project-level first-viewport draft. The agent
+shows it and waits for confirmation before implementation.
 
 ## `questions`
 

@@ -1,6 +1,6 @@
 ---
 name: web-style-director
-description: Recommend and lock UI style directions before building or redesigning websites, and manage this skill's installed lifecycle. Use when the user asks to create or restyle a website, landing page, SaaS/product site, dashboard, docs site, portfolio, or ecommerce page; or explicitly asks to update, upgrade, uninstall, remove, or delete web-style-director. For website work, present five relevant UI directions, wait for selection or reroll, generate a project DESIGN.md, and only then proceed to UI code.
+description: Recommend, preview, and lock UI style directions before building or redesigning websites, and manage this skill's installed lifecycle. Use when the user asks to create or restyle a website, landing page, SaaS/product site, dashboard, docs site, portfolio, or ecommerce page; or explicitly asks to update, upgrade, uninstall, remove, or delete web-style-director. For website work, present five relevant visual directions with draft cards and live references, wait for selection, generate DESIGN.md plus a project first-viewport draft, wait for confirmation, and only then proceed to UI code.
 ---
 
 # Web Style Director
@@ -18,7 +18,9 @@ Use this skill as the style-selection gate before website UI implementation.
 
 ## Core Rule
 
-Do not write UI code until the user has selected one recommended style and a project `DESIGN.md` has been generated or updated.
+Do not write UI code until the user has selected one recommended style,
+`DESIGN.md` and the project first-viewport draft have been generated or
+updated, and the user has confirmed the draft direction.
 
 ## Workflow
 
@@ -30,7 +32,10 @@ Do not write UI code until the user has selected one recommended style and a pro
    node skills/web-style-director/scripts/style-director.mjs recommend --brief "<brief>" --count 5
    ```
 
-4. Present exactly five UI style options when available. Include: style name, fit reason, first-viewport shape, component kits, and risk.
+4. Present exactly five UI style options when available. For each option, show
+   its local SVG preview card, primary Light/Dark live-reference links, fit
+   reason, first-viewport shape, component kits, and risk. Follow
+   `references/recommendation-format.md`.
 5. Wait for the user's selection. The user may choose by number or style id.
 6. If the user rejects the options, rerun with `--again`:
 
@@ -38,15 +43,22 @@ Do not write UI code until the user has selected one recommended style and a pro
    node skills/web-style-director/scripts/style-director.mjs recommend --brief "<brief>" --again --count 5
    ```
 
-7. After selection, generate the target project's `DESIGN.md`:
+7. After selection, generate the target project's `DESIGN.md` and
+   `.ui-style-director/first-viewport-draft.svg`:
 
    ```bash
    node skills/web-style-director/scripts/style-director.mjs apply --style <style-id> --project <project-path> --brief "<brief>"
    ```
 
-8. Read the generated `DESIGN.md` before coding. Treat it as the implementation contract.
-9. Implement the UI using the target repo's framework. Use the recommended component kits only when they fit the repo stack and user constraints.
-10. Verify the rendered UI against `DESIGN.md`; record intentional deviations.
+8. Read the generated `DESIGN.md`, present the project first-viewport draft,
+   and wait for confirmation. If the user requests another style, return to
+   recommendation. If they request a project-specific adjustment, record it in
+   `DESIGN.md` and update the draft before asking again.
+9. After confirmation, implement the UI using the target repo's framework. Use
+   the recommended component kits only when they fit the repo stack and user
+   constraints.
+10. Verify the rendered UI against both `DESIGN.md` and the confirmed draft;
+    record intentional deviations.
 
 ## New Website Intake
 
@@ -74,7 +86,9 @@ If none is provided, ask for at least one source before recommending.
 
 ## Recommendation Output
 
-Use the concise format in `references/recommendation-format.md`. Do not overload the user with raw catalog fields.
+Use the visual format in `references/recommendation-format.md`. Keep the text
+concise so five preview cards remain scannable. Do not overload the user with
+raw catalog fields.
 
 ## Selection Rules
 
@@ -86,6 +100,10 @@ Use the concise format in `references/recommendation-format.md`. Do not overload
 ## Implementation Rules
 
 - Read `DESIGN.md` immediately before editing UI code.
+- Treat generated preview cards and upstream live previews as selection
+  references, never as assets to ship.
+- Show the project first-viewport draft and obtain confirmation before editing
+  UI code.
 - Preserve the selected visual direction's density, first viewport, component model, typography, and palette.
 - Do not copy upstream logos, screenshots, brand names, or exact proprietary layouts.
 - Do not introduce a new visual direction during coding unless the user selects a new style.

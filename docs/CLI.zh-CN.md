@@ -27,6 +27,12 @@ node bin/ai-ui-style-director.mjs recommend \
 
 如果 brief 缺少必要信息，命令会返回针对性的补充问题，而不是直接推荐。
 
+每个推荐还会返回：
+
+- 本地生成的 SVG 草图绝对路径；
+- 主要上游参考的 Light/Dark 实时预览；
+- 两个额外视觉参考标签。
+
 ## `apply`
 
 用户选择风格后，生成项目设计契约：
@@ -52,10 +58,13 @@ node bin/ai-ui-style-director.mjs apply \
 my-site/
   DESIGN.md
   .ui-style-director/
+    first-viewport-draft.svg
     selected-style.json
     recommended-components.json
     source-attribution.json
 ```
+
+`first-viewport-draft.svg` 是项目级首屏草图。agent 应在开始实现前展示它并等待用户确认。
 
 ## `questions`
 

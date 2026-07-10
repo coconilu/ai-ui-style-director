@@ -6,7 +6,8 @@
 ai-ui-style-director/
   bin/                         # CLI 入口
   src/                         # 推荐、应用与 provider 逻辑
-  catalog/                     # 风格、组件、provider 与问题
+  scripts/                     # 确定性预览生成
+  catalog/                     # 风格、视觉、预览、provider 与问题
   skills/web-style-director/   # agent skill
   examples/new-site/           # 示例 brief 与生成的 DESIGN.md
   docs/                        # 详细文档
@@ -25,6 +26,15 @@ npm run check
 ```
 
 `npm run check` 会验证 JavaScript 语法并运行测试。
+
+修改 `style-visuals.json` 或预览渲染逻辑后，应重新生成风格卡片：
+
+```bash
+npm run previews
+npm run previews:check
+```
+
+检查命令会确认每个 profile 都有一条视觉配置、3 条参考和一张最新提交的 SVG。
 
 如果环境中有 Codex `skill-creator`，还应单独验证 skill：
 
@@ -49,6 +59,8 @@ npm run check
 
 - 根目录 `INSTALL.md`；
 - `docs/PLATFORMS.md` 与 `docs/PLATFORMS.zh-CN.md`；
+- `docs/VISUAL_PREVIEWS.md` 与 `docs/VISUAL_PREVIEWS.zh-CN.md`；
+- `catalog/style-visuals.json` 与 `catalog/previews/`；
 - `skills/web-style-director/SKILL.md`；
 - `skills/web-style-director/references/lifecycle.md`；
 - `skills/web-style-director/scripts/style-director.mjs`；

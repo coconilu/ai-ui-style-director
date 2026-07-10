@@ -96,6 +96,7 @@ async function main() {
         printJson(result);
       } else {
         process.stdout.write(`Generated ${result.designPath}\n`);
+        process.stdout.write(`First-viewport draft: ${result.draftMarkdownPath}\n`);
         process.stdout.write(`State directory: ${result.stateDir}\n`);
         process.stdout.write(`Selected style: ${result.style.name} (${result.style.id})\n`);
       }

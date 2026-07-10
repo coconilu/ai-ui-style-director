@@ -13,10 +13,15 @@ Configured providers:
 
 Design references are inspiration and structure for agent-readable design contracts. They are not permission to copy protected logos, screenshots, exact page layouts, proprietary brand language, or other non-code assets.
 
+Recommendations may link to public Light/Dark previews hosted by getdesign.md
+for `awesome-design-md` style slugs. Those hosted pages remain external
+reference material. This repository does not vendor their HTML, screenshots,
+logos, or brand assets; committed SVG preview cards are independently generated
+brand-neutral wireframes.
+
 Generated websites should use:
 
 - project-owned assets
 - generated assets with suitable usage rights
 - open-source component code with preserved notices
 - source attribution when style profiles are derived from public examples
-

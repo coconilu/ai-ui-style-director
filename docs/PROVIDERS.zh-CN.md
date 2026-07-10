@@ -23,6 +23,12 @@ node bin/ai-ui-style-director.mjs refresh-catalog --clone
 
 定时 GitHub workflow 每天执行相同的刷新和仓库检查，只在生成索引发生变化时创建 PR。
 
+## 视觉参考
+
+`catalog/style-visuals.json` 把每个标准化内部风格映射到 3 个真实的 `awesome-design-md` slug。推荐核心会把这些 slug 展开为 getdesign.md 的 overview 与 Light/Dark 实时预览链接。
+
+这些链接刻意与 `catalog/previews/` 分离：本地 SVG 卡片是项目自有的中性线框草图，托管预览始终属于外部参考资料，不会 vendoring 到仓库。
+
 ## 来源归因与品牌安全
 
 Provider 仓库是灵感来源和实现材料，不代表可以克隆某个品牌。生成网站时应该使用：

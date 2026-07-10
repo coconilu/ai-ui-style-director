@@ -33,7 +33,7 @@ Claude Code：
 /web-style-director 我想做一个面向开发者的 AI 工具网站
 ```
 
-接下来只需从 5 个方向中选择一个，或让 agent 再换一批。选定后，agent 会生成 `DESIGN.md` 并据此实现网站。
+agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Dark 实时预览链接。选定后，它会生成项目专属的 `DESIGN.md` 与首屏草图，确认后再实现网站。
 
 ## 更新
 
@@ -70,6 +70,7 @@ Claude Code：
 ## 详细文档
 
 - [工作流程](docs/WORKFLOW.zh-CN.md)
+- [视觉预览](docs/VISUAL_PREVIEWS.zh-CN.md)
 - [支持平台](docs/PLATFORMS.zh-CN.md)
 - [CLI 参考](docs/CLI.zh-CN.md)
 - [Provider 与来源边界](docs/PROVIDERS.zh-CN.md)

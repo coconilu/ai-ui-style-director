@@ -1,5 +1,5 @@
 {
-  "selectedAt": "2026-07-06T15:10:35.776Z",
+  "selectedAt": "2026-07-10T05:52:09.725Z",
   "brief": "AI SDK landing page for developers",
   "style": {
     "id": "developer-product-minimal",
@@ -71,5 +71,49 @@
     "risks": [
       "Can feel generic if the product preview is weak."
     ]
+  },
+  "visual": {
+    "styleId": "developer-product-minimal",
+    "variant": "developer",
+    "theme": {
+      "canvas": "#09090B",
+      "surface": "#111114",
+      "surfaceAlt": "#1B1B20",
+      "text": "#FAFAFA",
+      "muted": "#A1A1AA",
+      "accent": "#E4E4E7",
+      "border": "#2A2A30"
+    },
+    "references": [
+      {
+        "provider": "awesome-design-md",
+        "slug": "vercel",
+        "label": "Vercel",
+        "role": "monochrome precision and product proof",
+        "pageUrl": "https://getdesign.md/vercel/design-md",
+        "lightPreviewUrl": "https://getdesign.md/design-md/vercel/preview.html",
+        "darkPreviewUrl": "https://getdesign.md/design-md/vercel/preview-dark.html"
+      },
+      {
+        "provider": "awesome-design-md",
+        "slug": "resend",
+        "label": "Resend",
+        "role": "developer-focused dark UI and monospace detail",
+        "pageUrl": "https://getdesign.md/resend/design-md",
+        "lightPreviewUrl": "https://getdesign.md/design-md/resend/preview.html",
+        "darkPreviewUrl": "https://getdesign.md/design-md/resend/preview-dark.html"
+      },
+      {
+        "provider": "awesome-design-md",
+        "slug": "cursor",
+        "label": "Cursor",
+        "role": "AI developer-tool presentation",
+        "pageUrl": "https://getdesign.md/cursor/design-md",
+        "lightPreviewUrl": "https://getdesign.md/design-md/cursor/preview.html",
+        "darkPreviewUrl": "https://getdesign.md/design-md/cursor/preview-dark.html"
+      }
+    ],
+    "previewCardPath": "C:\\Users\\admin\\Documents\\study\\ai-ui-style-director\\catalog\\previews\\developer-product-minimal.svg",
+    "previewCardMarkdownPath": "C:/Users/admin/Documents/study/ai-ui-style-director/catalog/previews/developer-product-minimal.svg"
   }
 }

@@ -5,9 +5,18 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { applyStyle, isBriefInsufficient, recommendStyles, updateCatalog } from "../src/core.mjs";
+import {
+  applyStyle,
+  isBriefInsufficient,
+  loadStyleProfiles,
+  loadStyleVisuals,
+  recommendStyles,
+  renderRecommendations,
+  updateCatalog
+} from "../src/core.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
+const rootDir = join(dirname(binPath), "..");
 const wrapperPath = fileURLToPath(
   new URL("../skills/web-style-director/scripts/style-director.mjs", import.meta.url)
 );
@@ -69,6 +78,49 @@ test("recommends five styles for an AI developer product", () => {
   assert.equal(result.needsContext, false);
   assert.equal(result.recommendations.length, 5);
   assert.equal(result.recommendations[0].id, "developer-product-minimal");
+  assert.equal(existsSync(result.recommendations[0].visual.previewCardPath), true);
+  assert.equal(result.recommendations[0].visual.references.length, 3);
+  assert.match(result.recommendations[0].visual.references[0].lightPreviewUrl, /getdesign\.md/);
+});
+
+test("every style has a generated preview and three real visual references", () => {
+  const profiles = loadStyleProfiles();
+  const visuals = loadStyleVisuals();
+  const visualMap = new Map(visuals.map((visual) => [visual.styleId, visual]));
+  const generatedSources = JSON.parse(
+    readFileSync(join(rootDir, "catalog", "generated", "style-sources.json"), "utf8")
+  ).sources;
+  const upstreamSlugs = new Set(
+    generatedSources
+      .filter((source) => source.providerId === "awesome-design-md")
+      .map((source) => source.path.match(/^design-md\/([^/]+)\/DESIGN\.md$/)?.[1])
+      .filter(Boolean)
+  );
+
+  assert.equal(visuals.length, profiles.length);
+  for (const profile of profiles) {
+    const visual = visualMap.get(profile.id);
+    assert.ok(visual, `Missing visual configuration for ${profile.id}`);
+    assert.equal(visual.references.length, 3);
+    assert.equal(existsSync(join(rootDir, "catalog", "previews", `${profile.id}.svg`)), true);
+    for (const reference of visual.references) {
+      assert.equal(upstreamSlugs.has(reference.slug), true, `Unknown upstream slug: ${reference.slug}`);
+    }
+  }
+});
+
+test("rendered recommendations expose the local card and live previews", () => {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-render-preview-"));
+  const result = recommendStyles({
+    brief: "AI developer tool website for an SDK and docs",
+    count: 1,
+    sessionPath: join(dir, "session.json")
+  });
+  const rendered = renderRecommendations(result);
+
+  assert.match(rendered, /Preview card: .*developer-product-minimal\.svg/);
+  assert.match(rendered, /Live preview: Vercel/);
+  assert.match(rendered, /preview-dark\.html/);
 });
 
 test("again excludes styles shown in the same session", () => {
@@ -100,10 +152,16 @@ test("apply writes a DESIGN.md and style state", () => {
 
   const design = readFileSync(result.designPath, "utf8");
   const selected = readFileSync(join(dir, ".ui-style-director", "selected-style.json"), "utf8");
+  const draft = readFileSync(result.draftPath, "utf8");
+  const attribution = JSON.parse(readFileSync(join(dir, ".ui-style-director", "source-attribution.json"), "utf8"));
 
   assert.match(design, /# DESIGN.md/);
   assert.match(design, /Operational SaaS Console/);
+  assert.match(design, /## Visual References/);
+  assert.match(design, /linear\.app\/preview\.html/);
   assert.match(selected, /operational-saas-console/);
+  assert.match(draft, /project first-viewport draft/);
+  assert.equal(attribution.visualReferences.length, 3);
 });
 
 test("catalog refresh writes generated provider indexes without cloning", () => {

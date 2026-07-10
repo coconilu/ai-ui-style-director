@@ -2,5 +2,34 @@
   "generatedBy": "ai-ui-style-director",
   "sourceProvider": "awesome-design-md",
   "sourceSlug": "vercel-like",
+  "visualReferences": [
+    {
+      "provider": "awesome-design-md",
+      "slug": "vercel",
+      "label": "Vercel",
+      "role": "monochrome precision and product proof",
+      "pageUrl": "https://getdesign.md/vercel/design-md",
+      "lightPreviewUrl": "https://getdesign.md/design-md/vercel/preview.html",
+      "darkPreviewUrl": "https://getdesign.md/design-md/vercel/preview-dark.html"
+    },
+    {
+      "provider": "awesome-design-md",
+      "slug": "resend",
+      "label": "Resend",
+      "role": "developer-focused dark UI and monospace detail",
+      "pageUrl": "https://getdesign.md/resend/design-md",
+      "lightPreviewUrl": "https://getdesign.md/design-md/resend/preview.html",
+      "darkPreviewUrl": "https://getdesign.md/design-md/resend/preview-dark.html"
+    },
+    {
+      "provider": "awesome-design-md",
+      "slug": "cursor",
+      "label": "Cursor",
+      "role": "AI developer-tool presentation",
+      "pageUrl": "https://getdesign.md/cursor/design-md",
+      "lightPreviewUrl": "https://getdesign.md/design-md/cursor/preview.html",
+      "darkPreviewUrl": "https://getdesign.md/design-md/cursor/preview-dark.html"
+    }
+  ],
   "brandSafety": "Use as inspiration only; do not copy proprietary brand assets or exact layouts."
 }

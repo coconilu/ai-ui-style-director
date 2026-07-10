@@ -6,7 +6,8 @@
 ai-ui-style-director/
   bin/                         # CLI entry point
   src/                         # recommendation, apply, and provider logic
-  catalog/                     # styles, components, providers, and questions
+  scripts/                     # deterministic preview generation
+  catalog/                     # styles, visuals, previews, providers, and questions
   skills/web-style-director/   # agent skill
   examples/new-site/           # example brief and generated DESIGN.md
   docs/                        # detailed documentation
@@ -25,6 +26,16 @@ npm run check
 ```
 
 `npm run check` validates JavaScript syntax and runs the test suite.
+
+Regenerate style cards after changing `style-visuals.json` or preview rendering:
+
+```bash
+npm run previews
+npm run previews:check
+```
+
+The check command verifies that every profile has one visual configuration,
+three references, and an up-to-date committed SVG.
 
 Validate the skill separately with the Codex `skill-creator` validator when it
 is available:
@@ -52,6 +63,8 @@ changes:
 
 - root `INSTALL.md`;
 - `docs/PLATFORMS.md` and `docs/PLATFORMS.zh-CN.md`;
+- `docs/VISUAL_PREVIEWS.md` and `docs/VISUAL_PREVIEWS.zh-CN.md`;
+- `catalog/style-visuals.json` and `catalog/previews/`;
 - `skills/web-style-director/SKILL.md`;
 - `skills/web-style-director/references/lifecycle.md`;
 - `skills/web-style-director/scripts/style-director.mjs`;

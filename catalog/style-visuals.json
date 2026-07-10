@@ -1,0 +1,122 @@
+[
+  {
+    "styleId": "developer-product-minimal",
+    "variant": "developer",
+    "theme": { "canvas": "#09090B", "surface": "#111114", "surfaceAlt": "#1B1B20", "text": "#FAFAFA", "muted": "#A1A1AA", "accent": "#E4E4E7", "border": "#2A2A30" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "vercel", "label": "Vercel", "role": "monochrome precision and product proof" },
+      { "provider": "awesome-design-md", "slug": "resend", "label": "Resend", "role": "developer-focused dark UI and monospace detail" },
+      { "provider": "awesome-design-md", "slug": "cursor", "label": "Cursor", "role": "AI developer-tool presentation" }
+    ]
+  },
+  {
+    "styleId": "operational-saas-console",
+    "variant": "app-shell",
+    "theme": { "canvas": "#0E1015", "surface": "#151821", "surfaceAlt": "#202431", "text": "#F4F4F5", "muted": "#9CA3AF", "accent": "#8B5CF6", "border": "#303545" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "linear.app", "label": "Linear", "role": "compact app shell, rows, and selected states" },
+      { "provider": "awesome-design-md", "slug": "notion", "label": "Notion", "role": "calm workspace hierarchy" },
+      { "provider": "awesome-design-md", "slug": "intercom", "label": "Intercom", "role": "friendly operational product surfaces" }
+    ]
+  },
+  {
+    "styleId": "enterprise-trust-solution",
+    "variant": "enterprise",
+    "theme": { "canvas": "#F3F6FA", "surface": "#FFFFFF", "surfaceAlt": "#E8EEF6", "text": "#10233E", "muted": "#64748B", "accent": "#2563EB", "border": "#CBD5E1" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "hashicorp", "label": "HashiCorp", "role": "infrastructure credibility and product clarity" },
+      { "provider": "awesome-design-md", "slug": "ibm", "label": "IBM", "role": "structured enterprise information design" },
+      { "provider": "awesome-design-md", "slug": "mastercard", "label": "Mastercard", "role": "measured trust and premium warmth" }
+    ]
+  },
+  {
+    "styleId": "data-dashboard-command-center",
+    "variant": "dashboard",
+    "theme": { "canvas": "#081018", "surface": "#0E1925", "surfaceAlt": "#152536", "text": "#E6F1FF", "muted": "#7F95AA", "accent": "#22C55E", "border": "#233A4D" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "sentry", "label": "Sentry", "role": "monitoring density and incident states" },
+      { "provider": "awesome-design-md", "slug": "clickhouse", "label": "ClickHouse", "role": "technical analytics presentation" },
+      { "provider": "awesome-design-md", "slug": "coinbase", "label": "Coinbase", "role": "institutional data clarity" }
+    ]
+  },
+  {
+    "styleId": "editorial-technical-docs",
+    "variant": "docs",
+    "theme": { "canvas": "#F7F7F5", "surface": "#FFFFFF", "surfaceAlt": "#EFEFEB", "text": "#18181B", "muted": "#71717A", "accent": "#16A34A", "border": "#D8D8D2" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "mintlify", "label": "Mintlify", "role": "reading-optimized documentation shell" },
+      { "provider": "awesome-design-md", "slug": "wired", "label": "WIRED", "role": "editorial hierarchy and dense prose" },
+      { "provider": "awesome-design-md", "slug": "notion", "label": "Notion", "role": "quiet typography and document rhythm" }
+    ]
+  },
+  {
+    "styleId": "motion-rich-launch",
+    "variant": "launch",
+    "theme": { "canvas": "#0B0714", "surface": "#160F25", "surfaceAlt": "#24163B", "text": "#FFF7FF", "muted": "#B9A8C9", "accent": "#F43F5E", "border": "#3B2852" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "framer", "label": "Framer", "role": "motion-first product launch" },
+      { "provider": "awesome-design-md", "slug": "runwayml", "label": "Runway", "role": "cinematic product reveal" },
+      { "provider": "awesome-design-md", "slug": "raycast", "label": "Raycast", "role": "polished gradients and energetic UI" }
+    ]
+  },
+  {
+    "styleId": "consumer-brand-story",
+    "variant": "brand",
+    "theme": { "canvas": "#FFF8F0", "surface": "#FFFFFF", "surfaceAlt": "#F4E4D3", "text": "#2B2118", "muted": "#806D5C", "accent": "#F97316", "border": "#E8D2BC" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "airbnb", "label": "Airbnb", "role": "warm image-led storytelling" },
+      { "provider": "awesome-design-md", "slug": "spotify", "label": "Spotify", "role": "bold consumer color and media" },
+      { "provider": "awesome-design-md", "slug": "nike", "label": "Nike", "role": "confident campaign rhythm" }
+    ]
+  },
+  {
+    "styleId": "portfolio-studio-grid",
+    "variant": "portfolio",
+    "theme": { "canvas": "#F2F0EB", "surface": "#FBFAF7", "surfaceAlt": "#DED9CF", "text": "#161616", "muted": "#6B675F", "accent": "#2563EB", "border": "#CFC8BC" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "clay", "label": "Clay", "role": "art-directed studio composition" },
+      { "provider": "awesome-design-md", "slug": "figma", "label": "Figma", "role": "creative color and professional structure" },
+      { "provider": "awesome-design-md", "slug": "framer", "label": "Framer", "role": "design-forward project presentation" }
+    ]
+  },
+  {
+    "styleId": "commerce-premium-catalog",
+    "variant": "commerce",
+    "theme": { "canvas": "#F5F2EC", "surface": "#FFFDF9", "surfaceAlt": "#E8E1D7", "text": "#171512", "muted": "#756E64", "accent": "#7C3AED", "border": "#D7D0C5" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "shopify", "label": "Shopify", "role": "polished commerce storytelling" },
+      { "provider": "awesome-design-md", "slug": "nike", "label": "Nike", "role": "product-first catalog hierarchy" },
+      { "provider": "awesome-design-md", "slug": "apple", "label": "Apple", "role": "premium spacing and product focus" }
+    ]
+  },
+  {
+    "styleId": "ai-lab-research-notebook",
+    "variant": "research",
+    "theme": { "canvas": "#F1F5F9", "surface": "#FFFFFF", "surfaceAlt": "#E2E8F0", "text": "#0F172A", "muted": "#64748B", "accent": "#0891B2", "border": "#CBD5E1" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "together.ai", "label": "Together AI", "role": "technical blueprint and infrastructure proof" },
+      { "provider": "awesome-design-md", "slug": "x.ai", "label": "xAI", "role": "stark research-lab presentation" },
+      { "provider": "awesome-design-md", "slug": "mistral.ai", "label": "Mistral AI", "role": "engineered model and benchmark storytelling" }
+    ]
+  },
+  {
+    "styleId": "fintech-precision-trust",
+    "variant": "fintech",
+    "theme": { "canvas": "#090B14", "surface": "#111626", "surfaceAlt": "#1A2238", "text": "#F8FAFC", "muted": "#94A3B8", "accent": "#8B5CF6", "border": "#2A3550" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "stripe", "label": "Stripe", "role": "premium fintech gradients and precision" },
+      { "provider": "awesome-design-md", "slug": "wise", "label": "Wise", "role": "clear financial outcomes and accessibility" },
+      { "provider": "awesome-design-md", "slug": "revolut", "label": "Revolut", "role": "dark financial product polish" }
+    ]
+  },
+  {
+    "styleId": "learning-platform-friendly",
+    "variant": "learning",
+    "theme": { "canvas": "#F5F7FF", "surface": "#FFFFFF", "surfaceAlt": "#E8ECFF", "text": "#20233A", "muted": "#6B7280", "accent": "#4F46E5", "border": "#D7DCF2" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "notion", "label": "Notion", "role": "friendly knowledge organization" },
+      { "provider": "awesome-design-md", "slug": "miro", "label": "Miro", "role": "approachable collaborative color" },
+      { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "structured but friendly progress views" }
+    ]
+  }
+]

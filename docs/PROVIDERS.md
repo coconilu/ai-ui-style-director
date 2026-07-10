@@ -29,6 +29,16 @@ and documentation files, then writes normalized indexes under
 The scheduled GitHub workflow performs the same refresh daily, runs repository
 checks, and opens a pull request only when generated indexes change.
 
+## Visual references
+
+`catalog/style-visuals.json` maps each normalized internal style to three real
+`awesome-design-md` slugs. The recommendation core expands those slugs into
+getdesign.md overview and Light/Dark live-preview links.
+
+The links are intentionally separate from `catalog/previews/`: local SVG cards
+are project-owned neutral wireframes, while hosted previews remain external
+reference material and are never vendored.
+
 ## Attribution and brand safety
 
 Provider repositories are inspiration sources and implementation materials, not
