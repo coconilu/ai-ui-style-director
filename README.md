@@ -35,6 +35,12 @@ Claude Code:
 
 The agent shows a brand-neutral SVG draft and upstream Light/Dark live-preview links for each of the five directions. After selection, it generates a project-specific `DESIGN.md` and first-viewport draft, then implements only after confirmation.
 
+## Example: choose an admin dashboard direction
+
+One prompt becomes five comparable directions before any UI code is written:
+
+![Web Style Director recommending five admin dashboard directions](docs/assets/admin-dashboard-example.en.png)
+
 ## Update
 
 Codex:

@@ -35,6 +35,12 @@ Claude Code：
 
 agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Dark 实时预览链接。选定后，它会生成项目专属的 `DESIGN.md` 与首屏草图，确认后再实现网站。
 
+## 示例：为管理台选择 UI 方向
+
+一句需求，在写 UI 代码前得到 5 个可以直接比较的方向：
+
+![Web Style Director 推荐五种管理台 UI 方向](docs/assets/admin-dashboard-example.zh-CN.png)
+
 ## 更新
 
 Codex：
