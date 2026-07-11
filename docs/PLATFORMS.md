@@ -21,9 +21,11 @@ historical release of the host agent.
 Hosts that can render Markdown images may embed the generated SVG cards
 directly. Terminal-only hosts receive structured text, local card paths, live
 reference links, and a self-contained `recommendations.html` gallery. A local
-TUI can open the gallery through `preview --open`; SSH or headless users can
-copy or download the single HTML file and view it elsewhere. Terminal-specific
-image protocols are optional enhancements, not a compatibility requirement.
+TUI can run `preview --serve` and open the printed loopback HTTP URL; the
+process remains active until Ctrl+C. `preview --open` is the direct-file
+fallback. SSH users can forward the selected port, or copy the single HTML file
+and view it elsewhere. Terminal-specific image protocols are optional
+enhancements, not a compatibility requirement.
 
 ## Codex layout
 

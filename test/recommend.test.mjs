@@ -11,10 +11,13 @@ import {
   loadStyleProfiles,
   loadStyleVisuals,
   openRecommendationGallery,
+  openPreviewUrl,
   previewOpenCommand,
+  previewUrlOpenCommand,
   recommendStyles,
   renderRecommendationGalleryHtml,
   renderRecommendations,
+  startRecommendationPreviewServer,
   updateCatalog
 } from "../src/core.mjs";
 
@@ -192,6 +195,76 @@ test("preview opener uses shell-free platform commands", () => {
   assert.deepEqual(invocation.args, [recommendation.galleryPath]);
   assert.equal(invocation.options.windowsHide, true);
   assert.equal(opened.opened, true);
+});
+
+test("preview server serves only the generated gallery on loopback", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-preview-server-"));
+  const recommendation = recommendStyles({
+    brief: "B2B operations dashboard for internal teams",
+    sessionPath: join(dir, "session.json")
+  });
+  const served = await startRecommendationPreviewServer(recommendation.galleryPath);
+
+  try {
+    assert.equal(served.host, "127.0.0.1");
+    assert.equal(served.port > 0, true);
+    assert.equal(served.previewUrl, `http://127.0.0.1:${served.port}/`);
+
+    const response = await fetch(served.previewUrl);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type"), /^text\/html/);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
+    assert.match(await response.text(), /选择一个 UI 方向|Choose a UI direction/);
+
+    const head = await fetch(`${served.previewUrl}recommendations.html`, { method: "HEAD" });
+    assert.equal(head.status, 200);
+    assert.equal(await head.text(), "");
+
+    const missing = await fetch(`${served.previewUrl}missing`);
+    assert.equal(missing.status, 404);
+
+    const rejected = await fetch(served.previewUrl, { method: "POST" });
+    assert.equal(rejected.status, 405);
+    assert.equal(rejected.headers.get("allow"), "GET, HEAD");
+  } finally {
+    await served.close();
+  }
+});
+
+test("preview server validates ports and opens URLs without a shell", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-preview-server-port-"));
+  const recommendation = recommendStyles({
+    brief: "Analytics dashboard for a finance operations team",
+    sessionPath: join(dir, "session.json")
+  });
+
+  await assert.rejects(
+    startRecommendationPreviewServer(recommendation.galleryPath, { port: true }),
+    /Invalid preview server port/
+  );
+  await assert.rejects(
+    startRecommendationPreviewServer(recommendation.galleryPath, { port: 70000 }),
+    /Invalid preview server port/
+  );
+
+  const previewUrl = "http://127.0.0.1:4173/";
+  assert.equal(previewUrlOpenCommand(previewUrl, "win32").command, "rundll32.exe");
+  assert.equal(previewUrlOpenCommand(previewUrl, "darwin").command, "open");
+  assert.equal(previewUrlOpenCommand(previewUrl, "linux").command, "xdg-open");
+
+  let invocation;
+  const opened = openPreviewUrl(previewUrl, {
+    platform: "linux",
+    run(command, args, options) {
+      invocation = { command, args, options };
+      return { status: 0, stderr: "" };
+    }
+  });
+  assert.equal(invocation.command, "xdg-open");
+  assert.deepEqual(invocation.args, [previewUrl]);
+  assert.equal(invocation.options.windowsHide, true);
+  assert.deepEqual(opened, { opened: true, previewUrl });
 });
 
 test("again excludes styles shown in the same session", () => {

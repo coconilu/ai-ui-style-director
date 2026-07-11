@@ -36,8 +36,19 @@ updated, and the user has confirmed the draft direction.
    its local SVG preview card, primary Light/Dark live-reference links, fit
    reason, first-viewport shape, component kits, and risk. The command also
    generates a self-contained recommendation gallery. If the client cannot
-   render local images, provide the printed `file://` gallery URL and mention
-   that it can be opened with `preview --open`. Follow
+   render local images, start the foreground loopback preview server in a
+   long-running terminal session:
+
+   ```bash
+   node skills/web-style-director/scripts/style-director.mjs preview --serve --path "<gallery-path>"
+   ```
+
+   Give the user the printed `http://127.0.0.1:<port>/` link and keep the
+   process alive while they review the options. Stop it after selection, when
+   the task ends, or before replacing the gallery with another batch. If the
+   agent cannot keep a terminal process alive, fall back to the printed
+   `file://` URL or `preview --open`. Visual-capable clients should continue to
+   render the local SVG cards directly and do not need the server. Follow
    `references/recommendation-format.md`.
 5. Wait for the user's selection. The user may choose by number or style id.
 6. If the user rejects the options, rerun with `--again`:
@@ -92,7 +103,9 @@ If none is provided, ask for at least one source before recommending.
 Use the visual format in `references/recommendation-format.md`. Keep the text
 concise so five preview cards remain scannable. Do not overload the user with
 raw catalog fields. For terminal-only clients, prefer the generated HTML
-gallery over asking the user to open five SVG files separately.
+gallery over asking the user to open five SVG files separately. The preview
+server is local-only and temporary; do not change its host to `0.0.0.0` or
+present it as a public URL.
 
 ## Selection Rules
 

@@ -41,18 +41,24 @@ local path and a `file://` URL.
 Inspect or open the most recently generated recommendation gallery:
 
 ```bash
-node bin/ai-ui-style-director.mjs preview --open
+node bin/ai-ui-style-director.mjs preview --serve
 ```
 
 Options:
 
 - `--path <file>`: use a gallery outside the default `.ui-style-director/` directory.
 - `--open`: open the gallery with the operating system's default browser.
+- `--serve`: start a foreground HTTP preview server and print its local URL.
+- `--port <number>`: choose a port for `--serve`; the default `0` asks the OS
+  for an available port.
 - `--json`: emit the gallery path, URL, and opened state as JSON.
 
-Without `--open`, the command only prints the `file://` URL. This is safe for
-headless or SSH sessions. The HTML embeds all five SVG cards, so it can be
-copied or downloaded and viewed without the original tool installation.
+`--serve` binds only to `127.0.0.1`, serves only the selected gallery, and runs
+until Ctrl+C. Add `--open` to open the HTTP URL automatically. Without
+`--serve`, the command preserves the direct-file behavior: it prints the
+`file://` URL, and `--open` opens that file. The HTML embeds all five SVG cards,
+so remote users can also copy or download it; an SSH session needs local port
+forwarding to use the loopback HTTP link remotely.
 
 ## `apply`
 

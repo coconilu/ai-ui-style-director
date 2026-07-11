@@ -108,9 +108,12 @@ After a successful recommendation, `writeRecommendationGallery` writes `.ui-styl
 - all five SVG cards are embedded as data URIs;
 - CSS, localized copy, and result data are stored in one file;
 - upstream Light/Dark previews remain external links;
-- `preview --open` selects `rundll32.exe`, `open`, or `xdg-open` for the current platform.
+- `preview --open` selects `rundll32.exe`, `open`, or `xdg-open` for the current platform;
+- `preview --serve` starts a foreground, no-cache HTTP server on
+  `127.0.0.1`, serving only the selected gallery on an available port.
 
-The gallery itself works offline. Network access is only needed to visit upstream references.
+The gallery and local server both work offline. Network access is only needed
+to visit upstream references. The server stops on Ctrl+C.
 
 ## `apply` and the project design contract
 

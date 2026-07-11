@@ -126,9 +126,12 @@ AI、dashboard、developer、enterprise、consumer、redesign 等常见意图还
 - 五张 SVG 会编码为 data URI；
 - CSS、中文或英文文案以及推荐数据都内嵌在单个文件中；
 - Light/Dark 上游预览仍然是外部链接；
-- `preview --open` 根据平台调用 `rundll32.exe`、`open` 或 `xdg-open`。
+- `preview --open` 根据平台调用 `rundll32.exe`、`open` 或 `xdg-open`；
+- `preview --serve` 在 `127.0.0.1` 启动一个禁用缓存的前台 HTTP 服务，
+  使用可用端口且只提供指定画廊。
 
-因此画廊本身可以离线打开，只有访问上游参考时需要网络。
+因此画廊和本地服务都可以离线使用，只有访问上游参考时需要网络。按 Ctrl+C
+即可停止服务。
 
 ## `apply` 与项目设计契约
 

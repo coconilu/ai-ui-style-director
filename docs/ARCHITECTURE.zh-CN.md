@@ -22,7 +22,9 @@ Catalog 保存标准化设计知识：
 `src/core.mjs` 会把每一组推荐打包为自包含的
 `.ui-style-director/recommendations.html` 画廊。生成式 SVG 卡片以 data URI
 内嵌，因此纯终端或远程用户只需复制或下载一个可移植预览文件。CLI 通过
-`preview` 命令暴露该画廊，并提供可选的跨平台 `--open` 操作。
+`preview` 命令暴露该画廊，并提供可选的跨平台 `--open` 操作。对于纯终端
+客户端，它还可以在 `127.0.0.1` 启动一个最小前台 HTTP 服务；该服务只暴露
+指定画廊，默认由操作系统分配可用端口。
 
 视觉预览层把本地中性草图与外部 Light/Dark 参考分开：上游预览只用于比较，不能作为 vendored 或发布资产。
 
