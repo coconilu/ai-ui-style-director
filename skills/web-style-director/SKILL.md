@@ -1,6 +1,6 @@
 ---
 name: web-style-director
-description: Recommend, preview, and lock UI style directions before building or redesigning websites, and manage this skill's installed lifecycle. Use when the user asks to create or restyle a website, landing page, SaaS/product site, dashboard, docs site, portfolio, or ecommerce page; or explicitly asks to update, upgrade, uninstall, remove, or delete web-style-director. For website work, present five relevant visual directions with draft cards and live references, wait for selection, generate DESIGN.md plus a project first-viewport draft, wait for confirmation, and only then proceed to UI code.
+description: Recommend, preview, and lock UI style directions before building or redesigning websites, browse the curated style catalog, and manage this skill's installed lifecycle. Use when the user asks to create or restyle a website, landing page, SaaS/product site, dashboard, docs site, portfolio, or ecommerce page; asks to serve, browse, search, or filter the Web Style Director catalog; or explicitly asks to update, upgrade, uninstall, remove, or delete web-style-director. For website work, present five relevant visual directions with draft cards and live references, wait for selection, generate DESIGN.md plus a project first-viewport draft, wait for confirmation, and only then proceed to UI code.
 ---
 
 # Web Style Director
@@ -9,6 +9,10 @@ Use this skill as the style-selection gate before website UI implementation.
 
 ## Request Routing
 
+- For an explicit `serve` request, or a request to browse, search, or filter the
+  complete Web Style Director catalog, read `references/catalog-browser.md`
+  and perform only that catalog-browser operation. Do not ask for a website
+  brief, recommend five directions, run `apply`, or enter the website workflow.
 - For an explicit update, upgrade, uninstall, remove, or delete request about
   `web-style-director`, read `references/lifecycle.md` and perform only that
   lifecycle operation. Do not enter the website workflow.
@@ -132,4 +136,6 @@ present it as a public URL.
 - `references/context-questions.md`: context questions for underspecified requests.
 - `references/recommendation-format.md`: output format for style options.
 - `references/design-md-contract.md`: what to do after `DESIGN.md` is generated.
+- `references/catalog-browser.md`: foreground catalog-browser routing and
+  shutdown behavior.
 - `references/lifecycle.md`: update and safe-uninstall routing.

@@ -54,6 +54,25 @@ Sixel. Without a browser on the same machine, users can forward the preview
 port or copy the HTML and open it elsewhere; the structured text output and
 live links remain usable.
 
+## Complete catalog browser
+
+`serve` reuses the committed neutral SVG cards in a different browsing
+surface. Instead of showing one five-direction recommendation batch, it lists
+all curated profiles with text search and family, page type, density, tone,
+and component-kit filters:
+
+```bash
+node bin/ai-ui-style-director.mjs serve --open
+```
+
+The foreground service binds only to `127.0.0.1`, chooses an available port by
+default, and stops on Ctrl+C. It is read-only and does not create recommendation
+session state or modify a target project.
+
+The page also reports the current upstream style-source index count as
+provenance context. Those paths do not have the reviewed metadata required for
+complete cards, so they remain a count rather than additional styles.
+
 ## Project draft
 
 After selection, `apply` writes

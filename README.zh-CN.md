@@ -35,6 +35,37 @@ Claude Code：
 
 agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Dark 实时预览链接。选定后，它会生成项目专属的 `DESIGN.md` 与首屏草图，确认后再实现网站。
 
+## 浏览已策展风格目录
+
+无需进入网站工作流，即可打开包含全部已策展风格的可搜索页面。
+
+Codex：
+
+```text
+$web-style-director serve
+```
+
+Claude Code：
+
+```text
+/web-style-director serve
+```
+
+也可以直接运行 CLI 并自动打开页面：
+
+```bash
+node bin/ai-ui-style-director.mjs serve --open
+```
+
+页面会列出全部已审查的风格 profile，并支持文本搜索以及 family、页面类型、
+密度、调性和组件库过滤。生成索引中的 style source 是上游来源路径；页面会
+动态展示当前来源索引数量，不会把它们伪装成完整风格卡片。`serve` 是只读
+操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
+
+服务以前台方式运行，只监听 `127.0.0.1`，默认选择可用端口，按 Ctrl+C 后
+停止。可用 `--port <number>` 指定端口、`--open` 自动打开浏览器，或用
+`--json` 输出机器可读的启动信息。
+
 ## 示例：为管理台选择 UI 方向
 
 一句需求，在写 UI 代码前得到 5 个可以直接比较的方向：
@@ -50,7 +81,8 @@ agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Da
 
 ![Mason Market Timeline 从风格选择到实现与验证的 UI 重构案例](docs/assets/mason-market-timeline-case-study.zh-CN.png)
 
-使用纯终端客户端时，每次推荐还会生成自包含的
+完整目录页与单次推荐预览是两个不同入口。使用纯终端客户端时，每次推荐还会
+生成自包含的
 `.ui-style-director/recommendations.html` 画廊。启动本地预览服务，再打开命令
 输出的链接：
 

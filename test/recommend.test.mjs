@@ -44,6 +44,7 @@ function runInstalledWrapper({
   repositoryDir,
   claudeConfigDir,
   marker,
+  commandArgs = ["recommend", "--brief", "test"],
   additionalRepositories = []
 }) {
   const installedWrapper = join(skillDir, "scripts", "style-director.mjs");
@@ -61,7 +62,7 @@ function runInstalledWrapper({
     AI_UI_STYLE_DIRECTOR_HOME: "",
     CLAUDE_CONFIG_DIR: claudeConfigDir || ""
   };
-  const result = spawnSync(process.execPath, [installedWrapper, "recommend", "--brief", "test"], {
+  const result = spawnSync(process.execPath, [installedWrapper, ...commandArgs], {
     encoding: "utf8",
     env
   });
@@ -440,6 +441,20 @@ test("installed wrapper finds the Codex repository from an .agents skill", () =>
 
   assert.equal(output.marker, "codex");
   assert.deepEqual(output.args, ["recommend", "--brief", "test"]);
+});
+
+test("installed wrapper forwards the serve command and options unchanged", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-codex-serve-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".agents", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
+    marker: "codex-serve",
+    commandArgs: ["serve", "--port", "4173", "--json"]
+  });
+
+  assert.equal(output.marker, "codex-serve");
+  assert.deepEqual(output.args, ["serve", "--port", "4173", "--json"]);
 });
 
 test("installed wrapper keeps the legacy .codex skill layout working", () => {

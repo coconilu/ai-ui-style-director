@@ -38,9 +38,43 @@ node bin/ai-ui-style-director.mjs recommend \
 `.ui-style-director/recommendations.html`，并在文本输出中提供本地路径与
 `file://` 地址。
 
+## `serve`
+
+启动只读的完整已策展风格目录浏览器：
+
+```bash
+node bin/ai-ui-style-director.mjs serve
+```
+
+参数：
+
+- `--port <number>`：指定本机回环端口；不传时默认值 `0` 表示由操作系统
+  选择可用端口。
+- `--open`：使用操作系统默认浏览器打开 HTTP 链接。
+- `--json`：输出机器可读的启动信息，同时保持前台服务继续运行。
+
+JSON 对象包含 `catalogUrl`、`host`、`port`、`styleCount`、`sourceCount` 和
+`opened`。
+
+页面会列出 `catalog/style-profiles.json` 中全部已策展条目及其生成式 SVG
+预览、已审查元数据、组件库建议和上游 Light/Dark 参考。页面支持文本搜索，
+并可按 family、页面类型、密度、调性和组件库过滤；搜索还识别“后台”等常见
+中文别名。同一过滤组内的多个值按“或”匹配，不同组以及搜索词之间按“且”
+组合。搜索与过滤状态会保存在页面 URL 中，因此刷新后仍能保留，也可以复制
+筛选后的链接。
+
+`catalog/generated/style-sources.json` 保存已索引的上游来源路径。浏览器只把
+当前来源索引数量作为背景信息，不会把这些路径扩充成风格卡片；只有已审查的
+profile 才作为完整条目展示。
+
+`serve` 只绑定 `127.0.0.1`，以前台方式运行，直到用户按下 Ctrl+C。它不会
+创建或修改目标项目中的 `.ui-style-director/` 目录。它与 `preview --serve`
+有意保持不同：`serve` 浏览完整已策展目录，`preview --serve` 只提供某一次
+生成的推荐画廊。
+
 ## `preview`
 
-查看或打开最近一次生成的推荐画廊：
+查看或打开最近一次生成的单批推荐画廊：
 
 ```bash
 node bin/ai-ui-style-director.mjs preview --serve

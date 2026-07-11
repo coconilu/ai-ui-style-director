@@ -17,11 +17,16 @@ flowchart LR
   W --> C[Node.js CLI]
   K[Curated Catalog] --> C
   C --> R[recommend]
+  C --> B[serve catalog browser]
   C --> A[apply]
   R --> H[recommendations.html]
+  H -. preview --serve .-> L[shared loopback server]
+  B --> L
+  L --> V[local browser]
   A --> D[DESIGN.md and project state]
   P[Upstream provider repositories] --> G[clone/pull and path scan]
   G --> I[catalog/generated]
+  I -. source index count .-> B
   I -. manually reviewed updates .-> K
 ```
 
@@ -33,6 +38,11 @@ Runtime recommendation and upstream synchronization are deliberately separate. R
 
 `skills/web-style-director/SKILL.md` is the workflow entrypoint for coding agents such as Codex and Claude Code. It requires the agent to gather missing context, present five directions, support rerolling with `--again`, run `apply` after selection, and wait for first-viewport confirmation before writing UI code.
 
+An explicit `serve` or complete-catalog browsing request takes a separate
+top-level route through `references/catalog-browser.md`. The agent starts the
+foreground service and does not gather a website brief, recommend five styles,
+run `apply`, or modify a target project.
+
 The Skill defines behavior and gates. It does not contain the recommendation algorithm.
 
 ### 2. Skill wrapper: locate the real CLI
@@ -43,22 +53,49 @@ This lets multiple agents share the same core implementation without requiring t
 
 ### 3. CLI: parse arguments and dispatch commands
 
-`bin/ai-ui-style-director.mjs` is a thin command layer over `src/core.mjs`.
+`bin/ai-ui-style-director.mjs` is a thin command layer. Recommendation,
+project-contract, preview, and provider operations dispatch to `src/core.mjs`;
+the complete-catalog command dispatches directly to
+`startStyleCatalogServer` in `src/catalog-browser.mjs`.
 
 | Command | Responsibility |
 | --- | --- |
 | `questions` | Return intake questions for an underspecified brief |
 | `recommend` | Rank directions, update session state, and generate an HTML gallery |
-| `preview` | Inspect or open the most recent gallery |
+| `serve` | Browse all curated styles with search and tag filters |
+| `preview` | Inspect or open one generated recommendation gallery |
 | `apply` | Generate the project design contract and state files |
 | `sync` | Clone or update configured provider repositories |
 | `refresh-catalog` | Scan providers and rebuild source indexes |
 
 `update` is a compatibility alias for `refresh-catalog`; it does not update an installed copy of the tool.
 
+### 4. Catalog browser and shared loopback server
+
+`src/catalog-browser.mjs` exports four focused operations:
+
+- `buildStyleCatalog`: join curated profiles, visual metadata, generated SVG
+  previews, and source-index statistics into the browser view model;
+- `filterCatalogEntries`: apply text search and family, page type, density,
+  tone, and component-kit filters;
+- `renderCatalogBrowserPage`: render the browser shell;
+- `startStyleCatalogServer`: expose the page and assets as a foreground
+  loopback service.
+
+The catalog service's four application routes are `/`, `/catalog.json`,
+`/app.js`, and `/styles.css`. Page state is encoded in the URL query, allowing
+a filtered view to survive refresh without server-side state.
+
+`src/loopback-server.mjs` owns the common `127.0.0.1` listener, port
+validation, no-cache response behavior, method and path handling, and graceful
+shutdown. `src/core.mjs` keeps the existing
+`startRecommendationPreviewServer` API but delegates its HTTP transport to
+this shared module. The two callers therefore share the same local-only
+boundary while serving different content.
+
 ## Catalog: the runtime knowledge source
 
-Runtime behavior reads four curated datasets:
+Recommendation and project-contract behavior read four curated datasets:
 
 | File | Purpose |
 | --- | --- |
@@ -68,6 +105,11 @@ Runtime behavior reads four curated datasets:
 | `catalog/scenario-questions.json` | Questions for an underspecified brief |
 
 `catalog/providers.json` describes upstream repositories. `catalog/generated/*` records scan results. The recommendation core does not read those generated indexes, so upstream changes cannot enter user-facing recommendations without review.
+
+The catalog browser reads `catalog/generated/style-sources.json` only to show
+its current source-index count. Those paths are not semantically parsed and are
+not returned as complete style cards. Browser entries still come only from the
+reviewed profiles in `catalog/style-profiles.json`.
 
 ## Recommendation algorithm
 
@@ -114,6 +156,20 @@ After a successful recommendation, `writeRecommendationGallery` writes `.ui-styl
 
 The gallery and local server both work offline. Network access is only needed
 to visit upstream references. The server stops on Ctrl+C.
+
+### Complete-catalog browser
+
+`serve` creates no recommendation session and writes no project files. It
+starts `startStyleCatalogServer`, prints the selected
+`http://127.0.0.1:<port>/` URL, optionally opens it, and stays in the foreground
+until Ctrl+C. Port `0` lets the operating system choose an available port;
+`--port` requests a specific port and `--json` makes the startup output
+machine-readable.
+
+The client loads the reviewed view model from `/catalog.json`, renders every
+style card, and performs search and tag filtering in the page. The generated
+SVG preview and upstream references remain subject to the same neutral-asset
+and external-link boundaries as recommendation galleries.
 
 ## `apply` and the project design contract
 
@@ -205,4 +261,7 @@ The implementation favors explainability, reproducibility, and a small dependenc
 - maintenance: new providers still require reviewed profile, visual, and component mappings;
 - extension requirement: future recommendation entrypoints should reuse or verify the same scoring and diversification rules so different surfaces stay consistent.
 
-Tests cover intake checks, recommendation order, rerolling, visual references, the HTML gallery, `apply` output, provider indexes, CLI commands, and Codex/Claude Code wrapper discovery.
+Tests cover intake checks, recommendation order, rerolling, visual references,
+the HTML gallery, catalog view-model filtering, catalog HTTP routes, shared
+loopback safety, `apply` output, provider indexes, CLI commands, and
+Codex/Claude Code wrapper discovery.

@@ -1,8 +1,8 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { createServer } from "node:http";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { startLoopbackServer } from "./loopback-server.mjs";
 import { expandVisualReferences, renderProjectDraftSvg } from "./preview.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -407,81 +407,20 @@ export async function startRecommendationPreviewServer(
   { port = 0 } = {}
 ) {
   const info = recommendationGalleryInfo(galleryPath);
-  const requestedPort = Number(port);
-  if (typeof port === "boolean" || !Number.isInteger(requestedPort) || requestedPort < 0 || requestedPort > 65535) {
-    throw new Error(`Invalid preview server port: ${port}`);
-  }
-
   const html = readFileSync(info.galleryPath);
-  const host = "127.0.0.1";
-  const server = createServer((request, response) => {
-    const method = request.method || "GET";
-    if (method !== "GET" && method !== "HEAD") {
-      response.writeHead(405, { Allow: "GET, HEAD", "Content-Type": "text/plain; charset=utf-8" });
-      response.end("Method Not Allowed\n");
-      return;
-    }
-
-    let pathname;
-    try {
-      pathname = new URL(request.url || "/", `http://${host}`).pathname;
-    } catch {
-      response.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
-      response.end("Bad Request\n");
-      return;
-    }
-
-    if (pathname === "/favicon.ico") {
-      response.writeHead(204, { "Cache-Control": "no-store" });
-      response.end();
-      return;
-    }
-    if (pathname !== "/" && pathname !== "/recommendations.html") {
-      response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
-      response.end("Not Found\n");
-      return;
-    }
-
-    response.writeHead(200, {
-      "Content-Type": "text/html; charset=utf-8",
-      "Content-Length": html.length,
-      "Cache-Control": "no-store",
-      "Content-Security-Policy": "default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
-      "Referrer-Policy": "no-referrer",
-      "X-Content-Type-Options": "nosniff"
-    });
-    if (method === "HEAD") response.end();
-    else response.end(html);
-  });
-
-  await new Promise((resolvePromise, rejectPromise) => {
-    const onError = (error) => rejectPromise(error);
-    server.once("error", onError);
-    server.listen(requestedPort, host, () => {
-      server.off("error", onError);
-      resolvePromise();
-    });
-  });
-
-  const address = server.address();
-  if (!address || typeof address === "string") {
-    server.close();
-    throw new Error("Preview server did not expose a TCP port.");
-  }
-  const previewUrl = `http://${host}:${address.port}/`;
-  const close = () => new Promise((resolvePromise, rejectPromise) => {
-    server.close((error) => {
-      if (error) rejectPromise(error);
-      else resolvePromise();
-    });
+  const served = await startLoopbackServer({
+    port,
+    serverName: "preview server",
+    routes: {
+      "/": { body: html, contentType: "text/html; charset=utf-8" },
+      "/recommendations.html": { body: html, contentType: "text/html; charset=utf-8" }
+    },
+    contentSecurityPolicy: "default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
   });
 
   return {
-    server,
-    close,
-    host,
-    port: address.port,
-    previewUrl,
+    ...served,
+    previewUrl: served.url,
     ...info
   };
 }
