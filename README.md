@@ -35,6 +35,40 @@ Claude Code:
 
 The agent shows a brand-neutral SVG draft and upstream Light/Dark live-preview links for each of the five directions. After selection, it generates a project-specific `DESIGN.md` and first-viewport draft, then implements only after confirmation.
 
+## Browse the curated catalog
+
+Open a searchable view of every curated style without starting a website
+workflow:
+
+Codex:
+
+```text
+$web-style-director serve
+```
+
+Claude Code:
+
+```text
+/web-style-director serve
+```
+
+Or run the CLI directly and open the page automatically:
+
+```bash
+node bin/ai-ui-style-director.mjs serve --open
+```
+
+The page lists every reviewed style profile and supports text search plus
+family, page type, density, tone, and component-kit filters. Generated
+style-source entries are upstream index paths; the page reports their current
+count but does not misrepresent them as curated style cards. `serve` is
+read-only and does not create or modify project `.ui-style-director/` state.
+
+The foreground service listens only on `127.0.0.1`, uses an available port by
+default, and stops when you press Ctrl+C. Use `--port <number>` to request a
+port, `--open` to launch the browser, or `--json` for machine-readable startup
+output.
+
 ## Example: choose an admin dashboard direction
 
 One prompt becomes five comparable directions before any UI code is written:
@@ -51,7 +85,8 @@ original UI visible beside the responsive production result.
 
 ![Mason Market Timeline UI redesign from style selection through implementation and verification](docs/assets/mason-market-timeline-case-study.en.png)
 
-Terminal-only client? Every recommendation also writes a self-contained
+This complete-catalog page is separate from a single recommendation preview.
+For a terminal-only client, every recommendation also writes a self-contained
 `.ui-style-director/recommendations.html` gallery. Start the local preview
 server and open the printed link:
 

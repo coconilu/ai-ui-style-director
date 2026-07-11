@@ -1,6 +1,6 @@
 # Architecture
 
-AI UI Style Director has five layers.
+AI UI Style Director has six layers.
 
 ## 1. Catalog
 
@@ -11,6 +11,8 @@ The catalog contains normalized design knowledge:
 - `catalog/previews/`: generated brand-neutral SVG cards.
 - `catalog/component-kits.json`: implementation kits that can support each style.
 - `catalog/providers.json`: upstream repositories used as style or component providers.
+- `catalog/generated/style-sources.json`: an index of upstream style-source
+  paths; these are provenance leads, not curated style profiles.
 - `catalog/scenario-questions.json`: required questions when a user brief is too vague.
 
 The catalog is intentionally structured. Agents should not load large upstream repositories into context just to choose a style.
@@ -30,11 +32,33 @@ and an optional cross-platform `--open` action. For terminal clients it can
 also start a minimal foreground HTTP server on `127.0.0.1`; the server exposes
 only the selected gallery and uses an OS-assigned port by default.
 
+`src/loopback-server.mjs` provides the shared local-only HTTP boundary used by
+both recommendation preview and complete-catalog browsing. Keeping host,
+port, request, cache, and shutdown handling in one module prevents the two
+surfaces from drifting while their content remains separate.
+
 The preview layer keeps generated neutral cards separate from external
 Light/Dark references. Upstream previews are links for comparison, not assets
 to vendor or ship.
 
-## 3. Recommendation Core
+## 3. Catalog Browser
+
+`src/catalog-browser.mjs` builds a browser view model from the curated style
+profiles, visual metadata, generated SVG cards, profile component-kit tags,
+and the upstream style-source count. `serve` exposes that model through a
+read-only page with text search and family, page type, density, tone, and
+component-kit filters.
+
+The browser serves `/`, `/catalog.json`, `/app.js`, and `/styles.css` on
+`127.0.0.1`. It displays every curated profile as a complete card. Entries in
+`catalog/generated/style-sources.json` remain a provenance index and are shown
+only as a current count, never promoted into unreviewed style profiles.
+
+This surface is intentionally distinct from `preview --serve`: the former
+browses the complete reviewed Catalog, while the latter serves one generated
+recommendation batch. Neither surface is a public hosting mechanism.
+
+## 4. Recommendation Core
 
 `src/core.mjs` scores style profiles against the user's brief using:
 
@@ -51,7 +75,7 @@ The first version uses deterministic weighted matching. Embeddings can be added 
 Recommendations include the local SVG card and expanded visual-reference URLs
 alongside the scored profile.
 
-## 4. Project Contract
+## 5. Project Contract
 
 After the user chooses a style, `apply` writes a project-specific `DESIGN.md`
 and `.ui-style-director/first-viewport-draft.svg`.
@@ -72,7 +96,7 @@ The generated `DESIGN.md` is the implementation contract. It records:
 Agents show the draft, wait for confirmation, and then implement UI from the
 contract instead of improvising a new direction.
 
-## 5. Agent Skill
+## 6. Agent Skill
 
 `skills/web-style-director/SKILL.md` wraps the CLI in an agent workflow:
 
@@ -87,9 +111,11 @@ contract instead of improvising a new direction.
 The skill can be used directly from this repository or copied into a supported
 Codex or Claude Code personal skill directory. Both agents use the same
 `SKILL.md`; only installation paths and explicit invocation syntax differ.
-It also routes explicit update and uninstall requests to the lifecycle contract
-in the root `INSTALL.md`, keeping installed-tool updates separate from provider
-catalog maintenance.
+It routes an explicit `serve` or catalog-browsing request directly to the
+foreground catalog browser without entering the five-direction website
+workflow. It also routes explicit update and uninstall requests to the
+lifecycle contract in the root `INSTALL.md`, keeping installed-tool updates
+separate from provider catalog maintenance.
 
 ## Why Provider Adapters
 

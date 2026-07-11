@@ -7,8 +7,8 @@
     "ai-ui-style-director": "./bin/ai-ui-style-director.mjs"
   },
   "scripts": {
-    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --check src/preview.mjs && node --check scripts/generate-style-previews.mjs && node --check scripts/validate-generated-catalog.mjs && npm run previews:check && npm run catalog:validate && npm test",
-    "test": "node --test test/recommend.test.mjs",
+    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --check src/preview.mjs && node --check src/loopback-server.mjs && node --check src/catalog-browser.mjs && node --check scripts/generate-style-previews.mjs && node --check scripts/validate-generated-catalog.mjs && npm run previews:check && npm run catalog:validate && npm test",
+    "test": "node --test test/*.test.mjs",
     "catalog:validate": "node scripts/validate-generated-catalog.mjs",
     "previews": "node scripts/generate-style-previews.mjs",
     "previews:check": "node scripts/generate-style-previews.mjs --check",

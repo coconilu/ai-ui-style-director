@@ -36,9 +36,48 @@ reference labels. A self-contained gallery is written next to the session file
 as `.ui-style-director/recommendations.html`; the text output includes both its
 local path and a `file://` URL.
 
+## `serve`
+
+Start the read-only browser for the complete curated style catalog:
+
+```bash
+node bin/ai-ui-style-director.mjs serve
+```
+
+Options:
+
+- `--port <number>`: request a loopback port; without this option, the default
+  `0` asks the operating system for an available port.
+- `--open`: open the HTTP URL with the operating system's default browser.
+- `--json`: emit machine-readable startup information while the foreground
+  service continues running.
+
+The JSON object contains `catalogUrl`, `host`, `port`, `styleCount`,
+`sourceCount`, and `opened`.
+
+The page lists every curated entry in `catalog/style-profiles.json`, its
+generated SVG previews, reviewed metadata, component-kit suggestions, and
+upstream Light/Dark references. It supports text search plus filters for
+family, page type, density, tone, and component kit. Search recognizes common
+Chinese aliases such as `后台`. Multiple values within one filter group use
+OR; different groups and the search query combine with AND. Search and filter
+state is kept in the page URL so a filtered view survives refresh and can be
+copied.
+
+`catalog/generated/style-sources.json` contains indexed upstream source paths.
+The browser reports the current source-index count for context but does not turn
+those paths into style cards; only reviewed profiles appear as full entries.
+
+`serve` binds only to `127.0.0.1` and runs in the foreground until Ctrl+C. It
+does not create or modify a target project's `.ui-style-director/` directory.
+This is intentionally different from `preview --serve`: `serve` browses the
+complete curated catalog, while `preview --serve` exposes only one generated
+recommendation gallery.
+
 ## `preview`
 
-Inspect or open the most recently generated recommendation gallery:
+Inspect or open the most recently generated, single-batch recommendation
+gallery:
 
 ```bash
 node bin/ai-ui-style-director.mjs preview --serve
