@@ -188,6 +188,13 @@ catalog/generated/style-sources.json
 catalog/generated/component-sources.json
 ```
 
+生成目录使用 schema v2：仓库级来源信息统一保存在
+`provider-inventory.json`，每个 Provider 的仓库与 commit revision 只记录一次；
+来源索引只保存 `providerId`、`path` 和 `sourceType`。版本控制中的生成产物不再
+写入生成时间和本机缓存绝对路径，因此相同的上游输入会得到字节完全一致的文件，
+不会产生无意义的刷新 PR。扫描器会先固定目录项顺序，再截取受上限约束的来源集合，
+保证 Windows、Linux 及不同文件系统得到相同的索引子集。
+
 扫描器是轻量路径索引器，不解析组件语义。registry 每个 Provider 最多记录 200 个文件，docs 最多记录 100 个文件，因此统计数字表示“已索引来源数”，不是上游仓库的完整组件总量。
 
 `.github/workflows/refresh-providers.yml` 每天运行相同流程，执行仓库检查，并只在生成索引变化时创建 PR。

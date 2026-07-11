@@ -783,6 +783,8 @@ const IGNORED_SCAN_DIRS = new Set([
   ".cache"
 ]);
 
+const GENERATED_CATALOG_SCHEMA_VERSION = 2;
+
 function posixPath(path) {
   return path.split("\\").join("/");
 }
@@ -805,16 +807,25 @@ function findProviderFiles(rootDir, matcher, { limit = 200 } = {}) {
       continue;
     }
 
+    entries.sort((left, right) => {
+      if (left.name < right.name) return -1;
+      if (left.name > right.name) return 1;
+      return 0;
+    });
+    const childDirectories = [];
     for (const entry of entries) {
       const fullPath = join(current, entry.name);
       if (entry.isDirectory()) {
-        if (!IGNORED_SCAN_DIRS.has(entry.name)) stack.push(fullPath);
+        if (!IGNORED_SCAN_DIRS.has(entry.name)) childDirectories.push(fullPath);
         continue;
       }
       if (!entry.isFile()) continue;
       const relativePath = posixPath(relative(rootDir, fullPath));
       if (matcher(relativePath, entry.name)) matches.push(relativePath);
       if (matches.length >= limit) break;
+    }
+    for (let index = childDirectories.length - 1; index >= 0; index -= 1) {
+      stack.push(childDirectories[index]);
     }
   }
 
@@ -880,8 +891,6 @@ export function updateCatalog({
   const styleSources = snapshots.flatMap((snapshot) =>
     snapshot.designMdFiles.map((path) => ({
       providerId: snapshot.id,
-      repo: snapshot.repo,
-      revision: snapshot.revision,
       path,
       sourceType: "design-md"
     }))
@@ -889,8 +898,6 @@ export function updateCatalog({
   const componentSources = snapshots.flatMap((snapshot) =>
     snapshot.registryFiles.map((path) => ({
       providerId: snapshot.id,
-      repo: snapshot.repo,
-      revision: snapshot.revision,
       path,
       sourceType: "registry"
     }))
@@ -903,11 +910,19 @@ export function updateCatalog({
   const generatedAt = new Date().toISOString();
   writeFileSync(
     inventoryPath,
-    `${JSON.stringify({ generatedAt, cacheDir: resolve(cacheDir), syncLockPath: syncResult.lockPath, providers: snapshots }, null, 2)}\n`,
+    `${JSON.stringify({ schemaVersion: GENERATED_CATALOG_SCHEMA_VERSION, providers: snapshots }, null, 2)}\n`,
     "utf8"
   );
-  writeFileSync(styleSourcesPath, `${JSON.stringify({ generatedAt, sources: styleSources }, null, 2)}\n`, "utf8");
-  writeFileSync(componentSourcesPath, `${JSON.stringify({ generatedAt, sources: componentSources }, null, 2)}\n`, "utf8");
+  writeFileSync(
+    styleSourcesPath,
+    `${JSON.stringify({ schemaVersion: GENERATED_CATALOG_SCHEMA_VERSION, sources: styleSources }, null, 2)}\n`,
+    "utf8"
+  );
+  writeFileSync(
+    componentSourcesPath,
+    `${JSON.stringify({ schemaVersion: GENERATED_CATALOG_SCHEMA_VERSION, sources: componentSources }, null, 2)}\n`,
+    "utf8"
+  );
 
   return {
     generatedAt,
