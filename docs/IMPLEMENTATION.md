@@ -159,6 +159,15 @@ catalog/generated/style-sources.json
 catalog/generated/component-sources.json
 ```
 
+Generated catalog schema v2 keeps repository-level provenance in
+`provider-inventory.json`. Each provider records its repository and commit
+revision once, while the source indexes contain only `providerId`, `path`, and
+`sourceType`. Tracked artifacts intentionally omit generation timestamps and
+machine-local cache paths, so identical upstream inputs produce byte-identical
+files and do not open noisy refresh pull requests. Directory entries are sorted
+before capped source selection, making the indexed subset stable across operating
+systems and filesystems.
+
 The scanner is a lightweight path indexer, not a semantic component parser. It records at most 200 registry files and 100 documentation files per provider, so counts represent indexed sources rather than complete upstream component totals.
 
 `.github/workflows/refresh-providers.yml` runs the same process daily, validates the repository, and opens a pull request only when generated indexes change.

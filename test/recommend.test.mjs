@@ -310,8 +310,17 @@ test("apply writes a DESIGN.md and style state", () => {
 
 test("catalog refresh writes generated provider indexes without cloning", () => {
   const dir = mkdtempSync(join(tmpdir(), "style-director-update-"));
+  const cacheDir = join(dir, "cache", "providers");
+  const providerDir = join(cacheDir, "shadcn-ui");
+  mkdirSync(join(providerDir, "registry"), { recursive: true });
+  writeFileSync(join(providerDir, "DESIGN.md"), "# Test design source\n", "utf8");
+  for (let index = 200; index >= 0; index -= 1) {
+    const name = `component-${String(index).padStart(3, "0")}.ts`;
+    writeFileSync(join(providerDir, "registry", name), "export const component = {};\n", "utf8");
+  }
+
   const result = updateCatalog({
-    cacheDir: join(dir, "cache", "providers"),
+    cacheDir,
     generatedDir: join(dir, "generated"),
     clone: false
   });
@@ -321,6 +330,42 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
     assert.equal(existsSync(file), true);
   }
   assert.equal(result.providers.length > 0, true);
+
+  const [inventoryPath, styleSourcesPath, componentSourcesPath] = result.generatedFiles;
+  const inventory = JSON.parse(readFileSync(inventoryPath, "utf8"));
+  const styleSources = JSON.parse(readFileSync(styleSourcesPath, "utf8"));
+  const componentSources = JSON.parse(readFileSync(componentSourcesPath, "utf8"));
+
+  assert.deepEqual(Object.keys(inventory), ["schemaVersion", "providers"]);
+  assert.equal(inventory.schemaVersion, 2);
+  assert.equal("generatedAt" in inventory, false);
+  assert.equal("cacheDir" in inventory, false);
+  assert.equal("syncLockPath" in inventory, false);
+  assert.deepEqual(styleSources, {
+    schemaVersion: 2,
+    sources: [{ providerId: "shadcn-ui", path: "DESIGN.md", sourceType: "design-md" }]
+  });
+  assert.equal(componentSources.schemaVersion, 2);
+  assert.equal(componentSources.sources.length, 200);
+  assert.deepEqual(componentSources.sources[0], {
+    providerId: "shadcn-ui",
+    path: "registry/component-000.ts",
+    sourceType: "registry"
+  });
+  assert.deepEqual(componentSources.sources.at(-1), {
+    providerId: "shadcn-ui",
+    path: "registry/component-199.ts",
+    sourceType: "registry"
+  });
+  assert.equal(componentSources.sources.some((source) => source.path.endsWith("component-200.ts")), false);
+  assert.equal(componentSources.sources.some((source) => "revision" in source || "repo" in source), false);
+
+  const firstGeneration = result.generatedFiles.map((file) => readFileSync(file, "utf8"));
+  updateCatalog({ cacheDir, generatedDir: join(dir, "generated"), clone: false });
+  assert.deepEqual(
+    result.generatedFiles.map((file) => readFileSync(file, "utf8")),
+    firstGeneration
+  );
 });
 
 test("refresh-catalog is the documented CLI command", () => {
