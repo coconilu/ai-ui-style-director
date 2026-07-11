@@ -43,7 +43,9 @@ Each recommendation gives the user enough information to choose without
 exposing raw catalog data: a generated SVG card, primary Light/Dark live
 previews, the direction name, why it fits, its first viewport, useful component
 kits, and the main risk. Terminal-only clients also receive a self-contained
-HTML gallery URL so all five directions can be compared in a regular browser.
+HTML gallery through a temporary loopback HTTP URL so all five directions can
+be compared in a regular browser. The agent keeps the foreground server alive
+while the user chooses, then stops it after selection or before a reroll.
 
 If the user rejects the set, the skill excludes directions already shown in the
 session and recommends another set. It reports when unseen catalog options are

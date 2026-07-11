@@ -26,7 +26,9 @@ committed style cards. The same renderer creates a project-level
 `.ui-style-director/recommendations.html` gallery. Generated SVG cards are
 embedded as data URIs so terminal-only and remote users can copy or download a
 single portable preview file. The CLI exposes the gallery through `preview`
-and an optional cross-platform `--open` action.
+and an optional cross-platform `--open` action. For terminal clients it can
+also start a minimal foreground HTTP server on `127.0.0.1`; the server exposes
+only the selected gallery and uses an OS-assigned port by default.
 
 The preview layer keeps generated neutral cards separate from external
 Light/Dark references. Upstream previews are links for comparison, not assets

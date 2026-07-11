@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createServer } from "node:http";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expandVisualReferences, renderProjectDraftSvg } from "./preview.mjs";
@@ -378,6 +379,111 @@ export function openRecommendationGallery(galleryPath, { platform = process.plat
     throw new Error(`Could not open the recommendation gallery automatically (${detail}). Open ${info.galleryUrl} manually.`);
   }
   return { ...info, opened: true };
+}
+
+export function previewUrlOpenCommand(previewUrl, platform = process.platform) {
+  if (platform === "win32") {
+    return {
+      command: "rundll32.exe",
+      args: ["url.dll,FileProtocolHandler", previewUrl]
+    };
+  }
+  if (platform === "darwin") return { command: "open", args: [previewUrl] };
+  return { command: "xdg-open", args: [previewUrl] };
+}
+
+export function openPreviewUrl(previewUrl, { platform = process.platform, run = spawnSync } = {}) {
+  const opener = previewUrlOpenCommand(previewUrl, platform);
+  const result = run(opener.command, opener.args, { encoding: "utf8", windowsHide: true });
+  if (result.error || result.status !== 0) {
+    const detail = result.error?.message || result.stderr?.trim() || `exit code ${result.status}`;
+    throw new Error(`Could not open the preview server automatically (${detail}). Open ${previewUrl} manually.`);
+  }
+  return { opened: true, previewUrl };
+}
+
+export async function startRecommendationPreviewServer(
+  galleryPath = resolve(".ui-style-director", "recommendations.html"),
+  { port = 0 } = {}
+) {
+  const info = recommendationGalleryInfo(galleryPath);
+  const requestedPort = Number(port);
+  if (typeof port === "boolean" || !Number.isInteger(requestedPort) || requestedPort < 0 || requestedPort > 65535) {
+    throw new Error(`Invalid preview server port: ${port}`);
+  }
+
+  const html = readFileSync(info.galleryPath);
+  const host = "127.0.0.1";
+  const server = createServer((request, response) => {
+    const method = request.method || "GET";
+    if (method !== "GET" && method !== "HEAD") {
+      response.writeHead(405, { Allow: "GET, HEAD", "Content-Type": "text/plain; charset=utf-8" });
+      response.end("Method Not Allowed\n");
+      return;
+    }
+
+    let pathname;
+    try {
+      pathname = new URL(request.url || "/", `http://${host}`).pathname;
+    } catch {
+      response.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
+      response.end("Bad Request\n");
+      return;
+    }
+
+    if (pathname === "/favicon.ico") {
+      response.writeHead(204, { "Cache-Control": "no-store" });
+      response.end();
+      return;
+    }
+    if (pathname !== "/" && pathname !== "/recommendations.html") {
+      response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
+      response.end("Not Found\n");
+      return;
+    }
+
+    response.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Length": html.length,
+      "Cache-Control": "no-store",
+      "Content-Security-Policy": "default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "Referrer-Policy": "no-referrer",
+      "X-Content-Type-Options": "nosniff"
+    });
+    if (method === "HEAD") response.end();
+    else response.end(html);
+  });
+
+  await new Promise((resolvePromise, rejectPromise) => {
+    const onError = (error) => rejectPromise(error);
+    server.once("error", onError);
+    server.listen(requestedPort, host, () => {
+      server.off("error", onError);
+      resolvePromise();
+    });
+  });
+
+  const address = server.address();
+  if (!address || typeof address === "string") {
+    server.close();
+    throw new Error("Preview server did not expose a TCP port.");
+  }
+  const previewUrl = `http://${host}:${address.port}/`;
+  const close = () => new Promise((resolvePromise, rejectPromise) => {
+    server.close((error) => {
+      if (error) rejectPromise(error);
+      else resolvePromise();
+    });
+  });
+
+  return {
+    server,
+    close,
+    host,
+    port: address.port,
+    previewUrl,
+    ...info
+  };
 }
 
 export function recommendStyles({

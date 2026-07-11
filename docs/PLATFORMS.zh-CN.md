@@ -16,9 +16,10 @@ Web Style Director 只维护一份兼容 Agent Skills 的 `SKILL.md`，不同编
 
 能够渲染 Markdown 图片的宿主可以直接嵌入生成式 SVG 卡片。纯终端宿主会拿到
 结构化文字、本地卡片路径、在线参考链接，以及一个自包含的
-`recommendations.html` 画廊。本机 TUI 可以通过 `preview --open` 打开画廊；
-SSH 或无图形界面用户可以复制或下载这一个 HTML 文件后在其他设备查看。
-特定终端的图片协议只是可选增强，不是兼容前提。
+`recommendations.html` 画廊。本机 TUI 可以运行 `preview --serve`，再打开输出的
+本机回环 HTTP 链接；服务持续到按下 Ctrl+C。`preview --open` 是直接打开文件的
+降级方式。SSH 用户可以转发所选端口，或复制、下载这一个 HTML 文件后在其他
+设备查看。特定终端的图片协议只是可选增强，不是兼容前提。
 
 ## Codex 布局
 

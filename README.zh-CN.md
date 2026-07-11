@@ -51,11 +51,15 @@ agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Da
 ![Mason Market Timeline 从风格选择到实现与验证的 UI 重构案例](docs/assets/mason-market-timeline-case-study.zh-CN.png)
 
 使用纯终端客户端时，每次推荐还会生成自包含的
-`.ui-style-director/recommendations.html` 画廊。可以这样打开：
+`.ui-style-director/recommendations.html` 画廊。启动本地预览服务，再打开命令
+输出的链接：
 
 ```bash
-node bin/ai-ui-style-director.mjs preview --open
+node bin/ai-ui-style-director.mjs preview --serve
 ```
+
+服务只监听 `127.0.0.1`，默认选择可用端口，按 Ctrl+C 后停止。
+`preview --open` 仍可作为直接打开文件的降级方式。
 
 ## 更新
 

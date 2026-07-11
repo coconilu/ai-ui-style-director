@@ -4,10 +4,12 @@ import {
   applyStyle,
   loadScenarioQuestions,
   openRecommendationGallery,
+  openPreviewUrl,
   recommendationGalleryInfo,
   renderContextQuestions,
   renderRecommendations,
   recommendStyles,
+  startRecommendationPreviewServer,
   syncProviders,
   updateCatalog
 } from "../src/core.mjs";
@@ -37,7 +39,7 @@ function usage() {
 
 Commands:
   recommend --brief <text> [--count 5] [--again] [--session <path>] [--open] [--json]
-  preview [--path <recommendations.html>] [--open] [--json]
+  preview [--path <recommendations.html>] [--open] [--serve] [--port <number>] [--json]
   apply --style <id> --project <path> [--brief <text>] [--force] [--json]
   sync [--cache-dir <path>] [--clone] [--json]
   refresh-catalog [--cache-dir <path>] [--generated-dir <path>] [--clone] [--json]
@@ -51,6 +53,8 @@ Examples:
   ai-ui-style-director recommend --brief "AI developer tool website" --again
   ai-ui-style-director recommend --brief "B2B operations dashboard" --open
   ai-ui-style-director preview --open
+  ai-ui-style-director preview --serve
+  ai-ui-style-director preview --serve --port 4173 --open
   ai-ui-style-director apply --style developer-product-minimal --project ./my-site --brief "AI SDK landing page"
   ai-ui-style-director refresh-catalog --clone
 `;
@@ -58,6 +62,35 @@ Examples:
 
 function printJson(value) {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+}
+
+function serveUntilStopped(server, close) {
+  return new Promise((resolvePromise, rejectPromise) => {
+    let stopping = false;
+    const cleanup = () => {
+      process.off("SIGINT", stop);
+      process.off("SIGTERM", stop);
+      server.off("close", onClose);
+      server.off("error", onError);
+    };
+    const onClose = () => {
+      cleanup();
+      resolvePromise();
+    };
+    const onError = (error) => {
+      cleanup();
+      rejectPromise(error);
+    };
+    const stop = () => {
+      if (stopping) return;
+      stopping = true;
+      close().catch(onError);
+    };
+    process.once("SIGINT", stop);
+    process.once("SIGTERM", stop);
+    server.once("close", onClose);
+    server.once("error", onError);
+  });
 }
 
 async function main() {
@@ -95,6 +128,35 @@ async function main() {
 
     if (command === "preview") {
       const galleryPath = args.path ? resolve(args.path) : resolve(".ui-style-director", "recommendations.html");
+      if (args.serve) {
+        const served = await startRecommendationPreviewServer(galleryPath, {
+          port: args.port === undefined ? 0 : args.port
+        });
+        let opened = false;
+        try {
+          if (args.open) opened = openPreviewUrl(served.previewUrl).opened;
+        } catch (error) {
+          await served.close();
+          throw error;
+        }
+        const output = {
+          galleryPath: served.galleryPath,
+          galleryUrl: served.galleryUrl,
+          previewUrl: served.previewUrl,
+          host: served.host,
+          port: served.port,
+          opened
+        };
+        if (args.json) {
+          printJson(output);
+        } else {
+          process.stdout.write(`Preview server: ${output.previewUrl}\n`);
+          process.stdout.write(`Gallery: ${output.galleryPath}\n`);
+          process.stdout.write(`${opened ? "Opened in the default browser. " : ""}Press Ctrl+C to stop.\n`);
+        }
+        await serveUntilStopped(served.server, served.close);
+        return;
+      }
       const result = args.open
         ? openRecommendationGallery(galleryPath)
         : { ...recommendationGalleryInfo(galleryPath), opened: false };
