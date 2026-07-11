@@ -11,9 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Validate automated refresh scope
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'automation/refresh-providers-')
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          allowed='^catalog/generated/(provider-inventory|style-sources|component-sources)\.json$'
+          unexpected="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep -Ev "$allowed" || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Automated refresh PR contains files outside the generated catalog:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi
       - run: npm test
       - run: npm run check
-

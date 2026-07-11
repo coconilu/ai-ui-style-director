@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { validateGeneratedCatalog } from "../scripts/validate-generated-catalog.mjs";
 import {
   applyStyle,
   isBriefInsufficient,
@@ -365,6 +366,32 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
   assert.deepEqual(
     result.generatedFiles.map((file) => readFileSync(file, "utf8")),
     firstGeneration
+  );
+});
+
+test("generated catalog validation rejects denormalized source provenance", () => {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-catalog-validation-"));
+  const generatedDir = join(dir, "generated");
+  mkdirSync(generatedDir, { recursive: true });
+  for (const file of ["provider-inventory.json", "style-sources.json", "component-sources.json"]) {
+    copyFileSync(join(rootDir, "catalog", "generated", file), join(generatedDir, file));
+  }
+
+  const valid = validateGeneratedCatalog({ generatedDir });
+  const currentProviders = JSON.parse(readFileSync(join(rootDir, "catalog", "providers.json"), "utf8"));
+  const currentStyles = JSON.parse(readFileSync(join(generatedDir, "style-sources.json"), "utf8"));
+  const currentComponents = JSON.parse(readFileSync(join(generatedDir, "component-sources.json"), "utf8"));
+  assert.equal(valid.providerCount, currentProviders.length);
+  assert.equal(valid.styleSourceCount, currentStyles.sources.length);
+  assert.equal(valid.componentSourceCount, currentComponents.sources.length);
+
+  const componentPath = join(generatedDir, "component-sources.json");
+  const components = JSON.parse(readFileSync(componentPath, "utf8"));
+  components.sources[0].revision = "deadbeef";
+  writeFileSync(componentPath, `${JSON.stringify(components, null, 2)}\n`, "utf8");
+  assert.throws(
+    () => validateGeneratedCatalog({ generatedDir }),
+    /component-sources\.json sources must exactly match normalized provider inventory paths/u
   );
 });
 
