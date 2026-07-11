@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-07T16:02:59.769Z",
-  "cacheDir": "C:\\Users\\admin\\Documents\\study\\ai-ui-style-director\\.ui-style-director\\cache\\providers",
-  "syncLockPath": "C:\\Users\\admin\\Documents\\study\\ai-ui-style-director\\.ui-style-director\\cache\\providers-lock.json",
+  "generatedAt": "2026-07-11T08:09:22.352Z",
+  "cacheDir": "/home/runner/work/ai-ui-style-director/ai-ui-style-director/.ui-style-director/cache/providers",
+  "syncLockPath": "/home/runner/work/ai-ui-style-director/ai-ui-style-director/.ui-style-director/cache/providers-lock.json",
   "providers": [
     {
       "id": "awesome-design-md",
@@ -125,7 +125,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "68e1f171aa8c6ce2e38cb9a7d1463d6bcf357e91",
+      "revision": "3cdaa6eb2f0da27aca8598cb752c32d840e06940",
       "counts": {
         "designMdFiles": 0,
         "registryFiles": 200,
@@ -149,6 +149,7 @@
         "apps/v4/registry/config.ts",
         "apps/v4/registry/directory.json",
         "apps/v4/registry/fonts.ts",
+        "apps/v4/registry/new-york-v4/examples/_registry.ts",
         "apps/v4/registry/new-york-v4/examples/accordion-demo.tsx",
         "apps/v4/registry/new-york-v4/examples/alert-demo.tsx",
         "apps/v4/registry/new-york-v4/examples/alert-destructive.tsx",
@@ -189,7 +190,6 @@
         "apps/v4/registry/new-york-v4/examples/button-secondary.tsx",
         "apps/v4/registry/new-york-v4/examples/button-size.tsx",
         "apps/v4/registry/new-york-v4/examples/button-with-icon.tsx",
-        "apps/v4/registry/new-york-v4/examples/calendar-demo.tsx",
         "apps/v4/registry/new-york-v4/hooks/_registry.ts",
         "apps/v4/registry/new-york-v4/hooks/use-mobile.ts",
         "apps/v4/registry/new-york-v4/internal/_registry.ts",
