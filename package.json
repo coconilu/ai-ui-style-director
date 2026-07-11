@@ -7,8 +7,8 @@
     "ai-ui-style-director": "./bin/ai-ui-style-director.mjs"
   },
   "scripts": {
-    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --check src/preview.mjs && node --check scripts/generate-style-previews.mjs && npm run previews:check && node --test",
-    "test": "node --test",
+    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --check src/preview.mjs && node --check scripts/generate-style-previews.mjs && npm run previews:check && npm test",
+    "test": "node --test test/recommend.test.mjs",
     "previews": "node scripts/generate-style-previews.mjs",
     "previews:check": "node scripts/generate-style-previews.mjs --check",
     "recommend:demo": "node bin/ai-ui-style-director.mjs recommend --brief \"AI developer tool website\" --count 5"
