@@ -25,7 +25,11 @@ and `bin/ai-ui-style-director.mjs`.
 ## Execute the request
 
 - For **update** or **upgrade**, read the located repository's `INSTALL.md` and
-  follow its **Update** section.
+  follow its **Update** section. The installed skill directory is a generated
+  deployment copy and may be force-replaced in full, including modified or
+  extra files inside it. This permission never extends to a project
+  `DESIGN.md`, project `.ui-style-director/`, provider cache, or website source
+  code.
 - For **uninstall**, **remove**, or **delete**, read `INSTALL.md` completely,
   then follow its **Uninstall** section.
 
