@@ -43,17 +43,23 @@ node bin/ai-ui-style-director.mjs recommend \
 查看或打开最近一次生成的推荐画廊：
 
 ```bash
-node bin/ai-ui-style-director.mjs preview --open
+node bin/ai-ui-style-director.mjs preview --serve
 ```
 
 参数：
 
 - `--path <file>`：指定默认 `.ui-style-director/` 目录之外的画廊。
 - `--open`：使用操作系统默认浏览器打开画廊。
+- `--serve`：启动前台 HTTP 预览服务并输出本地链接。
+- `--port <number>`：为 `--serve` 指定端口；默认值 `0` 表示由操作系统
+  选择可用端口。
 - `--json`：以 JSON 输出画廊路径、URL 和打开状态。
 
-不加 `--open` 时，命令只打印 `file://` 地址，适合无图形界面或 SSH
-环境。HTML 已内嵌全部 SVG 卡片，因此可以单独复制或下载，不依赖原工具安装目录。
+`--serve` 只监听 `127.0.0.1`，只提供指定画廊，并持续运行到用户按下
+Ctrl+C。与 `--open` 一起使用时会自动打开 HTTP 链接。不加 `--serve` 时保留
+原来的文件模式：输出 `file://` 地址，`--open` 直接打开该文件。HTML 已内嵌
+全部 SVG 卡片，因此远程用户也可以单独复制或下载；通过 SSH 使用本机回环
+HTTP 链接时需要端口转发。
 
 ## `apply`
 

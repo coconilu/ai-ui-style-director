@@ -42,11 +42,16 @@ One prompt becomes five comparable directions before any UI code is written:
 ![Web Style Director recommending five admin dashboard directions](docs/assets/admin-dashboard-example.en.png)
 
 Terminal-only client? Every recommendation also writes a self-contained
-`.ui-style-director/recommendations.html` gallery. Open it with:
+`.ui-style-director/recommendations.html` gallery. Start the local preview
+server and open the printed link:
 
 ```bash
-node bin/ai-ui-style-director.mjs preview --open
+node bin/ai-ui-style-director.mjs preview --serve
 ```
+
+The server listens only on `127.0.0.1`, chooses an available port, and runs
+until you press Ctrl+C. `preview --open` remains available as a direct-file
+fallback.
 
 ## Update
 
