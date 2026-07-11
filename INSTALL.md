@@ -116,14 +116,19 @@ If a prerequisite is missing, stop and tell the user exactly what is missing.
    existing supported or legacy layout in place unless migration was requested.
    Do not guess a replacement target.
 2. Verify that the repository is a Git checkout of the canonical repository.
-3. Check the repository and installed skill for local modifications. If either
-   contains user changes, stop and report them instead of overwriting them.
+3. Check the repository for local modifications. If it contains user changes,
+   stop and report them instead of overwriting them. Treat the installed skill
+   directory as a generated deployment copy: do not inspect it for local
+   modifications and do not preserve files that exist only there.
 4. Fetch the canonical remote and update the current branch with a fast-forward
    only operation. Do not reset, force-checkout, or discard changes.
 5. Confirm that the updated skill source exists.
 6. Stage a fresh copy of `<repository>/skills/web-style-director` in a temporary
-   sibling directory, then replace only the installed `web-style-director`
-   directory.
+   sibling directory, then force-replace the entire resolved installed
+   `web-style-director` directory, including modified or extra files inside it.
+   This overwrite permission applies only to that resolved skill directory.
+   Never remove or overwrite a project `DESIGN.md`, project
+   `.ui-style-director/`, provider cache, or website source code during update.
 7. Run **Verify**.
 8. Report the agent, previous and current commit, both installed paths, and the
    verification result.
