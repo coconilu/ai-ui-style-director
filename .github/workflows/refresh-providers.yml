@@ -6,23 +6,60 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+
+concurrency:
+  group: refresh-providers
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
+      - name: Create refresh bot token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.REFRESH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REFRESH_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
       - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Configure refresh bot identity
+        shell: bash
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          app_slug="${{ steps.app-token.outputs.app-slug }}"
+          app_user_id="$(gh api "/users/${app_slug}[bot]" --jq .id)"
+          git config user.name "${app_slug}[bot]"
+          git config user.email "${app_user_id}+${app_slug}[bot]@users.noreply.github.com"
+          gh auth setup-git
 
       - name: Refresh provider indexes
         run: node bin/ai-ui-style-director.mjs refresh-catalog --clone
 
       - name: Validate
         run: npm run check
+
+      - name: Validate generated change scope
+        shell: bash
+        run: |
+          allowed='^catalog/generated/(provider-inventory|style-sources|component-sources)\.json$'
+          unexpected="$(git diff --name-only | grep -Ev "$allowed" || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Provider refresh changed files outside the generated catalog:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi
 
       - name: Detect generated changes
         id: changes
@@ -34,21 +71,33 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Open refresh pull request
+      - name: Open refresh pull request and enable auto-merge
         if: steps.changes.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         shell: bash
         run: |
           branch="automation/refresh-providers-${GITHUB_RUN_ID}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add catalog/generated
           git commit -m "chore: refresh provider indexes"
-          git push origin "$branch"
-          gh pr create \
+          git push --set-upstream origin "$branch"
+
+          body_file="$RUNNER_TEMP/provider-refresh-pr.md"
+          printf '%s\n' \
+            'Automated refresh of provider-derived indexes.' \
+            '' \
+            "- Source run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            '- Generated catalog schema validation: passed' \
+            '- Changed-file allowlist validation: passed' \
+            '- Merge policy: squash after required CI checks pass' \
+            > "$body_file"
+
+          pr_url="$(gh pr create \
             --title "chore: refresh provider indexes" \
-            --body "Automated daily refresh of provider-derived indexes." \
-            --base "${GITHUB_REF_NAME:-main}" \
-            --head "$branch"
+            --body-file "$body_file" \
+            --base main \
+            --head "$branch")"
+
+          gh pr merge "$pr_url" --auto --squash --delete-branch
+          printf '### Automated provider refresh\n\n- PR: %s\n- Auto-merge: enabled\n' "$pr_url" >> "$GITHUB_STEP_SUMMARY"

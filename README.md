@@ -104,6 +104,7 @@ Claude Code:
 - [Providers and source boundaries](docs/PROVIDERS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Implementation and open-source integration](docs/IMPLEMENTATION.md)
+- [Automated provider refresh](docs/AUTOMATED_REFRESH.md)
 - [Development and maintenance](docs/DEVELOPMENT.md)
 - [Third-party notices](THIRD_PARTY_NOTICES.md)
 

@@ -172,6 +172,16 @@ The scanner is a lightweight path indexer, not a semantic component parser. It r
 
 `.github/workflows/refresh-providers.yml` runs the same process daily, validates the repository, and opens a pull request only when generated indexes change.
 
+The normal refresh path is unattended but does not bypass `main` protection. A
+repository-scoped GitHub App pushes the automation branch and opens the pull
+request, which lets pull-request CI start without the approval gate applied to
+PRs created by `GITHUB_TOKEN`. The workflow requests GitHub-native squash
+auto-merge; required checks still have to pass. CI rejects automation branches
+that change anything outside the three generated catalog files. Failed checks
+leave the PR open for exception handling, while successful merges retain the
+workflow run, PR diff, CI logs, and merge commit as the audit trail. See
+[`AUTOMATED_REFRESH.md`](AUTOMATED_REFRESH.md) for setup and operations.
+
 ## Dependency and license boundaries
 
 The project has no runtime npm dependencies. The core uses Node.js built-ins and the external Git command. `actions/checkout`, `actions/setup-node`, and `gh` are limited to CI and maintenance automation.

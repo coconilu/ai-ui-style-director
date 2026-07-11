@@ -199,6 +199,14 @@ catalog/generated/component-sources.json
 
 `.github/workflows/refresh-providers.yml` 每天运行相同流程，执行仓库检查，并只在生成索引变化时创建 PR。
 
+正常刷新路径无人值守，但不会绕过 `main` 保护。仅限本仓库的 GitHub App
+负责推送自动化分支并创建 PR，使 PR CI 不再进入 `GITHUB_TOKEN` 创建 PR 时的
+人工批准状态。工作流随后请求 GitHub 原生 squash auto-merge，所有必需检查仍须
+通过。CI 会拒绝修改三个生成目录文件以外内容的自动化分支；检查失败时 PR 保持
+打开等待异常处理，成功时则保留 Action 运行、PR diff、CI 日志和合并提交作为
+审计记录。配置与运维方式参见
+[`AUTOMATED_REFRESH.zh-CN.md`](AUTOMATED_REFRESH.zh-CN.md)。
+
 ## 依赖与许可证边界
 
 项目没有运行时 npm 依赖，核心仅使用 Node.js 内置模块和外部 Git 命令。GitHub Actions 中的 `actions/checkout`、`actions/setup-node` 与 `gh` 只服务于 CI 和维护自动化。
