@@ -41,6 +41,16 @@ One prompt becomes five comparable directions before any UI code is written:
 
 ![Web Style Director recommending five admin dashboard directions](docs/assets/admin-dashboard-example.en.png)
 
+## Example: carry a selected direction into production
+
+This real Mason Market Timeline refactor shows the complete gated workflow:
+recommend five directions, combine direction 4 with direction 2's financial
+semantics, generate a project-specific `DESIGN.md` and first-viewport draft,
+then implement only after explicit confirmation. The image also keeps the
+original UI visible beside the responsive production result.
+
+![Mason Market Timeline UI redesign from style selection through implementation and verification](docs/assets/mason-market-timeline-case-study.en.png)
+
 Terminal-only client? Every recommendation also writes a self-contained
 `.ui-style-director/recommendations.html` gallery. Start the local preview
 server and open the printed link:

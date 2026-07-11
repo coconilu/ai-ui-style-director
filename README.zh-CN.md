@@ -41,6 +41,15 @@ agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Da
 
 ![Web Style Director 推荐五种管理台 UI 方向](docs/assets/admin-dashboard-example.zh-CN.png)
 
+## 示例：把选定方向落实到正式界面
+
+这个真实的 Mason Market Timeline 重构案例展示了完整的门控流程：先推荐
+5 个方向，再把方案 4 与方案 2 的金融语义组合起来，生成项目专属的
+`DESIGN.md` 和首屏草稿，并且只在用户明确确认后实现代码。图片同时保留
+原始 UI，并与响应式正式界面并排对照。
+
+![Mason Market Timeline 从风格选择到实现与验证的 UI 重构案例](docs/assets/mason-market-timeline-case-study.zh-CN.png)
+
 使用纯终端客户端时，每次推荐还会生成自包含的
 `.ui-style-director/recommendations.html` 画廊。启动本地预览服务，再打开命令
 输出的链接：
