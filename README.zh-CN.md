@@ -88,6 +88,7 @@ Claude Code：
 - [CLI 参考](docs/CLI.zh-CN.md)
 - [Provider 与来源边界](docs/PROVIDERS.zh-CN.md)
 - [架构](docs/ARCHITECTURE.zh-CN.md)
+- [实现详解与开源集成](docs/IMPLEMENTATION.zh-CN.md)
 - [开发与维护](docs/DEVELOPMENT.zh-CN.md)
 - [第三方声明](THIRD_PARTY_NOTICES.md)
 

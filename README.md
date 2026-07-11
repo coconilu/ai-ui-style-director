@@ -88,6 +88,7 @@ Claude Code:
 - [CLI reference](docs/CLI.md)
 - [Providers and source boundaries](docs/PROVIDERS.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Implementation and open-source integration](docs/IMPLEMENTATION.md)
 - [Development and maintenance](docs/DEVELOPMENT.md)
 - [Third-party notices](THIRD_PARTY_NOTICES.md)
 
