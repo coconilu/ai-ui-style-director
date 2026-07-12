@@ -15,8 +15,11 @@ const DENSITY_ORDER = ["low", "low-medium", "medium", "medium-high", "high"];
 export const CATALOG_PAGE_SIZE = 24;
 export const DEFAULT_HOSTED_CATALOG_URL = "https://coconilu.github.io/ai-ui-style-director/";
 const STYLE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const CATALOG_CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
-const CATALOG_META_CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'";
+const CATALOG_SHARED_CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'";
+// GitHub Pages can enforce the shared policy only through HTML meta. The local
+// development server adds frame-ancestors, which browsers ignore in meta CSP.
+const CATALOG_META_CONTENT_SECURITY_POLICY = CATALOG_SHARED_CONTENT_SECURITY_POLICY;
+const CATALOG_CONTENT_SECURITY_POLICY = `${CATALOG_SHARED_CONTENT_SECURITY_POLICY}; frame-ancestors 'none'`;
 const SEARCH_ALIASES = new Map([
   ["developer", ["开发者", "开发工具", "技术产品"]],
   ["saas", ["软件服务", "工作流", "管理台"]],
@@ -217,6 +220,7 @@ export function hostedCatalogInfo({
   if (!["http:", "https:"].includes(catalogUrl.protocol) || catalogUrl.username || catalogUrl.password) {
     throw new Error(`Invalid hosted catalog URL: ${baseUrl}`);
   }
+  if (!catalogUrl.pathname.endsWith("/")) catalogUrl.pathname += "/";
   catalogUrl.searchParams.set("expectedRevision", catalog.catalogRevision);
   return {
     catalogUrl: catalogUrl.href,

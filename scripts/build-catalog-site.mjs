@@ -8,6 +8,7 @@ import {
 } from "../src/catalog-browser.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const DIST_DIR = join(ROOT_DIR, "dist");
 
 function parseArgs(argv) {
   const args = {};
@@ -39,14 +40,39 @@ function safeAssetOutputPath(outputDir, assetPath) {
   return outputPath;
 }
 
-export function writeCatalogSite({
-  outputDir = join(ROOT_DIR, "dist", "pages"),
-  catalog = buildStyleCatalog()
-} = {}) {
+function isDescendant(parentDir, candidateDir) {
+  const relativePath = relative(parentDir, candidateDir);
+  return Boolean(relativePath) && !relativePath.startsWith("..") && !isAbsolute(relativePath);
+}
+
+function safeCatalogOutputDir(outputDir, { allowExternalOutput = false } = {}) {
   const resolvedOutputDir = resolve(outputDir);
-  if (resolvedOutputDir === ROOT_DIR || resolvedOutputDir === parse(resolvedOutputDir).root) {
+  const filesystemRoot = parse(resolvedOutputDir).root;
+  const outputContainsRepository = resolvedOutputDir === ROOT_DIR
+    || isDescendant(resolvedOutputDir, ROOT_DIR);
+  const outputInsideRepository = isDescendant(ROOT_DIR, resolvedOutputDir);
+  const outputInsideDist = isDescendant(DIST_DIR, resolvedOutputDir);
+
+  if (resolvedOutputDir === filesystemRoot || outputContainsRepository) {
     throw new Error(`Refusing to replace unsafe catalog output directory: ${resolvedOutputDir}`);
   }
+  if (outputInsideRepository && !outputInsideDist) {
+    throw new Error(`Catalog output directory must be inside ${DIST_DIR}: ${resolvedOutputDir}`);
+  }
+  if (!outputInsideRepository && !allowExternalOutput) {
+    throw new Error(
+      `Catalog output directory must be inside ${DIST_DIR}; external output requires an explicit override: ${resolvedOutputDir}`
+    );
+  }
+  return resolvedOutputDir;
+}
+
+export function writeCatalogSite({
+  outputDir = join(ROOT_DIR, "dist", "pages"),
+  catalog = buildStyleCatalog(),
+  allowExternalOutput = false
+} = {}) {
+  const resolvedOutputDir = safeCatalogOutputDir(outputDir, { allowExternalOutput });
 
   const { assets } = buildStyleCatalogStaticAssets({ catalog });
   rmSync(resolvedOutputDir, { recursive: true, force: true });
@@ -57,7 +83,7 @@ export function writeCatalogSite({
     const outputPath = safeAssetOutputPath(resolvedOutputDir, assetPath);
     mkdirSync(dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, asset.body, "utf8");
-    totalBytes += Buffer.byteLength(String(asset.body), "utf8");
+    totalBytes += Buffer.byteLength(asset.body, "utf8");
   }
 
   return {

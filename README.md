@@ -70,7 +70,7 @@ longer starts a local complete-catalog server.
 The current catalog contains 48 reviewed profiles: four directions in each of
 12 families. The page supports text search plus family, page type, density,
 tone, and component-kit filters. It loads a lightweight schema-v3 catalog,
-fetches previews from independent same-origin SVG routes, and progressively
+fetches previews from independent same-origin SVG paths, and progressively
 renders 24 cards at a time. A deterministic catalog revision is attached to
 the URL and assets so the page can warn about a stale deployment without
 blocking browsing.

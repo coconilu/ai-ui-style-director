@@ -56,7 +56,6 @@ Examples:
   ai-ui-style-director recommend --brief "AI developer tool website" --again
   ai-ui-style-director recommend --brief "B2B operations dashboard" --open
   ai-ui-style-director browse --open
-  ai-ui-style-director serve --open
   ai-ui-style-director preview --open
   ai-ui-style-director preview --serve
   ai-ui-style-director preview --serve --port 4173 --open

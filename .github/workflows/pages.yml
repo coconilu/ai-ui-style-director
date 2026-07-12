@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: catalog-pages-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'production' }}
@@ -26,6 +24,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 20
+      - name: Install dependencies
+        run: npm ci
       - name: Build static catalog
         run: npm run catalog:build
       - name: Validate Pages artifact
@@ -36,10 +36,9 @@ jobs:
           test -f dist/pages/app.js
           test -f dist/pages/styles.css
           test -f dist/pages/.nojekyll
-          test "$(find dist/pages/previews -type f -name '*.svg' | wc -l)" -eq 48
-      - name: Configure Pages
-        if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v6
+          expected="$(node -p "require('./dist/pages/catalog.json').styleCount")"
+          actual="$(find dist/pages/previews -type f -name '*.svg' | wc -l)"
+          test "$actual" -eq "$expected"
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
@@ -50,10 +49,15 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

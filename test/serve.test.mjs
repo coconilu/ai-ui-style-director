@@ -150,6 +150,13 @@ test("catalog revision and hosted URL are deterministic and detect catalog chang
   assert.equal(url.searchParams.get("expectedRevision"), catalog.catalogRevision);
   assert.equal(info.hosted, true);
   assert.equal(info.styleCount, catalog.styleCount);
+  const normalizedUrl = new URL(hostedCatalogInfo({
+    catalog,
+    baseUrl: "https://example.test/catalog?from=test"
+  }).catalogUrl);
+  assert.equal(normalizedUrl.pathname, "/catalog/");
+  assert.equal(normalizedUrl.searchParams.get("from"), "test");
+  assert.equal(normalizedUrl.searchParams.get("expectedRevision"), catalog.catalogRevision);
   assert.equal(DEFAULT_HOSTED_CATALOG_URL, "https://coconilu.github.io/ai-ui-style-director/");
   assert.throws(() => hostedCatalogInfo({ catalog, baseUrl: "not a URL" }), /Invalid hosted catalog URL/);
   assert.throws(() => hostedCatalogInfo({ catalog, baseUrl: "file:///tmp/catalog/" }), /Invalid hosted catalog URL/);
@@ -184,9 +191,13 @@ test("static catalog assets are project-subpath safe and complete", () => {
 test("static catalog build writes a deterministic Pages artifact", () => {
   const tempDir = mkdtempSync(join(tmpdir(), "style-director-pages-"));
   const outputDir = join(tempDir, "site");
-  const first = writeCatalogSite({ outputDir });
+  assert.throws(
+    () => writeCatalogSite({ outputDir }),
+    /external output requires an explicit override/
+  );
+  const first = writeCatalogSite({ outputDir, allowExternalOutput: true });
   const firstSnapshot = readDirectorySnapshot(outputDir);
-  const second = writeCatalogSite({ outputDir });
+  const second = writeCatalogSite({ outputDir, allowExternalOutput: true });
   const secondSnapshot = readDirectorySnapshot(outputDir);
 
   assert.equal(first.fileCount, 54);
