@@ -30,6 +30,10 @@ Options:
 If the brief lacks essential context, the command returns targeted questions
 instead of recommendations.
 
+Ranking is performed by the deterministic Node.js recommendation core. The
+Agent is responsible for collecting context and presenting the selection gate,
+not for inventing a different ranking at runtime.
+
 Each recommendation also returns the absolute path to a generated local SVG
 card, the primary upstream Light/Dark live previews, and two additional visual
 reference labels. A self-contained gallery is written next to the session file
@@ -55,18 +59,28 @@ Options:
 The JSON object contains `catalogUrl`, `host`, `port`, `styleCount`,
 `sourceCount`, and `opened`.
 
-The page lists every curated entry in `catalog/style-profiles.json`, its
-generated SVG previews, reviewed metadata, component-kit suggestions, and
-upstream Light/Dark references. It supports text search plus filters for
-family, page type, density, tone, and component kit. Search recognizes common
-Chinese aliases such as `后台`. Multiple values within one filter group use
-OR; different groups and the search query combine with AND. Search and filter
+The current page lists 48 curated entries from `catalog/style-profiles.json`,
+balanced as four profiles in each of 12 families. Each entry includes reviewed
+metadata, component-kit suggestions, upstream Light/Dark references, and a
+generated SVG preview. It supports text search plus filters for family, page
+type, density, tone, and component kit. Search recognizes common Chinese
+aliases such as `后台`. Multiple values within one filter group use OR;
+different groups and the search query combine with AND. Search and filter
 state is kept in the page URL so a filtered view survives refresh and can be
 copied.
 
-`catalog/generated/style-sources.json` contains indexed upstream source paths.
-The browser reports the current source-index count for context but does not turn
-those paths into style cards; only reviewed profiles appear as full entries.
+`/catalog.json` uses schema version 2. It contains lightweight `previewUrl`
+values, an inverted token-to-numeric-entry postings index, and an ID-to-entry index rather than
+embedding SVG data. Exact query tokens use postings intersections; partial or
+unknown tokens use a substring fallback. The client progressively renders 24
+matching cards at a time while preserving the total match count. Preview
+images are fetched from validated, same-origin
+`/previews/<style-id>.svg` routes.
+
+`catalog/generated/style-sources.json` currently contains 74 indexed upstream
+source paths. The browser reports that source-pool count for context but does
+not turn those paths into style cards; only the 48 reviewed profiles appear as
+full entries.
 
 `serve` binds only to `127.0.0.1` and runs in the foreground until Ctrl+C. It
 does not create or modify a target project's `.ui-style-director/` directory.

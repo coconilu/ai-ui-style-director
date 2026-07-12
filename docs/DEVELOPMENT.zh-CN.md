@@ -14,7 +14,10 @@ ai-ui-style-director/
   test/                        # Node.js 测试
 ```
 
-当前 MVP 没有运行时 npm 依赖，需要 Node.js 20 或更高版本。
+当前实现没有运行时 npm 依赖，需要 Node.js 20 或更高版本。已策展 Catalog
+包含 48 个 profile，覆盖 12 个 family、每组 4 个方向；
+`catalog/generated/style-sources.json` 中当前 74 条 provider 路径只作为候选
+素材池，不会自动进入推荐或目录页面。
 
 ## 检查
 
@@ -25,7 +28,19 @@ npm test
 npm run check
 ```
 
-`npm run check` 会验证 JavaScript 语法并运行测试。
+`npm run check` 会验证 JavaScript 语法、已策展 Catalog、SVG 一致性、Provider
+生成索引并运行完整测试，其中包含 12 个场景的推荐 benchmark。
+
+只运行已策展 Catalog 门禁：
+
+```bash
+npm run catalog:curated:validate
+```
+
+该命令会先应用 `catalog/curation-policy.json`，保证每个基线 family 至少
+4 个 profile、至少 3 种 visual variant；同时检查 profile/visual 一一对应、
+taxonomy 和颜色格式、每个方向恰好 3 条不重复且存在于来源索引的参考，以及
+对应 SVG 是否存在。
 
 修改 `style-visuals.json` 或预览渲染逻辑后，应重新生成风格卡片：
 
@@ -34,7 +49,32 @@ npm run previews
 npm run previews:check
 ```
 
-检查命令会确认每个 profile 都有一条视觉配置、3 条参考和一张最新提交的 SVG。
+`previews:check` 会确认提交的 SVG 与当前渲染结果一致；更完整的字段、参考和
+文件对应关系由 `catalog:curated:validate` 检查。
+
+## 新增或修改风格
+
+1. 从 `catalog/generated/style-sources.json` 的候选路径中研究可用参考，但不要
+   直接把路径批量转换成 profile。
+2. 在 `catalog/style-profiles.json` 新增唯一的 kebab-case ID，补全 family、
+   页面类型、受众、目标、密度、调性、适用/避免场景、布局、组件库和风险。
+   新方向应与所在 family 的现有 4 个方向形成真正的场景或结构差异，而不是
+   只换颜色。
+   新增时需继续满足 `catalog/curation-policy.json` 的基线深度与结构多样性门槛。
+3. 在 `catalog/style-visuals.json` 新增同 ID 的 visual，选择受支持的 SVG
+   variant、补全 7 个主题色，并指定恰好 3 条不重复的有效 provider/slug 参考。
+4. 运行 `npm run previews`，目视检查新增或变化的 SVG；确认信息结构、密度和
+   层级确实表达该方向，且没有上游品牌资产。
+5. 运行 `npm run catalog:curated:validate`，先修复结构、来源或预览缺失问题。
+6. 如果新增 taxonomy、family 或修改评分规则，相应更新
+   `catalog/recommendation-benchmarks.json`；现有 12 个场景仍须保持合理的
+   Top 1、Top 5 覆盖和确定性。
+7. 最后运行 `npm run check`，确保预览、目录检索、推荐和完整回归全部通过。
+
+目录浏览器会从 profile 动态生成 schema v2、倒排索引和 facets，无需维护第二
+份手工搜索索引。每个条目只携带 `previewUrl`，SVG 由独立同源路由加载；前端
+按 24 张卡片一批渐进渲染，因此新增条目不会让首屏 JSON 或 DOM 与 SVG 总体积
+一起线性膨胀。
 
 如果环境中有 Codex `skill-creator`，还应单独验证 skill：
 

@@ -6,21 +6,26 @@ AI UI Style Director has six layers.
 
 The catalog contains normalized design knowledge:
 
-- `catalog/style-profiles.json`: curated style directions.
+- `catalog/style-profiles.json`: 48 curated style directions, balanced as four
+  profiles in each of 12 families.
 - `catalog/style-visuals.json`: preview variants, themes, and real visual references.
 - `catalog/previews/`: generated brand-neutral SVG cards.
 - `catalog/component-kits.json`: implementation kits that can support each style.
 - `catalog/providers.json`: upstream repositories used as style or component providers.
 - `catalog/generated/style-sources.json`: an index of upstream style-source
-  paths; these are provenance leads, not curated style profiles.
+  paths; the current 74 entries are provenance leads, not curated style
+  profiles.
 - `catalog/scenario-questions.json`: required questions when a user brief is too vague.
+- `catalog/curation-policy.json`: baseline family depth and per-family visual-diversity requirements.
+- `catalog/recommendation-benchmarks.json`: 12 representative briefs used to
+  protect intent coverage and deterministic ranking.
 
 The catalog is intentionally structured. Agents should not load large upstream repositories into context just to choose a style.
 
 ## 2. Visual Preview Layer
 
 `src/preview.mjs` turns normalized visual metadata into deterministic SVG
-wireframes. `scripts/generate-style-previews.mjs` generates and verifies the 12
+wireframes. `scripts/generate-style-previews.mjs` generates and verifies the 48
 committed style cards. The same renderer creates a project-level
 `first-viewport-draft.svg` after selection.
 
@@ -43,14 +48,23 @@ to vendor or ship.
 
 ## 3. Catalog Browser
 
-`src/catalog-browser.mjs` builds a browser view model from the curated style
-profiles, visual metadata, generated SVG cards, profile component-kit tags,
-and the upstream style-source count. `serve` exposes that model through a
-read-only page with text search and family, page type, density, tone, and
-component-kit filters.
+`src/catalog-browser.mjs` builds a schema-v2 browser view model from the curated
+style profiles, visual metadata, profile component-kit tags, and the upstream
+style-source count. Each entry carries a lightweight `previewUrl` instead of
+an embedded SVG. `serve` exposes that model through a read-only page with text
+search and family, page type, density, tone, and component-kit filters.
 
-The browser serves `/`, `/catalog.json`, `/app.js`, and `/styles.css` on
-`127.0.0.1`. It displays every curated profile as a complete card. Entries in
+The browser serves `/`, `/catalog.json`, `/app.js`, `/styles.css`, and one
+same-origin `/previews/<style-id>.svg` route per curated profile on
+`127.0.0.1`. The SVG routes are validated against curated IDs and carry a
+same-origin resource policy.
+
+The catalog payload contains an inverted token-to-numeric-entry postings index
+and a direct ID-to-entry index. Numeric postings avoid repeating long style IDs
+for every searchable term. Exact query tokens use postings intersections;
+unknown or partial tokens fall back to substring matching. The page keeps the
+full match count but adds cards to the DOM in progressive batches of 24, which
+limits initial layout and image work as the catalog grows. Entries in
 `catalog/generated/style-sources.json` remain a provenance index and are shown
 only as a current count, never promoted into unreviewed style profiles.
 
@@ -70,7 +84,17 @@ recommendation batch. Neither surface is a public hosting mechanism.
 - keywords
 - important scenario hints
 
-The first version uses deterministic weighted matching. Embeddings can be added later, but the selection gate does not need them to be useful.
+Matching is deterministic and programmatic. The Agent gathers context,
+presents results, and enforces the selection gate; it does not replace the
+ranking algorithm with an ad hoc judgment. Embeddings can be added later, but
+the selection gate does not need them to be useful.
+
+`scripts/validate-curated-catalog.mjs` checks the one-to-one profile, visual,
+and preview relationship, the baseline of at least four profiles and three
+visual variants in each required family, taxonomy fields, supported render
+variants, theme colors, and the three reviewed upstream references for every style. The
+12-case recommendation benchmark verifies expected family coverage and
+identical rankings across repeated runs.
 
 Recommendations include the local SVG card and expanded visual-reference URLs
 alongside the scored profile.

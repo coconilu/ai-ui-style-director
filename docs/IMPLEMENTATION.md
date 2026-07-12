@@ -43,7 +43,8 @@ top-level route through `references/catalog-browser.md`. The agent starts the
 foreground service and does not gather a website brief, recommend five styles,
 run `apply`, or modify a target project.
 
-The Skill defines behavior and gates. It does not contain the recommendation algorithm.
+The Skill defines behavior and gates. It does not contain or improvise the
+recommendation algorithm; the deterministic Node.js core performs matching.
 
 ### 2. Skill wrapper: locate the real CLI
 
@@ -75,16 +76,27 @@ the complete-catalog command dispatches directly to
 `src/catalog-browser.mjs` exports four focused operations:
 
 - `buildStyleCatalog`: join curated profiles, visual metadata, generated SVG
-  previews, and source-index statistics into the browser view model;
+  preview URLs, indexes, and source-index statistics into the schema-v2 browser
+  view model;
 - `filterCatalogEntries`: apply text search and family, page type, density,
   tone, and component-kit filters;
 - `renderCatalogBrowserPage`: render the browser shell;
 - `startStyleCatalogServer`: expose the page and assets as a foreground
   loopback service.
 
-The catalog service's four application routes are `/`, `/catalog.json`,
-`/app.js`, and `/styles.css`. Page state is encoded in the URL query, allowing
-a filtered view to survive refresh without server-side state.
+The catalog service exposes `/`, `/catalog.json`, `/app.js`, `/styles.css`, and
+one validated `/previews/<style-id>.svg` route per curated profile. The JSON
+uses lightweight `previewUrl` values instead of embedded image data; preview
+routes are same-origin and use a same-origin resource policy. Page state is
+encoded in the URL query, allowing a filtered view to survive refresh without
+server-side state.
+
+The browser model includes a token-to-numeric-entry postings index and an
+ID-to-entry index. Numeric postings keep repeated style IDs out of the search
+index. Exact tokens are intersected through the postings lists; a missing
+exact token falls back to substring search so partial terms still work. The
+client renders the current result set in batches of 24 cards, limiting initial
+DOM and image work without changing the total match count.
 
 `src/loopback-server.mjs` owns the common `127.0.0.1` listener, port
 validation, no-cache response behavior, method and path handling, and graceful
@@ -104,16 +116,30 @@ Recommendation and project-contract behavior read four curated datasets:
 | `catalog/component-kits.json` | Component-library fit and usage boundaries |
 | `catalog/scenario-questions.json` | Questions for an underspecified brief |
 
+The current catalog contains 48 profiles: four in each of 12 families. A
+separate `catalog/recommendation-benchmarks.json` file contains 12 representative
+briefs used by the test suite to protect family-level intent coverage.
+
 `catalog/providers.json` describes upstream repositories. `catalog/generated/*` records scan results. The recommendation core does not read those generated indexes, so upstream changes cannot enter user-facing recommendations without review.
 
 The catalog browser reads `catalog/generated/style-sources.json` only to show
-its current source-index count. Those paths are not semantically parsed and are
-not returned as complete style cards. Browser entries still come only from the
-reviewed profiles in `catalog/style-profiles.json`.
+its current source-index count. At this revision the file contains 74 provider
+paths, but those paths are not semantically parsed and are not returned as 74
+complete style cards. Browser entries still come only from the 48 reviewed
+profiles in `catalog/style-profiles.json`.
+
+`scripts/validate-curated-catalog.mjs` applies `catalog/curation-policy.json`,
+which requires at least four profiles and three distinct visual variants in
+each baseline family. It also enforces unique IDs, complete profile fields and
+taxonomy values, one-to-one profile/visual mapping, supported visual variants,
+complete hex-color themes, exactly three unique references backed by the
+provider source index, and the presence of every committed preview.
 
 ## Recommendation algorithm
 
-Recommendation in `src/core.mjs` is deterministic rule matching. It does not require an LLM, embeddings, or a vector database.
+Recommendation in `src/core.mjs` is deterministic rule matching. It does not
+require an LLM, embeddings, or a vector database. The Agent orchestrates
+intake, selection, and confirmation around this programmatic result.
 
 ### Brief normalization
 
@@ -123,15 +149,25 @@ Recommendation in `src/core.mjs` is deterministic rule matching. It does not req
 
 Profile fields use three weight groups:
 
-- high: keywords, page types, audiences, and goals;
+- high: family, keywords, page types, audiences, and goals;
 - medium: tones, density, and best-fit scenarios;
 - low: layout rules.
 
-Common intents such as AI, dashboard, developer, enterprise, consumer, and redesign receive explicit bonuses. Identical inputs and Catalog data produce identical ordering, which keeps recommendation testable and reproducible.
+Matching uses normalized token boundaries and light plural canonicalization,
+while generic words such as `website`, `product`, and `team` do not qualify a
+brief by themselves. Identical inputs and Catalog data produce identical
+ordering, which keeps recommendation testable and reproducible.
 
 ### Diversification and rerolling
 
-`diversify` first selects high-scoring profiles from different `family` values, then fills remaining slots from the score order. This prevents five near-identical options.
+Diversification first discards zero-score entries and results below 15% of the
+best score. It otherwise keeps score order, promoting a new `family` only when
+its score is at least 80% of the best remaining candidate. This keeps
+relevance primary while allowing near-score alternatives to add useful visual
+range.
+
+The 12-case benchmark asserts the expected Top-1 family, required Top-5 family
+coverage, and identical style IDs and scores across repeated runs.
 
 Session state lives in `.ui-style-director/session.json`. With `--again`, the core excludes `shownStyleIds` and appends the next results. It reports `exhausted` when fewer unseen styles remain than requested.
 
@@ -166,10 +202,11 @@ until Ctrl+C. Port `0` lets the operating system choose an available port;
 `--port` requests a specific port and `--json` makes the startup output
 machine-readable.
 
-The client loads the reviewed view model from `/catalog.json`, renders every
-style card, and performs search and tag filtering in the page. The generated
-SVG preview and upstream references remain subject to the same neutral-asset
-and external-link boundaries as recommendation galleries.
+The client loads the reviewed schema-v2 view model from `/catalog.json`, uses
+the inverted search index and facet tags in the page, and progressively renders
+24 matching cards at a time. Generated SVG previews load independently from
+same-origin routes, while upstream references remain subject to the same
+neutral-asset and external-link boundaries as recommendation galleries.
 
 ## `apply` and the project design contract
 
@@ -224,7 +261,7 @@ files and do not open noisy refresh pull requests. Directory entries are sorted
 before capped source selection, making the indexed subset stable across operating
 systems and filesystems.
 
-The scanner is a lightweight path indexer, not a semantic component parser. It records at most 200 registry files and 100 documentation files per provider, so counts represent indexed sources rather than complete upstream component totals.
+The scanner is a lightweight path indexer, not a semantic component parser. It records at most 200 registry files and 100 documentation files per provider, so counts represent indexed sources rather than complete upstream component totals. In particular, the current 74 style-source paths are review candidates, not automatically promoted styles.
 
 `.github/workflows/refresh-providers.yml` runs the same process daily, validates the repository, and opens a pull request only when generated indexes change.
 
@@ -261,7 +298,8 @@ The implementation favors explainability, reproducibility, and a small dependenc
 - maintenance: new providers still require reviewed profile, visual, and component mappings;
 - extension requirement: future recommendation entrypoints should reuse or verify the same scoring and diversification rules so different surfaces stay consistent.
 
-Tests cover intake checks, recommendation order, rerolling, visual references,
-the HTML gallery, catalog view-model filtering, catalog HTTP routes, shared
-loopback safety, `apply` output, provider indexes, CLI commands, and
-Codex/Claude Code wrapper discovery.
+Tests cover intake checks, the 12-case deterministic recommendation benchmark,
+rerolling, curated-catalog validation, visual references, the HTML gallery,
+indexed catalog filtering, progressive rendering, catalog and independent SVG
+HTTP routes, shared loopback safety, `apply` output, provider indexes, CLI
+commands, and Codex/Claude Code wrapper discovery.

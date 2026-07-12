@@ -35,6 +35,39 @@ const CHINESE_HINTS = [
   ["saas", "saas workflow product"]
 ];
 
+const GENERIC_BRIEF_TERMS = new Set([
+  "a",
+  "an",
+  "app",
+  "application",
+  "build",
+  "business",
+  "company",
+  "create",
+  "design",
+  "interface",
+  "make",
+  "new",
+  "page",
+  "product",
+  "redesign",
+  "refresh",
+  "service",
+  "software",
+  "team",
+  "the",
+  "ui",
+  "update",
+  "ux",
+  "web",
+  "webpage",
+  "website"
+]);
+
+const SCENARIO_PROFILE_ARRAY_FIELDS = ["pageTypes", "audiences", "goals", "keywords", "bestFor"];
+const DIVERSITY_RELEVANCE_RATIO = 0.15;
+const DIVERSITY_PROMOTION_RATIO = 0.8;
+
 export function repoRoot() {
   return ROOT_DIR;
 }
@@ -76,94 +109,175 @@ function resolveStyleVisual(styleId, visualMap = new Map(loadStyleVisuals().map(
   };
 }
 
+function includesHint(text, needle) {
+  if (!/^[a-z0-9]+$/iu.test(needle)) return text.includes(needle);
+  const tokens = text.toLowerCase().split(/[^a-z0-9]+/u).filter(Boolean);
+  return tokens.includes(needle.toLowerCase());
+}
+
 function normalizeBrief(brief) {
-  let text = String(brief || "");
+  const original = String(brief || "");
+  const expansions = new Set();
   for (const [needle, expansion] of CHINESE_HINTS) {
-    if (text.includes(needle)) text += ` ${expansion}`;
+    if (includesHint(original, needle)) expansions.add(expansion);
   }
+  const text = `${original} ${[...expansions].join(" ")}`;
   return text.toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function canonicalToken(token) {
+  if (token.length > 4 && token.endsWith("ies")) return `${token.slice(0, -3)}y`;
+  if (token.length > 4 && token.endsWith("s") && !token.endsWith("ss")) return token.slice(0, -1);
+  return token;
+}
+
+function normalizeForMatching(value) {
+  return normalizeBrief(value)
+    .split(" ")
+    .filter(Boolean)
+    .map(canonicalToken)
+    .join(" ");
+}
+
+function normalizeLiteralForMatching(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .map(canonicalToken)
+    .join(" ");
+}
+
 function normalizedTerms(values) {
-  return values.flatMap((value) => normalizeBrief(value).split(" ").filter(Boolean));
+  return values
+    .flatMap((value) => normalizeForMatching(value).split(" ").filter(Boolean))
+    .filter((term) => !GENERIC_BRIEF_TERMS.has(term));
+}
+
+function normalizedPhrases(values) {
+  return values.map(normalizeLiteralForMatching).filter(Boolean);
 }
 
 function countMatches(haystack, terms) {
   let score = 0;
   const seen = new Set();
+  const paddedHaystack = ` ${haystack} `;
   for (const term of terms) {
     if (term.length < 2 || seen.has(term)) continue;
     seen.add(term);
-    if (haystack.includes(term)) score += term.length > 5 ? 2 : 1;
+    if (paddedHaystack.includes(` ${term} `)) score += term.length > 5 ? 2 : 1;
   }
   return score;
 }
 
-export function isBriefInsufficient(brief) {
-  const normalized = normalizeBrief(brief);
+function profileArray(profile, field) {
+  return Array.isArray(profile?.[field]) ? profile[field] : [];
+}
+
+function scenarioTermsFromProfiles(profiles) {
+  return new Set(
+    profiles
+      .flatMap((profile) => [
+        profile?.family || "",
+        ...SCENARIO_PROFILE_ARRAY_FIELDS.flatMap((field) => profileArray(profile, field))
+      ])
+      .flatMap((value) => normalizeForMatching(value).split(" ").filter(Boolean))
+      .filter((term) => term.length >= 2 && !GENERIC_BRIEF_TERMS.has(term))
+  );
+}
+
+export function isBriefInsufficient(brief, profiles = loadStyleProfiles()) {
+  const normalized = normalizeForMatching(brief);
   if (!normalized) return true;
   const terms = new Set(normalized.split(" ").filter(Boolean));
-  const specificTerms = [
-    "dashboard",
-    "docs",
-    "portfolio",
-    "ecommerce",
-    "developer",
-    "enterprise",
-    "consumer",
-    "finance",
-    "education",
-    "research",
-    "saas",
-    "ai",
-    "tool"
-  ];
-  return specificTerms.every((term) => !terms.has(term));
+  const scenarioTerms = scenarioTermsFromProfiles(Array.isArray(profiles) ? profiles : []);
+  return [...terms].every((term) => !scenarioTerms.has(term));
 }
 
 export function scoreProfile(profile, brief) {
-  const normalized = normalizeBrief(brief);
+  const normalized = normalizeForMatching(brief);
+  const keywords = profileArray(profile, "keywords");
+  const pageTypes = profileArray(profile, "pageTypes");
+  const audiences = profileArray(profile, "audiences");
+  const goals = profileArray(profile, "goals");
+  const tones = profileArray(profile, "tones");
+  const bestFor = profileArray(profile, "bestFor");
+  const layoutRules = profileArray(profile, "layoutRules");
   const highWeight = normalizedTerms([
-    ...profile.keywords,
-    ...profile.pageTypes,
-    ...profile.audiences,
-    ...profile.goals
+    profile?.family || "",
+    ...keywords,
+    ...pageTypes,
+    ...audiences,
+    ...goals
   ]);
-  const mediumWeight = normalizedTerms([...profile.tones, profile.density, ...profile.bestFor]);
-  const lowWeight = normalizedTerms(profile.layoutRules);
+  const mediumWeight = normalizedTerms([...tones, profile?.density || "", ...bestFor]);
+  const lowWeight = normalizedTerms(layoutRules);
 
   let score = 0;
   score += countMatches(normalized, highWeight) * 4;
   score += countMatches(normalized, mediumWeight) * 2;
   score += countMatches(normalized, lowWeight);
+  score += countMatches(normalized, normalizedPhrases(pageTypes)) * 4;
+  score += countMatches(normalized, normalizedPhrases(audiences)) * 3;
+  score += countMatches(normalized, normalizedPhrases(goals)) * 2;
+  score += countMatches(normalized, normalizedPhrases(keywords)) * 2;
+  score += countMatches(normalized, normalizedPhrases([profile?.family || ""])) * 4;
 
-  if (normalized.includes("redesign") && profile.pageTypes.includes("app-redesign")) score += 8;
-  if (normalized.includes("new") && profile.pageTypes.includes("landing")) score += 2;
-  if (normalized.includes("ai") && profile.keywords.includes("ai")) score += 6;
-  if (normalized.includes("dashboard") && profile.pageTypes.includes("dashboard")) score += 7;
-  if (normalized.includes("developer") && profile.audiences.includes("developers")) score += 6;
-  if (normalized.includes("enterprise") && profile.audiences.includes("enterprise-buyers")) score += 6;
-  if (normalized.includes("consumer") && profile.audiences.includes("consumers")) score += 5;
+  if (countMatches(normalized, ["redesign"]) && pageTypes.includes("app-redesign")) score += 8;
+  if (countMatches(normalized, ["new"]) && pageTypes.includes("landing")) score += 2;
 
   return score;
 }
 
-function diversify(scored, count) {
+function compareText(left, right) {
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
+}
+
+function compareScoredProfiles(left, right) {
+  return (
+    right.score - left.score ||
+    compareText(left.profile?.name || "", right.profile?.name || "") ||
+    compareText(left.profile?.id || "", right.profile?.id || "")
+  );
+}
+
+export function diversifyScoredProfiles(scored, count, {
+  relevanceRatio = DIVERSITY_RELEVANCE_RATIO,
+  diversityPromotionRatio = DIVERSITY_PROMOTION_RATIO
+} = {}) {
+  const limit = Math.max(0, Number.isFinite(count) ? Math.floor(count) : 0);
+  if (limit === 0) return [];
+
+  const ordered = scored
+    .filter((item) => Number.isFinite(item?.score) && item.score > 0 && item?.profile?.id)
+    .slice()
+    .sort(compareScoredProfiles);
+  if (ordered.length === 0) return [];
+
+  const ratio = Number.isFinite(relevanceRatio) ? Math.max(0, Math.min(1, relevanceRatio)) : DIVERSITY_RELEVANCE_RATIO;
+  const promotionRatio = Number.isFinite(diversityPromotionRatio)
+    ? Math.max(0, Math.min(1, diversityPromotionRatio))
+    : DIVERSITY_PROMOTION_RATIO;
+  const minimumScore = Math.max(1, Math.ceil(ordered[0].score * ratio));
+  const remaining = ordered.filter((item) => item.score >= minimumScore);
   const selected = [];
   const families = new Set();
 
-  for (const item of scored) {
-    if (selected.length >= count) break;
-    if (!families.has(item.profile.family)) {
-      selected.push(item);
+  while (selected.length < limit && remaining.length > 0) {
+    const best = remaining[0];
+    const diverseIndex = remaining.findIndex((item) => !families.has(item.profile.family));
+    const canPromoteDiversity = diverseIndex > 0
+      && remaining[diverseIndex].score >= best.score * promotionRatio;
+    const selectedIndex = canPromoteDiversity ? diverseIndex : 0;
+    const [item] = remaining.splice(selectedIndex, 1);
+    selected.push(item);
+    if (item.profile.family) {
       families.add(item.profile.family);
-    }
-  }
-
-  for (const item of scored) {
-    if (selected.length >= count) break;
-    if (!selected.some((candidate) => candidate.profile.id === item.profile.id)) {
-      selected.push(item);
     }
   }
 
@@ -431,7 +545,8 @@ export function recommendStyles({
   again = false,
   sessionPath = resolve(".ui-style-director", "session.json")
 } = {}) {
-  if (isBriefInsufficient(brief)) {
+  const profiles = loadStyleProfiles();
+  if (isBriefInsufficient(brief, profiles)) {
     return {
       needsContext: true,
       questions: loadScenarioQuestions(),
@@ -440,16 +555,15 @@ export function recommendStyles({
     };
   }
 
-  const profiles = loadStyleProfiles();
   const visualMap = new Map(loadStyleVisuals().map((item) => [item.styleId, item]));
   const session = readSession(sessionPath);
   const excluded = new Set(again ? session.shownStyleIds || [] : []);
   const scored = profiles
     .map((profile) => ({ profile, score: scoreProfile(profile, brief) }))
     .filter((item) => !excluded.has(item.profile.id))
-    .sort((a, b) => b.score - a.score || a.profile.name.localeCompare(b.profile.name));
+    .sort(compareScoredProfiles);
 
-  const selected = diversify(scored, count);
+  const selected = diversifyScoredProfiles(scored, count);
   const exhausted = selected.length < count;
   const shownStyleIds = Array.from(new Set([...(session.shownStyleIds || []), ...selected.map((item) => item.profile.id)]));
 

@@ -11,6 +11,8 @@ import { expandVisualReferences } from "./preview.mjs";
 
 const FACET_GROUPS = ["family", "pageTypes", "density", "tones", "componentKits"];
 const DENSITY_ORDER = ["low", "low-medium", "medium", "medium-high", "high"];
+export const CATALOG_PAGE_SIZE = 24;
+const STYLE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SEARCH_ALIASES = new Map([
   ["developer", ["开发者", "开发工具", "技术产品"]],
   ["saas", ["软件服务", "工作流", "管理台"]],
@@ -52,10 +54,19 @@ function normalizeSearchText(value) {
     .trim();
 }
 
-function previewDataUri(styleId) {
-  const path = join(repoRoot(), "catalog", "previews", `${styleId}.svg`);
-  const svg = readFileSync(path, "utf8");
-  return `data:image/svg+xml;base64,${Buffer.from(svg, "utf8").toString("base64")}`;
+function assertSafeStyleId(styleId) {
+  if (!STYLE_ID_PATTERN.test(styleId)) {
+    throw new Error(`Invalid style id for preview route: ${styleId}`);
+  }
+  return styleId;
+}
+
+function previewPath(styleId) {
+  return join(repoRoot(), "catalog", "previews", `${assertSafeStyleId(styleId)}.svg`);
+}
+
+function previewUrl(styleId) {
+  return `/previews/${assertSafeStyleId(styleId)}.svg`;
 }
 
 function aliasesFor(values) {
@@ -77,6 +88,17 @@ function uniqueSorted(values, group) {
     });
   }
   return unique.sort((left, right) => left.localeCompare(right));
+}
+
+function buildSearchIndex(entries) {
+  const postings = new Map();
+  for (const [entryIndex, entry] of entries.entries()) {
+    for (const token of new Set(entry.searchText.split(" ").filter(Boolean))) {
+      if (!postings.has(token)) postings.set(token, []);
+      postings.get(token).push(entryIndex);
+    }
+  }
+  return Object.fromEntries([...postings.entries()].sort(([left], [right]) => left.localeCompare(right)));
 }
 
 export function buildStyleCatalog() {
@@ -130,7 +152,7 @@ export function buildStyleCatalog() {
         ...searchableValues,
         ...aliasesFor(searchableValues)
       ].join(" ")),
-      previewDataUri: previewDataUri(profile.id),
+      previewUrl: previewUrl(profile.id),
       references: expandVisualReferences(visual.references)
     };
   });
@@ -140,16 +162,54 @@ export function buildStyleCatalog() {
     uniqueSorted(entries.flatMap((entry) => entry.tags[group]), group)
   ]));
 
+  const searchIndex = buildSearchIndex(entries);
+
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     styleCount: entries.length,
     sourceCount: Array.isArray(sourceIndex.sources) ? sourceIndex.sources.length : 0,
+    pageSize: CATALOG_PAGE_SIZE,
     facets,
+    entryIndex: Object.fromEntries(entries.map((entry, index) => [entry.id, index])),
+    searchIndex,
+    searchIndexMeta: {
+      documentCount: entries.length,
+      tokenCount: Object.keys(searchIndex).length,
+      normalization: "nfkc-lower-alphanumeric",
+      strategy: "exact-token-postings-with-substring-fallback",
+      postingValue: "entry-index"
+    },
     entries
   };
 }
 
-export function filterCatalogEntries(entries, { query = "", filters = {} } = {}) {
+export function searchCatalogEntries(catalog, query = "") {
+  const entries = Array.isArray(catalog?.entries) ? catalog.entries : [];
+  const queryTerms = normalizeSearchText(query).split(" ").filter(Boolean);
+  if (queryTerms.length === 0) return entries;
+
+  let candidateIndexes = null;
+  for (const term of queryTerms) {
+    const indexedEntries = catalog.searchIndex?.[term];
+    const termIndexes = new Set(Array.isArray(indexedEntries)
+      ? indexedEntries
+      : entries
+        .map((entry, index) => ({ entry, index }))
+        .filter(({ entry }) => entry.searchText.includes(term))
+        .map(({ index }) => index));
+
+    candidateIndexes = candidateIndexes === null
+      ? termIndexes
+      : new Set([...candidateIndexes].filter((index) => termIndexes.has(index)));
+    if (candidateIndexes.size === 0) break;
+  }
+
+  return [...candidateIndexes].map((index) => entries[index]).filter(Boolean);
+}
+
+export function filterCatalogEntries(entriesOrCatalog, { query = "", filters = {} } = {}) {
+  const catalog = Array.isArray(entriesOrCatalog) ? null : entriesOrCatalog;
+  const entries = catalog?.entries || entriesOrCatalog;
   const queryTerms = normalizeSearchText(query).split(" ").filter(Boolean);
   const activeFilters = Object.entries(filters)
     .map(([group, values]) => [group, Array.isArray(values) ? values : [values]])
@@ -158,8 +218,11 @@ export function filterCatalogEntries(entries, { query = "", filters = {} } = {})
 
   if (queryTerms.length === 0 && activeFilters.length === 0) return entries;
 
-  return entries.filter((entry) => {
-    if (!queryTerms.every((term) => entry.searchText.includes(term))) return false;
+  const candidates = catalog
+    ? searchCatalogEntries(catalog, query)
+    : entries.filter((entry) => queryTerms.every((term) => entry.searchText.includes(term)));
+
+  return candidates.filter((entry) => {
     return activeFilters.every(([group, selectedValues]) => {
       const entryValues = (entry.tags[group] || []).map(normalizeSearchText);
       return selectedValues.some((selected) => entryValues.includes(selected));
@@ -183,7 +246,7 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <link rel="icon" href="data:,">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/styles.css">
   <title>UI 风格目录 · Web Style Director</title>
 </head>
@@ -226,6 +289,9 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
           <p id="filter-hint">组内任选，组间叠加</p>
         </div>
         <div id="style-grid" class="style-grid"></div>
+        <div class="load-more-wrap">
+          <button id="load-more" class="load-more-button" type="button" aria-controls="style-grid" hidden>加载更多</button>
+        </div>
         <div id="empty-state" class="empty-state" hidden>
           <strong>没有匹配的风格</strong>
           <span>尝试缩短搜索词或清空部分标签。</span>
@@ -325,6 +391,10 @@ h1 { margin: 0; font-size: clamp(36px, 5vw, 64px); line-height: .98; letter-spac
 .reference-item { display: flex; align-items: center; gap: 7px; color: var(--faint); font-size: 10px; }
 .reference-item span { margin-right: auto; }
 .reference-item a { padding: 4px 7px; border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: var(--ink); background: var(--tag); font-weight: 700; }
+.load-more-wrap { display: flex; justify-content: center; padding: 22px 0 4px; }
+.load-more-button { min-width: 150px; min-height: 44px; padding: 10px 18px; border: 1px solid var(--line); border-radius: 11px; cursor: pointer; color: var(--ink); background: var(--card); font-size: 12px; font-weight: 740; }
+.load-more-button:hover { border-color: #9ca39a; }
+.load-more-button:focus-visible { outline: 3px solid rgba(90, 117, 90, .2); outline-offset: 2px; }
 .empty-state { padding: 74px 24px; border: 1px dashed var(--line); border-radius: 18px; text-align: center; background: var(--panel); }
 .empty-state strong, .empty-state span { display: block; }
 .empty-state span { margin-top: 9px; color: var(--muted); font-size: 12px; }
@@ -376,6 +446,7 @@ const CATALOG_APP_JS = String.raw`
   "use strict";
 
   var FACET_ORDER = ["family", "pageTypes", "density", "tones", "componentKits"];
+  var DEFAULT_PAGE_SIZE = ${CATALOG_PAGE_SIZE};
   var COPY = {
     zh: {
       result: "个匹配风格",
@@ -385,6 +456,8 @@ const CATALOG_APP_JS = String.raw`
       references: "视觉参考",
       light: "浅色",
       dark: "深色",
+      loadMore: "加载更多",
+      loadMoreLabel: "再显示 {count} 个风格",
       facet: { family: "风格家族", pageTypes: "页面类型", density: "信息密度", tones: "视觉调性", componentKits: "组件库" },
       loadError: "目录载入失败，请刷新页面或重新启动服务。"
     },
@@ -396,13 +469,15 @@ const CATALOG_APP_JS = String.raw`
       references: "Visual references",
       light: "Light",
       dark: "Dark",
+      loadMore: "Load more",
+      loadMoreLabel: "Show {count} more styles",
       facet: { family: "Family", pageTypes: "Page type", density: "Density", tones: "Tone", componentKits: "Component kits" },
       loadError: "Could not load the catalog. Refresh the page or restart the server."
     }
   };
   var locale = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
   var copy = COPY[locale];
-  var state = { catalog: null, query: "", filters: {} };
+  var state = { catalog: null, query: "", filters: {}, visibleCount: DEFAULT_PAGE_SIZE };
   var search = document.getElementById("catalog-search");
   var clearButton = document.getElementById("clear-filters");
   var facetGroups = document.getElementById("facet-groups");
@@ -410,6 +485,7 @@ const CATALOG_APP_JS = String.raw`
   var status = document.getElementById("result-status");
   var activeCount = document.getElementById("active-filter-count");
   var emptyState = document.getElementById("empty-state");
+  var loadMore = document.getElementById("load-more");
 
   document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
 
@@ -446,9 +522,40 @@ const CATALOG_APP_JS = String.raw`
     history.replaceState({}, "", url);
   }
 
-  function matches(entry) {
+  function pageSize() {
+    var configured = Number(state.catalog && state.catalog.pageSize);
+    return Number.isInteger(configured) && configured > 0 ? configured : DEFAULT_PAGE_SIZE;
+  }
+
+  function resetPagination() {
+    state.visibleCount = pageSize();
+  }
+
+  function searchCandidates() {
     var terms = normalize(state.query).split(" ").filter(Boolean);
-    if (!terms.every(function (term) { return entry.searchText.indexOf(term) !== -1; })) return false;
+    if (terms.length === 0) return state.catalog.entries;
+
+    var candidateIndexes = null;
+    terms.forEach(function (term) {
+      if (candidateIndexes && candidateIndexes.size === 0) return;
+      var indexedEntries = state.catalog.searchIndex && state.catalog.searchIndex[term];
+      var termIndexes = new Set(Array.isArray(indexedEntries)
+        ? indexedEntries
+        : state.catalog.entries
+          .map(function (entry, index) { return { entry: entry, index: index }; })
+          .filter(function (candidate) { return candidate.entry.searchText.indexOf(term) !== -1; })
+          .map(function (candidate) { return candidate.index; }));
+      candidateIndexes = candidateIndexes === null
+        ? termIndexes
+        : new Set(Array.from(candidateIndexes).filter(function (index) { return termIndexes.has(index); }));
+    });
+
+    return Array.from(candidateIndexes).map(function (index) {
+      return state.catalog.entries[index];
+    }).filter(Boolean);
+  }
+
+  function matchesFilters(entry) {
     return FACET_ORDER.every(function (group) {
       var selected = state.filters[group] || [];
       if (selected.length === 0) return true;
@@ -476,7 +583,7 @@ const CATALOG_APP_JS = String.raw`
     article.dataset.styleId = entry.id;
     var preview = element("div", "preview");
     var image = document.createElement("img");
-    image.src = entry.previewDataUri;
+    image.src = entry.previewUrl;
     image.alt = entry.name + " style preview";
     image.loading = "lazy";
     preview.append(image, element("span", "preview-family", entry.family));
@@ -547,6 +654,7 @@ const CATALOG_APP_JS = String.raw`
             ? values.filter(function (item) { return item !== value; })
             : values.concat(value);
           writeUrlState();
+          resetPagination();
           render();
         });
         options.append(button);
@@ -557,18 +665,27 @@ const CATALOG_APP_JS = String.raw`
   }
 
   function render() {
-    var entries = state.catalog.entries.filter(matches);
+    var entries = searchCandidates().filter(matchesFilters);
+    var visibleEntries = entries.slice(0, state.visibleCount);
     status.textContent = entries.length + " " + copy.result;
     activeCount.textContent = String(selectedCount());
     grid.replaceChildren();
-    entries.forEach(function (entry) { grid.append(createCard(entry)); });
+    visibleEntries.forEach(function (entry) { grid.append(createCard(entry)); });
     emptyState.hidden = entries.length !== 0;
+    var remaining = entries.length - visibleEntries.length;
+    loadMore.hidden = remaining <= 0;
+    if (remaining > 0) {
+      var nextCount = Math.min(pageSize(), remaining);
+      loadMore.textContent = copy.loadMore + " · " + nextCount;
+      loadMore.setAttribute("aria-label", copy.loadMoreLabel.replace("{count}", String(nextCount)));
+    }
     renderFacets();
   }
 
   search.addEventListener("input", function () {
     state.query = search.value;
     writeUrlState();
+    resetPagination();
     render();
   });
   clearButton.addEventListener("click", function () {
@@ -576,8 +693,13 @@ const CATALOG_APP_JS = String.raw`
     state.filters = {};
     search.value = "";
     writeUrlState();
+    resetPagination();
     render();
     search.focus();
+  });
+  loadMore.addEventListener("click", function () {
+    state.visibleCount += pageSize();
+    render();
   });
   window.addEventListener("keydown", function (event) {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -594,6 +716,7 @@ const CATALOG_APP_JS = String.raw`
     })
     .then(function (catalog) {
       state.catalog = catalog;
+      resetPagination();
       render();
     })
     .catch(function () {
@@ -606,16 +729,30 @@ const CATALOG_APP_JS = String.raw`
 export async function startStyleCatalogServer({ port = 0, catalog = buildStyleCatalog() } = {}) {
   const html = renderCatalogBrowserPage(catalog);
   const catalogJson = `${JSON.stringify(catalog)}\n`;
-  const contentSecurityPolicy = "default-src 'none'; img-src data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+  const contentSecurityPolicy = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+  const routes = {
+    "/": { body: html, contentType: "text/html; charset=utf-8" },
+    "/catalog.json": { body: catalogJson, contentType: "application/json; charset=utf-8" },
+    "/app.js": { body: CATALOG_APP_JS, contentType: "text/javascript; charset=utf-8" },
+    "/styles.css": { body: CATALOG_STYLES_CSS, contentType: "text/css; charset=utf-8" }
+  };
+
+  for (const entry of catalog.entries) {
+    const routePath = previewUrl(entry.id);
+    if (entry.previewUrl !== routePath) {
+      throw new Error(`Unexpected preview URL for style ${entry.id}: ${entry.previewUrl}`);
+    }
+    routes[routePath] = {
+      body: readFileSync(previewPath(entry.id), "utf8"),
+      contentType: "image/svg+xml; charset=utf-8",
+      headers: { "Cross-Origin-Resource-Policy": "same-origin" }
+    };
+  }
+
   const served = await startLoopbackServer({
     port,
     serverName: "style catalog server",
-    routes: {
-      "/": { body: html, contentType: "text/html; charset=utf-8" },
-      "/catalog.json": { body: catalogJson, contentType: "application/json; charset=utf-8" },
-      "/app.js": { body: CATALOG_APP_JS, contentType: "text/javascript; charset=utf-8" },
-      "/styles.css": { body: CATALOG_STYLES_CSS, contentType: "text/css; charset=utf-8" }
-    },
+    routes,
     contentSecurityPolicy
   });
 

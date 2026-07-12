@@ -6,9 +6,10 @@ direction before choosing it without copying protected brand screenshots.
 ## Generated style cards
 
 `catalog/previews/` contains one deterministic SVG wireframe for every style in
-`catalog/style-profiles.json`. The card communicates layout, density, hierarchy,
-and palette at a glance. It deliberately uses generic labels and shapes rather
-than upstream logos, copy, screenshots, or proprietary assets.
+`catalog/style-profiles.json`. The current 48 cards cover 12 families with four
+reviewed directions per family. Each card communicates layout, density,
+hierarchy, and palette at a glance. It deliberately uses generic labels and
+shapes rather than upstream logos, copy, screenshots, or proprietary assets.
 
 The source metadata lives in `catalog/style-visuals.json`:
 
@@ -73,6 +74,12 @@ The page also reports the current upstream style-source index count as
 provenance context. Those paths do not have the reviewed metadata required for
 complete cards, so they remain a count rather than additional styles.
 
+The browser's schema-v2 JSON keeps each card lightweight by returning a
+`previewUrl`, not an embedded SVG. Previews load from independent same-origin
+`/previews/<style-id>.svg` routes. An inverted token index handles exact search
+terms, substring matching remains available for partial terms, and the client
+adds matching cards in batches of 24.
+
 ## Project draft
 
 After selection, `apply` writes
@@ -91,4 +98,5 @@ pixel-perfect final mockup.
 3. Use real upstream slugs and describe the narrow role of each reference.
 4. Run `npm run previews`.
 5. Visually inspect the generated SVG.
-6. Run `npm run check`.
+6. Run `npm run catalog:curated:validate`.
+7. Run `npm run check`.

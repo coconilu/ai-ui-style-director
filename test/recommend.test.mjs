@@ -5,9 +5,11 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { validateCuratedCatalog } from "../scripts/validate-curated-catalog.mjs";
 import { validateGeneratedCatalog } from "../scripts/validate-generated-catalog.mjs";
 import {
   applyStyle,
+  diversifyScoredProfiles,
   isBriefInsufficient,
   loadStyleProfiles,
   loadStyleVisuals,
@@ -18,15 +20,48 @@ import {
   recommendStyles,
   renderRecommendationGalleryHtml,
   renderRecommendations,
+  scoreProfile,
   startRecommendationPreviewServer,
   updateCatalog
 } from "../src/core.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
 const rootDir = join(dirname(binPath), "..");
+const curatedValidatorPath = fileURLToPath(new URL("../scripts/validate-curated-catalog.mjs", import.meta.url));
 const wrapperPath = fileURLToPath(
   new URL("../skills/web-style-director/scripts/style-director.mjs", import.meta.url)
 );
+const recommendationBenchmarks = JSON.parse(
+  readFileSync(join(rootDir, "catalog", "recommendation-benchmarks.json"), "utf8")
+);
+
+function writeCuratedCatalogFixture({ mutate } = {}) {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-curated-catalog-"));
+  const profiles = JSON.parse(readFileSync(join(rootDir, "catalog", "style-profiles.json"), "utf8"));
+  const visuals = JSON.parse(readFileSync(join(rootDir, "catalog", "style-visuals.json"), "utf8"));
+  const styleSources = JSON.parse(
+    readFileSync(join(rootDir, "catalog", "generated", "style-sources.json"), "utf8")
+  );
+  const previewsDir = join(dir, "previews");
+  mkdirSync(previewsDir, { recursive: true });
+
+  mutate?.({ profiles, visuals, styleSources });
+  writeFileSync(join(dir, "style-profiles.json"), `${JSON.stringify(profiles, null, 2)}\n`, "utf8");
+  writeFileSync(join(dir, "style-visuals.json"), `${JSON.stringify(visuals, null, 2)}\n`, "utf8");
+  writeFileSync(join(dir, "style-sources.json"), `${JSON.stringify(styleSources, null, 2)}\n`, "utf8");
+  for (const profile of profiles) {
+    if (typeof profile?.id === "string") {
+      writeFileSync(join(previewsDir, `${profile.id}.svg`), "<svg xmlns=\"http://www.w3.org/2000/svg\"/>\n", "utf8");
+    }
+  }
+
+  return {
+    profilesPath: join(dir, "style-profiles.json"),
+    visualsPath: join(dir, "style-visuals.json"),
+    styleSourcesPath: join(dir, "style-sources.json"),
+    previewsDir
+  };
+}
 
 function writeFakeRepository(repositoryDir, marker) {
   const fakeBin = join(repositoryDir, "bin", "ai-ui-style-director.mjs");
@@ -73,7 +108,107 @@ function runInstalledWrapper({
 
 test("detects missing scenario context", () => {
   assert.equal(isBriefInsufficient("make a website"), true);
+  assert.equal(isBriefInsufficient("make a paid website"), true);
   assert.equal(isBriefInsufficient("AI developer tool website"), false);
+
+  const expandedCatalog = [
+    {
+      pageTypes: ["patient-portal"],
+      audiences: ["clinicians"],
+      goals: ["care-coordination"],
+      keywords: ["healthcare"],
+      bestFor: ["medical teams"]
+    }
+  ];
+  assert.equal(isBriefInsufficient("make a website", expandedCatalog), true);
+  assert.equal(isBriefInsufficient("healthcare patient portal for clinicians", expandedCatalog), false);
+
+  const familyOnlyProfiles = [
+    { id: "healthcare-family", name: "Healthcare", family: "healthcare" },
+    { id: "hospitality-family", name: "Hospitality", family: "hospitality" }
+  ];
+  assert.equal(isBriefInsufficient("healthcare website", familyOnlyProfiles), false);
+  const familyRanking = diversifyScoredProfiles(
+    familyOnlyProfiles.map((profile) => ({ profile, score: scoreProfile(profile, "healthcare website") })),
+    2
+  );
+  assert.equal(familyRanking[0].profile.id, "healthcare-family");
+});
+
+test("diversification keeps relevance ahead of family coverage and is deterministic", () => {
+  const scored = [
+    { profile: { id: "unrelated-family", name: "Unrelated", family: "unrelated" }, score: 14 },
+    { profile: { id: "relevant-two", name: "Relevant Two", family: "relevant" }, score: 90 },
+    { profile: { id: "zero-score", name: "Zero", family: "zero" }, score: 0 },
+    { profile: { id: "relevant-one", name: "Relevant One", family: "relevant" }, score: 100 }
+  ];
+
+  const first = diversifyScoredProfiles(scored, 5);
+  const second = diversifyScoredProfiles(scored.toReversed(), 5);
+  assert.deepEqual(first.map((item) => item.profile.id), ["relevant-one", "relevant-two"]);
+  assert.deepEqual(
+    first.map((item) => [item.profile.id, item.score]),
+    second.map((item) => [item.profile.id, item.score])
+  );
+});
+
+test("diversification promotes only near-score alternatives from a new family", () => {
+  const scored = [
+    { profile: { id: "same-one", name: "Same One", family: "same" }, score: 100 },
+    { profile: { id: "same-two", name: "Same Two", family: "same" }, score: 95 },
+    { profile: { id: "close-diverse", name: "Close Diverse", family: "diverse" }, score: 80 },
+    { profile: { id: "weak-diverse", name: "Weak Diverse", family: "weak" }, score: 20 }
+  ];
+
+  assert.deepEqual(
+    diversifyScoredProfiles(scored, 4).map((item) => item.profile.id),
+    ["same-one", "close-diverse", "same-two", "weak-diverse"]
+  );
+});
+
+test("recommendation benchmarks preserve intent coverage and deterministic ranking", () => {
+  assert.equal(recommendationBenchmarks.schemaVersion, 1);
+  assert.equal(Array.isArray(recommendationBenchmarks.cases), true);
+  assert.equal(recommendationBenchmarks.cases.length > 0, true);
+
+  for (const benchmark of recommendationBenchmarks.cases) {
+    const dir = mkdtempSync(join(tmpdir(), `style-director-benchmark-${benchmark.id}-`));
+    const first = recommendStyles({
+      brief: benchmark.brief,
+      count: 5,
+      sessionPath: join(dir, "first-session.json")
+    });
+    const second = recommendStyles({
+      brief: benchmark.brief,
+      count: 5,
+      sessionPath: join(dir, "second-session.json")
+    });
+    const topFamilies = first.recommendations.map((item) => item.family);
+
+    assert.equal(first.needsContext, false, `${benchmark.id}: brief unexpectedly needs context`);
+    assert.equal(
+      benchmark.expectedTopFamilies.includes(topFamilies[0]),
+      true,
+      `${benchmark.id}: unexpected top family ${topFamilies[0]}`
+    );
+    for (const family of benchmark.requiredFamiliesInTop5) {
+      assert.equal(topFamilies.includes(family), true, `${benchmark.id}: missing required Top 5 family ${family}`);
+    }
+    for (let index = 1; index < first.recommendations.length; index += 1) {
+      const previous = first.recommendations[index - 1];
+      const current = first.recommendations[index];
+      assert.equal(
+        previous.score >= current.score * 0.8,
+        true,
+        `${benchmark.id}: diversity promoted ${previous.id} too far above ${current.id}`
+      );
+    }
+    assert.deepEqual(
+      first.recommendations.map((item) => [item.id, item.score]),
+      second.recommendations.map((item) => [item.id, item.score]),
+      `${benchmark.id}: ranking is not deterministic`
+    );
+  }
 });
 
 test("recommends five styles for an AI developer product", () => {
@@ -134,6 +269,85 @@ test("every style has a generated preview and three real visual references", () 
       assert.equal(upstreamSlugs.has(reference.slug), true, `Unknown upstream slug: ${reference.slug}`);
     }
   }
+});
+
+test("curated catalog validator accepts the current catalog and runs as a CLI", () => {
+  const profiles = loadStyleProfiles();
+  const visuals = loadStyleVisuals();
+  const result = validateCuratedCatalog();
+
+  assert.equal(result.profileCount, profiles.length);
+  assert.equal(result.visualCount, visuals.length);
+  assert.equal(result.requiredFamilyCount, 12);
+  assert.equal(result.minimumProfilesPerFamily, 4);
+  assert.equal(result.minimumVisualVariantsPerFamily, 3);
+  assert.equal(
+    result.referenceCount,
+    visuals.reduce((total, visual) => total + visual.references.length, 0)
+  );
+
+  const cli = spawnSync(process.execPath, [curatedValidatorPath], { encoding: "utf8" });
+  assert.equal(cli.status, 0, cli.stderr);
+  assert.match(cli.stdout, new RegExp(`${profiles.length} profiles, ${visuals.length} visuals`));
+});
+
+test("curated catalog policy protects baseline family depth and visual diversity", () => {
+  const fixture = writeCuratedCatalogFixture({
+    mutate({ profiles, visuals }) {
+      const removedIds = new Set(
+        profiles.filter((profile) => profile.family === "developer").slice(1).map((profile) => profile.id)
+      );
+      profiles.splice(0, profiles.length, ...profiles.filter((profile) => !removedIds.has(profile.id)));
+      visuals.splice(0, visuals.length, ...visuals.filter((visual) => !removedIds.has(visual.styleId)));
+    }
+  });
+
+  assert.throws(
+    () => validateCuratedCatalog(fixture),
+    (error) => {
+      assert.match(error.message, /developer: requires at least 4 curated profiles/u);
+      assert.match(error.message, /developer: requires at least 3 distinct visual variants/u);
+      return true;
+    }
+  );
+});
+
+test("curated catalog validator reports structural, provenance, and pairing failures", () => {
+  const fixture = writeCuratedCatalogFixture({
+    mutate({ profiles, visuals }) {
+      profiles.push(structuredClone(profiles[0]));
+      profiles[0].family = "Invalid Family";
+      profiles[0].density = "";
+      profiles[0].pageTypes = ["invalid page type"];
+      profiles[0].tones = [];
+      profiles[0].keywords = [""];
+      visuals[0].variant = "unsupported-variant";
+      visuals[0].theme.accent = "not-a-color";
+      visuals[0].references[0].slug = "not-in-style-sources";
+      visuals[0].references.pop();
+      visuals[1].styleId = "orphan-visual";
+    }
+  });
+
+  assert.throws(
+    () => validateCuratedCatalog(fixture),
+    (error) => {
+      assert.match(error.message, /duplicate profile id/u);
+      assert.match(error.message, /family must be a lowercase kebab-case token/u);
+      assert.match(error.message, /density must be a non-empty string/u);
+      assert.match(error.message, /pageTypes must contain lowercase kebab-case tokens/u);
+      assert.match(error.message, /tones must be a non-empty array/u);
+      assert.match(error.message, /keywords must contain only non-empty strings/u);
+      assert.match(error.message, /variant must be one of/u);
+      assert.match(error.message, /theme\.accent must be a valid hex color/u);
+      assert.match(error.message, /references must contain exactly 3 entries/u);
+      assert.match(error.message, /not-in-style-sources is missing from style-sources\.json/u);
+      assert.match(error.message, /profile has no matching visual/u);
+      assert.match(error.message, /visual has no matching profile/u);
+      assert.match(error.message, /preview file is missing/u);
+      return true;
+    }
+  );
 });
 
 test("rendered recommendations expose the local card and live previews", () => {
