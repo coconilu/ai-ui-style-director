@@ -31,12 +31,14 @@ checks.
    validates the complete repository.
 9. Only after those gates pass does the workflow create a write-capable token
    for the existing `ai-ui-style-director-refresh` GitHub App. The App commits
-   the allowlisted artifacts, opens a PR, and enables squash auto-merge. The
-   required `test` check still has to pass.
+   the allowlisted artifacts and opens a Draft PR. A maintainer must review the
+   diff, mark the PR ready, and merge it manually. The workflow never enables
+   auto-merge.
 
 The GitHub App is the audited repository identity, not the reasoning engine.
 Kimi Code proposes the candidate; Node.js code applies policy; GitHub branch
-protection decides whether the App PR can merge.
+protection and required checks provide defense in depth, but passing CI does not
+authorize the App PR to merge without a maintainer.
 
 This is a defense-in-depth boundary for untrusted upstream text: model-authored
 free text is retained only as an audit rationale, while everything later read by

@@ -174,7 +174,7 @@ jobs:
           git config user.email "${app_user_id}+${app_slug}[bot]@users.noreply.github.com"
           gh auth setup-git
 
-      - name: Commit, open pull request, and enable auto-merge
+      - name: Commit and open draft pull request
         if: steps.result.outputs.changed == 'true'
         shell: bash
         env:
@@ -296,7 +296,7 @@ jobs:
             `- Output tokens: ${metric("outputTokens", "completionTokens", "completion_tokens")}`,
             `- Total tokens: ${metric("totalTokens", "total_tokens")}`,
             "",
-            "Merge policy: squash automatically after the required CI check passes. Full normalized decisions remain in catalog/curation/records."
+            "Review policy: created as a draft; a maintainer must review, mark it ready, and merge it manually. Full normalized decisions remain in catalog/curation/records."
           );
 
           writeFileSync(process.env.BODY_PATH, `${lines.join("\n")}\n`, "utf8");
@@ -306,8 +306,8 @@ jobs:
             --title "feat(catalog): curate ${PROMOTED} updated style source(s)" \
             --body-file "$body_file" \
             --base main \
-            --head "$branch")"
+            --head "$branch" \
+            --draft)"
 
-          gh pr merge "$pr_url" --auto --squash --delete-branch
-          printf '### Automated style curation\n\n- PR: %s\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Auto-merge: enabled after required CI\n' \
+          printf '### Automated style curation\n\n- Draft PR: %s\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Review: maintainer review and manual merge required\n' \
             "$pr_url" "$PROCESSED" "$PROMOTED" "$DUPLICATES" "$SKIPPED" "$INVALID" >> "$GITHUB_STEP_SUMMARY"

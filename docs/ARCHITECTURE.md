@@ -30,7 +30,8 @@ Supply-side curation is separate from consumer-side recommendation. The
 OpenAI-compatible curator reads only bounded new/changed source material and
 proposes a structured candidate. Program code owns provenance, taxonomy,
 duplicate policy, promotion, preview generation, and validation. The existing
-GitHub App opens the audited PR only after those deterministic gates pass.
+GitHub App opens an audited Draft PR only after those deterministic gates pass;
+a maintainer reviews and merges it manually.
 
 ## 2. Visual Preview Layer
 

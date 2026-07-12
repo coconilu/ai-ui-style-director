@@ -24,10 +24,12 @@
    同时更新 source state；之后由 `npm run check` 校验完整仓库。
 9. 只有上述门禁全部通过，Workflow 才创建现有
    `ai-ui-style-director-refresh` GitHub App 的写 Token。App 提交白名单内的文件、
-   创建 PR 并开启 squash auto-merge；分支保护要求的 `test` 仍必须通过。
+   创建 Draft PR。维护者必须审查 diff、将 PR 标记为 Ready，再手动合并；
+   Workflow 绝不开启 auto-merge。
 
 GitHub App 是可审计的仓库操作身份，不是推理引擎。Kimi Code 生成候选，Node.js
-程序执行政策，GitHub 分支保护决定 App 创建的 PR 能否合并。
+程序执行政策；GitHub 分支保护和必需检查是纵深防御，但 CI 通过不代表
+App 可以跳过维护者直接合并。
 
 这是针对不可信上游文本的纵深防御：模型自由文本只保留为审计理由；后续会被消费端
 Agent 读取的内容全部来自可信 taxonomy 和程序模板。`DESIGN.md` 也会明确声明：

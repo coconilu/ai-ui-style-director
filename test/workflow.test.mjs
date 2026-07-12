@@ -50,7 +50,7 @@ test("write-capable GitHub App token is unavailable to the model and only create
   const curateIndex = curationWorkflow.indexOf("- name: Curate changed sources");
   const validateIndex = curationWorkflow.indexOf("- name: Validate curated output");
   const tokenIndex = curationWorkflow.indexOf("- name: Create curation bot token");
-  const publishIndex = curationWorkflow.indexOf("- name: Commit, open pull request, and enable auto-merge");
+  const publishIndex = curationWorkflow.indexOf("- name: Commit and open draft pull request");
 
   assert.ok(curateIndex >= 0);
   assert.ok(validateIndex > curateIndex);
@@ -67,7 +67,7 @@ test("write-capable GitHub App token is unavailable to the model and only create
   assert.match(curationWorkflow, /permission-pull-requests: write/u);
 });
 
-test("curation automation leaves an allowlisted, append-only PR audit trail and uses required CI auto-merge", () => {
+test("curation automation leaves an allowlisted, append-only draft PR for maintainer review", () => {
   const workflowAllowlists = [...curationWorkflow.matchAll(/allowed='([^']+)'/gu)].map((match) => match[1]);
   assert.deepEqual(workflowAllowlists, [curationAllowlist, curationAllowlist]);
   assert.match(curationWorkflow, /catalog\/curation\/records/u);
@@ -78,7 +78,10 @@ test("curation automation leaves an allowlisted, append-only PR audit trail and 
   assert.match(curationWorkflow, /SKIPPED: \$\{\{ steps\.result\.outputs\.skipped \}\}/u);
   assert.doesNotMatch(curationWorkflow, / — /u);
   assert.match(curationWorkflow, /gh pr create/u);
-  assert.match(curationWorkflow, /gh pr merge "\$pr_url" --auto --squash --delete-branch/u);
+  assert.match(curationWorkflow, /--head "\$branch" \\\s*\n\s+--draft\)"/u);
+  assert.match(curationWorkflow, /Review policy: created as a draft; a maintainer must review, mark it ready, and merge it manually\./u);
+  assert.match(curationWorkflow, /Review: maintainer review and manual merge required/u);
+  assert.doesNotMatch(curationWorkflow, /gh pr merge|--auto/u);
   assert.match(curationWorkflow, /automation\/curate-style-sources-\$\{GITHUB_RUN_ID\}-\$\{GITHUB_RUN_ATTEMPT\}/u);
   assert.match(curationWorkflow, /git diff --quiet "\$GITHUB_SHA" origin\/main -- \\\s*\n\s+catalog \\\s*\n\s+src \\\s*\n\s+scripts/u);
   assert.match(curationWorkflow, /git rebase origin\/main\s*\n\s+npm run check/u);

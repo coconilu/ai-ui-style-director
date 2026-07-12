@@ -299,7 +299,9 @@ workflow run, PR diff, CI logs, and merge commit as the audit trail. See
 
 `.github/workflows/curate-style-sources.yml` separately processes new/changed
 style hashes through the OpenAI-compatible client, deterministic gates,
-immutable records, an independent file allowlist, and another App PR. See
+immutable records, an independent file allowlist, and another App-created Draft
+PR. It never enables auto-merge; a maintainer reviews and merges the proposal
+manually. See
 [`AUTOMATED_CURATION.md`](AUTOMATED_CURATION.md).
 
 ## Dependency and license boundaries

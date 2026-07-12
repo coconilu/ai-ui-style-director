@@ -323,7 +323,8 @@ style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
 
 `.github/workflows/curate-style-sources.yml` 会在另一条流程中处理新来源或变化哈希，
 依次经过 OpenAI-compatible 客户端、确定性门禁、不可变记录、独立文件白名单和
-另一条 App PR。详见
+另一条由 App 创建的 Draft PR。这条流程绝不开启 auto-merge，而是由维护者
+人工审查并手动合并提案。详见
 [`AUTOMATED_CURATION.zh-CN.md`](AUTOMATED_CURATION.zh-CN.md)。
 
 ## 依赖与许可证边界
