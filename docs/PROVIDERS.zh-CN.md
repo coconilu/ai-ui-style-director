@@ -21,16 +21,23 @@ node bin/ai-ui-style-director.mjs refresh-catalog --clone
 
 命令会刷新本地 provider 仓库，扫描 `DESIGN.md`、registry 和文档文件，再把
 标准化索引写入 `catalog/generated/`。当前 style-source 索引有 74 条路径，
-它们只是待研究的候选素材池；命令不会自动改写人工维护的
-`catalog/style-profiles.json`，也不会把 74 条路径批量晋升为可推荐风格。
+它们只是候选素材池，不等于 74 个用户可选风格。已提交的 74 条来源属于 baseline；
+未来新增或变化的来源可以进入独立的 AI 辅助策展 Workflow，但只有在结构化候选、
+精确溯源、确定性去重、预览和仓库门禁全部通过后才会进入已策展 Catalog。
 
 定时 GitHub workflow 每天执行相同的刷新和仓库检查，只在生成索引发生变化时创建 PR。
 
 ## 视觉参考
 
-`catalog/style-visuals.json` 把每个标准化内部风格映射到 3 个真实的 `awesome-design-md` slug。推荐核心会把这些 slug 展开为 getdesign.md 的 overview 与 Light/Dark 实时预览链接。
+`catalog/style-visuals.json` 把每个标准化内部风格映射到 3 个真实来源。旧的
+`awesome-design-md` slug 仍会展开为 getdesign.md 的 overview 与 Light/Dark
+实时预览；通用 Provider 使用精确 `provider + path`，并生成固定到索引 revision
+的 GitHub 来源页链接。
 
-当前已策展层有 48 个风格 profile，覆盖 12 个 family、每组 4 个方向。新增
+Adapter、state、审计和 GitHub Actions 细节见
+[AI 辅助风格策展自动化](AUTOMATED_CURATION.zh-CN.md)。
+
+已策展层从 12 个 family、每组 4 个方向的审查基线开始，并可通过受保护 PR 增长。新增
 方向必须补齐 profile 和 visual、使用恰好 3 条已索引且不重复的参考、生成中性
 SVG，并通过 `npm run catalog:curated:validate`；provider 路径数量本身不构成
 晋升依据。

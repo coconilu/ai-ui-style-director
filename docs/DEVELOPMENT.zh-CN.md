@@ -15,7 +15,7 @@ ai-ui-style-director/
 ```
 
 当前实现没有运行时 npm 依赖，需要 Node.js 20 或更高版本。已策展 Catalog
-包含 48 个 profile，覆盖 12 个 family、每组 4 个方向；
+从 12 个 family、每组 4 个方向的审查基线开始，并可通过受保护的策展 PR 增长；
 `catalog/generated/style-sources.json` 中当前 74 条 provider 路径只作为候选
 素材池，不会自动进入推荐或目录页面。
 
@@ -29,7 +29,7 @@ npm run check
 ```
 
 `npm run check` 会验证 JavaScript 语法、已策展 Catalog、SVG 一致性、Provider
-生成索引并运行完整测试，其中包含 12 个场景的推荐 benchmark。
+生成索引、策展状态与不可变审计记录，并运行完整测试，其中包含 12 个场景的推荐 benchmark。
 
 只运行已策展 Catalog 门禁：
 
@@ -41,6 +41,15 @@ npm run catalog:curated:validate
 4 个 profile、至少 3 种 visual variant；同时检查 profile/visual 一一对应、
 taxonomy 和颜色格式、每个方向恰好 3 条不重复且存在于来源索引的参考，以及
 对应 SVG 是否存在。
+
+只校验 AI 辅助策展的 state 与审计记录：
+
+```bash
+npm run catalog:curation:validate
+```
+
+模型与程序的职责边界、首次基线、GitHub App 工作流和通用 Provider 接入方式见
+[AI 辅助风格策展自动化](AUTOMATED_CURATION.zh-CN.md)。
 
 修改 `style-visuals.json` 或预览渲染逻辑后，应重新生成风格卡片：
 
@@ -104,6 +113,10 @@ npm run check
 ```
 
 `.github/workflows/refresh-providers.yml` 每天执行该流程，并在 `catalog/generated/` 发生变化时创建 PR。
+
+来源哈希变化后，`.github/workflows/curate-style-sources.yml` 会在另一条可审计 PR
+中提出受治理的 Catalog 新增。确定性刷新结果与模型辅助策展结果继续使用彼此独立的
+文件白名单。
 
 ## 用户侧版本发布
 

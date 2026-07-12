@@ -530,6 +530,11 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
   const providerDir = join(cacheDir, "shadcn-ui");
   mkdirSync(join(providerDir, "registry"), { recursive: true });
   writeFileSync(join(providerDir, "DESIGN.md"), "# Test design source\n", "utf8");
+  for (let index = 0; index < 205; index += 1) {
+    const styleDir = join(providerDir, "styles", `style-${String(index).padStart(3, "0")}`);
+    mkdirSync(styleDir, { recursive: true });
+    writeFileSync(join(styleDir, "DESIGN.md"), `# Style ${index}\n`, "utf8");
+  }
   for (let index = 200; index >= 0; index -= 1) {
     const name = `component-${String(index).padStart(3, "0")}.ts`;
     writeFileSync(join(providerDir, "registry", name), "export const component = {};\n", "utf8");
@@ -553,15 +558,23 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
   const componentSources = JSON.parse(readFileSync(componentSourcesPath, "utf8"));
 
   assert.deepEqual(Object.keys(inventory), ["schemaVersion", "providers"]);
-  assert.equal(inventory.schemaVersion, 2);
+  assert.equal(inventory.schemaVersion, 3);
   assert.equal("generatedAt" in inventory, false);
   assert.equal("cacheDir" in inventory, false);
   assert.equal("syncLockPath" in inventory, false);
-  assert.deepEqual(styleSources, {
-    schemaVersion: 2,
-    sources: [{ providerId: "shadcn-ui", path: "DESIGN.md", sourceType: "design-md" }]
-  });
-  assert.equal(componentSources.schemaVersion, 2);
+  assert.equal(styleSources.schemaVersion, 3);
+  assert.equal(styleSources.sources.length, 206);
+  const rootStyleSource = styleSources.sources.find((source) => source.path === "DESIGN.md");
+  assert.deepEqual(
+    {
+      providerId: rootStyleSource.providerId,
+      path: rootStyleSource.path,
+      sourceType: rootStyleSource.sourceType
+    },
+    { providerId: "shadcn-ui", path: "DESIGN.md", sourceType: "design-md" }
+  );
+  assert.match(rootStyleSource.contentHash, /^sha256:[0-9a-f]{64}$/u);
+  assert.equal(componentSources.schemaVersion, 3);
   assert.equal(componentSources.sources.length, 200);
   assert.deepEqual(componentSources.sources[0], {
     providerId: "shadcn-ui",
@@ -581,6 +594,20 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
   assert.deepEqual(
     result.generatedFiles.map((file) => readFileSync(file, "utf8")),
     firstGeneration
+  );
+
+  writeFileSync(join(providerDir, "DESIGN.md"), "# Changed design source\n", "utf8");
+  updateCatalog({ cacheDir, generatedDir: join(dir, "generated"), clone: false });
+  const changedStyleSources = JSON.parse(readFileSync(styleSourcesPath, "utf8"));
+  const changedRootSource = changedStyleSources.sources.find((source) => source.path === "DESIGN.md");
+  assert.notEqual(changedRootSource.contentHash, rootStyleSource.contentHash);
+  assert.deepEqual(
+    {
+      providerId: changedRootSource.providerId,
+      path: changedRootSource.path,
+      sourceType: changedRootSource.sourceType
+    },
+    { providerId: "shadcn-ui", path: "DESIGN.md", sourceType: "design-md" }
   );
 });
 
@@ -607,6 +634,16 @@ test("generated catalog validation rejects denormalized source provenance", () =
   assert.throws(
     () => validateGeneratedCatalog({ generatedDir }),
     /component-sources\.json sources must exactly match normalized provider inventory paths/u
+  );
+
+  copyFileSync(join(rootDir, "catalog", "generated", "component-sources.json"), componentPath);
+  const stylePath = join(generatedDir, "style-sources.json");
+  const styles = JSON.parse(readFileSync(stylePath, "utf8"));
+  styles.sources[0].contentHash = "sha256:not-a-digest";
+  writeFileSync(stylePath, `${JSON.stringify(styles, null, 2)}\n`, "utf8");
+  assert.throws(
+    () => validateGeneratedCatalog({ generatedDir }),
+    /contentHash must be a lowercase SHA-256 digest/u
   );
 });
 

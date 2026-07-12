@@ -15,7 +15,7 @@ flowchart LR
   U[用户需求] --> S[Agent Skill]
   S --> W[Skill wrapper]
   W --> C[Node.js CLI]
-  K[48 个已策展 profile] --> C
+  K[已策展 profile] --> C
   C --> R[recommend]
   C --> B[browse 托管目录]
   C --> A[apply]
@@ -29,13 +29,16 @@ flowchart LR
   P[上游 Provider 仓库] --> G[clone/pull 与路径扫描]
   G --> I[catalog/generated]
   I -. 74 条来源路径统计 .-> X
-  I -. 维护者审查后手工更新 .-> K
+  I --> Q[受限 AI 候选]
+  Q --> T[程序化溯源与去重门禁]
+  T -. 可审计 App PR .-> K
 ```
 
 系统刻意把运行时推荐和上游同步分开。推荐只读取已审查的 Catalog；Provider
-刷新只生成来源索引，不会直接改变推荐结果。当前运行时 Catalog 是 48 个
-profile，即 12 个 family、每组 4 个方向；生成索引中的 74 条 style source
-只是等待人工策展的候选素材池，不能按数量等同于可推荐风格。
+刷新只生成来源索引。独立的 AI 辅助 Workflow 可以提出候选，但只有程序门禁和
+受保护 PR 合并后才会改变推荐结果。运行时 Catalog 从 12 个 family、每组 4 个
+方向的审查基线开始，并可继续增长；生成索引中的 74 条 style source 已作为 baseline
+提交，不能按数量等同于可推荐风格。
 
 ## 入口与调用链
 
@@ -123,7 +126,7 @@ GitHub Pages environment 部署。
 
 ## Catalog：真正的运行时知识源
 
-推荐与项目契约运行时读取四组人工维护的数据：
+推荐与项目契约运行时读取四组已策展数据：
 
 | 文件 | 用途 |
 | --- | --- |
@@ -132,17 +135,18 @@ GitHub Pages environment 部署。
 | `catalog/component-kits.json` | 组件库适用场景与使用边界 |
 | `catalog/scenario-questions.json` | brief 信息不足时的问题 |
 
-`catalog/providers.json` 描述上游仓库；`catalog/generated/*` 记录上游扫描结果。推荐核心不会直接读取生成索引，因此上游内容变化不会未经审查进入用户推荐。
+`catalog/providers.json` 描述上游仓库；`catalog/generated/*` 记录上游扫描结果。
+推荐核心不会直接读取生成索引，因此上游内容变化不能直接进入用户推荐。供给侧
+Curator 只读取新来源或变化哈希并创建受治理 PR；消费侧仍只读取已合并的 Profile。
 
-当前 `style-profiles.json` 与 `style-visuals.json` 各有 48 个一一对应的条目，
-覆盖 12 个 family、每组 4 个方向。`style-sources.json` 当前有 74 条 provider
+`style-profiles.json` 与 `style-visuals.json` 始终一一对应；初始基线覆盖 12 个
+family、每组 4 个方向。`style-sources.json` 当前有 74 条 provider
 路径；它们没有完整的适用场景、风险、视觉主题和经过审查的参考关系，因此不
 会自动晋升为 profile。
 
 目录浏览器读取 `catalog/generated/style-sources.json` 的唯一目的是显示当前
 来源索引数量。里面的 74 条路径不会被语义解析，也不会作为完整风格卡片返回；
-浏览器条目仍然只来自 `catalog/style-profiles.json` 中经过审查的 48 个
-profile。
+浏览器条目仍然只来自 `catalog/style-profiles.json` 中经过审查的 profile。
 
 ## 推荐算法
 
@@ -259,11 +263,11 @@ DESIGN.md
 
 ## 开源项目如何接入
 
-项目通过 Provider 元数据和 Adapter 风格的同步流程接入开源资料，而不是把这些仓库声明成 npm 依赖。
+项目通过 Provider 元数据和显式 Source Adapter 接入开源资料，而不是把这些仓库声明成 npm 依赖。
 
 | Provider | 系统中的角色 | 接入方式 |
 | --- | --- | --- |
-| `VoltAgent/awesome-design-md` | 风格参考语料 | 扫描 `DESIGN.md`，人工整理 profile，并将 slug 展开为外部 Light/Dark 预览 |
+| `VoltAgent/awesome-design-md` | 风格参考语料 | 扫描并哈希 `DESIGN.md`，保留旧预览 URL，并把变化来源交给受治理策展 |
 | `Harzva/design-md-flow` | 工作流参考 | 登记来源和版本；本地 Skill 实现自己的选择门禁 |
 | `shadcn-ui/ui` | 基础组件 | 扫描 registry，并作为 profile 的可选组件建议 |
 | `shadcn/originui` | 应用与营销区块 | 扫描 registry，映射到适合 SaaS 和重复页面的 component kit |
@@ -295,14 +299,17 @@ catalog/generated/style-sources.json
 catalog/generated/component-sources.json
 ```
 
-生成目录使用 schema v2：仓库级来源信息统一保存在
+生成目录使用 schema v3：仓库级来源信息统一保存在
 `provider-inventory.json`，每个 Provider 的仓库与 commit revision 只记录一次；
-来源索引只保存 `providerId`、`path` 和 `sourceType`。版本控制中的生成产物不再
+style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
+`contentHash`，component-source 保持前三个字段。版本控制中的生成产物不再
 写入生成时间和本机缓存绝对路径，因此相同的上游输入会得到字节完全一致的文件，
 不会产生无意义的刷新 PR。扫描器会先固定目录项顺序，再截取受上限约束的来源集合，
 保证 Windows、Linux 及不同文件系统得到相同的索引子集。
 
-扫描器是轻量路径索引器，不解析组件语义。registry 每个 Provider 最多记录 200 个文件，docs 最多记录 100 个文件，因此统计数字表示“已索引来源数”，不是上游仓库的完整组件总量。
+扫描器是轻量路径索引器，不解析组件语义。它会索引所有匹配的 `DESIGN.md`，用户
+可选风格数量不受扫描器常量限制；registry 与 docs 仍分别保留每个 Provider 200
+和 100 个文件的维护性上限。当前 74 条风格来源属于已提交 baseline，不会直接晋升。
 
 `.github/workflows/refresh-providers.yml` 每天运行相同流程，执行仓库检查，并只在生成索引变化时创建 PR。
 
@@ -313,6 +320,11 @@ catalog/generated/component-sources.json
 打开等待异常处理，成功时则保留 Action 运行、PR diff、CI 日志和合并提交作为
 审计记录。配置与运维方式参见
 [`AUTOMATED_REFRESH.zh-CN.md`](AUTOMATED_REFRESH.zh-CN.md)。
+
+`.github/workflows/curate-style-sources.yml` 会在另一条流程中处理新来源或变化哈希，
+依次经过 OpenAI-compatible 客户端、确定性门禁、不可变记录、独立文件白名单和
+另一条 App PR。详见
+[`AUTOMATED_CURATION.zh-CN.md`](AUTOMATED_CURATION.zh-CN.md)。
 
 ## 依赖与许可证边界
 
@@ -332,12 +344,13 @@ Provider 内容的使用遵循以下边界：
 
 这套实现优先选择可解释、可复现和低依赖：
 
-- 优点：离线可用、容易测试、推荐理由可追踪、上游更新不会直接污染运行时行为；
-- 代价：语义理解能力受关键词和人工 profile 限制；
-- 维护要求：新增 Provider 后仍需人工审查并更新 profile、视觉配置和组件映射；
+- 优点：消费侧离线可用、容易测试、推荐理由可追踪、上游更新有完整审计；
+- 代价：供给侧语义策展需要模型凭证，消费侧匹配仍基于关键词和 Profile；
+- 维护要求：新增 `DESIGN.md` Provider 只需配置；新增来源格式或 taxonomy 仍需审查 Adapter 或政策变更；
 - 扩展要求：如果未来增加新的推荐入口，应复用或验证同一套评分与差异化规则，避免不同入口产生不一致结果。
 
 仓库测试覆盖 brief 检查、12 场景推荐基准、换一批、Catalog 结构校验、视觉
 引用、HTML 画廊、倒排搜索与子串回退、24 张一批的目录渲染、独立 SVG HTTP
 路由、通用回环安全、`apply` 产物、Provider 索引、CLI 命令以及
-Codex/Claude Code wrapper 路径发现。
+Source Hash 与 Adapter、Mock OpenAI-compatible 响应、策展 state/审计门禁、
+Workflow 白名单以及 Codex/Claude Code wrapper 路径发现。

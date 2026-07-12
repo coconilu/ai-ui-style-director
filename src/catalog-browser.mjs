@@ -515,6 +515,7 @@ const CATALOG_APP_JS = String.raw`
       viewport: "首屏结构",
       components: "组件建议",
       references: "视觉参考",
+      source: "来源",
       light: "浅色",
       dark: "深色",
       loadMore: "加载更多",
@@ -531,6 +532,7 @@ const CATALOG_APP_JS = String.raw`
       viewport: "First viewport",
       components: "Component kits",
       references: "Visual references",
+      source: "Source",
       light: "Light",
       dark: "Dark",
       loadMore: "Load more",
@@ -704,15 +706,17 @@ const CATALOG_APP_JS = String.raw`
     entry.references.forEach(function (reference) {
       var row = element("div", "reference-item");
       row.append(element("span", "", reference.label));
-      var light = element("a", "", copy.light);
-      light.href = reference.lightPreviewUrl;
-      light.target = "_blank";
-      light.rel = "noreferrer noopener";
-      var dark = element("a", "", copy.dark);
-      dark.href = reference.darkPreviewUrl;
-      dark.target = "_blank";
-      dark.rel = "noreferrer noopener";
-      row.append(light, dark);
+      var links = [];
+      if (reference.lightPreviewUrl) links.push([copy.light, reference.lightPreviewUrl]);
+      if (reference.darkPreviewUrl) links.push([copy.dark, reference.darkPreviewUrl]);
+      if (links.length === 0 && reference.pageUrl) links.push([copy.source, reference.pageUrl]);
+      links.forEach(function (item) {
+        var link = element("a", "", item[0]);
+        link.href = item[1];
+        link.target = "_blank";
+        link.rel = "noreferrer noopener";
+        row.append(link);
+      });
       referenceList.append(row);
     });
     references.append(referenceList);

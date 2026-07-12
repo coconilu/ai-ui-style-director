@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { pinnedProviderSourceUrl, visualReferenceSource } from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -67,6 +68,23 @@ function isHexColor(value) {
   return typeof value === "string" && /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/iu.test(value);
 }
 
+function isContentHash(value) {
+  return typeof value === "string" && /^sha256:[0-9a-f]{64}$/u.test(value);
+}
+
+function isRepo(value) {
+  return typeof value === "string" && /^[a-z0-9_.-]+\/[a-z0-9_.-]+$/iu.test(value);
+}
+
+function isSafeRelativePath(value) {
+  return (
+    isNonEmptyString(value) &&
+    !value.startsWith("/") &&
+    !value.includes("\\") &&
+    !value.split("/").includes("..")
+  );
+}
+
 function duplicates(values) {
   const seen = new Set();
   const repeated = new Set();
@@ -77,16 +95,15 @@ function duplicates(values) {
   return [...repeated].sort();
 }
 
-function sourceKey(providerId, slug) {
-  return `${providerId}\u0000${slug}`;
+function sourceKey(providerId, path) {
+  return `${providerId}\u0000${path}`;
 }
 
-function sourceSlugs(styleSources) {
+function sourcePaths(styleSources) {
   const keys = new Set();
   for (const source of Array.isArray(styleSources?.sources) ? styleSources.sources : []) {
-    const match = source?.path?.match(/^design-md\/([^/]+)\/DESIGN\.md$/u);
-    if (isNonEmptyString(source?.providerId) && match) {
-      keys.add(sourceKey(source.providerId, match[1]));
+    if (isNonEmptyString(source?.providerId) && isSafeRelativePath(source?.path)) {
+      keys.add(sourceKey(source.providerId, source.path));
     }
   }
   return keys;
@@ -114,6 +131,7 @@ export function validateCuratedCatalog({
   expect(Array.isArray(profilesDocument), "style-profiles.json root must be an array");
   expect(Array.isArray(visualsDocument), "style-visuals.json root must be an array");
   expect(Array.isArray(styleSources?.sources), "style-sources.json sources must be an array");
+  expect(styleSources?.schemaVersion === 3, "style-sources.json schemaVersion must be 3");
   expect(policy && typeof policy === "object" && !Array.isArray(policy), "curation-policy.json root must be an object");
   expect(policy?.schemaVersion === 1, "curation-policy.json schemaVersion must be 1");
   expect(
@@ -152,7 +170,7 @@ export function validateCuratedCatalog({
   for (const id of duplicates(profileIds)) errors.push(`duplicate profile id: ${id}`);
   for (const id of duplicates(visualIds)) errors.push(`duplicate visual styleId: ${id}`);
 
-  const availableSources = sourceSlugs(styleSources);
+  const availableSources = sourcePaths(styleSources);
   const familyCounts = new Map();
   const profileFamilyById = new Map();
 
@@ -167,6 +185,24 @@ export function validateCuratedCatalog({
     expect(isTaxonomyToken(profile.id), `${label}: id must be a lowercase kebab-case token`);
     expect(isTaxonomyToken(profile.sourceProvider), `${label}: sourceProvider must be a lowercase kebab-case token`);
     expect(isSourceSlug(profile.sourceSlug), `${label}: sourceSlug must be a lowercase source slug`);
+    if (profile.sourcePath !== undefined) {
+      expect(isSafeRelativePath(profile.sourcePath), `${label}: sourcePath must be a safe POSIX-relative path`);
+      expect(isRepo(profile.sourceRepo), `${label}: sourceRepo must be an owner/repository pair`);
+      expect(/^[0-9a-f]{40}$/u.test(profile.sourceRevision || ""), `${label}: sourceRevision must be a 40-character Git SHA`);
+      expect(isContentHash(profile.sourceContentHash), `${label}: sourceContentHash must be SHA-256`);
+      const pinnedUrl = pinnedProviderSourceUrl({
+        repo: profile.sourceRepo,
+        revision: profile.sourceRevision,
+        path: profile.sourcePath
+      });
+      expect(profile.sourceUrl === pinnedUrl, `${label}: sourceUrl must match its pinned repository revision and path`);
+      if (isTaxonomyToken(profile.sourceProvider) && isSafeRelativePath(profile.sourcePath)) {
+        expect(
+          availableSources.has(sourceKey(profile.sourceProvider, profile.sourcePath)),
+          `${label}: sourceProvider/sourcePath is missing from style-sources.json`
+        );
+      }
+    }
     expect(isTaxonomyToken(profile.family), `${label}: family must be a lowercase kebab-case token`);
     expect(isTaxonomyToken(profile.density), `${label}: density must be a lowercase kebab-case token`);
 
@@ -230,17 +266,39 @@ export function validateCuratedCatalog({
         const referenceLabel = `${label}: reference[${referenceIndex}]`;
         expect(reference && typeof reference === "object" && !Array.isArray(reference), `${referenceLabel} must be an object`);
         if (!reference || typeof reference !== "object" || Array.isArray(reference)) continue;
-        for (const field of ["provider", "slug", "label", "role"]) {
+        for (const field of ["provider", "label", "role"]) {
           expect(isNonEmptyString(reference[field]), `${referenceLabel}.${field} must be a non-empty string`);
         }
         expect(isTaxonomyToken(reference.provider), `${referenceLabel}.provider must be a lowercase kebab-case token`);
-        expect(isSourceSlug(reference.slug), `${referenceLabel}.slug must be a lowercase source slug`);
-        if (isNonEmptyString(reference.provider) && isNonEmptyString(reference.slug)) {
-          const key = sourceKey(reference.provider, reference.slug);
+        if (reference.slug !== undefined) {
+          expect(isSourceSlug(reference.slug), `${referenceLabel}.slug must be a lowercase source slug`);
+        }
+        if (reference.path !== undefined) {
+          expect(isSafeRelativePath(reference.path), `${referenceLabel}.path must be a safe POSIX-relative path`);
+          expect(isRepo(reference.repo), `${referenceLabel}.repo must be an owner/repository pair`);
+          expect(/^[0-9a-f]{40}$/u.test(reference.revision || ""), `${referenceLabel}.revision must be a 40-character Git SHA`);
+          expect(isContentHash(reference.contentHash), `${referenceLabel}.contentHash must be SHA-256`);
+          const pinnedUrl = pinnedProviderSourceUrl({
+            repo: reference.repo,
+            revision: reference.revision,
+            path: reference.path
+          });
+          expect(reference.sourceUrl === pinnedUrl, `${referenceLabel}.sourceUrl must match its pinned repository revision and path`);
+        }
+        const source = visualReferenceSource(reference);
+        expect(
+          source !== null,
+          `${referenceLabel} must use an exact provider/path reference or a legacy awesome-design-md slug`
+        );
+        if (source) {
+          const key = sourceKey(source.providerId, source.path);
+          const sourceDisplay = reference.path
+            ? `${source.providerId}/${source.path}`
+            : `${reference.provider}/${reference.slug}`;
           referenceKeys.push(key);
           expect(
             availableSources.has(key),
-            `${referenceLabel} source ${reference.provider}/${reference.slug} is missing from style-sources.json`
+            `${referenceLabel} source ${sourceDisplay} is missing from style-sources.json`
           );
         }
       }

@@ -27,9 +27,12 @@ and documentation files, then writes normalized indexes under
 `catalog/style-profiles.json`.
 
 The current `style-sources.json` contains 74 provider paths. These paths form a
-source pool for review; they are not 74 user-facing styles and are never
-promoted automatically. The curated catalog currently contains 48 profiles,
-balanced as four profiles in each of 12 families.
+source pool; they are not 74 user-facing styles. The checked-in 74 are baseline
+sources. A future new or changed source can enter the separate AI-assisted
+curation workflow, but it reaches the curated catalog only after structured
+candidate, provenance, duplicate, preview, and repository gates pass. The
+curated catalog starts from a reviewed baseline of four profiles in each of 12
+families and can grow through audited curation PRs.
 
 The scheduled GitHub workflow performs the same refresh daily, runs repository
 checks, and opens a pull request only when generated indexes change.
@@ -37,8 +40,13 @@ checks, and opens a pull request only when generated indexes change.
 ## Visual references
 
 `catalog/style-visuals.json` maps each normalized internal style to three real
-`awesome-design-md` slugs. The recommendation core expands those slugs into
-getdesign.md overview and Light/Dark live-preview links.
+sources. Legacy `awesome-design-md` slug references expand to getdesign.md
+overview and Light/Dark live-preview links. Generic providers use exact
+`provider + path` references and a GitHub source page pinned to the indexed
+revision.
+
+See [Automated AI-assisted style curation](AUTOMATED_CURATION.md) for adapter,
+state, audit, and GitHub Actions details.
 
 The links are intentionally separate from `catalog/previews/`: local SVG cards
 are project-owned neutral wireframes, while hosted previews remain external

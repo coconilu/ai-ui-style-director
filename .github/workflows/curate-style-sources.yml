@@ -1,0 +1,313 @@
+name: Curate Style Sources
+
+on:
+  schedule:
+    - cron: "30 19 * * *"
+  push:
+    branches: [main]
+    paths:
+      - catalog/generated/provider-inventory.json
+      - catalog/generated/style-sources.json
+      - catalog/curation/source-state.json
+      - catalog/style-profiles.json
+      - catalog/style-visuals.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: curate-style-sources
+  cancel-in-progress: false
+
+jobs:
+  curate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CURATOR_BASE_URL: https://api.kimi.com/coding/v1
+      CURATOR_MODEL: kimi-for-coding
+      CURATOR_MAX_SOURCES: "5"
+      CURATOR_MAX_INPUT_CHARS: "80000"
+      CURATOR_MAX_OUTPUT_TOKENS: "4096"
+      CURATOR_MAX_RETRIES: "1"
+      CURATOR_REQUEST_TIMEOUT_MS: "120000"
+      CURATION_RESULT: /tmp/curation-result.json
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Validate trusted base
+        run: npm run check
+
+      - name: Curate changed sources
+        env:
+          CURATOR_API_KEY: ${{ secrets.KIMI_CODE_API_KEY }}
+        shell: bash
+        run: |
+          node scripts/curate-style-sources.mjs \
+            --clone \
+            --cache-dir .ui-style-director/cache/providers \
+            --output "$CURATION_RESULT" \
+            --max-sources "$CURATOR_MAX_SOURCES" \
+            --max-input-chars "$CURATOR_MAX_INPUT_CHARS" \
+            --max-output-tokens "$CURATOR_MAX_OUTPUT_TOKENS"
+
+      - name: Read curation result
+        id: result
+        env:
+          RESULT_PATH: ${{ env.CURATION_RESULT }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from "node:fs";
+
+          const result = JSON.parse(readFileSync(process.env.RESULT_PATH, "utf8"));
+          if (typeof result.changed !== "boolean") {
+            throw new Error("curation result must contain a boolean changed field");
+          }
+
+          const count = (field) => {
+            const value = result[field] ?? 0;
+            if (!Number.isInteger(value) || value < 0) {
+              throw new Error(`curation result ${field} must be a non-negative integer`);
+            }
+            return value;
+          };
+
+          const output = [
+            `changed=${result.changed}`,
+            `processed=${count("processed")}`,
+            `promoted=${count("promoted")}`,
+            `duplicates=${count("duplicates")}`,
+            `skipped=${count("skipped")}`,
+            `invalid=${count("invalid")}`
+          ].join("\n");
+          appendFileSync(process.env.GITHUB_OUTPUT, `${output}\n`, "utf8");
+          NODE
+
+      - name: Validate deterministic change scope
+        if: steps.result.outputs.changed == 'true'
+        shell: bash
+        run: |
+          allowed='^(catalog/style-profiles\.json|catalog/style-visuals\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\.svg)$'
+          changed_files="$(git status --porcelain=v1 --untracked-files=all | sed -E 's/^.. //')"
+          unexpected="$(printf '%s\n' "$changed_files" | grep -Ev "$allowed" || true)"
+          deleted="$(git status --porcelain=v1 --untracked-files=all | awk 'substr($0, 1, 2) ~ /D/ { print substr($0, 4) }')"
+          changed_records="$(git status --porcelain=v1 --untracked-files=all -- catalog/curation/records | grep -Ev '^\?\? catalog/curation/records/[0-9a-f]{64}\.json$' || true)"
+          added_records="$(printf '%s\n' "$changed_files" | grep -Ec '^catalog/curation/records/[0-9a-f]{64}\.json$' || true)"
+
+          if [ -z "$changed_files" ]; then
+            echo "Curator reported changes but did not produce tracked artifacts." >&2
+            exit 1
+          fi
+          if [ -n "$unexpected" ]; then
+            echo "Automated curation changed files outside its allowlist:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi
+          if [ -n "$deleted" ]; then
+            echo "Automated curation must not delete catalog or audit artifacts:" >&2
+            echo "$deleted" >&2
+            exit 1
+          fi
+          if [ -n "$changed_records" ]; then
+            echo "Curation records are append-only and must use their processing-event hash as the filename:" >&2
+            echo "$changed_records" >&2
+            exit 1
+          fi
+          if [ "$added_records" -lt 1 ]; then
+            echo "Automated curation must add at least one immutable curation record." >&2
+            exit 1
+          fi
+          if ! printf '%s\n' "$changed_files" | grep -qx 'catalog/curation/source-state.json'; then
+            echo "Automated curation must update catalog/curation/source-state.json." >&2
+            exit 1
+          fi
+
+          git diff --check
+
+      - name: Reject undeclared changes on no-op
+        if: steps.result.outputs.changed != 'true'
+        shell: bash
+        run: |
+          if [ -n "$(git status --porcelain=v1)" ]; then
+            echo "Curator reported a no-op but changed tracked artifacts:" >&2
+            git status --short >&2
+            exit 1
+          fi
+
+          printf '### Automated style curation\n\nNo new or changed source content was found. No model-backed catalog change was proposed.\n' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Validate curated output
+        if: steps.result.outputs.changed == 'true'
+        run: npm run check
+
+      # The write-capable installation token is intentionally created only after
+      # model output has passed deterministic scope and repository validation.
+      - name: Create curation bot token
+        if: steps.result.outputs.changed == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
+        with:
+          client-id: ${{ vars.REFRESH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REFRESH_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Configure curation bot identity
+        if: steps.result.outputs.changed == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          app_slug="${{ steps.app-token.outputs.app-slug }}"
+          app_user_id="$(gh api "/users/${app_slug}[bot]" --jq .id)"
+          git config user.name "${app_slug}[bot]"
+          git config user.email "${app_user_id}+${app_slug}[bot]@users.noreply.github.com"
+          gh auth setup-git
+
+      - name: Commit, open pull request, and enable auto-merge
+        if: steps.result.outputs.changed == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          RESULT_PATH: ${{ env.CURATION_RESULT }}
+          PROCESSED: ${{ steps.result.outputs.processed }}
+          PROMOTED: ${{ steps.result.outputs.promoted }}
+          DUPLICATES: ${{ steps.result.outputs.duplicates }}
+          SKIPPED: ${{ steps.result.outputs.skipped }}
+          INVALID: ${{ steps.result.outputs.invalid }}
+        run: |
+          branch="automation/curate-style-sources-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git checkout -b "$branch"
+          git add \
+            catalog/style-profiles.json \
+            catalog/style-visuals.json \
+            catalog/previews \
+            catalog/curation/source-state.json \
+            catalog/curation/records
+          git commit -m "feat(catalog): curate updated style sources"
+
+          git fetch origin main
+          if ! git diff --quiet "$GITHUB_SHA" origin/main -- \
+            catalog \
+            src \
+            scripts \
+            package.json \
+            .github/workflows/curate-style-sources.yml \
+            .github/workflows/ci.yml; then
+            echo "Catalog, curation policy, or executable inputs changed while this run was active; regenerate from the newer main branch." >&2
+            exit 1
+          fi
+          git rebase origin/main
+          npm run check
+
+          changed_files="$(git diff --name-only origin/main...HEAD)"
+          allowed='^(catalog/style-profiles\.json|catalog/style-visuals\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\.svg)$'
+          unexpected="$(printf '%s\n' "$changed_files" | grep -Ev "$allowed" || true)"
+          deleted="$(git diff --diff-filter=D --name-only origin/main...HEAD)"
+          non_added_records="$(git diff --name-status origin/main...HEAD | awk '$2 ~ /^catalog\/curation\/records\// && $1 != "A" { print }')"
+          added_records="$(git diff --diff-filter=A --name-only origin/main...HEAD | grep -Ec '^catalog/curation/records/[0-9a-f]{64}\.json$' || true)"
+          if [ -z "$changed_files" ] || [ -n "$unexpected" ] || [ -n "$deleted" ] || [ -n "$non_added_records" ] || [ "$added_records" -lt 1 ]; then
+            echo "Committed curation diff does not match the automation allowlist." >&2
+            echo "$unexpected" >&2
+            echo "$deleted" >&2
+            echo "$non_added_records" >&2
+            exit 1
+          fi
+          if ! printf '%s\n' "$changed_files" | grep -qx 'catalog/curation/source-state.json'; then
+            echo "Committed curation diff must update catalog/curation/source-state.json." >&2
+            exit 1
+          fi
+
+          git push --set-upstream origin "$branch"
+
+          body_file="$RUNNER_TEMP/style-curation-pr.md"
+          BODY_PATH="$body_file" \
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+          BASE_SHA="$GITHUB_SHA" \
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from "node:fs";
+
+          const result = JSON.parse(readFileSync(process.env.RESULT_PATH, "utf8"));
+          const usage = result.usage && typeof result.usage === "object" ? result.usage : {};
+          const records = Array.isArray(result.records) ? result.records : [];
+          const safe = (value, max = 240) => String(value ?? "")
+            .replace(/[\u0000-\u001f\u007f]/gu, " ")
+            .replace(/[<>&`*_[\]#|\\]/gu, "")
+            .replace(/\s+/gu, " ")
+            .trim()
+            .slice(0, max);
+          const metric = (...keys) => {
+            for (const key of keys) {
+              const value = usage[key];
+              if (Number.isFinite(value) && value >= 0) return String(value);
+            }
+            return "not reported";
+          };
+
+          const lines = [
+            "Automated, model-assisted curation of changed upstream UI style sources.",
+            "",
+            "## Run",
+            "",
+            `- Workflow: ${process.env.RUN_URL}`,
+            `- Base commit: ${process.env.BASE_SHA}`,
+            `- Provider: OpenAI-compatible (${process.env.CURATOR_BASE_URL})`,
+            `- Model: ${safe(process.env.CURATOR_MODEL, 80)}`,
+            `- Prompt version: ${safe(result.promptVersion || "not reported", 80)}`,
+            "",
+            "## Decisions",
+            "",
+            `- Processed: ${process.env.PROCESSED}`,
+            `- Promoted: ${process.env.PROMOTED}`,
+            `- Duplicates: ${process.env.DUPLICATES}`,
+            `- Skipped: ${process.env.SKIPPED}`,
+            `- Invalid: ${process.env.INVALID}`
+          ];
+
+          for (const record of records.slice(0, 50)) {
+            const source = safe(record.sourceId || `${record.providerId || "source"}:${record.path || "unknown"}`, 180);
+            const decision = safe(record.decision || record.status || "recorded", 40);
+            const reason = safe(record.reason || "See the machine-readable curation record.", 260);
+            lines.push(`- ${source}: ${decision} - ${reason}`);
+          }
+
+          lines.push(
+            "",
+            "## Deterministic gates",
+            "",
+            "- Pinned provider revision and source content hash: passed",
+            "- Changed-file allowlist: passed",
+            "- Curated catalog and provenance validation: passed",
+            "- Preview generation and repository test suite: passed",
+            "",
+            "## Usage",
+            "",
+            `- Input tokens: ${metric("inputTokens", "promptTokens", "prompt_tokens")}`,
+            `- Output tokens: ${metric("outputTokens", "completionTokens", "completion_tokens")}`,
+            `- Total tokens: ${metric("totalTokens", "total_tokens")}`,
+            "",
+            "Merge policy: squash automatically after the required CI check passes. Full normalized decisions remain in catalog/curation/records."
+          );
+
+          writeFileSync(process.env.BODY_PATH, `${lines.join("\n")}\n`, "utf8");
+          NODE
+
+          pr_url="$(gh pr create \
+            --title "feat(catalog): curate ${PROMOTED} updated style source(s)" \
+            --body-file "$body_file" \
+            --base main \
+            --head "$branch")"
+
+          gh pr merge "$pr_url" --auto --squash --delete-branch
+          printf '### Automated style curation\n\n- PR: %s\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Auto-merge: enabled after required CI\n' \
+            "$pr_url" "$PROCESSED" "$PROMOTED" "$DUPLICATES" "$SKIPPED" "$INVALID" >> "$GITHUB_STEP_SUMMARY"

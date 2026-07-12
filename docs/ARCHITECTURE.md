@@ -6,8 +6,8 @@ AI UI Style Director has six layers.
 
 The catalog contains normalized design knowledge:
 
-- `catalog/style-profiles.json`: 48 curated style directions, balanced as four
-  profiles in each of 12 families.
+- `catalog/style-profiles.json`: reviewed style directions governed by 12
+  baseline families; the initial baseline contains four profiles per family.
 - `catalog/style-visuals.json`: preview variants, themes, and real visual references.
 - `catalog/previews/`: generated brand-neutral SVG cards.
 - `catalog/component-kits.json`: implementation kits that can support each style.
@@ -17,16 +17,26 @@ The catalog contains normalized design knowledge:
   profiles.
 - `catalog/scenario-questions.json`: required questions when a user brief is too vague.
 - `catalog/curation-policy.json`: baseline family depth and per-family visual-diversity requirements.
+- `catalog/curation/source-state.json`: content-hash processing cursor; the
+  current 74 sources are checked in as a no-cost initial baseline.
+- `catalog/curation/records/`: immutable per-source model and gate audit records
+  created only after the baseline.
 - `catalog/recommendation-benchmarks.json`: 12 representative briefs used to
   protect intent coverage and deterministic ranking.
 
 The catalog is intentionally structured. Agents should not load large upstream repositories into context just to choose a style.
 
+Supply-side curation is separate from consumer-side recommendation. The
+OpenAI-compatible curator reads only bounded new/changed source material and
+proposes a structured candidate. Program code owns provenance, taxonomy,
+duplicate policy, promotion, preview generation, and validation. The existing
+GitHub App opens the audited PR only after those deterministic gates pass.
+
 ## 2. Visual Preview Layer
 
 `src/preview.mjs` turns normalized visual metadata into deterministic SVG
-wireframes. `scripts/generate-style-previews.mjs` generates and verifies the 48
-committed style cards. The same renderer creates a project-level
+wireframes. `scripts/generate-style-previews.mjs` generates and verifies one
+committed card per curated style. The same renderer creates a project-level
 `first-viewport-draft.svg` after selection.
 
 `src/core.mjs` packages each recommendation set into a self-contained

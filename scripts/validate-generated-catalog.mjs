@@ -1,9 +1,11 @@
 import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveProviderAdapter } from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 3;
+const CONTENT_HASH_PATTERN = /^sha256:[0-9a-f]{64}$/u;
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
@@ -51,7 +53,7 @@ export function validateGeneratedCatalog({
   expect(sameJson(providerIds, configuredIds), "provider inventory IDs and order must match catalog/providers.json");
 
   const fileRules = [
-    ["designMdFiles", "designMdFiles", 200],
+    ["designMdFiles", "designMdFiles", null],
     ["registryFiles", "registryFiles", 200],
     ["docsFiles", "docsFiles", 100]
   ];
@@ -59,6 +61,11 @@ export function validateGeneratedCatalog({
   for (const [index, provider] of providers.entries()) {
     const configured = configuredProviders[index];
     if (!configured) continue;
+    try {
+      resolveProviderAdapter(configured);
+    } catch (error) {
+      errors.push(`${configured.id}: ${error.message}`);
+    }
     expect(provider.repo === configured.repo, `${provider.id}: repo must match catalog/providers.json`);
     expect(provider.url === configured.url, `${provider.id}: url must match catalog/providers.json`);
     expect(provider.role === configured.role, `${provider.id}: role must match catalog/providers.json`);
@@ -78,12 +85,12 @@ export function validateGeneratedCatalog({
       if (!Array.isArray(files)) continue;
       expect(files.every(isSafeRelativePath), `${provider.id}: ${field} must contain safe POSIX-relative paths`);
       expect(sameJson(files, sortedUnique(files)), `${provider.id}: ${field} must be sorted and unique`);
-      expect(files.length <= limit, `${provider.id}: ${field} exceeds its ${limit}-file limit`);
+      if (limit !== null) expect(files.length <= limit, `${provider.id}: ${field} exceeds its ${limit}-file limit`);
       expect(provider.counts?.[countField] === files.length, `${provider.id}: ${countField} count must match ${field}`);
     }
   }
 
-  const validateSourceIndex = (indexDocument, label, sourceType, providerField) => {
+  const validateSourceIndex = (indexDocument, label, sourceType, providerField, { contentHashed = false } = {}) => {
     expect(sameJson(Object.keys(indexDocument).sort(), ["schemaVersion", "sources"]), `${label} root fields must be schemaVersion and sources`);
     expect(indexDocument.schemaVersion === SCHEMA_VERSION, `${label} schemaVersion must be ${SCHEMA_VERSION}`);
     expect(Array.isArray(indexDocument.sources), `${label} sources must be an array`);
@@ -94,10 +101,33 @@ export function validateGeneratedCatalog({
         sourceType
       }))
     );
-    expect(sameJson(indexDocument.sources, expectedSources), `${label} sources must exactly match normalized provider inventory paths`);
+    const actualSources = Array.isArray(indexDocument.sources) ? indexDocument.sources : [];
+    if (contentHashed) {
+      for (const [index, source] of actualSources.entries()) {
+        expect(
+          sameJson(Object.keys(source || {}).sort(), ["contentHash", "path", "providerId", "sourceType"]),
+          `${label} source[${index}] fields must be contentHash, path, providerId, and sourceType`
+        );
+        expect(
+          CONTENT_HASH_PATTERN.test(source?.contentHash || ""),
+          `${label} source[${index}] contentHash must be a lowercase SHA-256 digest`
+        );
+      }
+      const normalizedActual = actualSources.map(({ providerId, path, sourceType }) => ({
+        providerId,
+        path,
+        sourceType
+      }));
+      expect(
+        sameJson(normalizedActual, expectedSources),
+        `${label} sources must exactly match normalized provider inventory paths`
+      );
+    } else {
+      expect(sameJson(actualSources, expectedSources), `${label} sources must exactly match normalized provider inventory paths`);
+    }
   };
 
-  validateSourceIndex(styleIndex, "style-sources.json", "design-md", "designMdFiles");
+  validateSourceIndex(styleIndex, "style-sources.json", "design-md", "designMdFiles", { contentHashed: true });
   validateSourceIndex(componentIndex, "component-sources.json", "registry", "registryFiles");
 
   if (errors.length > 0) {
