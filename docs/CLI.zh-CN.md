@@ -28,6 +28,10 @@ node bin/ai-ui-style-director.mjs recommend \
 
 如果 brief 缺少必要信息，命令会返回针对性的补充问题，而不是直接推荐。
 
+匹配和排序由 `src/core.mjs` 根据 Catalog 元数据执行确定性规则，不调用 LLM、
+Embedding 或向量数据库。agent 只负责补齐 brief、调用 CLI 和展示选择；相同
+brief 与相同 Catalog 会得到相同的 ID、分数和顺序。
+
 每个推荐还会返回：
 
 - 本地生成的 SVG 草图绝对路径；
@@ -56,16 +60,24 @@ node bin/ai-ui-style-director.mjs serve
 JSON 对象包含 `catalogUrl`、`host`、`port`、`styleCount`、`sourceCount` 和
 `opened`。
 
-页面会列出 `catalog/style-profiles.json` 中全部已策展条目及其生成式 SVG
-预览、已审查元数据、组件库建议和上游 Light/Dark 参考。页面支持文本搜索，
-并可按 family、页面类型、密度、调性和组件库过滤；搜索还识别“后台”等常见
-中文别名。同一过滤组内的多个值按“或”匹配，不同组以及搜索词之间按“且”
-组合。搜索与过滤状态会保存在页面 URL 中，因此刷新后仍能保留，也可以复制
-筛选后的链接。
+当前页面列出 `catalog/style-profiles.json` 中 48 个已策展条目，即 12 个
+family、每个 family 4 个方向，并展示已审查元数据、组件库建议和上游
+Light/Dark 参考。页面支持文本搜索，并可按 family、页面类型、密度、调性和
+组件库过滤；搜索还识别“后台”等常见中文别名。同一过滤组内的多个值按“或”
+匹配，不同组以及搜索词之间按“且”组合。搜索与过滤状态会保存在页面 URL
+中，因此刷新后仍能保留，也可以复制筛选后的链接。
 
-`catalog/generated/style-sources.json` 保存已索引的上游来源路径。浏览器只把
-当前来源索引数量作为背景信息，不会把这些路径扩充成风格卡片；只有已审查的
-profile 才作为完整条目展示。
+`/catalog.json` 使用轻量 schema v2。每个条目只返回 `previewUrl`，不会把 SVG
+编码进 JSON；预览由 `/previews/<style-id>.svg` 独立同源路由提供。响应还包含
+`entryIndex` 与词项到数字条目下标的 `searchIndex`，避免在每个 postings 中
+重复较长的风格 ID：查询词有精确 postings 时直接
+求交集，未知词或前缀词则回退到标准化 `searchText` 子串匹配。客户端先渲染
+24 张卡片，用户继续浏览时再按 24 张一批追加，搜索或切换标签会重置批次，
+而匹配总数始终反映全部结果。
+
+`catalog/generated/style-sources.json` 当前保存 74 条已索引的上游来源路径。
+浏览器只把它们作为候选素材池和背景统计，不会把这些路径扩充成 74 张风格
+卡片；只有通过策展与校验的 48 个 profile 才作为完整条目展示。
 
 `serve` 只绑定 `127.0.0.1`，以前台方式运行，直到用户按下 Ctrl+C。它不会
 创建或修改目标项目中的 `.ui-style-director/` 目录。它与 `preview --serve`

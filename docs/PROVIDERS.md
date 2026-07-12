@@ -26,6 +26,11 @@ and documentation files, then writes normalized indexes under
 `catalog/generated/`. It does not automatically rewrite the curated
 `catalog/style-profiles.json`.
 
+The current `style-sources.json` contains 74 provider paths. These paths form a
+source pool for review; they are not 74 user-facing styles and are never
+promoted automatically. The curated catalog currently contains 48 profiles,
+balanced as four profiles in each of 12 families.
+
 The scheduled GitHub workflow performs the same refresh daily, runs repository
 checks, and opens a pull request only when generated indexes change.
 

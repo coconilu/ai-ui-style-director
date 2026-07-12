@@ -15,7 +15,7 @@ flowchart LR
   U[用户需求] --> S[Agent Skill]
   S --> W[Skill wrapper]
   W --> C[Node.js CLI]
-  K[人工维护的 Catalog] --> C
+  K[48 个已策展 profile] --> C
   C --> R[recommend]
   C --> B[serve 目录浏览器]
   C --> A[apply]
@@ -26,11 +26,14 @@ flowchart LR
   A --> D[DESIGN.md 与项目状态]
   P[上游 Provider 仓库] --> G[clone/pull 与路径扫描]
   G --> I[catalog/generated]
-  I -. 来源索引数量 .-> B
+  I -. 74 条来源路径统计 .-> B
   I -. 维护者审查后手工更新 .-> K
 ```
 
-系统刻意把运行时推荐和上游同步分开。推荐只读取已审查的 Catalog；Provider 刷新只生成来源索引，不会直接改变推荐结果。
+系统刻意把运行时推荐和上游同步分开。推荐只读取已审查的 Catalog；Provider
+刷新只生成来源索引，不会直接改变推荐结果。当前运行时 Catalog 是 48 个
+profile，即 12 个 family、每组 4 个方向；生成索引中的 74 条 style source
+只是等待人工策展的候选素材池，不能按数量等同于可推荐风格。
 
 ## 入口与调用链
 
@@ -82,18 +85,28 @@ Skill 负责流程和行为约束，不包含推荐算法。
 
 ### 4. 目录浏览器与通用回环服务
 
-`src/catalog-browser.mjs` 导出四个职责明确的操作：
+`src/catalog-browser.mjs` 导出五个职责明确的操作：
 
 - `buildStyleCatalog`：把已策展 profile、视觉元数据、生成式 SVG 预览和
   来源索引统计组合成浏览器视图模型；
-- `filterCatalogEntries`：执行文本搜索以及 family、页面类型、密度、调性和
-  组件库过滤；
+- `searchCatalogEntries`：使用倒排索引查询候选风格，并在必要时做子串回退；
+- `filterCatalogEntries`：把搜索结果与 family、页面类型、密度、调性和
+  组件库过滤组合；
 - `renderCatalogBrowserPage`：渲染浏览器页面外壳；
 - `startStyleCatalogServer`：以前台回环服务提供页面与资源。
 
-目录服务的四条应用路由是 `/`、`/catalog.json`、`/app.js` 和
-`/styles.css`。页面状态编码在 URL query 中，因此筛选结果无需服务端状态即可
-在刷新后保留。
+目录服务的固定应用路由是 `/`、`/catalog.json`、`/app.js` 和
+`/styles.css`，此外还为每个已策展风格提供
+`/previews/<style-id>.svg`。预览路由只接受经过校验的安全 ID，并设置同源资源
+策略；Catalog 的内容安全策略也只允许加载同源图片。页面状态编码在 URL
+query 中，因此筛选结果无需服务端状态即可在刷新后保留。
+
+`/catalog.json` 使用 schema v2。条目不再内嵌 SVG data URI，只携带轻量的
+`previewUrl`；响应中的 `entryIndex` 支持按 ID 定位条目，`searchIndex` 则把
+标准化词项映射到有序数字条目下标 postings。多词查询对精确 postings 求交集，
+未知或前缀词回退到 `searchText` 子串匹配，兼顾常见查询速度和宽松搜索体验。
+客户端每次最多追加 24 张卡片；搜索、过滤或清空条件会重置分页，但状态栏
+始终显示全部匹配数量。
 
 `src/loopback-server.mjs` 统一管理 `127.0.0.1` listener、端口校验、禁用缓存
 的响应、method 与 path 处理以及优雅停止。`src/core.mjs` 保持已有的
@@ -113,13 +126,21 @@ Skill 负责流程和行为约束，不包含推荐算法。
 
 `catalog/providers.json` 描述上游仓库；`catalog/generated/*` 记录上游扫描结果。推荐核心不会直接读取生成索引，因此上游内容变化不会未经审查进入用户推荐。
 
+当前 `style-profiles.json` 与 `style-visuals.json` 各有 48 个一一对应的条目，
+覆盖 12 个 family、每组 4 个方向。`style-sources.json` 当前有 74 条 provider
+路径；它们没有完整的适用场景、风险、视觉主题和经过审查的参考关系，因此不
+会自动晋升为 profile。
+
 目录浏览器读取 `catalog/generated/style-sources.json` 的唯一目的是显示当前
-来源索引数量。里面的路径不会被语义解析，也不会作为完整风格卡片返回；浏览器
-条目仍然只来自 `catalog/style-profiles.json` 中经过审查的 profile。
+来源索引数量。里面的 74 条路径不会被语义解析，也不会作为完整风格卡片返回；
+浏览器条目仍然只来自 `catalog/style-profiles.json` 中经过审查的 48 个
+profile。
 
 ## 推荐算法
 
-`src/core.mjs` 中的推荐是确定性规则匹配，不依赖 LLM、Embedding 或向量数据库。
+`src/core.mjs` 中的推荐是确定性程序匹配，不依赖 LLM、Embedding 或向量
+数据库。Agent Skill 负责收集 brief、调用 CLI、展示结果和等待选择，但不会
+凭主观判断重排风格。
 
 ### Brief 标准化
 
@@ -127,23 +148,33 @@ Skill 负责流程和行为约束，不包含推荐算法。
 
 - 将中文场景词补充为对应英文关键词，例如“后台”扩展为 dashboard、admin 和 internal-tool；
 - 转为小写；
-- 去除非字母数字字符并压缩空格。
+- 去除非字母数字字符并压缩空格；
+- 对简单英文复数做规范化，并过滤 product、website、team 等缺乏场景区分度
+  的通用词。
 
-`isBriefInsufficient` 检查 brief 是否至少包含一个可识别场景。信息不足时返回问题列表，不进行猜测性推荐。
+`isBriefInsufficient` 从当前 Catalog 的 family、页面类型、受众、目标、关键词
+和适用场景动态派生可识别词表。brief 没有任何场景信号时返回问题列表，不进行
+猜测性推荐；新增有效 taxonomy 后也不需要另写一份固定场景列表。
 
 ### 加权评分
 
-每个 profile 的字段按三档参与匹配：
+每个 profile 的字段按三档参与词项匹配：
 
-- 高权重：关键词、页面类型、受众和目标；
+- 高权重：family、关键词、页面类型、受众和目标；
 - 中权重：调性、密度和适用场景；
 - 低权重：布局规则。
 
-AI、dashboard、developer、enterprise、consumer、redesign 等常见意图还会获得显式场景加分。相同输入和 Catalog 会得到相同排序，便于测试和复现。
+页面类型、受众、目标、关键词和 family 的完整短语还会获得额外权重；
+`redesign` 与 `new landing` 保留少量明确的场景加分。匹配采用词边界而不是任意
+子串，分数相同时按名称和 ID 稳定排序，因此相同输入和 Catalog 会得到相同的
+ID、分数和顺序。
 
 ### 差异化与换一批
 
-`diversify` 首先从不同 `family` 中选择高分方向，再用剩余高分项补足数量，避免五个结果都属于相同视觉家族。
+`diversifyScoredProfiles` 先移除零分结果，并只保留达到最高分 15% 相关性阈值
+的方向；随后保持分数顺序，只有当新 `family` 候选至少达到当前最佳剩余候选
+80% 的分数时，才把它提前作为近似相关的差异化方向。这样相关性始终优先，
+同时允许分数接近的视觉家族增加选择范围。
 
 会话状态保存在 `.ui-style-director/session.json`。使用 `--again` 时，核心排除 `shownStyleIds`，并将新结果追加到会话。未展示方向不足时返回 `exhausted`。
 
@@ -176,9 +207,30 @@ AI、dashboard、developer、enterprise、consumer、redesign 等常见意图还
 自动打开，并在前台保持运行到用户按下 Ctrl+C。端口 `0` 表示由操作系统选择
 可用端口；`--port` 用于指定端口，`--json` 则让启动输出变为机器可读格式。
 
-客户端从 `/catalog.json` 读取已审查的视图模型，渲染全部风格卡片，
-并在页面内执行搜索和标签过滤。生成式 SVG 预览与上游参考继续遵循推荐画廊
-相同的中性资产和外部链接边界。
+客户端从轻量 `/catalog.json` 读取已审查的视图模型，用倒排索引执行精确
+词项查询、在索引未命中时回退子串搜索，再与标签过滤组合。首屏只创建 24 张
+卡片，继续浏览时每批追加 24 张；每张 SVG 通过独立同源 `previewUrl` 按需
+请求。生成式 SVG 预览与上游参考继续遵循推荐画廊相同的中性资产和外部链接
+边界。
+
+## Catalog 质量门禁与推荐基准
+
+`scripts/validate-curated-catalog.mjs` 同时提供可导入的
+`validateCuratedCatalog` 和命令行入口。它会验证：
+
+- `catalog/curation-policy.json` 要求的 12 个基线 family 各至少有 4 个 profile
+  和 3 种 visual variant；
+- profile ID 与 visual `styleId` 唯一且一一对应；
+- 必填字符串、数组与 kebab-case taxonomy 合法且无重复项；
+- visual 使用支持的变体，并提供完整且合法的语义颜色；
+- 每个方向恰好包含 3 条不重复的参考，且 provider/slug 确实存在于来源索引；
+- 每个 visual 都有对应的已提交 SVG。
+
+运行 `npm run catalog:curated:validate` 可单独执行该门禁；`npm run check` 会在
+完整检查链中自动执行它。`catalog/recommendation-benchmarks.json` 还保存 12 个
+覆盖 developer、SaaS、enterprise、dashboard、docs、launch、consumer、
+portfolio、commerce、research、finance 和 education 的场景。测试会逐项校验
+Top 1 family、Top 5 必要 family，以及重复运行得到完全相同的 ID 和分数。
 
 ## `apply` 与项目设计契约
 
@@ -277,6 +329,7 @@ Provider 内容的使用遵循以下边界：
 - 维护要求：新增 Provider 后仍需人工审查并更新 profile、视觉配置和组件映射；
 - 扩展要求：如果未来增加新的推荐入口，应复用或验证同一套评分与差异化规则，避免不同入口产生不一致结果。
 
-仓库测试覆盖 brief 检查、推荐顺序、换一批、视觉引用、HTML 画廊、目录
-视图模型过滤、目录 HTTP 路由、通用回环安全、`apply` 产物、Provider 索引、
-CLI 命令以及 Codex/Claude Code wrapper 路径发现。
+仓库测试覆盖 brief 检查、12 场景推荐基准、换一批、Catalog 结构校验、视觉
+引用、HTML 画廊、倒排搜索与子串回退、24 张一批的目录渲染、独立 SVG HTTP
+路由、通用回环安全、`apply` 产物、Provider 索引、CLI 命令以及
+Codex/Claude Code wrapper 路径发现。

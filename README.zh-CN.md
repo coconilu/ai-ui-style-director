@@ -4,6 +4,11 @@
 
 AI UI Style Director 是面向编程 agent 的 UI 风格决策工作流。在新建或重构网站之前，它会先推荐 5 个合适的视觉方向；你选定后，它会生成项目专属的 `DESIGN.md`，再让 agent 开始实现。
 
+当前 Catalog 包含 48 个经过人工策展的风格 profile，覆盖 12 个 family、每个
+family 4 个方向。推荐排序由 Node.js 程序根据结构化字段做确定性匹配；agent
+负责收集需求、调用命令、展示结果和执行选择门禁，不在运行时凭主观判断替换
+排序。
+
 当前一等支持 Codex 与 Claude Code，可运行在 Windows、macOS 和 Linux。其他兼容 Agent Skills 的工具按 best-effort 方式支持。
 
 ## 安装
@@ -58,8 +63,13 @@ node bin/ai-ui-style-director.mjs serve --open
 ```
 
 页面会列出全部已审查的风格 profile，并支持文本搜索以及 family、页面类型、
-密度、调性和组件库过滤。生成索引中的 style source 是上游来源路径；页面会
-动态展示当前来源索引数量，不会把它们伪装成完整风格卡片。`serve` 是只读
+密度、调性和组件库过滤。目录接口使用轻量 schema v2：卡片只携带
+`previewUrl`，SVG 通过独立的同源路由按需加载；搜索优先使用倒排索引的精确
+词项 postings，未命中时回退到子串匹配，结果再以每批 24 张卡片渐进渲染。
+
+当前生成索引中的 74 条 style source 是上游来源路径，只构成候选素材池；页面
+会动态展示该数量，但不会把它们伪装成 74 个完整风格。只有经过 profile、视觉
+配置、3 条参考和 SVG 校验的条目才进入上述 48 个已策展方向。`serve` 是只读
 操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
 
 服务以前台方式运行，只监听 `127.0.0.1`，默认选择可用端口，按 Ctrl+C 后

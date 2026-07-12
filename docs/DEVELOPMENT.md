@@ -14,7 +14,11 @@ ai-ui-style-director/
   test/                        # Node.js tests
 ```
 
-The MVP has no runtime npm dependencies and requires Node.js 20 or newer.
+The project has no runtime npm dependencies and requires Node.js 20 or newer.
+The current reviewed catalog contains 48 profiles, balanced as four profiles
+in each of 12 families. The 74 provider paths in
+`catalog/generated/style-sources.json` are a source pool, not additional
+curated profiles.
 
 ## Checks
 
@@ -25,7 +29,21 @@ npm test
 npm run check
 ```
 
-`npm run check` validates JavaScript syntax and runs the test suite.
+`npm run check` validates JavaScript syntax, the curated and generated catalog
+schemas, committed preview freshness, and the test suite.
+
+Validate only the curated profile/visual/reference contract with:
+
+```bash
+npm run catalog:curated:validate
+```
+
+This command applies `catalog/curation-policy.json`, including the baseline of
+at least four profiles and three visual variants in every required family. It
+also checks unique IDs, required profile fields and taxonomy values, one
+matching visual and preview per profile, supported render variants, valid theme
+colors, and exactly three unique references that exist in the generated
+provider source index.
 
 Regenerate style cards after changing `style-visuals.json` or preview rendering:
 
@@ -34,8 +52,27 @@ npm run previews
 npm run previews:check
 ```
 
-The check command verifies that every profile has one visual configuration,
-three references, and an up-to-date committed SVG.
+The preview check verifies that every profile has an up-to-date committed SVG.
+
+## Adding or changing a curated style
+
+1. Add or update the reviewed profile in `catalog/style-profiles.json`. Keep
+   the 12-family taxonomy and the baseline in `catalog/curation-policy.json`
+   intact.
+2. Add exactly one matching visual entry in `catalog/style-visuals.json`, using
+   a supported renderer variant, a complete semantic theme, and three distinct
+   provider references.
+3. Choose references from `catalog/generated/style-sources.json`; do not
+   promote a provider path into a style without the reviewed profile and visual
+   metadata.
+4. Run `npm run previews`, then visually inspect the generated SVG.
+5. Run `npm run catalog:curated:validate`.
+6. Run `npm run check` before committing.
+
+`catalog/recommendation-benchmarks.json` contains 12 representative briefs.
+When taxonomy or scoring changes, update or extend those cases deliberately;
+the recommendation test verifies expected Top-1/Top-5 family coverage and
+identical IDs and scores across repeated runs.
 
 Validate the skill separately with the Codex `skill-creator` validator when it
 is available:

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "requiredFamilies": [
+    "developer",
+    "saas",
+    "enterprise",
+    "dashboard",
+    "docs",
+    "launch",
+    "consumer",
+    "portfolio",
+    "commerce",
+    "research",
+    "finance",
+    "education"
+  ],
+  "minimumProfilesPerFamily": 4,
+  "minimumVisualVariantsPerFamily": 3
+}

@@ -35,6 +35,10 @@ Claude Code:
 
 The agent shows a brand-neutral SVG draft and upstream Light/Dark live-preview links for each of the five directions. After selection, it generates a project-specific `DESIGN.md` and first-viewport draft, then implements only after confirmation.
 
+The agent orchestrates this workflow, but it does not improvise the match. The
+Node.js core ranks the reviewed catalog with deterministic, testable rules, so
+the same brief and catalog produce the same result.
+
 ## Browse the curated catalog
 
 Open a searchable view of every curated style without starting a website
@@ -58,11 +62,17 @@ Or run the CLI directly and open the page automatically:
 node bin/ai-ui-style-director.mjs serve --open
 ```
 
-The page lists every reviewed style profile and supports text search plus
-family, page type, density, tone, and component-kit filters. Generated
-style-source entries are upstream index paths; the page reports their current
-count but does not misrepresent them as curated style cards. `serve` is
-read-only and does not create or modify project `.ui-style-director/` state.
+The current catalog contains 48 reviewed profiles: four directions in each of
+12 families. The page supports text search plus family, page type, density,
+tone, and component-kit filters. It loads a lightweight schema-v2 catalog,
+fetches previews from independent same-origin SVG routes, and progressively
+renders 24 cards at a time.
+
+The 74 generated style-source entries are upstream provider paths and remain a
+source pool for human curation; they are not 74 additional styles. The page
+reports that count without misrepresenting unreviewed paths as style cards.
+`serve` is read-only and does not create or modify project
+`.ui-style-director/` state.
 
 The foreground service listens only on `127.0.0.1`, uses an available port by
 default, and stops when you press Ctrl+C. Use `--port <number>` to request a

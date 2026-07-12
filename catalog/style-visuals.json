@@ -118,5 +118,365 @@
       { "provider": "awesome-design-md", "slug": "miro", "label": "Miro", "role": "approachable collaborative color" },
       { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "structured but friendly progress views" }
     ]
+  },
+  {
+    "styleId": "developer-cli-workbench",
+    "variant": "docs",
+    "theme": { "canvas": "#070A0D", "surface": "#0D1318", "surfaceAlt": "#141D22", "text": "#F4F7F5", "muted": "#8FA39A", "accent": "#4ADE80", "border": "#26352E" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "warp", "label": "Warp", "role": "terminal workflow clarity and command-first interaction" },
+      { "provider": "awesome-design-md", "slug": "opencode.ai", "label": "OpenCode", "role": "open developer-tool positioning and code-native detail" },
+      { "provider": "awesome-design-md", "slug": "cursor", "label": "Cursor", "role": "focused technical product presentation" }
+    ]
+  },
+  {
+    "styleId": "developer-api-observability-lab",
+    "variant": "dashboard",
+    "theme": { "canvas": "#07111A", "surface": "#0D1A26", "surfaceAlt": "#122535", "text": "#EAF7FF", "muted": "#7FA3B8", "accent": "#22D3EE", "border": "#224156" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "sentry", "label": "Sentry", "role": "actionable error groups and incident severity" },
+      { "provider": "awesome-design-md", "slug": "posthog", "label": "PostHog", "role": "developer analytics and event exploration" },
+      { "provider": "awesome-design-md", "slug": "clickhouse", "label": "ClickHouse", "role": "high-density technical data presentation" }
+    ]
+  },
+  {
+    "styleId": "developer-open-source-community-hub",
+    "variant": "portfolio",
+    "theme": { "canvas": "#0B0F0D", "surface": "#121815", "surfaceAlt": "#1B2821", "text": "#F0FFF6", "muted": "#91A99B", "accent": "#34D399", "border": "#294337" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "supabase", "label": "Supabase", "role": "open-source ecosystem energy and technical credibility" },
+      { "provider": "awesome-design-md", "slug": "expo", "label": "Expo", "role": "friendly framework community and project pathways" },
+      { "provider": "awesome-design-md", "slug": "voltagent", "label": "VoltAgent", "role": "agent ecosystem organization and contributor focus" }
+    ]
+  },
+  {
+    "styleId": "saas-collaborative-workspace-canvas",
+    "variant": "app-shell",
+    "theme": { "canvas": "#F5F4FF", "surface": "#FFFFFF", "surfaceAlt": "#ECEAFB", "text": "#25223B", "muted": "#77728D", "accent": "#7C3AED", "border": "#D7D3EB" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "miro", "label": "Miro", "role": "collaborative canvas, presence, and approachable tools" },
+      { "provider": "awesome-design-md", "slug": "notion", "label": "Notion", "role": "calm shared workspace hierarchy" },
+      { "provider": "awesome-design-md", "slug": "figma", "label": "Figma", "role": "multiplayer context and flexible creative controls" }
+    ]
+  },
+  {
+    "styleId": "saas-automation-flow-builder",
+    "variant": "enterprise",
+    "theme": { "canvas": "#F7F8FC", "surface": "#FFFFFF", "surfaceAlt": "#EEF0F8", "text": "#171A2B", "muted": "#6F7489", "accent": "#6D4AFF", "border": "#D9DDEA" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "composio", "label": "Composio", "role": "integration-led automation and technical connectors" },
+      { "provider": "awesome-design-md", "slug": "zapier", "label": "Zapier", "role": "clear trigger-action workflow language" },
+      { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "structured operational configuration" }
+    ]
+  },
+  {
+    "styleId": "saas-customer-success-inbox",
+    "variant": "dashboard",
+    "theme": { "canvas": "#FBF9FF", "surface": "#FFFFFF", "surfaceAlt": "#F1EDFA", "text": "#292336", "muted": "#7B7288", "accent": "#7452D6", "border": "#DED7E8" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "intercom", "label": "Intercom", "role": "human support operations and conversation context" },
+      { "provider": "awesome-design-md", "slug": "slack", "label": "Slack", "role": "friendly team communication hierarchy" },
+      { "provider": "awesome-design-md", "slug": "superhuman", "label": "Superhuman", "role": "fast inbox workflow and keyboard efficiency" }
+    ]
+  },
+  {
+    "styleId": "enterprise-infrastructure-blueprint",
+    "variant": "research",
+    "theme": { "canvas": "#F3F5F8", "surface": "#FFFFFF", "surfaceAlt": "#E9ECF3", "text": "#1B2030", "muted": "#657083", "accent": "#6246B8", "border": "#CCD2DD" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "hashicorp", "label": "HashiCorp", "role": "infrastructure architecture and governed platform clarity" },
+      { "provider": "awesome-design-md", "slug": "nvidia", "label": "NVIDIA", "role": "technical system proof at enterprise scale" },
+      { "provider": "awesome-design-md", "slug": "mongodb", "label": "MongoDB", "role": "developer-facing data platform structure" }
+    ]
+  },
+  {
+    "styleId": "enterprise-governance-evidence-room",
+    "variant": "docs",
+    "theme": { "canvas": "#F7F9FC", "surface": "#FFFFFF", "surfaceAlt": "#EDF2F8", "text": "#13243A", "muted": "#627187", "accent": "#246BCE", "border": "#CFD9E6" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "ibm", "label": "IBM", "role": "formal information architecture and enterprise authority" },
+      { "provider": "awesome-design-md", "slug": "mastercard", "label": "Mastercard", "role": "measured assurance and institutional trust" },
+      { "provider": "awesome-design-md", "slug": "dell-1996", "label": "Dell 1996", "role": "dense document retrieval and explicit navigation cues" }
+    ]
+  },
+  {
+    "styleId": "enterprise-executive-transformation-brief",
+    "variant": "portfolio",
+    "theme": { "canvas": "#F5F1EA", "surface": "#FFFCF7", "surfaceAlt": "#E6DED2", "text": "#20233A", "muted": "#706B76", "accent": "#2F62C9", "border": "#D3CABE" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "hp", "label": "HP", "role": "broad enterprise transformation storytelling" },
+      { "provider": "awesome-design-md", "slug": "vodafone", "label": "Vodafone", "role": "large-scale customer and service outcomes" },
+      { "provider": "awesome-design-md", "slug": "meta", "label": "Meta", "role": "portfolio-level platform narrative" }
+    ]
+  },
+  {
+    "styleId": "dashboard-incident-response-wallboard",
+    "variant": "dashboard",
+    "theme": { "canvas": "#070C12", "surface": "#0D141D", "surfaceAlt": "#14202B", "text": "#EDF5FA", "muted": "#8193A0", "accent": "#F43F5E", "border": "#263541" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "sentry", "label": "Sentry", "role": "incident groups, severity, and ownership" },
+      { "provider": "awesome-design-md", "slug": "posthog", "label": "PostHog", "role": "event timelines and operational exploration" },
+      { "provider": "awesome-design-md", "slug": "clickhouse", "label": "ClickHouse", "role": "high-volume service analytics" }
+    ]
+  },
+  {
+    "styleId": "dashboard-executive-kpi-briefing",
+    "variant": "enterprise",
+    "theme": { "canvas": "#F4F3EF", "surface": "#FFFFFF", "surfaceAlt": "#E8E8E2", "text": "#15233A", "muted": "#687180", "accent": "#2563A8", "border": "#D1D4D6" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "ibm", "label": "IBM", "role": "executive information hierarchy and analytical restraint" },
+      { "provider": "awesome-design-md", "slug": "mastercard", "label": "Mastercard", "role": "board-ready trust and polished measurement" },
+      { "provider": "awesome-design-md", "slug": "coinbase", "label": "Coinbase", "role": "high-value metric clarity" }
+    ]
+  },
+  {
+    "styleId": "dashboard-field-operations-mapboard",
+    "variant": "app-shell",
+    "theme": { "canvas": "#EEF3F4", "surface": "#FFFFFF", "surfaceAlt": "#DDE7E8", "text": "#17282C", "muted": "#62767A", "accent": "#0284C7", "border": "#C4D2D4" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "uber", "label": "Uber", "role": "location-aware dispatch and operational immediacy" },
+      { "provider": "awesome-design-md", "slug": "vodafone", "label": "Vodafone", "role": "regional service operations and status" },
+      { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "structured assignment and resource views" }
+    ]
+  },
+  {
+    "styleId": "docs-api-reference-workbench",
+    "variant": "developer",
+    "theme": { "canvas": "#F8FAFC", "surface": "#FFFFFF", "surfaceAlt": "#EAF0F5", "text": "#111827", "muted": "#667085", "accent": "#0D9488", "border": "#CFD8E3" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "mintlify", "label": "Mintlify", "role": "navigable API documentation and readable reference" },
+      { "provider": "awesome-design-md", "slug": "resend", "label": "Resend", "role": "clear request examples and developer-focused polish" },
+      { "provider": "awesome-design-md", "slug": "supabase", "label": "Supabase", "role": "complete integration pathways and code proof" }
+    ]
+  },
+  {
+    "styleId": "docs-product-guides-library",
+    "variant": "docs",
+    "theme": { "canvas": "#F8F7F3", "surface": "#FFFFFF", "surfaceAlt": "#EFEEE8", "text": "#25241F", "muted": "#706F68", "accent": "#2F855A", "border": "#D9D7CF" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "notion", "label": "Notion", "role": "calm document hierarchy and task-oriented knowledge" },
+      { "provider": "awesome-design-md", "slug": "sanity", "label": "Sanity", "role": "structured content guidance and editorial organization" },
+      { "provider": "awesome-design-md", "slug": "webflow", "label": "Webflow", "role": "product education and visual how-to paths" }
+    ]
+  },
+  {
+    "styleId": "docs-knowledge-base-help-center",
+    "variant": "learning",
+    "theme": { "canvas": "#F8F7FF", "surface": "#FFFFFF", "surfaceAlt": "#EDEBFA", "text": "#26233A", "muted": "#716E84", "accent": "#5B5BD6", "border": "#DAD6EC" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "intercom", "label": "Intercom", "role": "customer-language help paths and guided support" },
+      { "provider": "awesome-design-md", "slug": "slack", "label": "Slack", "role": "friendly troubleshooting and approachable guidance" },
+      { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "structured self-service categories" }
+    ]
+  },
+  {
+    "styleId": "launch-cinematic-product-reveal",
+    "variant": "launch",
+    "theme": { "canvas": "#08040D", "surface": "#120A1B", "surfaceAlt": "#20102E", "text": "#FFF8FF", "muted": "#B9A8C2", "accent": "#E840B8", "border": "#382145" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "runwayml", "label": "Runway", "role": "cinematic creative-tool reveal" },
+      { "provider": "awesome-design-md", "slug": "elevenlabs", "label": "ElevenLabs", "role": "immersive media product storytelling" },
+      { "provider": "awesome-design-md", "slug": "playstation", "label": "PlayStation", "role": "dramatic entertainment launch pacing" }
+    ]
+  },
+  {
+    "styleId": "launch-proof-led-early-access",
+    "variant": "developer",
+    "theme": { "canvas": "#F7FAFF", "surface": "#FFFFFF", "surfaceAlt": "#E8F0FF", "text": "#111827", "muted": "#64748B", "accent": "#2563EB", "border": "#CFDAEA" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "lovable", "label": "Lovable", "role": "immediate builder proof and early product momentum" },
+      { "provider": "awesome-design-md", "slug": "vercel", "label": "Vercel", "role": "direct product contract and confident action" },
+      { "provider": "awesome-design-md", "slug": "replicate", "label": "Replicate", "role": "working technical demo and accessible experimentation" }
+    ]
+  },
+  {
+    "styleId": "launch-community-countdown-campaign",
+    "variant": "brand",
+    "theme": { "canvas": "#071A3A", "surface": "#0D2A57", "surfaceAlt": "#12396F", "text": "#FFF9E8", "muted": "#B9CAE6", "accent": "#FFCE3A", "border": "#28528B" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "nintendo-2001", "label": "Nintendo 2001", "role": "playful campaign energy and fan anticipation" },
+      { "provider": "awesome-design-md", "slug": "spotify", "label": "Spotify", "role": "community culture and bold media color" },
+      { "provider": "awesome-design-md", "slug": "pinterest", "label": "Pinterest", "role": "collectible inspiration and shareable discovery" }
+    ]
+  },
+  {
+    "styleId": "consumer-wellness-companion-soft",
+    "variant": "brand",
+    "theme": { "canvas": "#FFF8EF", "surface": "#FFFCF7", "surfaceAlt": "#E9F0DF", "text": "#2D3328", "muted": "#747B6E", "accent": "#7EAA75", "border": "#DADFCF" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "airbnb", "label": "Airbnb", "role": "warm human moments and reassuring service tone" },
+      { "provider": "awesome-design-md", "slug": "starbucks", "label": "Starbucks", "role": "daily ritual and familiar personal warmth" },
+      { "provider": "awesome-design-md", "slug": "pinterest", "label": "Pinterest", "role": "soft visual discovery and personal aspiration" }
+    ]
+  },
+  {
+    "styleId": "consumer-media-discovery-playground",
+    "variant": "portfolio",
+    "theme": { "canvas": "#0D0712", "surface": "#17101E", "surfaceAlt": "#281734", "text": "#FFF7FF", "muted": "#B39DBB", "accent": "#A3E635", "border": "#3C2946" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "spotify", "label": "Spotify", "role": "personalized media discovery and cultural energy" },
+      { "provider": "awesome-design-md", "slug": "pinterest", "label": "Pinterest", "role": "visual collection browsing and taste signals" },
+      { "provider": "awesome-design-md", "slug": "playstation", "label": "PlayStation", "role": "immersive entertainment presentation" }
+    ]
+  },
+  {
+    "styleId": "consumer-local-service-concierge",
+    "variant": "commerce",
+    "theme": { "canvas": "#F6FAFC", "surface": "#FFFFFF", "surfaceAlt": "#E6F0F4", "text": "#182C35", "muted": "#667A82", "accent": "#0EA5A4", "border": "#CEDDE2" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "uber", "label": "Uber", "role": "location-aware service selection and immediate action" },
+      { "provider": "awesome-design-md", "slug": "airbnb", "label": "Airbnb", "role": "local discovery and trustworthy provider context" },
+      { "provider": "awesome-design-md", "slug": "intercom", "label": "Intercom", "role": "concierge-like service communication" }
+    ]
+  },
+  {
+    "styleId": "portfolio-case-study-narrative",
+    "variant": "docs",
+    "theme": { "canvas": "#F7F4EE", "surface": "#FFFCF7", "surfaceAlt": "#EDE7DD", "text": "#201E1A", "muted": "#716C64", "accent": "#B45309", "border": "#D9D1C5" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "clay", "label": "Clay", "role": "art-directed case-study composition" },
+      { "provider": "awesome-design-md", "slug": "wired", "label": "WIRED", "role": "editorial narrative and evidence hierarchy" },
+      { "provider": "awesome-design-md", "slug": "webflow", "label": "Webflow", "role": "visual process explanation and project outcomes" }
+    ]
+  },
+  {
+    "styleId": "portfolio-experimental-creative-canvas",
+    "variant": "portfolio",
+    "theme": { "canvas": "#F3F0FF", "surface": "#FCFAFF", "surfaceAlt": "#DED5FA", "text": "#201637", "muted": "#73658A", "accent": "#7C3AED", "border": "#CEC3EA" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "figma", "label": "Figma", "role": "playful creative systems and multiplayer energy" },
+      { "provider": "awesome-design-md", "slug": "framer", "label": "Framer", "role": "interactive project presentation and motion" },
+      { "provider": "awesome-design-md", "slug": "runwayml", "label": "Runway", "role": "experimental media and cinematic artifacts" }
+    ]
+  },
+  {
+    "styleId": "portfolio-technical-builder-showcase",
+    "variant": "developer",
+    "theme": { "canvas": "#08090B", "surface": "#101216", "surfaceAlt": "#181C22", "text": "#F5F7FA", "muted": "#929AA7", "accent": "#38BDF8", "border": "#29303A" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "vercel", "label": "Vercel", "role": "precise technical project proof" },
+      { "provider": "awesome-design-md", "slug": "cursor", "label": "Cursor", "role": "builder identity and product craft" },
+      { "provider": "awesome-design-md", "slug": "expo", "label": "Expo", "role": "open projects and accessible developer storytelling" }
+    ]
+  },
+  {
+    "styleId": "commerce-marketplace-discovery-grid",
+    "variant": "commerce",
+    "theme": { "canvas": "#FAF9FC", "surface": "#FFFFFF", "surfaceAlt": "#EEEAF4", "text": "#241D2C", "muted": "#766C7D", "accent": "#7C3AED", "border": "#DED8E5" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "shopify", "label": "Shopify", "role": "scalable catalog and trustworthy transaction patterns" },
+      { "provider": "awesome-design-md", "slug": "pinterest", "label": "Pinterest", "role": "visual discovery and collection browsing" },
+      { "provider": "awesome-design-md", "slug": "nike", "label": "Nike", "role": "strong category rhythm and product imagery" }
+    ]
+  },
+  {
+    "styleId": "commerce-direct-response-product-detail",
+    "variant": "brand",
+    "theme": { "canvas": "#F4F3F0", "surface": "#FFFFFF", "surfaceAlt": "#E2E0DA", "text": "#151515", "muted": "#6D6C68", "accent": "#2563EB", "border": "#CECCC6" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "apple", "label": "Apple", "role": "focused product story and purchasing clarity" },
+      { "provider": "awesome-design-md", "slug": "tesla", "label": "Tesla", "role": "direct-response product configuration" },
+      { "provider": "awesome-design-md", "slug": "bugatti", "label": "Bugatti", "role": "premium material presence and dramatic detail" }
+    ]
+  },
+  {
+    "styleId": "commerce-wholesale-order-workbench",
+    "variant": "app-shell",
+    "theme": { "canvas": "#F2F5F7", "surface": "#FFFFFF", "surfaceAlt": "#E4E9ED", "text": "#17212B", "muted": "#687580", "accent": "#1769AA", "border": "#CCD5DB" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "dense table operations and configurable views" },
+      { "provider": "awesome-design-md", "slug": "shopify", "label": "Shopify", "role": "reliable commerce and order semantics" },
+      { "provider": "awesome-design-md", "slug": "ibm", "label": "IBM", "role": "enterprise procurement information density" }
+    ]
+  },
+  {
+    "styleId": "research-benchmark-evaluation-board",
+    "variant": "dashboard",
+    "theme": { "canvas": "#F2F6F8", "surface": "#FFFFFF", "surfaceAlt": "#E3ECEF", "text": "#10212A", "muted": "#637780", "accent": "#0891B2", "border": "#C9D8DD" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "together.ai", "label": "Together AI", "role": "model comparison and infrastructure evidence" },
+      { "provider": "awesome-design-md", "slug": "cohere", "label": "Cohere", "role": "clear enterprise model evaluation" },
+      { "provider": "awesome-design-md", "slug": "mistral.ai", "label": "Mistral AI", "role": "technical benchmark storytelling" }
+    ]
+  },
+  {
+    "styleId": "research-scientific-publication-archive",
+    "variant": "docs",
+    "theme": { "canvas": "#F8F5EE", "surface": "#FFFCF7", "surfaceAlt": "#ECE7DD", "text": "#26231D", "muted": "#746F66", "accent": "#1D6FA5", "border": "#D8D1C5" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "wired", "label": "WIRED", "role": "accessible science editorial hierarchy" },
+      { "provider": "awesome-design-md", "slug": "nvidia", "label": "NVIDIA", "role": "technical publication and figure polish" },
+      { "provider": "awesome-design-md", "slug": "x.ai", "label": "xAI", "role": "stark research statement and lab identity" }
+    ]
+  },
+  {
+    "styleId": "research-experiment-control-workbench",
+    "variant": "app-shell",
+    "theme": { "canvas": "#F3F7F8", "surface": "#FFFFFF", "surfaceAlt": "#E4ECEE", "text": "#142328", "muted": "#63767C", "accent": "#0F9B8E", "border": "#C9D7DA" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "replicate", "label": "Replicate", "role": "runnable model experiments and artifact output" },
+      { "provider": "awesome-design-md", "slug": "ollama", "label": "Ollama", "role": "local experiment control and technical simplicity" },
+      { "provider": "awesome-design-md", "slug": "clickhouse", "label": "ClickHouse", "role": "high-volume run analytics and traceability" }
+    ]
+  },
+  {
+    "styleId": "finance-consumer-money-companion",
+    "variant": "learning",
+    "theme": { "canvas": "#F4F9F3", "surface": "#FFFFFF", "surfaceAlt": "#E1EEDD", "text": "#1D3021", "muted": "#667B69", "accent": "#67A840", "border": "#CCDCC8" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "wise", "label": "Wise", "role": "plain-language financial outcomes and accessible action" },
+      { "provider": "awesome-design-md", "slug": "revolut", "label": "Revolut", "role": "consumer money overview and mobile polish" },
+      { "provider": "awesome-design-md", "slug": "mastercard", "label": "Mastercard", "role": "trusted everyday payment context" }
+    ]
+  },
+  {
+    "styleId": "finance-treasury-operations-console",
+    "variant": "dashboard",
+    "theme": { "canvas": "#080D18", "surface": "#101827", "surfaceAlt": "#18243A", "text": "#F1F5FB", "muted": "#8C9BB2", "accent": "#8B5CF6", "border": "#293A55" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "stripe", "label": "Stripe", "role": "payment operations precision and platform polish" },
+      { "provider": "awesome-design-md", "slug": "coinbase", "label": "Coinbase", "role": "institutional balances and transaction clarity" },
+      { "provider": "awesome-design-md", "slug": "kraken", "label": "Kraken", "role": "dense financial operations and risk context" }
+    ]
+  },
+  {
+    "styleId": "finance-investment-research-terminal",
+    "variant": "research",
+    "theme": { "canvas": "#07090D", "surface": "#0E1219", "surfaceAlt": "#171E29", "text": "#F5F3E8", "muted": "#96978F", "accent": "#EAB308", "border": "#2C3440" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "binance", "label": "Binance", "role": "fast market data and asset comparison" },
+      { "provider": "awesome-design-md", "slug": "coinbase", "label": "Coinbase", "role": "institutional market research presentation" },
+      { "provider": "awesome-design-md", "slug": "clickhouse", "label": "ClickHouse", "role": "analytical query and chart density" }
+    ]
+  },
+  {
+    "styleId": "education-cohort-learning-workspace",
+    "variant": "app-shell",
+    "theme": { "canvas": "#F6F8FC", "surface": "#FFFFFF", "surfaceAlt": "#E8EDF6", "text": "#1E2A44", "muted": "#6D7890", "accent": "#3B6FD8", "border": "#D1D9E8" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "notion", "label": "Notion", "role": "shared learning workspace and modular content" },
+      { "provider": "awesome-design-md", "slug": "slack", "label": "Slack", "role": "cohort conversation and peer momentum" },
+      { "provider": "awesome-design-md", "slug": "miro", "label": "Miro", "role": "participatory exercises and collaborative practice" }
+    ]
+  },
+  {
+    "styleId": "education-kids-exploration-path",
+    "variant": "brand",
+    "theme": { "canvas": "#FFF9E8", "surface": "#FFFFFF", "surfaceAlt": "#DFF1FF", "text": "#25335A", "muted": "#6F7893", "accent": "#FF5D5D", "border": "#D7E1EB" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "nintendo-2001", "label": "Nintendo 2001", "role": "age-friendly exploration and playful missions" },
+      { "provider": "awesome-design-md", "slug": "miro", "label": "Miro", "role": "approachable color and hands-on activity" },
+      { "provider": "awesome-design-md", "slug": "pinterest", "label": "Pinterest", "role": "visual curiosity and collection discovery" }
+    ]
+  },
+  {
+    "styleId": "education-certification-study-console",
+    "variant": "docs",
+    "theme": { "canvas": "#F4F7FA", "surface": "#FFFFFF", "surfaceAlt": "#E6EDF3", "text": "#16273A", "muted": "#66788B", "accent": "#0D9488", "border": "#CCD8E2" },
+    "references": [
+      { "provider": "awesome-design-md", "slug": "ibm", "label": "IBM", "role": "professional skills and structured learning authority" },
+      { "provider": "awesome-design-md", "slug": "mintlify", "label": "Mintlify", "role": "clear study navigation and reference content" },
+      { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "progress tracking and competency organization" }
+    ]
   }
 ]

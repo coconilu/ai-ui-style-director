@@ -12,6 +12,10 @@ const outputDir = join(rootDir, "catalog", "previews");
 const checkOnly = process.argv.includes("--check");
 const failures = [];
 
+function normalizeLineEndings(value) {
+  return value.replace(/\r\n?/g, "\n");
+}
+
 mkdirSync(outputDir, { recursive: true });
 
 for (const style of profiles) {
@@ -25,7 +29,9 @@ for (const style of profiles) {
   const expected = renderStylePreviewSvg({ style, visual });
   if (checkOnly) {
     if (!existsSync(outputPath)) failures.push(`Missing generated preview ${outputPath}`);
-    else if (readFileSync(outputPath, "utf8") !== expected) failures.push(`Stale generated preview ${outputPath}`);
+    else if (normalizeLineEndings(readFileSync(outputPath, "utf8")) !== normalizeLineEndings(expected)) {
+      failures.push(`Stale generated preview ${outputPath}`);
+    }
   } else {
     writeFileSync(outputPath, expected, "utf8");
     process.stdout.write(`Generated ${outputPath}\n`);
