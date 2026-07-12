@@ -1,7 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { pinnedProviderSourceUrl, visualReferenceSource } from "../src/provider-adapters.mjs";
+import {
+  isSafeRelativePath,
+  pinnedProviderSourceUrl,
+  visualReferenceSource
+} from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -74,15 +78,6 @@ function isContentHash(value) {
 
 function isRepo(value) {
   return typeof value === "string" && /^[a-z0-9_.-]+\/[a-z0-9_.-]+$/iu.test(value);
-}
-
-function isSafeRelativePath(value) {
-  return (
-    isNonEmptyString(value) &&
-    !value.startsWith("/") &&
-    !value.includes("\\") &&
-    value.split("/").every((segment) => segment.length > 0 && segment !== "." && segment !== "..")
-  );
 }
 
 function duplicates(values) {

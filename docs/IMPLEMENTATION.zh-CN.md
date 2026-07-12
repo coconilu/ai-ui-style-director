@@ -319,6 +319,14 @@ style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
 与 docs 仍分别保留每个 Provider 200 和 100 个文件的维护性上限。当前 109 条 style
 source 中，原有 74 条是 baseline，35 条 daisyUI 主题则从 pending 开始，不会直接晋升。
 
+daisyUI Normalizer 是严格的 Schema 边界：只接受精确 29 个声明（1 个
+`color-scheme`、20 个颜色值和 8 个几何值），未知、缺失、重复或格式非法的输入都会
+被拒绝。因此上游 token 契约发生变化时，必须走人工审查的 Normalizer 版本/代码
+变更，不能由刷新过程猜测。`canonicalTheme.accent` 映射自代表主导品牌色/行动色的
+daisyUI `--color-primary`，上游自己的 accent token 仍完整保留在规范颜色表中。任一
+受治理值变化都会生成新的规范内容哈希，因此相同 `providerId + path` 会因为与上一版
+state 哈希不同而重新进入 pending。
+
 `.github/workflows/refresh-providers.yml` 每天运行相同流程，执行仓库检查，并只在生成索引变化时创建 PR。
 
 正常刷新路径无人值守，但不会绕过 `main` 保护。仅限本仓库的 GitHub App
@@ -334,6 +342,12 @@ source 中，原有 74 条是 baseline，35 条 daisyUI 主题则从 pending 开
 另一条由 App 创建的 Draft PR。这条流程绝不开启 auto-merge，而是由维护者
 人工审查并手动合并提案。详见
 [`AUTOMATED_CURATION.zh-CN.md`](AUTOMATED_CURATION.zh-CN.md)。
+
+当前仓库的不可变策展记录文件为 0；74 条 baseline 游标也没有 record ID。因此，
+`style-curation-v3` 扩展 record ID 哈希输入后，无需重新生成仓库内记录。若外部部署
+已经存在 v2 不可变记录，升级时必须保留原文件与 ID：先增加显式的版本感知迁移/
+校验逻辑，让旧记录与新 v3 事件并存，再以追加方式写入新记录；绝不能重新计算或
+覆盖既有 v2 审计历史。
 
 ## 依赖与许可证边界
 

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolveProviderAdapter } from "../src/provider-adapters.mjs";
+import { isSafeRelativePath, resolveProviderAdapter } from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCHEMA_VERSION = 4;
@@ -14,16 +14,6 @@ function readJson(path) {
 
 function sameJson(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
-}
-
-function isSafeRelativePath(path) {
-  return (
-    typeof path === "string" &&
-    path.length > 0 &&
-    !path.startsWith("/") &&
-    !path.includes("\\") &&
-    path.split("/").every((segment) => segment.length > 0 && segment !== "." && segment !== "..")
-  );
 }
 
 function sortedUnique(values) {

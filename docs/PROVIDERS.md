@@ -43,6 +43,20 @@ converts OKLCH colors deterministically, and produces canonical JSON for both
 content hashing and bounded Kimi input. It does not treat arbitrary repository
 CSS as a style source.
 
+The adapter accepts exactly 29 declarations: one `color-scheme`, 20 governed
+color tokens, and eight geometry tokens. Unknown, missing, duplicated, or
+malformed declarations fail closed during refresh. If daisyUI adds or changes
+its token contract, support must arrive through a normal reviewed code PR that
+updates the allowlist and bumps the normalizer version; the refresh job does
+not silently absorb a new upstream schema.
+
+The catalog's single `canonicalTheme.accent` role is derived from daisyUI's
+`--color-primary`, because primary is the theme's dominant brand/action color;
+daisyUI's own `--color-accent` remains available in the normalized color-token
+map as a secondary highlight. When a governed upstream value changes, the
+canonical JSON and its hash change. The stable `providerId + path` source then
+becomes pending again because its current hash no longer matches source state.
+
 The generated provider/style/component indexes use schema v4. This does not
 change the hosted browser's independent schema-v3 `catalog.json` contract.
 

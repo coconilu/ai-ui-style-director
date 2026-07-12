@@ -10,6 +10,7 @@ import {
   buildStyleSourceRecords,
   expandProviderReference,
   hashStyleSourceContent,
+  isSafeRelativePath,
   loadStyleSourceDocument,
   resolveProviderAdapter,
   visualReferenceSource
@@ -106,6 +107,14 @@ test("daisyUI adapter matches only exact theme CSS paths", () => {
   assert.equal(adapter.matchesStyleSource("themes/retro.css", "retro.css"), false);
 });
 
+test("provider source paths reject traversal and absolute path forms", () => {
+  assert.equal(isSafeRelativePath("packages/daisyui/src/themes/retro.css"), true);
+  assert.equal(isSafeRelativePath("../etc/passwd"), false);
+  assert.equal(isSafeRelativePath("/absolute"), false);
+  assert.equal(isSafeRelativePath("C:\\absolute"), false);
+  assert.equal(isSafeRelativePath("C:/absolute"), false);
+});
+
 test("daisyUI theme CSS normalizes to stable canonical JSON and a governed candidate theme", () => {
   const fixture = daisyuiFixture();
   const document = loadStyleSourceDocument({
@@ -195,6 +204,48 @@ test("daisyUI out-of-gamut OKLCH colors reduce chroma before conversion", () => 
   assert.equal(document.candidateTheme.accent, "#FF42F4");
 });
 
+test("daisyUI OKLCH conversion matches sRGB primary reference vectors", () => {
+  const fixture = daisyuiFixture(
+    DAISYUI_RETRO_THEME
+      .replace("oklch(80% 0.114 19.571)", "oklch(62.795536% 0.257683 29.233885)")
+      .replace("oklch(92% 0.084 155.995)", "oklch(86.643961% 0.294827 142.495339)")
+      .replace("oklch(68% 0.162 75.834)", "oklch(45.201372% 0.313214 264.052021)")
+  );
+  const document = loadStyleSourceDocument({
+    provider: fixture.provider,
+    providerDir: fixture.dir,
+    path: fixture.path
+  });
+  const canonical = JSON.parse(document.content);
+
+  assert.equal(canonical.colors.primary.hex, "#FF0000");
+  assert.equal(canonical.colors.secondary.hex, "#00FF00");
+  assert.equal(canonical.colors.accent.hex, "#0000FF");
+});
+
+test("daisyUI hue 360 is accepted and canonicalized to zero", () => {
+  const zero = daisyuiFixture(
+    DAISYUI_RETRO_THEME.replace("oklch(80% 0.114 19.571)", "oklch(80% 0.114 0)")
+  );
+  const fullTurn = daisyuiFixture(
+    DAISYUI_RETRO_THEME.replace("oklch(80% 0.114 19.571)", "oklch(80% 0.114 360)")
+  );
+  const zeroDocument = loadStyleSourceDocument({
+    provider: zero.provider,
+    providerDir: zero.dir,
+    path: zero.path
+  });
+  const fullTurnDocument = loadStyleSourceDocument({
+    provider: fullTurn.provider,
+    providerDir: fullTurn.dir,
+    path: fullTurn.path
+  });
+
+  assert.equal(JSON.parse(fullTurnDocument.content).colors.primary.oklch.hueDegrees, 0);
+  assert.equal(fullTurnDocument.content, zeroDocument.content);
+  assert.equal(fullTurnDocument.contentHash, zeroDocument.contentHash);
+});
+
 test("daisyUI theme parser rejects missing, duplicate, unknown, and executable CSS", () => {
   const load = (content) => {
     const fixture = daisyuiFixture(content);
@@ -227,6 +278,10 @@ test("daisyUI theme parser rejects missing, duplicate, unknown, and executable C
   assert.throws(
     load(`/* unterminated\n${DAISYUI_RETRO_THEME}`),
     /unterminated comment/u
+  );
+  assert.throws(
+    load(`${DAISYUI_RETRO_THEME}${" ".repeat(16_384)}`),
+    /source exceeds 16384 bytes/u
   );
 });
 

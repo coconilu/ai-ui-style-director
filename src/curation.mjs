@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 import { createOpenAICompatibleClient } from "./openai-compatible.mjs";
 import { renderStylePreviewSvg } from "./preview.mjs";
 import {
+  isSafeRelativePath,
   loadStyleSourceDocument,
   pinnedProviderSourceUrl,
   resolveProviderAdapter
@@ -21,6 +22,8 @@ import {
 export const CURATION_SCHEMA_VERSION = 1;
 export const CURATION_PROMPT_VERSION = "style-curation-v3";
 export const DEFAULT_DUPLICATE_THRESHOLD = 0.85;
+// At the pinned 35-theme daisyUI snapshot, 0.04 admits only the closest of 595
+// palette pairs (pastel/wireframe at 0.023854); the next pair is 0.052662.
 export const DEFAULT_THEME_DUPLICATE_THRESHOLD = 0.04;
 export const DEFAULT_REFERENCE_POOL_SIZE = 60;
 export const DEFAULT_PROFILE_CONTEXT_SIZE = 40;
@@ -174,16 +177,6 @@ function isSafeCatalogText(value) {
 
 function hasExactKeys(value, expected) {
   return isObject(value) && JSON.stringify(Object.keys(value).sort()) === JSON.stringify([...expected].sort());
-}
-
-function isSafeRelativePath(path) {
-  if (
-    typeof path !== "string" ||
-    path.length === 0 ||
-    path.startsWith("/") ||
-    path.includes("\\")
-  ) return false;
-  return path.split("/").every((segment) => segment.length > 0 && segment !== "." && segment !== "..");
 }
 
 function safeResolvedPath(root, relativePath) {

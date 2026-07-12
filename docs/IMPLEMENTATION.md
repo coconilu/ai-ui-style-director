@@ -295,6 +295,16 @@ of 200 and 100 files per provider. The current index has 109 style sources:
 the original 74 are the checked-in baseline and the 35 daisyUI themes begin as
 pending, not automatically promoted styles.
 
+The daisyUI normalizer is a strict schema boundary: it requires exactly 29
+declarations (one color-scheme, 20 colors, and eight geometry values) and
+rejects unknown, missing, duplicated, or malformed input. A changed upstream
+token contract therefore needs a reviewed normalizer-version/code change
+instead of being inferred by a refresh. `canonicalTheme.accent` maps from
+daisyUI `--color-primary`, the dominant brand/action role, while the upstream
+accent token remains preserved in the full canonical color map. Changes to a
+governed value produce a new canonical content hash, so the same
+`providerId + path` is selected as pending again against its prior state hash.
+
 `.github/workflows/refresh-providers.yml` runs the same process daily, validates the repository, and opens a pull request only when generated indexes change.
 
 The normal refresh path is unattended but does not bypass `main` protection. A
@@ -313,6 +323,15 @@ immutable records, an independent file allowlist, and another App-created Draft
 PR. It never enables auto-merge; a maintainer reviews and merges the proposal
 manually. See
 [`AUTOMATED_CURATION.md`](AUTOMATED_CURATION.md).
+
+The checked-in repository currently has zero immutable curation record files;
+its 74 baseline cursor rows have no record IDs. The expanded record-ID hash
+inputs introduced with `style-curation-v3` therefore require no in-repository
+record regeneration. An external deployment that already has v2 immutable
+records must preserve their files and IDs. Its upgrade must first add an
+explicit version-aware migration/validator, accept old records alongside new
+v3 events, and append new records; it must never recompute or overwrite the v2
+audit history.
 
 ## Dependency and license boundaries
 

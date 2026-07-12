@@ -69,11 +69,12 @@ function hashNormalizedText(value) {
   return `sha256:${createHash("sha256").update(value, "utf8").digest("hex")}`;
 }
 
-function isSafeRelativePath(path) {
+export function isSafeRelativePath(path) {
   return (
     typeof path === "string" &&
     path.length > 0 &&
     !path.startsWith("/") &&
+    !/^[a-z]:/iu.test(path) &&
     !path.includes("\\") &&
     path.split("/").every((segment) => segment.length > 0 && segment !== "." && segment !== "..")
   );
@@ -122,6 +123,10 @@ function finiteNumber(value, label, { minimum, maximum } = {}) {
   return Object.is(number, -0) ? 0 : number;
 }
 
+// Oklab/linear-sRGB matrices follow the color-space author's reference derivation
+// and agree with CSS Color 4's published (non-normative) sample conversion path:
+// https://bottosson.github.io/posts/oklab/#converting-from-linear-srgb-to-oklab
+// https://www.w3.org/TR/css-color-4/#color-conversion-code
 function oklchToLinearSrgb(lightnessPercent, chroma, hueDegrees) {
   const lightness = lightnessPercent / 100;
   const hueRadians = hueDegrees * Math.PI / 180;
@@ -195,7 +200,8 @@ function parseOklch(value, property) {
   if (!match) throw new Error(`Invalid daisyUI theme CSS: ${property} must be a strict oklch(L% C H) value.`);
   const lightnessPercent = finiteNumber(match[1], `${property} lightness`, { minimum: 0, maximum: 100 });
   const chroma = finiteNumber(match[2], `${property} chroma`, { minimum: 0, maximum: 0.5 });
-  const hueDegrees = finiteNumber(match[3], `${property} hue`, { minimum: 0, maximum: 359.999999 });
+  const parsedHue = finiteNumber(match[3], `${property} hue`, { minimum: 0, maximum: 360 });
+  const hueDegrees = parsedHue === 360 ? 0 : parsedHue;
   const oklch = { lightnessPercent, chroma, hueDegrees };
   return { oklch, hex: oklchToSrgbHex(oklch) };
 }
@@ -287,6 +293,7 @@ function normalizeDaisyuiThemeStyleSource({ path, content }) {
     surfaceAlt: colors["base-300"].hex,
     text: colors["base-content"].hex,
     muted: mixHex(colors["base-content"].hex, colors["base-100"].hex, 0.6),
+    // The curated profile has one action accent, so daisyUI's primary token owns that role.
     accent: colors.primary.hex,
     border: colors["base-300"].hex
   };
