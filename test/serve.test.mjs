@@ -1,16 +1,24 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { mkdtempSync, readFileSync, readdirSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import {
   CATALOG_PAGE_SIZE,
+  DEFAULT_HOSTED_CATALOG_URL,
   buildStyleCatalog,
+  buildStyleCatalogStaticAssets,
+  computeCatalogRevision,
   filterCatalogEntries,
+  hostedCatalogInfo,
   renderCatalogBrowserPage,
   searchCatalogEntries,
   startStyleCatalogServer
 } from "../src/catalog-browser.mjs";
-import { loadStyleProfiles } from "../src/core.mjs";
+import { loadStyleProfiles, loadStyleVisuals } from "../src/core.mjs";
+import { writeCatalogSite } from "../scripts/build-catalog-site.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
 
@@ -25,6 +33,17 @@ function sortedIds(entries) {
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function readDirectorySnapshot(rootDir, relativeDir = "") {
+  const snapshot = {};
+  const absoluteDir = join(rootDir, relativeDir);
+  for (const entry of readdirSync(absoluteDir, { withFileTypes: true })) {
+    const relativePath = join(relativeDir, entry.name);
+    if (entry.isDirectory()) Object.assign(snapshot, readDirectorySnapshot(rootDir, relativePath));
+    else snapshot[relativePath.replaceAll("\\", "/")] = readFileSync(join(rootDir, relativePath), "utf8");
+  }
+  return snapshot;
 }
 
 function assertCatalogResponseHeaders(response, expectedContentType) {
@@ -44,7 +63,8 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
   const catalog = buildStyleCatalog();
   const profileCount = loadStyleProfiles().length;
 
-  assert.equal(catalog.schemaVersion, 2);
+  assert.equal(catalog.schemaVersion, 3);
+  assert.match(catalog.catalogRevision, /^[a-f0-9]{16}$/);
   assert.equal(catalog.styleCount, profileCount);
   assert.equal(catalog.entries.length, profileCount);
   assert.equal(new Set(catalog.entries.map((entry) => entry.id)).size, profileCount);
@@ -62,7 +82,7 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
     assert.equal(entry.searchText, entry.searchText.toLowerCase());
 
     assert.equal(Object.hasOwn(entry, "previewDataUri"), false);
-    assert.equal(entry.previewUrl, `/previews/${entry.id}.svg`);
+    assert.equal(entry.previewUrl, `previews/${entry.id}.svg?v=${catalog.catalogRevision}`);
 
     assert.equal(typeof entry.tags, "object");
     for (const group of ["family", "pageTypes", "density", "tones", "componentKits"]) {
@@ -109,6 +129,83 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
   const serialized = JSON.stringify(catalog);
   assert.doesNotMatch(serialized, /data:image\/svg\+xml/i);
   assert.deepEqual(JSON.parse(serialized), catalog);
+});
+
+test("catalog revision and hosted URL are deterministic and detect catalog changes", () => {
+  const profiles = loadStyleProfiles();
+  const visuals = loadStyleVisuals();
+  const revision = computeCatalogRevision({ profiles, visuals });
+  const repeated = computeCatalogRevision({ profiles: structuredClone(profiles), visuals: structuredClone(visuals) });
+  const changedProfiles = structuredClone(profiles);
+  changedProfiles[0].name = `${changedProfiles[0].name} changed`;
+
+  assert.equal(repeated, revision);
+  assert.notEqual(computeCatalogRevision({ profiles: changedProfiles, visuals }), revision);
+
+  const catalog = buildStyleCatalog();
+  const info = hostedCatalogInfo({ catalog, baseUrl: "https://example.test/catalog/" });
+  const url = new URL(info.catalogUrl);
+  assert.equal(url.origin, "https://example.test");
+  assert.equal(url.pathname, "/catalog/");
+  assert.equal(url.searchParams.get("expectedRevision"), catalog.catalogRevision);
+  assert.equal(info.hosted, true);
+  assert.equal(info.styleCount, catalog.styleCount);
+  const normalizedUrl = new URL(hostedCatalogInfo({
+    catalog,
+    baseUrl: "https://example.test/catalog?from=test"
+  }).catalogUrl);
+  assert.equal(normalizedUrl.pathname, "/catalog/");
+  assert.equal(normalizedUrl.searchParams.get("from"), "test");
+  assert.equal(normalizedUrl.searchParams.get("expectedRevision"), catalog.catalogRevision);
+  assert.equal(DEFAULT_HOSTED_CATALOG_URL, "https://coconilu.github.io/ai-ui-style-director/");
+  assert.throws(() => hostedCatalogInfo({ catalog, baseUrl: "not a URL" }), /Invalid hosted catalog URL/);
+  assert.throws(() => hostedCatalogInfo({ catalog, baseUrl: "file:///tmp/catalog/" }), /Invalid hosted catalog URL/);
+  assert.throws(() => hostedCatalogInfo({ catalog, baseUrl: "https://user:secret@example.test/" }), /Invalid hosted catalog URL/);
+});
+
+test("static catalog assets are project-subpath safe and complete", () => {
+  const catalog = buildStyleCatalog();
+  const { assets } = buildStyleCatalogStaticAssets({ catalog });
+  const html = String(assets.get("index.html").body);
+  const appScript = String(assets.get("app.js").body);
+  const payload = JSON.parse(String(assets.get("catalog.json").body));
+
+  assert.equal(assets.size, catalog.entries.length + 6);
+  for (const assetPath of ["index.html", "catalog.json", "app.js", "styles.css", "favicon.svg", ".nojekyll"]) {
+    assert.equal(assets.has(assetPath), true, `Missing static asset: ${assetPath}`);
+  }
+  for (const entry of catalog.entries) {
+    assert.equal(entry.previewUrl.startsWith("/"), false);
+    assert.equal(assets.has(entry.previewUrl.split("?", 1)[0]), true, `Missing preview asset: ${entry.id}`);
+  }
+
+  assert.doesNotMatch(html, /\b(?:href|src)="\//i);
+  assert.doesNotMatch(appScript, /fetch\("\//);
+  assert.match(html, new RegExp(`catalog-revision" content="${catalog.catalogRevision}`));
+  assert.match(html, new RegExp(`styles\\.css\\?v=${catalog.catalogRevision}`));
+  assert.match(appScript, /expectedRevision/);
+  assert.match(appScript, /catalog\.json/);
+  assert.equal(payload.catalogRevision, catalog.catalogRevision);
+});
+
+test("static catalog build writes a deterministic Pages artifact", () => {
+  const tempDir = mkdtempSync(join(tmpdir(), "style-director-pages-"));
+  const outputDir = join(tempDir, "site");
+  assert.throws(
+    () => writeCatalogSite({ outputDir }),
+    /external output requires an explicit override/
+  );
+  const first = writeCatalogSite({ outputDir, allowExternalOutput: true });
+  const firstSnapshot = readDirectorySnapshot(outputDir);
+  const second = writeCatalogSite({ outputDir, allowExternalOutput: true });
+  const secondSnapshot = readDirectorySnapshot(outputDir);
+
+  assert.equal(first.fileCount, 54);
+  assert.equal(first.styleCount, 48);
+  assert.equal(first.catalogRevision, second.catalogRevision);
+  assert.deepEqual(secondSnapshot, firstSnapshot);
+  assert.equal(firstSnapshot[".nojekyll"], "");
+  assert.equal(Object.keys(firstSnapshot).filter((path) => path.startsWith("previews/")).length, 48);
 });
 
 test("filterCatalogEntries supports English queries, Chinese aliases, and case folding", () => {
@@ -166,8 +263,11 @@ test("renderCatalogBrowserPage exposes accessible search and batched-result cont
 
   assert.match(html, /<!doctype html>/i);
   assert.match(html, /<html\b[^>]*\blang="zh-CN"/i);
-  assert.match(html, /<link\b[^>]*\brel="stylesheet"[^>]*\bhref="\/styles\.css"/i);
-  assert.match(html, /<script\b[^>]*\bsrc="\/app\.js"[^>]*><\/script>/i);
+  assert.match(html, /<meta\b[^>]*\bname="catalog-revision"/i);
+  assert.match(html, /<meta\b[^>]*http-equiv="Content-Security-Policy"/i);
+  assert.match(html, /<link\b[^>]*\brel="stylesheet"[^>]*\bhref="styles\.css\?v=/i);
+  assert.match(html, /<script\b[^>]*\bsrc="app\.js\?v=[^"]+"[^>]*><\/script>/i);
+  assert.match(html, /\bid="revision-warning"[^>]*\bhidden/i);
   assert.match(html, /<main\b/i);
   assert.match(html, /\baria-live="polite"/i);
 
@@ -184,78 +284,83 @@ test("renderCatalogBrowserPage exposes accessible search and batched-result cont
   assert.match(loadMoreButton, /\bhidden\b/i);
 });
 
-test("style catalog server binds to loopback and serves GET and HEAD routes securely", { timeout: 10_000 }, async () => {
+test("catalog development server mirrors the Pages project subpath securely", { timeout: 10_000 }, async () => {
   const profileCount = loadStyleProfiles().length;
-  const served = await startStyleCatalogServer({ port: 0 });
+  const served = await startStyleCatalogServer({ port: 0, basePath: "/ai-ui-style-director/" });
 
   try {
     assert.equal(served.host, "127.0.0.1");
     assert.equal(served.port > 0, true);
     assert.equal(served.url, `http://127.0.0.1:${served.port}/`);
-    assert.equal(served.catalogUrl, served.url);
+    assert.equal(served.catalogUrl, `${served.url}ai-ui-style-director/`);
+    assert.equal(served.basePath, "/ai-ui-style-director/");
     assert.equal(served.server.address().address, "127.0.0.1");
     assert.equal(served.styleCount, profileCount);
     assert.equal(served.sourceCount >= served.styleCount, true);
+    assert.match(served.catalogRevision, /^[a-f0-9]{16}$/);
 
     const routes = [
-      { path: "/", contentType: /^text\/html\b/ },
-      { path: "/catalog.json", contentType: /^application\/json\b/ },
-      { path: "/app.js", contentType: /javascript/ },
-      { path: "/styles.css", contentType: /^text\/css\b/ }
+      { path: "", contentType: /^text\/html\b/ },
+      { path: "catalog.json", contentType: /^application\/json\b/ },
+      { path: "app.js", contentType: /javascript/ },
+      { path: "styles.css", contentType: /^text\/css\b/ },
+      { path: "favicon.svg", contentType: /^image\/svg\+xml\b/ }
     ];
 
     for (const route of routes) {
-      const response = await fetch(new URL(route.path, served.url));
+      const response = await fetch(new URL(route.path, served.catalogUrl));
       assertCatalogResponseHeaders(response, route.contentType);
       assert.equal((await response.text()).length > 0, true);
 
-      const head = await fetch(new URL(route.path, served.url), { method: "HEAD" });
+      const head = await fetch(new URL(route.path, served.catalogUrl), { method: "HEAD" });
       assertCatalogResponseHeaders(head, route.contentType);
       assert.equal(await head.text(), "");
     }
 
-    const catalogResponse = await fetch(new URL("/catalog.json", served.url));
+    const catalogResponse = await fetch(new URL("catalog.json", served.catalogUrl));
     const catalogText = await catalogResponse.text();
     assert.doesNotMatch(catalogText, /data:image\/svg\+xml/i);
     const payload = JSON.parse(catalogText);
     assert.equal(payload.styleCount, profileCount);
     assert.equal(payload.entries.length, profileCount);
     assert.equal(payload.pageSize, CATALOG_PAGE_SIZE);
+    assert.equal(payload.catalogRevision, served.catalogRevision);
 
-    const preview = await fetch(new URL(payload.entries[0].previewUrl, served.url));
+    const preview = await fetch(new URL(payload.entries[0].previewUrl, served.catalogUrl));
     assertCatalogResponseHeaders(preview, /^image\/svg\+xml\b/);
     assert.equal(preview.headers.get("cross-origin-resource-policy"), "same-origin");
     const previewSvg = await preview.text();
     assert.match(previewSvg, /<svg\b/);
     assert.match(previewSvg, /<title\b/);
 
-    const previewHead = await fetch(new URL(payload.entries[0].previewUrl, served.url), { method: "HEAD" });
+    const previewHead = await fetch(new URL(payload.entries[0].previewUrl, served.catalogUrl), { method: "HEAD" });
     assertCatalogResponseHeaders(previewHead, /^image\/svg\+xml\b/);
     assert.equal(await previewHead.text(), "");
 
     const allPreviewHeads = await Promise.all(payload.entries.map((entry) => (
-      fetch(new URL(entry.previewUrl, served.url), { method: "HEAD" })
+      fetch(new URL(entry.previewUrl, served.catalogUrl), { method: "HEAD" })
     )));
     for (const response of allPreviewHeads) {
       assertCatalogResponseHeaders(response, /^image\/svg\+xml\b/);
       assert.equal(response.headers.get("cross-origin-resource-policy"), "same-origin");
     }
 
-    const appResponse = await fetch(new URL("/app.js", served.url));
+    const appResponse = await fetch(new URL("app.js", served.catalogUrl));
     const appScript = await appResponse.text();
     assert.match(appScript, new RegExp(`DEFAULT_PAGE_SIZE = ${CATALOG_PAGE_SIZE}`));
     assert.match(appScript, /entries\.slice\(0, state\.visibleCount\)/);
     assert.match(appScript, /loadMore\.addEventListener\("click"/);
     assert.match(appScript, /status\.textContent = entries\.length/);
+    assert.match(appScript, /renderRevisionWarning/);
 
-    const uncuratedPreview = await fetch(new URL("/previews/not-a-curated-style.svg", served.url));
+    const uncuratedPreview = await fetch(new URL("previews/not-a-curated-style.svg", served.catalogUrl));
     assert.equal(uncuratedPreview.status, 404);
 
-    const missing = await fetch(new URL("/missing", served.url));
+    const missing = await fetch(new URL("missing", served.catalogUrl));
     assert.equal(missing.status, 404);
     assert.equal(missing.headers.get("cache-control"), "no-store");
 
-    const rejected = await fetch(new URL("/", served.url), { method: "POST" });
+    const rejected = await fetch(served.catalogUrl, { method: "POST" });
     assert.equal(rejected.status, 405);
     assert.equal(rejected.headers.get("allow"), "GET, HEAD");
     assert.equal(rejected.headers.get("cache-control"), "no-store");
@@ -273,11 +378,20 @@ test("style catalog server validates requested ports before listening", async ()
   }
 });
 
+test("style catalog server rejects unsafe project base paths", async () => {
+  for (const basePath of ["../escape", "/valid/../escape/", "https://example.test/catalog/"]) {
+    await assert.rejects(
+      async () => startStyleCatalogServer({ basePath }),
+      /Invalid style catalog base path/
+    );
+  }
+});
+
 test("style catalog server rejects preview ids that could escape the curated preview directory", async () => {
   const catalog = buildStyleCatalog();
   const unsafeCatalog = structuredClone(catalog);
   unsafeCatalog.entries[0].id = "../package";
-  unsafeCatalog.entries[0].previewUrl = "/previews/../package.svg";
+  unsafeCatalog.entries[0].previewUrl = "previews/../package.svg";
 
   await assert.rejects(
     async () => startStyleCatalogServer({ catalog: unsafeCatalog }),
@@ -285,14 +399,41 @@ test("style catalog server rejects preview ids that could escape the curated pre
   );
 });
 
-test("serve is exposed by the CLI and dispatches validation errors", () => {
+test("browse opens the hosted catalog contract and serve remains a non-blocking alias", () => {
   const help = spawnSync(process.execPath, [binPath, "help"], { encoding: "utf8" });
   assert.equal(help.status, 0, help.stderr);
-  assert.match(help.stdout, /serve \[--open\] \[--port <number>\] \[--json\]/);
+  assert.match(help.stdout, /browse \[--open\] \[--json\]/);
+  assert.match(help.stdout, /serve\s+Alias for browse/);
 
-  const invalid = spawnSync(process.execPath, [binPath, "serve", "--port", "not-a-port"], {
-    encoding: "utf8"
-  });
-  assert.equal(invalid.status, 1);
-  assert.match(invalid.stderr, /Invalid style catalog server port/);
+  const env = {
+    ...process.env,
+    AI_UI_STYLE_DIRECTOR_CATALOG_URL: "https://example.test/catalog/"
+  };
+  const browse = spawnSync(process.execPath, [binPath, "browse", "--json"], { encoding: "utf8", env });
+  assert.equal(browse.status, 0, browse.stderr);
+  assert.equal(browse.stderr, "");
+  const browseOutput = JSON.parse(browse.stdout);
+  assert.equal(browseOutput.hosted, true);
+  assert.equal(browseOutput.opened, false);
+  assert.equal(browseOutput.styleCount, loadStyleProfiles().length);
+  assert.equal(new URL(browseOutput.catalogUrl).pathname, "/catalog/");
+  assert.equal(
+    new URL(browseOutput.catalogUrl).searchParams.get("expectedRevision"),
+    browseOutput.catalogRevision
+  );
+
+  const serve = spawnSync(process.execPath, [binPath, "serve", "--json"], { encoding: "utf8", env });
+  assert.equal(serve.status, 0, serve.stderr);
+  assert.match(serve.stderr, /compatibility alias for browse/);
+  assert.deepEqual(JSON.parse(serve.stdout), browseOutput);
+
+  for (const command of ["browse", "serve"]) {
+    const invalid = spawnSync(process.execPath, [binPath, command, "--port", "4173"], {
+      encoding: "utf8",
+      env
+    });
+    assert.equal(invalid.status, 1);
+    assert.match(invalid.stderr, /--port is no longer supported/);
+    assert.match(invalid.stderr, /preview --serve --port/);
+  }
 });

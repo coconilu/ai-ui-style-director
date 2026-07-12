@@ -1,35 +1,35 @@
 # Catalog Browser
 
-Use this route only when the user explicitly asks to run `serve` or browse,
-search, or filter the complete Web Style Director catalog. It is a read-only
-catalog operation, not the five-direction website workflow.
+Use this route only when the user explicitly asks to run `browse` or `serve`,
+or asks to search or filter the complete Web Style Director catalog. It is a
+read-only hosted-catalog operation, not the five-direction website workflow.
 
-## Start the browser
+## Open the hosted catalog
 
 Run the wrapper from this skill's actual installation directory. From the
 repository root, the equivalent command is:
 
 ```bash
-node skills/web-style-director/scripts/style-director.mjs serve
+node skills/web-style-director/scripts/style-director.mjs browse
 ```
 
 Forward supported options when the user supplies them:
 
 ```bash
-node skills/web-style-director/scripts/style-director.mjs serve --port 4173 --open
+node skills/web-style-director/scripts/style-director.mjs browse --open
 ```
 
-- `--port <number>` requests a specific loopback port. Without it, the
-  operating system chooses an available port.
-- `--open` opens the HTTP URL in the default browser after startup.
-- `--json` emits machine-readable startup information while keeping the
-  service in the foreground.
+- `--open` opens the GitHub Pages URL in the default browser.
+- `--json` emits machine-readable hosted-catalog information and exits.
+- `serve` is a compatibility alias for `browse`; it no longer starts a local
+  complete-catalog server.
+- `--port` is not supported for `browse` or `serve`. It remains valid only for
+  a project-specific `preview --serve` gallery.
 
-Start the command in a long-running terminal session, report the printed
-`http://127.0.0.1:<port>/` URL, and keep the process alive while the user
-browses. Stop it with Ctrl+C when the user asks, when the task ends, or before
-starting a replacement instance. Never change the host to `0.0.0.0` or present
-the URL as public.
+Report the printed hosted URL. The command exits immediately, so do not create
+or keep a long-running terminal session. If the page shows a catalog-revision
+warning, report it, refresh the page, and confirm that Pages has deployed or
+Web Style Director is updated before applying a style from that page.
 
 ## Catalog boundary
 
@@ -43,9 +43,9 @@ index context, but must not present them as complete style cards.
 
 ## Keep routes separate
 
-- `serve` browses the complete curated catalog and does not read or write a
-  target project's `.ui-style-director/` state.
+- `browse` and its `serve` alias open the complete hosted curated catalog and
+  do not read or write a target project's `.ui-style-director/` state.
 - `preview --serve` exposes only one generated five-direction recommendation
-  gallery.
+  gallery on loopback and may contain a private project brief.
 - Do not run `recommend`, generate `DESIGN.md`, ask for style selection, or
   begin UI implementation as part of a catalog-browser request.

@@ -47,37 +47,43 @@ workflow:
 Codex:
 
 ```text
-$web-style-director serve
+$web-style-director browse
 ```
 
 Claude Code:
 
 ```text
-/web-style-director serve
+/web-style-director browse
 ```
 
 Or run the CLI directly and open the page automatically:
 
 ```bash
-node bin/ai-ui-style-director.mjs serve --open
+node bin/ai-ui-style-director.mjs browse --open
 ```
+
+The catalog is hosted at
+[coconilu.github.io/ai-ui-style-director](https://coconilu.github.io/ai-ui-style-director/).
+The legacy `serve` command remains a compatibility alias for `browse`; it no
+longer starts a local complete-catalog server.
 
 The current catalog contains 48 reviewed profiles: four directions in each of
 12 families. The page supports text search plus family, page type, density,
-tone, and component-kit filters. It loads a lightweight schema-v2 catalog,
-fetches previews from independent same-origin SVG routes, and progressively
-renders 24 cards at a time.
+tone, and component-kit filters. It loads a lightweight schema-v3 catalog,
+fetches previews from independent same-origin SVG paths, and progressively
+renders 24 cards at a time. A deterministic catalog revision is attached to
+the URL and assets so the page can warn about a stale deployment without
+blocking browsing.
 
 The 74 generated style-source entries are upstream provider paths and remain a
 source pool for human curation; they are not 74 additional styles. The page
 reports that count without misrepresenting unreviewed paths as style cards.
-`serve` is read-only and does not create or modify project
+`browse` is read-only and does not create or modify project
 `.ui-style-director/` state.
 
-The foreground service listens only on `127.0.0.1`, uses an available port by
-default, and stops when you press Ctrl+C. Use `--port <number>` to request a
-port, `--open` to launch the browser, or `--json` for machine-readable startup
-output.
+The command returns immediately. Use `--open` to launch the browser or
+`--json` for machine-readable hosted-catalog information. `--port` is reserved
+for the project-specific `preview --serve` command.
 
 ## Example: choose an admin dashboard direction
 

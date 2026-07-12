@@ -6,7 +6,7 @@
 ai-ui-style-director/
   bin/                         # CLI entry point
   src/                         # recommendation, apply, and provider logic
-  scripts/                     # deterministic preview generation
+  scripts/                     # deterministic preview and static-site generation
   catalog/                     # styles, visuals, previews, providers, and questions
   skills/web-style-director/   # agent skill
   examples/new-site/           # example brief and generated DESIGN.md
@@ -54,6 +54,18 @@ npm run previews:check
 
 The preview check verifies that every profile has an up-to-date committed SVG.
 
+Build the deployable catalog site with:
+
+```bash
+npm run catalog:build
+```
+
+The command recreates `dist/pages` with schema-v3 `catalog.json`, the browser
+shell and assets, and one preview SVG per curated profile. The output is
+deterministic, uses only relative references for the GitHub project subpath,
+and is intentionally not committed. `.github/workflows/pages.yml` runs this
+build for pull requests and deploys it from `main` through GitHub Pages.
+
 ## Adding or changing a curated style
 
 1. Add or update the reviewed profile in `catalog/style-profiles.json`. Keep
@@ -68,6 +80,12 @@ The preview check verifies that every profile has an up-to-date committed SVG.
 4. Run `npm run previews`, then visually inspect the generated SVG.
 5. Run `npm run catalog:curated:validate`.
 6. Run `npm run check` before committing.
+
+The catalog model derives schema v3, the inverted search index, facets, and
+`catalogRevision` from reviewed data, so there is no second hand-maintained
+search index. Each entry carries a relative `previewUrl`; the client renders 24
+cards at a time, keeping initial DOM and image work bounded as the catalog
+grows.
 
 `catalog/recommendation-benchmarks.json` contains 12 representative briefs.
 When taxonomy or scoring changes, update or extend those cases deliberately;

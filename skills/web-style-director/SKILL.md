@@ -9,7 +9,7 @@ Use this skill as the style-selection gate before website UI implementation.
 
 ## Request Routing
 
-- For an explicit `serve` request, or a request to browse, search, or filter the
+- For an explicit `browse` or `serve` request, or a request to search or filter the
   complete Web Style Director catalog, read `references/catalog-browser.md`
   and perform only that catalog-browser operation. Do not ask for a website
   brief, recommend five directions, run `apply`, or enter the website workflow.
@@ -136,6 +136,6 @@ present it as a public URL.
 - `references/context-questions.md`: context questions for underspecified requests.
 - `references/recommendation-format.md`: output format for style options.
 - `references/design-md-contract.md`: what to do after `DESIGN.md` is generated.
-- `references/catalog-browser.md`: foreground catalog-browser routing and
-  shutdown behavior.
+- `references/catalog-browser.md`: hosted catalog routing, revision checks, and
+  the `serve` compatibility alias.
 - `references/lifecycle.md`: update and safe-uninstall routing.

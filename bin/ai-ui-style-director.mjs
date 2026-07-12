@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { resolve } from "node:path";
-import { startStyleCatalogServer } from "../src/catalog-browser.mjs";
+import { buildStyleCatalog, hostedCatalogInfo } from "../src/catalog-browser.mjs";
 import {
   applyStyle,
   loadScenarioQuestions,
@@ -40,7 +40,7 @@ function usage() {
 
 Commands:
   recommend --brief <text> [--count 5] [--again] [--session <path>] [--open] [--json]
-  serve [--open] [--port <number>] [--json]
+  browse [--open] [--json]
   preview [--path <recommendations.html>] [--open] [--serve] [--port <number>] [--json]
   apply --style <id> --project <path> [--brief <text>] [--force] [--json]
   sync [--cache-dir <path>] [--clone] [--json]
@@ -48,14 +48,14 @@ Commands:
   questions [--json]
 
 Compatibility aliases:
+  serve               Alias for browse; opens the hosted catalog and no longer starts a local server
   update              Alias for refresh-catalog; does not update the installed skill
 
 Examples:
   ai-ui-style-director recommend --brief "AI developer tool website"
   ai-ui-style-director recommend --brief "AI developer tool website" --again
   ai-ui-style-director recommend --brief "B2B operations dashboard" --open
-  ai-ui-style-director serve --open
-  ai-ui-style-director serve --port 4173
+  ai-ui-style-director browse --open
   ai-ui-style-director preview --open
   ai-ui-style-director preview --serve
   ai-ui-style-director preview --serve --port 4173 --open
@@ -130,33 +130,28 @@ async function main() {
       return;
     }
 
-    if (command === "serve") {
-      const served = await startStyleCatalogServer({
-        port: args.port === undefined ? 0 : args.port
-      });
-      let opened = false;
-      try {
-        if (args.open) opened = openPreviewUrl(served.catalogUrl).opened;
-      } catch (error) {
-        await served.close();
-        throw error;
+    if (command === "browse" || command === "serve") {
+      if (args.port !== undefined) {
+        throw new Error(
+          "--port is no longer supported by browse/serve because the complete catalog is hosted on GitHub Pages. " +
+          "Use preview --serve --port <number> only for a local recommendation gallery."
+        );
       }
       const output = {
-        catalogUrl: served.catalogUrl,
-        host: served.host,
-        port: served.port,
-        styleCount: served.styleCount,
-        sourceCount: served.sourceCount,
-        opened
+        ...hostedCatalogInfo({ catalog: buildStyleCatalog() }),
+        opened: false
       };
+      if (args.open) output.opened = openPreviewUrl(output.catalogUrl).opened;
+      if (command === "serve") {
+        process.stderr.write("serve is a compatibility alias for browse and no longer starts a local server.\n");
+      }
       if (args.json) {
         printJson(output);
       } else {
         process.stdout.write(`Style catalog: ${output.catalogUrl}\n`);
         process.stdout.write(`Curated styles: ${output.styleCount} (${output.sourceCount} indexed source records)\n`);
-        process.stdout.write(`${opened ? "Opened in the default browser. " : ""}Press Ctrl+C to stop.\n`);
+        process.stdout.write(`${output.opened ? "Opened in the default browser." : "Pass --open to open it in the default browser."}\n`);
       }
-      await serveUntilStopped(served.server, served.close);
       return;
     }
 

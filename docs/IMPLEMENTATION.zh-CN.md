@@ -17,16 +17,18 @@ flowchart LR
   W --> C[Node.js CLI]
   K[48 个已策展 profile] --> C
   C --> R[recommend]
-  C --> B[serve 目录浏览器]
+  C --> B[browse 托管目录]
   C --> A[apply]
   R --> H[recommendations.html]
-  H -. preview --serve .-> L[通用本机回环服务]
-  B --> L
+  H -. preview --serve .-> L[本机回环服务]
   L --> V[本地浏览器]
+  K --> X[静态目录构建]
+  X --> GP[GitHub Pages]
+  B --> GP
   A --> D[DESIGN.md 与项目状态]
   P[上游 Provider 仓库] --> G[clone/pull 与路径扫描]
   G --> I[catalog/generated]
-  I -. 74 条来源路径统计 .-> B
+  I -. 74 条来源路径统计 .-> X
   I -. 维护者审查后手工更新 .-> K
 ```
 
@@ -49,8 +51,8 @@ profile，即 12 个 family、每组 4 个方向；生成索引中的 74 条 sty
 
 Skill 负责流程和行为约束，不包含推荐算法。
 
-明确的 `serve` 或完整目录浏览需求会通过
-`references/catalog-browser.md` 进入独立的顶层路由。Agent 只启动前台服务，
+明确的 `browse`、旧 `serve` 或完整目录浏览需求会通过
+`references/catalog-browser.md` 进入独立的顶层路由。Agent 只打开 Pages 托管地址，
 不会收集网站 brief、推荐五个风格、运行 `apply` 或修改目标项目。
 
 ### 2. Skill wrapper：定位真正的 CLI
@@ -68,14 +70,15 @@ Skill 负责流程和行为约束，不包含推荐算法。
 ### 3. CLI：参数解析和命令分发
 
 `bin/ai-ui-style-director.mjs` 是薄命令层。推荐、项目契约、预览和 Provider
-操作会分发到 `src/core.mjs`；完整目录命令则直接调用
-`src/catalog-browser.mjs` 中的 `startStyleCatalogServer`。主要命令为：
+操作会分发到 `src/core.mjs`；完整目录命令从
+`src/catalog-browser.mjs` 的 `hostedCatalogInfo` 获取带 revision 的 Pages 地址。主要命令为：
 
 | 命令 | 职责 |
 | --- | --- |
 | `questions` | 输出 brief 缺失时的场景问题 |
 | `recommend` | 推荐方向、写入会话并生成 HTML 画廊 |
-| `serve` | 浏览全部已策展风格，并提供搜索和标签过滤 |
+| `browse` | 打开支持搜索和标签过滤的托管目录 |
+| `serve` | `browse` 的兼容别名 |
 | `preview` | 查看或打开某一次生成的推荐画廊 |
 | `apply` | 生成项目设计契约和状态文件 |
 | `sync` | 克隆或更新配置的 Provider 仓库 |
@@ -83,35 +86,40 @@ Skill 负责流程和行为约束，不包含推荐算法。
 
 `update` 只是 `refresh-catalog` 的兼容别名，不负责更新已安装的工具。
 
-### 4. 目录浏览器与通用回环服务
+### 4. 目录浏览器与静态 Pages 构建
 
-`src/catalog-browser.mjs` 导出五个职责明确的操作：
+`src/catalog-browser.mjs` 提供目录模型与浏览器资源：
 
 - `buildStyleCatalog`：把已策展 profile、视觉元数据、生成式 SVG 预览和
-  来源索引统计组合成浏览器视图模型；
+  来源索引统计及确定性的 revision 组合成 schema v3 浏览器视图模型；
+- `hostedCatalogInfo`：把本地预期 revision 附在 Pages 地址上，并返回 CLI
+  所需信息；
 - `searchCatalogEntries`：使用倒排索引查询候选风格，并在必要时做子串回退；
 - `filterCatalogEntries`：把搜索结果与 family、页面类型、密度、调性和
   组件库过滤组合；
 - `renderCatalogBrowserPage`：渲染浏览器页面外壳；
-- `startStyleCatalogServer`：以前台回环服务提供页面与资源。
+- `buildStyleCatalogStaticAssets`：组装所有可部署的静态文件。
 
-目录服务的固定应用路由是 `/`、`/catalog.json`、`/app.js` 和
-`/styles.css`，此外还为每个已策展风格提供
-`/previews/<style-id>.svg`。预览路由只接受经过校验的安全 ID，并设置同源资源
-策略；Catalog 的内容安全策略也只允许加载同源图片。页面状态编码在 URL
-query 中，因此筛选结果无需服务端状态即可在刷新后保留。
+`scripts/build-catalog-site.mjs` 把这些资源写入 `dist/pages`。HTML 使用
+`catalog.json`、`styles.css` 和 `previews/<style-id>.svg` 等相对引用，因此能
+在 GitHub 项目子路径下正确工作。页面状态编码在 URL query 中，因此筛选结果
+无需服务端状态即可在刷新后保留。
 
-`/catalog.json` 使用 schema v2。条目不再内嵌 SVG data URI，只携带轻量的
+`catalog.json` 使用 schema v3。条目不再内嵌 SVG data URI，只携带轻量的
 `previewUrl`；响应中的 `entryIndex` 支持按 ID 定位条目，`searchIndex` 则把
 标准化词项映射到有序数字条目下标 postings。多词查询对精确 postings 求交集，
 未知或前缀词回退到 `searchText` 子串匹配，兼顾常见查询速度和宽松搜索体验。
 客户端每次最多追加 24 张卡片；搜索、过滤或清空条件会重置分页，但状态栏
 始终显示全部匹配数量。
 
-`src/loopback-server.mjs` 统一管理 `127.0.0.1` listener、端口校验、禁用缓存
-的响应、method 与 path 处理以及优雅停止。`src/core.mjs` 保持已有的
-`startRecommendationPreviewServer` API，但把 HTTP transport 委托给该通用
-模块。两个调用方因此共享同一本机边界，同时继续提供不同内容。
+HTML 与 JSON 都携带 `catalogRevision`，CLI 还会把本地预期 revision 附到托管
+URL 上；三者不一致时页面显示提示，但继续允许搜索和过滤。
+`.github/workflows/pages.yml` 会在 PR 中构建，并在 `main` 上上传静态产物、通过
+GitHub Pages environment 部署。
+
+`src/loopback-server.mjs` 只继续负责项目级 `preview --serve` 的
+`127.0.0.1` listener。目录 server helper 仅用于测试和本地静态站点验收，不再
+作为面向用户的 CLI 入口。
 
 ## Catalog：真正的运行时知识源
 
@@ -202,12 +210,12 @@ ID、分数和顺序。
 
 ### 完整目录浏览器
 
-`serve` 不创建推荐 session，也不写入项目文件。它会启动
-`startStyleCatalogServer`，输出选定的 `http://127.0.0.1:<port>/` 链接，按需
-自动打开，并在前台保持运行到用户按下 Ctrl+C。端口 `0` 表示由操作系统选择
-可用端口；`--port` 用于指定端口，`--json` 则让启动输出变为机器可读格式。
+`browse` 不创建推荐 session，也不写入项目文件。它会输出带 revision 的
+GitHub Pages 地址，按需自动打开，然后立即返回。`--json` 输出托管地址、
+revision、已策展风格数量、来源数量和打开状态。`serve` 保留为带迁移提示的
+兼容别名；两者都不接受 `--port`。
 
-客户端从轻量 `/catalog.json` 读取已审查的视图模型，用倒排索引执行精确
+客户端从相对路径 `catalog.json` 读取轻量 schema v3 视图模型，用倒排索引执行精确
 词项查询、在索引未命中时回退子串搜索，再与标签过滤组合。首屏只创建 24 张
 卡片，继续浏览时每批追加 24 张；每张 SVG 通过独立同源 `previewUrl` 按需
 请求。生成式 SVG 预览与上游参考继续遵循推荐画廊相同的中性资产和外部链接
