@@ -4,8 +4,8 @@
 
 AI UI Style Director 是面向编程 agent 的 UI 风格决策工作流。在新建或重构网站之前，它会先推荐 5 个合适的视觉方向；你选定后，它会生成项目专属的 `DESIGN.md`，再让 agent 开始实现。
 
-当前 Catalog 包含 48 个经过人工策展的风格 profile，覆盖 12 个 family、每个
-family 4 个方向。推荐排序由 Node.js 程序根据结构化字段做确定性匹配；agent
+Catalog 从 12 个 family、每组 4 个方向的已审查基线开始，并可通过可审计策展 PR
+继续增长。推荐排序由 Node.js 程序根据结构化字段做确定性匹配；agent
 负责收集需求、调用命令、展示结果和执行选择门禁，不在运行时凭主观判断替换
 排序。
 
@@ -76,7 +76,8 @@ node bin/ai-ui-style-director.mjs browse --open
 
 当前生成索引中的 74 条 style source 是上游来源路径，只构成候选素材池；页面
 会动态展示该数量，但不会把它们伪装成 74 个完整风格。只有经过 profile、视觉
-配置、3 条参考和 SVG 校验的条目才进入上述 48 个已策展方向。`browse` 是只读
+配置、3 条参考和 SVG 校验的条目才进入已策展方向；当前基线为 48 个，后续
+可通过可审计策展 PR 继续增长。`browse` 是只读
 操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
 
 命令会立即返回。可用 `--open` 自动打开浏览器，或用 `--json` 输出机器可读的
@@ -151,6 +152,7 @@ Claude Code：
 - [架构](docs/ARCHITECTURE.zh-CN.md)
 - [实现详解与开源集成](docs/IMPLEMENTATION.zh-CN.md)
 - [Provider 全自动刷新](docs/AUTOMATED_REFRESH.zh-CN.md)
+- [AI 辅助风格策展自动化](docs/AUTOMATED_CURATION.zh-CN.md)
 - [开发与维护](docs/DEVELOPMENT.zh-CN.md)
 - [第三方声明](THIRD_PARTY_NOTICES.md)
 

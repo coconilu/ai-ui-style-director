@@ -67,16 +67,18 @@ The catalog is hosted at
 The legacy `serve` command remains a compatibility alias for `browse`; it no
 longer starts a local complete-catalog server.
 
-The current catalog contains 48 reviewed profiles: four directions in each of
-12 families. The page supports text search plus family, page type, density,
-tone, and component-kit filters. It loads a lightweight schema-v3 catalog,
-fetches previews from independent same-origin SVG paths, and progressively
-renders 24 cards at a time. A deterministic catalog revision is attached to
-the URL and assets so the page can warn about a stale deployment without
-blocking browsing.
+The catalog starts from a reviewed baseline of 48 profiles: four directions in
+each of 12 families, and it can grow through audited curation PRs. The page
+supports text search plus family, page type, density, tone, and component-kit
+filters. It loads a lightweight schema-v3 catalog, fetches previews from
+independent same-origin SVG paths, and progressively renders 24 cards at a
+time. A deterministic catalog revision is attached to the URL and assets so
+the page can warn about a stale deployment without blocking browsing.
 
 The 74 generated style-source entries are upstream provider paths and remain a
-source pool for human curation; they are not 74 additional styles. The page
+governed source pool; they are not 74 additional styles. New or changed hashes
+can enter the audited AI-assisted curation workflow, but only passing candidates
+become user-facing profiles. The page
 reports that count without misrepresenting unreviewed paths as style cards.
 `browse` is read-only and does not create or modify project
 `.ui-style-director/` state.
@@ -156,6 +158,7 @@ Claude Code:
 - [Architecture](docs/ARCHITECTURE.md)
 - [Implementation and open-source integration](docs/IMPLEMENTATION.md)
 - [Automated provider refresh](docs/AUTOMATED_REFRESH.md)
+- [Automated AI-assisted style curation](docs/AUTOMATED_CURATION.md)
 - [Development and maintenance](docs/DEVELOPMENT.md)
 - [Third-party notices](THIRD_PARTY_NOTICES.md)
 

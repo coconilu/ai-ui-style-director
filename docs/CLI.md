@@ -59,8 +59,8 @@ does not start a local server. `serve` remains a compatibility alias that emits
 a migration notice and otherwise has the same behavior. `--port` is rejected
 for both commands; use it only with `preview --serve`.
 
-The current page lists 48 curated entries from `catalog/style-profiles.json`,
-balanced as four profiles in each of 12 families. Each entry includes reviewed
+The page lists every curated entry from `catalog/style-profiles.json`. The
+checked-in baseline begins with four profiles in each of 12 families. Each entry includes reviewed
 metadata, component-kit suggestions, upstream Light/Dark references, and a
 generated SVG preview. It supports text search plus filters for family, page
 type, density, tone, and component kit. Search recognizes common Chinese
@@ -85,7 +85,7 @@ warning; search and filtering remain available.
 
 `catalog/generated/style-sources.json` currently contains 74 indexed upstream
 source paths. The browser reports that source-pool count for context but does
-not turn those paths into style cards; only the 48 reviewed profiles appear as
+not turn those paths into style cards; only reviewed profiles appear as
 full entries.
 
 `browse` and its `serve` alias do not create or modify a target project's

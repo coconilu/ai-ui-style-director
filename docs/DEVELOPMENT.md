@@ -15,8 +15,8 @@ ai-ui-style-director/
 ```
 
 The project has no runtime npm dependencies and requires Node.js 20 or newer.
-The current reviewed catalog contains 48 profiles, balanced as four profiles
-in each of 12 families. The 74 provider paths in
+The reviewed baseline starts with four profiles in each of 12 families and can
+grow through audited curation PRs. The 74 provider paths in
 `catalog/generated/style-sources.json` are a source pool, not additional
 curated profiles.
 
@@ -30,7 +30,8 @@ npm run check
 ```
 
 `npm run check` validates JavaScript syntax, the curated and generated catalog
-schemas, committed preview freshness, and the test suite.
+schemas, committed preview freshness, curation state and immutable audit
+records, and the test suite.
 
 Validate only the curated profile/visual/reference contract with:
 
@@ -44,6 +45,16 @@ also checks unique IDs, required profile fields and taxonomy values, one
 matching visual and preview per profile, supported render variants, valid theme
 colors, and exactly three unique references that exist in the generated
 provider source index.
+
+Validate only the AI-assisted curation state and records with:
+
+```bash
+npm run catalog:curation:validate
+```
+
+See [Automated AI-assisted style curation](AUTOMATED_CURATION.md) for the
+model/program boundary, initial baseline, GitHub App workflow, and generic
+provider onboarding.
 
 Regenerate style cards after changing `style-visuals.json` or preview rendering:
 
@@ -110,6 +121,10 @@ npm run check
 
 `.github/workflows/refresh-providers.yml` performs this work daily and opens a
 pull request if `catalog/generated/` changes.
+
+After a source hash changes, `.github/workflows/curate-style-sources.yml`
+proposes governed additions in a separate audited PR. Deterministic refresh
+output and model-assisted curated output retain independent file allowlists.
 
 ## User-facing releases
 

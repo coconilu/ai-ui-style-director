@@ -29,10 +29,15 @@ flowchart LR
   P[Upstream provider repositories] --> G[clone/pull and path scan]
   G --> I[catalog/generated]
   I -. source index count .-> X
-  I -. manually reviewed updates .-> K
+  I --> Q[bounded AI candidate]
+  Q --> T[programmatic provenance and duplicate gates]
+  T -. audited App PR .-> K
 ```
 
-Runtime recommendation and upstream synchronization are deliberately separate. Recommendations read reviewed Catalog data; provider refreshes generate source indexes but never change recommendation behavior automatically.
+Runtime recommendation and upstream synchronization are deliberately separate.
+Recommendations read reviewed Catalog data. Provider refreshes generate source
+indexes; a separate AI-assisted workflow may propose a change, but recommendation
+behavior changes only after deterministic gates and its protected PR merge.
 
 ## Entrypoints and call path
 
@@ -123,17 +128,21 @@ Recommendation and project-contract behavior read four curated datasets:
 | `catalog/component-kits.json` | Component-library fit and usage boundaries |
 | `catalog/scenario-questions.json` | Questions for an underspecified brief |
 
-The current catalog contains 48 profiles: four in each of 12 families. A
-separate `catalog/recommendation-benchmarks.json` file contains 12 representative
+The reviewed baseline begins with four profiles in each of 12 families and may
+grow through audited curation PRs. A separate `catalog/recommendation-benchmarks.json` file contains 12 representative
 briefs used by the test suite to protect family-level intent coverage.
 
-`catalog/providers.json` describes upstream repositories. `catalog/generated/*` records scan results. The recommendation core does not read those generated indexes, so upstream changes cannot enter user-facing recommendations without review.
+`catalog/providers.json` describes upstream repositories. `catalog/generated/*`
+records scan results. The recommendation core does not read those generated
+indexes, so upstream changes cannot enter user-facing recommendations directly.
+The supply-side curator reads only new/changed hashes and writes a governed PR;
+the consumer continues to read only merged profiles.
 
 The catalog browser reads `catalog/generated/style-sources.json` only to show
 its current source-index count. At this revision the file contains 74 provider
 paths, but those paths are not semantically parsed and are not returned as 74
-complete style cards. Browser entries still come only from the 48 reviewed
-profiles in `catalog/style-profiles.json`.
+complete style cards. Browser entries still come only from reviewed profiles in
+`catalog/style-profiles.json`.
 
 `scripts/validate-curated-catalog.mjs` applies `catalog/curation-policy.json`,
 which requires at least four profiles and three distinct visual variants in
@@ -234,11 +243,12 @@ An existing `DESIGN.md` is protected by default and is replaced only when `--for
 
 ## How open-source projects are integrated
 
-Open-source material is connected through provider metadata and an adapter-like synchronization pipeline, not declared as runtime npm dependencies.
+Open-source material is connected through provider metadata and explicit source
+adapters, not declared as runtime npm dependencies.
 
 | Provider | Role | Integration |
 | --- | --- | --- |
-| `VoltAgent/awesome-design-md` | Style-reference corpus | Scan `DESIGN.md`, curate profiles, and expand slugs into external Light/Dark previews |
+| `VoltAgent/awesome-design-md` | Style-reference corpus | Scan and hash `DESIGN.md`, preserve legacy preview URLs, and feed changed sources to governed curation |
 | `Harzva/design-md-flow` | Workflow reference | Track source and revision while implementing a local selection gate |
 | `shadcn-ui/ui` | Base components | Scan registry sources and recommend the kit from matching profiles |
 | `shadcn/originui` | Application and marketing blocks | Scan registry sources and map the kit to practical SaaS surfaces |
@@ -259,16 +269,21 @@ catalog/generated/style-sources.json
 catalog/generated/component-sources.json
 ```
 
-Generated catalog schema v2 keeps repository-level provenance in
+Generated catalog schema v3 keeps repository-level provenance in
 `provider-inventory.json`. Each provider records its repository and commit
-revision once, while the source indexes contain only `providerId`, `path`, and
-`sourceType`. Tracked artifacts intentionally omit generation timestamps and
+revision once. The style-source index contains `providerId`, `path`,
+`sourceType`, and normalized `contentHash`; component sources retain the first
+three fields. Tracked artifacts intentionally omit generation timestamps and
 machine-local cache paths, so identical upstream inputs produce byte-identical
 files and do not open noisy refresh pull requests. Directory entries are sorted
 before capped source selection, making the indexed subset stable across operating
 systems and filesystems.
 
-The scanner is a lightweight path indexer, not a semantic component parser. It records at most 200 registry files and 100 documentation files per provider, so counts represent indexed sources rather than complete upstream component totals. In particular, the current 74 style-source paths are review candidates, not automatically promoted styles.
+The scanner is a lightweight path indexer, not a semantic component parser. It
+indexes every matching `DESIGN.md`; user-facing style count is not capped by a
+source scanner constant. Registry and documentation indexes retain maintenance
+caps of 200 and 100 files per provider. The current 74 style-source paths are a
+checked-in baseline, not automatically promoted styles.
 
 `.github/workflows/refresh-providers.yml` runs the same process daily, validates the repository, and opens a pull request only when generated indexes change.
 
@@ -281,6 +296,13 @@ that change anything outside the three generated catalog files. Failed checks
 leave the PR open for exception handling, while successful merges retain the
 workflow run, PR diff, CI logs, and merge commit as the audit trail. See
 [`AUTOMATED_REFRESH.md`](AUTOMATED_REFRESH.md) for setup and operations.
+
+`.github/workflows/curate-style-sources.yml` separately processes new/changed
+style hashes through the OpenAI-compatible client, deterministic gates,
+immutable records, an independent file allowlist, and another App-created Draft
+PR. It never enables auto-merge; a maintainer reviews and merges the proposal
+manually. See
+[`AUTOMATED_CURATION.md`](AUTOMATED_CURATION.md).
 
 ## Dependency and license boundaries
 
@@ -300,13 +322,15 @@ See `THIRD_PARTY_NOTICES.md` and `docs/PROVIDERS.md` for the source and license 
 
 The implementation favors explainability, reproducibility, and a small dependency surface:
 
-- strengths: offline operation, straightforward tests, traceable recommendations, and reviewed upstream changes;
-- cost: semantic understanding is limited by keywords and curated profiles;
-- maintenance: new providers still require reviewed profile, visual, and component mappings;
+- strengths: offline consumer operation, straightforward tests, traceable recommendations, and audited upstream changes;
+- cost: supply-side semantic curation requires a model credential, while consumer matching remains keyword/profile based;
+- maintenance: a new `DESIGN.md` provider is configuration-driven; a new source format or taxonomy still requires a reviewed adapter or policy change;
 - extension requirement: future recommendation entrypoints should reuse or verify the same scoring and diversification rules so different surfaces stay consistent.
 
 Tests cover intake checks, the 12-case deterministic recommendation benchmark,
 rerolling, curated-catalog validation, visual references, the HTML gallery,
 indexed catalog filtering, progressive rendering, catalog and independent SVG
 HTTP routes, shared loopback safety, `apply` output, provider indexes, CLI
-commands, and Codex/Claude Code wrapper discovery.
+commands, source hashes and adapters, mocked OpenAI-compatible responses,
+curation state/audit gates, workflow allowlists, and Codex/Claude Code wrapper
+discovery.

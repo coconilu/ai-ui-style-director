@@ -1,4 +1,4 @@
-const PREVIEW_BASE_URL = "https://getdesign.md";
+import { expandProviderReference } from "./provider-adapters.mjs";
 
 function escapeXml(value = "") {
   return String(value)
@@ -256,17 +256,8 @@ const VARIANT_RENDERERS = {
   learning: renderLearning
 };
 
-export function expandVisualReferences(references = []) {
-  return references.map((reference) => {
-    if (reference.provider !== "awesome-design-md") return { ...reference };
-    const slug = encodeURIComponent(reference.slug);
-    return {
-      ...reference,
-      pageUrl: `${PREVIEW_BASE_URL}/${slug}/design-md`,
-      lightPreviewUrl: `${PREVIEW_BASE_URL}/design-md/${slug}/preview.html`,
-      darkPreviewUrl: `${PREVIEW_BASE_URL}/design-md/${slug}/preview-dark.html`
-    };
-  });
+export function expandVisualReferences(references = [], options = {}) {
+  return references.map((reference) => expandProviderReference(reference, options));
 }
 
 export function renderStylePreviewSvg({ style, visual, title, subtitle } = {}) {

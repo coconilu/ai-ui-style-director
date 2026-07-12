@@ -30,5 +30,46 @@ jobs:
             echo "$unexpected" >&2
             exit 1
           fi
+      - name: Validate automated curation scope
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'automation/curate-style-sources-')
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          allowed='^(catalog/style-profiles\.json|catalog/style-visuals\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\.svg)$'
+          changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
+          unexpected="$(printf '%s\n' "$changed_files" | grep -Ev "$allowed" || true)"
+          deleted="$(git diff --diff-filter=D --name-only "$BASE_SHA" "$HEAD_SHA")"
+          non_added_records="$(git diff --name-status "$BASE_SHA" "$HEAD_SHA" | awk '$2 ~ /^catalog\/curation\/records\// && $1 != "A" { print }')"
+          added_records="$(git diff --diff-filter=A --name-only "$BASE_SHA" "$HEAD_SHA" | grep -Ec '^catalog/curation/records/[0-9a-f]{64}\.json$' || true)"
+
+          if [ -z "$changed_files" ]; then
+            echo "Automated curation PR must contain catalog changes." >&2
+            exit 1
+          fi
+          if [ -n "$unexpected" ]; then
+            echo "Automated curation PR contains files outside its allowlist:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi
+          if [ -n "$deleted" ]; then
+            echo "Automated curation PR must not delete catalog or audit artifacts:" >&2
+            echo "$deleted" >&2
+            exit 1
+          fi
+          if [ -n "$non_added_records" ]; then
+            echo "Curation records are append-only:" >&2
+            echo "$non_added_records" >&2
+            exit 1
+          fi
+          if [ "$added_records" -lt 1 ]; then
+            echo "Automated curation PR must add at least one immutable curation record." >&2
+            exit 1
+          fi
+          if ! printf '%s\n' "$changed_files" | grep -qx 'catalog/curation/source-state.json'; then
+            echo "Automated curation PR must update catalog/curation/source-state.json." >&2
+            exit 1
+          fi
       - run: npm test
       - run: npm run check

@@ -7,10 +7,13 @@
     "ai-ui-style-director": "./bin/ai-ui-style-director.mjs"
   },
   "scripts": {
-    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --check src/preview.mjs && node --check src/loopback-server.mjs && node --check src/catalog-browser.mjs && node --check scripts/build-catalog-site.mjs && node --check scripts/generate-style-previews.mjs && node --check scripts/validate-curated-catalog.mjs && node --check scripts/validate-generated-catalog.mjs && npm run catalog:curated:validate && npm run previews:check && npm run catalog:validate && npm test",
+    "check": "node --check bin/ai-ui-style-director.mjs && node --check src/core.mjs && node --check src/preview.mjs && node --check src/provider-adapters.mjs && node --check src/openai-compatible.mjs && node --check src/curation.mjs && node --check src/loopback-server.mjs && node --check src/catalog-browser.mjs && node --check scripts/build-catalog-site.mjs && node --check scripts/generate-style-previews.mjs && node --check scripts/curate-style-sources.mjs && node --check scripts/validate-curation.mjs && node --check scripts/validate-curated-catalog.mjs && node --check scripts/validate-generated-catalog.mjs && npm run catalog:curated:validate && npm run catalog:curation:validate && npm run previews:check && npm run catalog:validate && npm test",
     "test": "node --test test/*.test.mjs",
     "catalog:validate": "node scripts/validate-generated-catalog.mjs",
     "catalog:curated:validate": "node scripts/validate-curated-catalog.mjs",
+    "catalog:curation:validate": "node scripts/validate-curation.mjs",
+    "catalog:curate": "node scripts/curate-style-sources.mjs",
+    "catalog:curate:baseline": "node scripts/curate-style-sources.mjs --baseline",
     "catalog:build": "node scripts/build-catalog-site.mjs",
     "previews": "node scripts/generate-style-previews.mjs",
     "previews:check": "node scripts/generate-style-previews.mjs --check",

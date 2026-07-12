@@ -6,8 +6,8 @@ AI UI Style Director 分为六层。
 
 Catalog 保存标准化设计知识：
 
-- `catalog/style-profiles.json`：人工维护的 48 个风格方向，按 12 个 family
-  均衡为每组 4 个 profile。
+- `catalog/style-profiles.json`：由 12 个基线 family 治理的已审查风格方向；
+  初始基线为每组 4 个 profile。
 - `catalog/style-visuals.json`：预览变体、主题和真实视觉参考。
 - `catalog/previews/`：生成的无品牌 SVG 卡片。
 - `catalog/component-kits.json`：可支持不同风格的实现组件库。
@@ -16,14 +16,22 @@ Catalog 保存标准化设计知识：
   这些路径是候选素材线索，不是已策展的风格 profile。
 - `catalog/scenario-questions.json`：brief 信息不足时需要确认的问题。
 - `catalog/curation-policy.json`：基线 family 的条目深度与结构变体门槛。
+- `catalog/curation/source-state.json`：按内容哈希记录的处理游标；当前 74 条来源
+  已作为零模型费用的首次基线提交。
+- `catalog/curation/records/`：基线之后由每次模型处理和程序门禁产生的不可变审计记录。
 - `catalog/recommendation-benchmarks.json`：保护推荐意图覆盖与确定性的 12 个代表场景。
 
 结构化 catalog 让 agent 无需把大量上游仓库加载进上下文就能选择风格。
 
+供给侧策展与消费侧推荐彼此独立。OpenAI-compatible 策展 Agent 只读取受限的新来源
+或变更来源，并提出结构化候选；来源绑定、taxonomy、重复政策、晋升、预览生成和校验
+都由程序掌握。确定性门禁通过后，现有 GitHub App 才创建可审计的 Draft PR，
+并由维护者人工审查和手动合并。
+
 ## 2. 视觉预览层
 
 `src/preview.mjs` 把标准化视觉元数据渲染为确定性的 SVG 线框草图。
-`scripts/generate-style-previews.mjs` 生成并验证 48 张提交到仓库的风格卡片；
+`scripts/generate-style-previews.mjs` 为每个已策展风格生成并验证一张提交到仓库的卡片；
 同一个渲染器在选定后生成项目级 `first-viewport-draft.svg`。
 
 `src/core.mjs` 会把每一组推荐打包为自包含的
@@ -55,7 +63,7 @@ Catalog 保存标准化设计知识：
 静态站点中的资源全部使用相对路径，因此可以正确运行在 GitHub 项目站点的
 子路径下。`.github/workflows/pages.yml` 会在 PR 中构建产物，并在 `main` 分支
 上部署到 GitHub Pages。`browse` 输出或打开托管地址；旧的 `serve` 只作为兼容
-别名，不再启动完整目录的本地服务。页面把 48 个已策展 profile 显示为完整
+别名，不再启动完整目录的本地服务。页面把全部已策展 profile 显示为完整
 卡片；`catalog/generated/style-sources.json` 中当前 74 条记录仍然只是来源
 索引，只动态显示统计数量，绝不会未经审查就升级为风格 profile。
 
