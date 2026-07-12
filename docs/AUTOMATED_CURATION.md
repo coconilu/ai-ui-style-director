@@ -154,12 +154,16 @@ Defaults are:
 ```text
 CURATOR_BASE_URL=https://api.kimi.com/coding/v1
 CURATOR_MODEL=kimi-for-coding
+CURATOR_TEMPERATURE=1
 CURATOR_MAX_SOURCES=5
 CURATOR_MAX_INPUT_CHARS=80000
 CURATOR_MAX_OUTPUT_TOKENS=4096
 CURATOR_MAX_RETRIES=1
 CURATOR_REQUEST_TIMEOUT_MS=120000
 ```
+
+`kimi-for-coding` requires `CURATOR_TEMPERATURE=1`. The generic curator keeps
+`0` as its default when the variable is omitted for another compatible model.
 
 The five-source batch is implemented today, not reserved for a future phase:
 `.github/workflows/curate-style-sources.yml` sets
@@ -198,6 +202,7 @@ Process pending sources locally:
 ```bash
 CURATOR_BASE_URL=https://api.kimi.com/coding/v1 \
 CURATOR_MODEL=kimi-for-coding \
+CURATOR_TEMPERATURE=1 \
 CURATOR_API_KEY=... \
 npm run catalog:curate -- --clone --max-sources 5
 ```

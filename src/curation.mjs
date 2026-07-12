@@ -889,6 +889,7 @@ export async function curateStyleSources({
   profileContextSize = DEFAULT_PROFILE_CONTEXT_SIZE,
   client,
   env = process.env,
+  requestTemperature = Number(env.CURATOR_TEMPERATURE ?? 0),
   requestTimeoutMs = Number(env.CURATOR_REQUEST_TIMEOUT_MS || 30_000),
   requestMaxRetries = Number(env.CURATOR_MAX_RETRIES ?? 1),
   now = () => new Date().toISOString()
@@ -896,6 +897,9 @@ export async function curateStyleSources({
   if (!Number.isInteger(maxSources) || maxSources <= 0) throw new TypeError("maxSources must be a positive integer.");
   if (!Number.isInteger(maxInputChars) || maxInputChars <= 0) throw new TypeError("maxInputChars must be a positive integer.");
   if (!Number.isInteger(maxOutputTokens) || maxOutputTokens <= 0) throw new TypeError("maxOutputTokens must be a positive integer.");
+  if (!Number.isFinite(requestTemperature) || requestTemperature < 0 || requestTemperature > 2) {
+    throw new TypeError("requestTemperature must be a number between 0 and 2.");
+  }
   if (!Number.isFinite(requestTimeoutMs) || requestTimeoutMs <= 0) throw new TypeError("requestTimeoutMs must be a positive number.");
   if (requestMaxRetries !== 0 && requestMaxRetries !== 1) throw new TypeError("requestMaxRetries must be 0 or 1.");
   if (!(duplicateThreshold > 0 && duplicateThreshold <= 1)) throw new TypeError("duplicateThreshold must be in (0, 1].");
@@ -1012,6 +1016,7 @@ export async function curateStyleSources({
         componentKitIds,
         taxonomyVocabulary
       }),
+      temperature: requestTemperature,
       maxTokens: maxOutputTokens,
       maxRetries: requestMaxRetries
     });

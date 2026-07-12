@@ -34,6 +34,7 @@ test("curation workflow uses trusted main-only triggers and bounded execution", 
 test("curation workflow calls Kimi through the OpenAI-compatible environment and supports a clean no-op", () => {
   assert.match(curationWorkflow, /CURATOR_BASE_URL: https:\/\/api\.kimi\.com\/coding\/v1/u);
   assert.match(curationWorkflow, /CURATOR_MODEL: kimi-for-coding/u);
+  assert.match(curationWorkflow, /CURATOR_TEMPERATURE: "1"/u);
   assert.match(curationWorkflow, /CURATOR_API_KEY: \$\{\{ secrets\.KIMI_CODE_API_KEY \}\}/u);
   assert.match(
     curationWorkflow,

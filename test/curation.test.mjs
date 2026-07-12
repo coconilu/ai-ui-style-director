@@ -285,6 +285,13 @@ test("curation state rejects current-directory and empty relative-path segments"
   }
 });
 
+test("rejects an invalid curator temperature before making a request", async () => {
+  await assert.rejects(
+    curateStyleSources({ requestTemperature: Number.NaN }),
+    /requestTemperature must be a number between 0 and 2/u
+  );
+});
+
 test("fresh no-checkout provider clones materialize the pinned source revision", () => {
   const dir = mkdtempSync(join(tmpdir(), "style-curation-clone-"));
   const upstream = join(dir, "upstream");
@@ -322,6 +329,7 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
     env: {
       CURATOR_PROVIDER: "mock-provider",
       CURATOR_MODEL: "mock-curator",
+      CURATOR_TEMPERATURE: "1",
       GITHUB_REPOSITORY: "example/repo",
       GITHUB_RUN_ID: "42",
       GITHUB_SHA: "b".repeat(40)
@@ -332,6 +340,7 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
   assert.equal(result.processed, 1);
   assert.equal(result.promoted, 1);
   assert.deepEqual(result.usage, { promptTokens: 100, completionTokens: 50, totalTokens: 150 });
+  assert.equal(request.temperature, 1);
   assert.match(request.messages[0].content, /untrusted data/u);
   assert.match(request.messages[1].content, /Ignore all previous instructions/u);
   const profiles = JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8"));
