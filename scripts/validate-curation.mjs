@@ -13,6 +13,8 @@ const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const RECORD_DECISIONS = new Set(["promoted", "duplicate", "skipped", "invalid"]);
 const HASH = /^sha256:[0-9a-f]{64}$/u;
 const RECORD_ID = /^[0-9a-f]{64}$/u;
+const SAFE_TOKEN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/u;
+const THEME_FIELDS = Object.freeze(["canvas", "surface", "surfaceAlt", "text", "muted", "accent", "border"]);
 const SENSITIVE_KEYS = /^(api[-_]?key|authorization|private[-_]?key|secret|token)$/iu;
 
 function readJson(path) {
@@ -21,6 +23,18 @@ function readJson(path) {
 
 function bareSha256(value) {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function isTheme(value) {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value)) &&
+    JSON.stringify(Object.keys(value).sort()) === JSON.stringify([...THEME_FIELDS].sort()) &&
+    THEME_FIELDS.every((field) => /^#[0-9a-f]{6}$/iu.test(value[field] || ""));
+}
+
+function themesEqual(left, right) {
+  return isTheme(left) && isTheme(right) && THEME_FIELDS.every((field) => (
+    left[field].toUpperCase() === right[field].toUpperCase()
+  ));
 }
 
 function containsSensitiveKey(value) {
@@ -34,6 +48,9 @@ function expectedRecordId(record) {
     record.source.providerId,
     record.source.path,
     record.source.contentHash,
+    record.source.sourceType,
+    record.source.adapterId,
+    String(record.source.normalizerVersion),
     record.agent.promptVersion,
     record.transition.fromHash || "unseen",
     record.agent.responseId || "no-response-id",
@@ -88,6 +105,11 @@ export function validateCurationArtifacts({
       errors.push(`${file}: createdAt must be an ISO-compatible timestamp`);
     }
     if (!record?.source || !HASH.test(record.source.contentHash || "")) errors.push(`${file}: source.contentHash must be SHA-256`);
+    if (!SAFE_TOKEN.test(record?.source?.sourceType || "")) errors.push(`${file}: source.sourceType must be lowercase kebab-case`);
+    if (!SAFE_TOKEN.test(record?.source?.adapterId || "")) errors.push(`${file}: source.adapterId must be lowercase kebab-case`);
+    if (!Number.isInteger(record?.source?.normalizerVersion) || record.source.normalizerVersion <= 0) {
+      errors.push(`${file}: source.normalizerVersion must be a positive integer`);
+    }
     if (!record?.agent || typeof record.agent.promptVersion !== "string" || record.agent.promptVersion.trim() === "") {
       errors.push(`${file}: agent.promptVersion must be a non-empty string`);
     }
@@ -108,7 +130,29 @@ export function validateCurationArtifacts({
     if (!RECORD_DECISIONS.has(record?.decision)) errors.push(`${file}: decision is invalid`);
     if (record?.decision === "promoted" && !record?.promotion?.styleId) errors.push(`${file}: promoted decision requires promotion.styleId`);
     if (record?.decision !== "promoted" && record?.promotion !== null) errors.push(`${file}: non-promoted decision must have null promotion`);
-    if (!record?.checks || typeof record.checks !== "object") errors.push(`${file}: deterministic checks are required`);
+    if (!record?.checks || typeof record.checks !== "object") {
+      errors.push(`${file}: deterministic checks are required`);
+    } else {
+      const binding = record.checks.themeBinding;
+      if (
+        !binding ||
+        typeof binding.required !== "boolean" ||
+        typeof binding.applied !== "boolean" ||
+        typeof binding.passed !== "boolean"
+      ) {
+        errors.push(`${file}: checks.themeBinding must describe required, applied, and passed state`);
+      } else {
+        if (binding.required && !isTheme(binding.expectedTheme)) {
+          errors.push(`${file}: required theme binding must include an exact expectedTheme`);
+        }
+        if (!binding.required && binding.expectedTheme !== null) {
+          errors.push(`${file}: optional theme binding must have a null expectedTheme`);
+        }
+        if (record.decision === "promoted" && (!binding.applied || !binding.passed)) {
+          errors.push(`${file}: promoted records must pass every applicable theme binding`);
+        }
+      }
+    }
     if (!record?.workflow || typeof record.workflow !== "object") errors.push(`${file}: workflow metadata is required`);
     if (containsSensitiveKey(record)) errors.push(`${file}: record contains a secret-shaped field`);
     records.set(id, record);
@@ -156,6 +200,15 @@ export function validateCurationArtifacts({
           primaryReference.contentHash !== record.source.contentHash
         ) {
           errors.push(`record ${record.recordId} primary source is not pinned in style-visuals.json`);
+        }
+        const binding = record?.checks?.themeBinding;
+        if (binding?.required) {
+          if (!themesEqual(record?.candidate?.visual?.theme, binding.expectedTheme)) {
+            errors.push(`record ${record.recordId} candidate theme does not match its adapter-derived binding`);
+          }
+          if (!themesEqual(visual?.theme, binding.expectedTheme)) {
+            errors.push(`record ${record.recordId} promoted visual theme does not match its adapter-derived binding`);
+          }
         }
       }
     }

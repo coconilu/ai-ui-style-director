@@ -74,10 +74,13 @@ node bin/ai-ui-style-director.mjs browse --open
 命令会把确定性的 Catalog revision 附在页面 URL 上；若 Pages 部署仍是旧版，
 页面会给出提示，但不会阻止继续浏览。
 
-当前生成索引中的 74 条 style source 是上游来源路径，只构成候选素材池；页面
-会动态展示该数量，但不会把它们伪装成 74 个完整风格。只有经过 profile、视觉
-配置、3 条参考和 SVG 校验的条目才进入已策展方向；当前基线为 48 个，后续
-可通过可审计策展 PR 继续增长。`browse` 是只读
+当前生成索引包含 7 个 Provider、109 条上游 style source 和 600 条 component
+source。109 条 style source 只构成候选素材池，不等于 109 个完整风格：原有
+74 条 `DESIGN.md` 来源保留为零模型费用 baseline，新增的 35 条 daisyUI theme
+CSS 来源进入可审计的 AI 策展队列。只有经过 profile、视觉配置、3 条参考和 SVG
+校验的条目才进入已策展方向；当前基线为 48 个，后续可通过可审计策展 PR 继续
+增长。`daisyui-themes` Provider 会先通过格式专用 Adapter，把受治理的 CSS token
+与 OKLCH 颜色转换成规范 JSON，再进行内容哈希和受限 Kimi 处理。`browse` 是只读
 操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
 
 命令会立即返回。可用 `--open` 自动打开浏览器，或用 `--json` 输出机器可读的

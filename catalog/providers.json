@@ -47,5 +47,14 @@
     "url": "https://github.com/tremorlabs/tremor",
     "role": "dashboard-and-chart-components",
     "license": "Apache-2.0"
+  },
+  {
+    "id": "daisyui-themes",
+    "adapter": "daisyui-theme-css",
+    "type": "theme-token-corpus",
+    "repo": "saadeghi/daisyui",
+    "url": "https://github.com/saadeghi/daisyui",
+    "role": "visual-theme-reference",
+    "license": "MIT"
   }
 ]

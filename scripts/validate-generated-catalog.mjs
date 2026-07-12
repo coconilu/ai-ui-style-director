@@ -1,11 +1,12 @@
 import { readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolveProviderAdapter } from "../src/provider-adapters.mjs";
+import { isSafeRelativePath, resolveProviderAdapter } from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
 const CONTENT_HASH_PATTERN = /^sha256:[0-9a-f]{64}$/u;
+const SOURCE_TYPE_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/u;
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
@@ -13,16 +14,6 @@ function readJson(path) {
 
 function sameJson(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
-}
-
-function isSafeRelativePath(path) {
-  return (
-    typeof path === "string" &&
-    path.length > 0 &&
-    !path.startsWith("/") &&
-    !path.includes("\\") &&
-    !path.split("/").includes("..")
-  );
 }
 
 function sortedUnique(values) {
@@ -53,7 +44,6 @@ export function validateGeneratedCatalog({
   expect(sameJson(providerIds, configuredIds), "provider inventory IDs and order must match catalog/providers.json");
 
   const fileRules = [
-    ["designMdFiles", "designMdFiles", null],
     ["registryFiles", "registryFiles", 200],
     ["docsFiles", "docsFiles", 100]
   ];
@@ -61,10 +51,17 @@ export function validateGeneratedCatalog({
   for (const [index, provider] of providers.entries()) {
     const configured = configuredProviders[index];
     if (!configured) continue;
+    let adapter = null;
     try {
-      resolveProviderAdapter(configured);
+      adapter = resolveProviderAdapter(configured);
     } catch (error) {
       errors.push(`${configured.id}: ${error.message}`);
+    }
+    if (adapter) {
+      expect(
+        SOURCE_TYPE_PATTERN.test(adapter.sourceType || ""),
+        `${configured.id}: adapter ${adapter.id} must declare a lowercase kebab-case sourceType`
+      );
     }
     expect(provider.repo === configured.repo, `${provider.id}: repo must match catalog/providers.json`);
     expect(provider.url === configured.url, `${provider.id}: url must match catalog/providers.json`);
@@ -79,6 +76,40 @@ export function validateGeneratedCatalog({
     }
     expect(provider.counts && typeof provider.counts === "object", `${provider.id}: counts must be present`);
 
+    const styleSources = provider.styleSources;
+    expect(Array.isArray(styleSources), `${provider.id}: styleSources must be an array`);
+    if (Array.isArray(styleSources)) {
+      const paths = [];
+      for (const [sourceIndex, source] of styleSources.entries()) {
+        const label = `${provider.id}: styleSources[${sourceIndex}]`;
+        expect(
+          sameJson(Object.keys(source || {}).sort(), ["contentHash", "path", "sourceType"]),
+          `${label} fields must be contentHash, path, and sourceType`
+        );
+        expect(isSafeRelativePath(source?.path), `${label}.path must be a safe POSIX-relative path`);
+        if (adapter && typeof source?.path === "string") {
+          expect(
+            adapter.matchesStyleSource(source.path, basename(source.path)),
+            `${label}.path must match adapter ${adapter.id}`
+          );
+        }
+        expect(SOURCE_TYPE_PATTERN.test(source?.sourceType || ""), `${label}.sourceType must be lowercase kebab-case`);
+        if (adapter) {
+          expect(
+            source?.sourceType === adapter.sourceType,
+            `${label}.sourceType must match adapter ${adapter.id}: ${adapter.sourceType}`
+          );
+        }
+        expect(
+          CONTENT_HASH_PATTERN.test(source?.contentHash || ""),
+          `${label}.contentHash must be a lowercase SHA-256 digest`
+        );
+        if (typeof source?.path === "string") paths.push(source.path);
+      }
+      expect(sameJson(paths, sortedUnique(paths)), `${provider.id}: styleSources must be sorted by unique path`);
+      expect(provider.counts?.styleSources === styleSources.length, `${provider.id}: styleSources count must match styleSources`);
+    }
+
     for (const [field, countField, limit] of fileRules) {
       const files = provider[field];
       expect(Array.isArray(files), `${provider.id}: ${field} must be an array`);
@@ -90,17 +121,10 @@ export function validateGeneratedCatalog({
     }
   }
 
-  const validateSourceIndex = (indexDocument, label, sourceType, providerField, { contentHashed = false } = {}) => {
+  const validateSourceIndex = (indexDocument, label, expectedSources, { contentHashed = false } = {}) => {
     expect(sameJson(Object.keys(indexDocument).sort(), ["schemaVersion", "sources"]), `${label} root fields must be schemaVersion and sources`);
     expect(indexDocument.schemaVersion === SCHEMA_VERSION, `${label} schemaVersion must be ${SCHEMA_VERSION}`);
     expect(Array.isArray(indexDocument.sources), `${label} sources must be an array`);
-    const expectedSources = providers.flatMap((provider) =>
-      (Array.isArray(provider[providerField]) ? provider[providerField] : []).map((path) => ({
-        providerId: provider.id,
-        path,
-        sourceType
-      }))
-    );
     const actualSources = Array.isArray(indexDocument.sources) ? indexDocument.sources : [];
     if (contentHashed) {
       for (const [index, source] of actualSources.entries()) {
@@ -112,23 +136,38 @@ export function validateGeneratedCatalog({
           CONTENT_HASH_PATTERN.test(source?.contentHash || ""),
           `${label} source[${index}] contentHash must be a lowercase SHA-256 digest`
         );
+        expect(isSafeRelativePath(source?.path), `${label} source[${index}] path must be a safe POSIX-relative path`);
+        expect(
+          SOURCE_TYPE_PATTERN.test(source?.sourceType || ""),
+          `${label} source[${index}] sourceType must be lowercase kebab-case`
+        );
       }
-      const normalizedActual = actualSources.map(({ providerId, path, sourceType }) => ({
-        providerId,
-        path,
-        sourceType
-      }));
       expect(
-        sameJson(normalizedActual, expectedSources),
-        `${label} sources must exactly match normalized provider inventory paths`
+        sameJson(actualSources, expectedSources),
+        `${label} sources must exactly match provider inventory styleSources`
       );
     } else {
       expect(sameJson(actualSources, expectedSources), `${label} sources must exactly match normalized provider inventory paths`);
     }
   };
 
-  validateSourceIndex(styleIndex, "style-sources.json", "design-md", "designMdFiles", { contentHashed: true });
-  validateSourceIndex(componentIndex, "component-sources.json", "registry", "registryFiles");
+  const expectedStyleSources = providers.flatMap((provider) =>
+    (Array.isArray(provider.styleSources) ? provider.styleSources : []).map((source) => ({
+      providerId: provider.id,
+      path: source.path,
+      sourceType: source.sourceType,
+      contentHash: source.contentHash
+    }))
+  );
+  const expectedComponentSources = providers.flatMap((provider) =>
+    (Array.isArray(provider.registryFiles) ? provider.registryFiles : []).map((path) => ({
+      providerId: provider.id,
+      path,
+      sourceType: "registry"
+    }))
+  );
+  validateSourceIndex(styleIndex, "style-sources.json", expectedStyleSources, { contentHashed: true });
+  validateSourceIndex(componentIndex, "component-sources.json", expectedComponentSources);
 
   if (errors.length > 0) {
     throw new Error(`Generated catalog validation failed:\n- ${errors.join("\n- ")}`);

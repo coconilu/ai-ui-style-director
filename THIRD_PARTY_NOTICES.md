@@ -5,11 +5,19 @@ This project connects to upstream repositories as providers. Check each upstream
 Configured providers:
 
 - VoltAgent/awesome-design-md
+- saadeghi/daisyui (MIT)
 - Harzva/design-md-flow
 - shadcn-ui/ui
 - shadcn/originui
 - magicuidesign/magicui
 - tremorlabs/tremor
+
+The daisyUI integration indexes the upstream theme CSS files as reference
+material through the `daisyui-theme-css` adapter. It stores provider metadata,
+pinned paths, normalized token hashes, and independently generated catalog
+artifacts; it does not vendor the upstream theme files. daisyUI is distributed
+under the MIT License. Re-check the pinned upstream license before copying or
+redistributing daisyUI code or CSS in a target project.
 
 Design references are inspiration and structure for agent-readable design contracts. They are not permission to copy protected logos, screenshots, exact page layouts, proprietary brand language, or other non-code assets.
 

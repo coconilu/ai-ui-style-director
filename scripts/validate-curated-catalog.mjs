@@ -1,7 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { pinnedProviderSourceUrl, visualReferenceSource } from "../src/provider-adapters.mjs";
+import {
+  isSafeRelativePath,
+  pinnedProviderSourceUrl,
+  visualReferenceSource
+} from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -76,15 +80,6 @@ function isRepo(value) {
   return typeof value === "string" && /^[a-z0-9_.-]+\/[a-z0-9_.-]+$/iu.test(value);
 }
 
-function isSafeRelativePath(value) {
-  return (
-    isNonEmptyString(value) &&
-    !value.startsWith("/") &&
-    !value.includes("\\") &&
-    !value.split("/").includes("..")
-  );
-}
-
 function duplicates(values) {
   const seen = new Set();
   const repeated = new Set();
@@ -131,7 +126,7 @@ export function validateCuratedCatalog({
   expect(Array.isArray(profilesDocument), "style-profiles.json root must be an array");
   expect(Array.isArray(visualsDocument), "style-visuals.json root must be an array");
   expect(Array.isArray(styleSources?.sources), "style-sources.json sources must be an array");
-  expect(styleSources?.schemaVersion === 3, "style-sources.json schemaVersion must be 3");
+  expect(styleSources?.schemaVersion === 4, "style-sources.json schemaVersion must be 4");
   expect(policy && typeof policy === "object" && !Array.isArray(policy), "curation-policy.json root must be an object");
   expect(policy?.schemaVersion === 1, "curation-policy.json schemaVersion must be 1");
   expect(

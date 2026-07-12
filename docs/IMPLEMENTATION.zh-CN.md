@@ -26,9 +26,9 @@ flowchart LR
   X --> GP[GitHub Pages]
   B --> GP
   A --> D[DESIGN.md 与项目状态]
-  P[上游 Provider 仓库] --> G[clone/pull 与路径扫描]
+  P[上游 Provider 仓库] --> G[clone/pull 与 Adapter 规范化]
   G --> I[catalog/generated]
-  I -. 74 条来源路径统计 .-> X
+  I -. 109 条来源路径统计 .-> X
   I --> Q[受限 AI 候选]
   Q --> T[程序化溯源与去重门禁]
   T -. 可审计 App PR .-> K
@@ -37,8 +37,10 @@ flowchart LR
 系统刻意把运行时推荐和上游同步分开。推荐只读取已审查的 Catalog；Provider
 刷新只生成来源索引。独立的 AI 辅助 Workflow 可以提出候选，但只有程序门禁和
 受保护 PR 合并后才会改变推荐结果。运行时 Catalog 从 12 个 family、每组 4 个
-方向的审查基线开始，并可继续增长；生成索引中的 74 条 style source 已作为 baseline
-提交，不能按数量等同于可推荐风格。
+方向的审查基线开始，并可继续增长；生成索引当前包含 7 个 Provider、109 条
+style source 和 600 条 component source。原有 74 条 `DESIGN.md` 来源是 baseline，
+新增 35 条 daisyUI theme CSS 来源从 pending 开始，二者都不能按路径数量直接等同于
+可推荐风格。
 
 ## 入口与调用链
 
@@ -140,13 +142,14 @@ GitHub Pages environment 部署。
 Curator 只读取新来源或变化哈希并创建受治理 PR；消费侧仍只读取已合并的 Profile。
 
 `style-profiles.json` 与 `style-visuals.json` 始终一一对应；初始基线覆盖 12 个
-family、每组 4 个方向。`style-sources.json` 当前有 74 条 provider
-路径；它们没有完整的适用场景、风险、视觉主题和经过审查的参考关系，因此不
-会自动晋升为 profile。
+family、每组 4 个方向。`style-sources.json` 当前有 109 条 Provider 路径；它们
+没有完整的适用场景、风险、视觉主题和经过审查的参考关系，因此不会自动晋升为
+profile。
 
 目录浏览器读取 `catalog/generated/style-sources.json` 的唯一目的是显示当前
-来源索引数量。里面的 74 条路径不会被语义解析，也不会作为完整风格卡片返回；
-浏览器条目仍然只来自 `catalog/style-profiles.json` 中经过审查的 profile。
+来源索引数量。里面的 109 条路径不会作为完整风格卡片返回；浏览器条目仍然只来自
+`catalog/style-profiles.json` 中经过审查的 profile。托管浏览器 payload 继续使用
+schema v3，与生成 Provider 索引的 schema 版本彼此独立。
 
 ## 推荐算法
 
@@ -265,9 +268,10 @@ DESIGN.md
 
 项目通过 Provider 元数据和显式 Source Adapter 接入开源资料，而不是把这些仓库声明成 npm 依赖。
 
-| Provider | 系统中的角色 | 接入方式 |
+| 上游仓库 | 系统中的角色 | 接入方式 |
 | --- | --- | --- |
 | `VoltAgent/awesome-design-md` | 风格参考语料 | 扫描并哈希 `DESIGN.md`，保留旧预览 URL，并把变化来源交给受治理策展 |
+| `saadeghi/daisyui` | 主题 token 参考语料 | 配置为 `daisyui-themes` Provider，解析 35 个限定主题 CSS，确定性转换 OKLCH，并把规范主题 JSON 交给受治理策展 |
 | `Harzva/design-md-flow` | 工作流参考 | 登记来源和版本；本地 Skill 实现自己的选择门禁 |
 | `shadcn-ui/ui` | 基础组件 | 扫描 registry，并作为 profile 的可选组件建议 |
 | `shadcn/originui` | 应用与营销区块 | 扫描 registry，映射到适合 SaaS 和重复页面的 component kit |
@@ -284,10 +288,11 @@ DESIGN.md
 - 缓存存在时使用 `git pull --ff-only`；
 - 写入包含同步状态和缓存位置的 `providers-lock.json`。
 
-`updateCatalog` 随后递归扫描缓存，跳过 `.git`、`node_modules`、构建产物和缓存目录，并记录：
+`updateCatalog` 随后递归扫描缓存，跳过 `.git`、`node_modules`、构建产物和缓存目录。
+每个 Provider Adapter 负责发现自己的 style source 并生成用于哈希的规范内容；刷新还会记录：
 
 - commit revision 和 branch；
-- `DESIGN.md` 路径；
+- style-source 路径与类型；
 - registry 文件路径；
 - docs 文件路径。
 
@@ -299,7 +304,7 @@ catalog/generated/style-sources.json
 catalog/generated/component-sources.json
 ```
 
-生成目录使用 schema v3：仓库级来源信息统一保存在
+生成 Provider 索引使用 schema v4：仓库级来源信息统一保存在
 `provider-inventory.json`，每个 Provider 的仓库与 commit revision 只记录一次；
 style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
 `contentHash`，component-source 保持前三个字段。版本控制中的生成产物不再
@@ -307,9 +312,20 @@ style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
 不会产生无意义的刷新 PR。扫描器会先固定目录项顺序，再截取受上限约束的来源集合，
 保证 Windows、Linux 及不同文件系统得到相同的索引子集。
 
-扫描器是轻量路径索引器，不解析组件语义。它会索引所有匹配的 `DESIGN.md`，用户
-可选风格数量不受扫描器常量限制；registry 与 docs 仍分别保留每个 Provider 200
-和 100 个文件的维护性上限。当前 74 条风格来源属于已提交 baseline，不会直接晋升。
+扫描器是轻量路径索引器，不解析组件语义。它会索引所有匹配的 `DESIGN.md`；格式
+专用的 `daisyui-theme-css` Adapter 只额外索引
+`packages/daisyui/src/themes/*.css`，解析受治理 token、确定性转换 OKLCH，并输出同时
+用于哈希与 Kimi 输入的规范 JSON。用户可选风格数量不受扫描器常量限制；registry
+与 docs 仍分别保留每个 Provider 200 和 100 个文件的维护性上限。当前 109 条 style
+source 中，原有 74 条是 baseline，35 条 daisyUI 主题则从 pending 开始，不会直接晋升。
+
+daisyUI Normalizer 是严格的 Schema 边界：只接受精确 29 个声明（1 个
+`color-scheme`、20 个颜色值和 8 个几何值），未知、缺失、重复或格式非法的输入都会
+被拒绝。因此上游 token 契约发生变化时，必须走人工审查的 Normalizer 版本/代码
+变更，不能由刷新过程猜测。`canonicalTheme.accent` 映射自代表主导品牌色/行动色的
+daisyUI `--color-primary`，上游自己的 accent token 仍完整保留在规范颜色表中。任一
+受治理值变化都会生成新的规范内容哈希，因此相同 `providerId + path` 会因为与上一版
+state 哈希不同而重新进入 pending。
 
 `.github/workflows/refresh-providers.yml` 每天运行相同流程，执行仓库检查，并只在生成索引变化时创建 PR。
 
@@ -326,6 +342,12 @@ style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
 另一条由 App 创建的 Draft PR。这条流程绝不开启 auto-merge，而是由维护者
 人工审查并手动合并提案。详见
 [`AUTOMATED_CURATION.zh-CN.md`](AUTOMATED_CURATION.zh-CN.md)。
+
+当前仓库的不可变策展记录文件为 0；74 条 baseline 游标也没有 record ID。因此，
+`style-curation-v3` 扩展 record ID 哈希输入后，无需重新生成仓库内记录。若外部部署
+已经存在 v2 不可变记录，升级时必须保留原文件与 ID：先增加显式的版本感知迁移/
+校验逻辑，让旧记录与新 v3 事件并存，再以追加方式写入新记录；绝不能重新计算或
+覆盖既有 v2 审计历史。
 
 ## 依赖与许可证边界
 
@@ -347,7 +369,8 @@ Provider 内容的使用遵循以下边界：
 
 - 优点：消费侧离线可用、容易测试、推荐理由可追踪、上游更新有完整审计；
 - 代价：供给侧语义策展需要模型凭证，消费侧匹配仍基于关键词和 Profile；
-- 维护要求：新增 `DESIGN.md` Provider 只需配置；新增来源格式或 taxonomy 仍需审查 Adapter 或政策变更；
+- 维护要求：新增 `DESIGN.md` Provider 只需配置；新增来源格式需提供经过审查的
+  Adapter（例如 `daisyui-theme-css`），新增 taxonomy 仍需政策变更；
 - 扩展要求：如果未来增加新的推荐入口，应复用或验证同一套评分与差异化规则，避免不同入口产生不一致结果。
 
 仓库测试覆盖 brief 检查、12 场景推荐基准、换一批、Catalog 结构校验、视觉

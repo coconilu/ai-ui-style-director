@@ -11,14 +11,17 @@ The catalog contains normalized design knowledge:
 - `catalog/style-visuals.json`: preview variants, themes, and real visual references.
 - `catalog/previews/`: generated brand-neutral SVG cards.
 - `catalog/component-kits.json`: implementation kits that can support each style.
-- `catalog/providers.json`: upstream repositories used as style or component providers.
+- `catalog/providers.json`: 7 upstream repositories used as style or component providers.
 - `catalog/generated/style-sources.json`: an index of upstream style-source
-  paths; the current 74 entries are provenance leads, not curated style
+  paths; the current 109 entries are provenance leads, not curated style
   profiles.
+- `catalog/generated/component-sources.json`: the current 600 upstream
+  component-source paths.
 - `catalog/scenario-questions.json`: required questions when a user brief is too vague.
 - `catalog/curation-policy.json`: baseline family depth and per-family visual-diversity requirements.
 - `catalog/curation/source-state.json`: content-hash processing cursor; the
-  current 74 sources are checked in as a no-cost initial baseline.
+  original 74 `DESIGN.md` sources are the no-cost initial baseline, while the
+  35 daisyUI theme CSS sources begin as pending work.
 - `catalog/curation/records/`: immutable per-source model and gate audit records
   created only after the baseline.
 - `catalog/recommendation-benchmarks.json`: 12 representative briefs used to
@@ -161,6 +164,17 @@ separate from provider catalog maintenance.
 ## Why Provider Adapters
 
 Upstream projects should be connected through adapters, not copied wholesale.
+
+The `generic-design-md` and legacy `awesome-design-md` adapters normalize
+`DESIGN.md` documents. The `daisyui-themes` Provider's `daisyui-theme-css`
+adapter instead discovers the
+35 files under `packages/daisyui/src/themes/`, parses only the governed theme
+tokens, converts OKLCH colors deterministically, and emits canonical JSON for
+hashing and Kimi input. Raw CSS instructions are never promoted directly into
+the consumer catalog.
+
+Provider inventory, style-source, and component-source artifacts use generated
+schema v4. The hosted browser view model remains its independent schema v3.
 
 This keeps the project legally and technically cleaner:
 

@@ -5,8 +5,11 @@ fail-closed exception path. It never pushes directly to `main`.
 
 ## Normal path
 
-1. The scheduled or manually dispatched workflow refreshes provider caches.
-2. `npm run check` validates code, previews, tests, and generated catalog schema.
+1. The scheduled or manually dispatched workflow refreshes provider caches and
+   runs each Provider's source Adapter.
+2. `npm run check` validates code, previews, tests, and generated provider-index
+   schema v4. The current indexes describe 7 providers, 109 style sources, and
+   600 component sources.
 3. A changed-file allowlist permits only the three `catalog/generated/*.json`
    artifacts.
 4. A repository-scoped GitHub App creates an automation branch and pull request.
@@ -44,3 +47,5 @@ and no force pushes or deletion.
 - Automation PRs may modify only the normalized generated catalog artifacts.
 - Upstream repositories are scanned as data; their test fixtures are not run by
   this project's test command.
+- `daisyui-themes` CSS is reduced to governed canonical theme JSON before
+  hashing or Kimi curation; arbitrary repository CSS is not indexed.

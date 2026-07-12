@@ -34,6 +34,36 @@ const wrapperPath = fileURLToPath(
 const recommendationBenchmarks = JSON.parse(
   readFileSync(join(rootDir, "catalog", "recommendation-benchmarks.json"), "utf8")
 );
+const DAISYUI_RETRO_THEME = `color-scheme: light;
+--color-base-100: oklch(91.637% 0.034 90.515);
+--color-base-200: oklch(88.272% 0.049 91.774);
+--color-base-300: oklch(84.133% 0.065 90.856);
+--color-base-content: oklch(41% 0.112 45.904);
+--color-primary: oklch(80% 0.114 19.571);
+--color-primary-content: oklch(39% 0.141 25.723);
+--color-secondary: oklch(92% 0.084 155.995);
+--color-secondary-content: oklch(44% 0.119 151.328);
+--color-accent: oklch(68% 0.162 75.834);
+--color-accent-content: oklch(41% 0.112 45.904);
+--color-neutral: oklch(44% 0.011 73.639);
+--color-neutral-content: oklch(86% 0.005 56.366);
+--color-info: oklch(58% 0.158 241.966);
+--color-info-content: oklch(96% 0.059 95.617);
+--color-success: oklch(51% 0.096 186.391);
+--color-success-content: oklch(96% 0.059 95.617);
+--color-warning: oklch(64% 0.222 41.116);
+--color-warning-content: oklch(96% 0.059 95.617);
+--color-error: oklch(70% 0.191 22.216);
+--color-error-content: oklch(40% 0.123 38.172);
+--radius-selector: 0.25rem;
+--radius-field: 0.25rem;
+--radius-box: 0.5rem;
+--size-selector: 0.25rem;
+--size-field: 0.25rem;
+--border: 1px;
+--depth: 0;
+--noise: 0;
+`;
 
 function writeCuratedCatalogFixture({ mutate } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "style-director-curated-catalog-"));
@@ -539,6 +569,9 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
     const name = `component-${String(index).padStart(3, "0")}.ts`;
     writeFileSync(join(providerDir, "registry", name), "export const component = {};\n", "utf8");
   }
+  const daisyThemeDir = join(cacheDir, "daisyui-themes", "packages", "daisyui", "src", "themes");
+  mkdirSync(daisyThemeDir, { recursive: true });
+  writeFileSync(join(daisyThemeDir, "retro.css"), DAISYUI_RETRO_THEME, "utf8");
 
   const result = updateCatalog({
     cacheDir,
@@ -558,12 +591,27 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
   const componentSources = JSON.parse(readFileSync(componentSourcesPath, "utf8"));
 
   assert.deepEqual(Object.keys(inventory), ["schemaVersion", "providers"]);
-  assert.equal(inventory.schemaVersion, 3);
+  assert.equal(inventory.schemaVersion, 4);
   assert.equal("generatedAt" in inventory, false);
   assert.equal("cacheDir" in inventory, false);
   assert.equal("syncLockPath" in inventory, false);
-  assert.equal(styleSources.schemaVersion, 3);
-  assert.equal(styleSources.sources.length, 206);
+  assert.equal(styleSources.schemaVersion, 4);
+  assert.equal(styleSources.sources.length, 207);
+  const shadcnInventory = inventory.providers.find((provider) => provider.id === "shadcn-ui");
+  assert.equal(shadcnInventory.counts.styleSources, 206);
+  assert.equal(shadcnInventory.styleSources.length, 206);
+  assert.deepEqual(Object.keys(shadcnInventory.styleSources[0]).sort(), ["contentHash", "path", "sourceType"]);
+  assert.equal("designMdFiles" in shadcnInventory, false);
+  assert.equal("designMdFiles" in shadcnInventory.counts, false);
+  assert.deepEqual(
+    styleSources.sources,
+    inventory.providers.flatMap((provider) => provider.styleSources.map((source) => ({
+      providerId: provider.id,
+      path: source.path,
+      sourceType: source.sourceType,
+      contentHash: source.contentHash
+    })))
+  );
   const rootStyleSource = styleSources.sources.find((source) => source.path === "DESIGN.md");
   assert.deepEqual(
     {
@@ -574,7 +622,19 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
     { providerId: "shadcn-ui", path: "DESIGN.md", sourceType: "design-md" }
   );
   assert.match(rootStyleSource.contentHash, /^sha256:[0-9a-f]{64}$/u);
-  assert.equal(componentSources.schemaVersion, 3);
+  const daisyStyleSource = styleSources.sources.find((source) => source.providerId === "daisyui-themes");
+  assert.deepEqual(
+    {
+      path: daisyStyleSource.path,
+      sourceType: daisyStyleSource.sourceType
+    },
+    {
+      path: "packages/daisyui/src/themes/retro.css",
+      sourceType: "theme-css"
+    }
+  );
+  assert.match(daisyStyleSource.contentHash, /^sha256:[0-9a-f]{64}$/u);
+  assert.equal(componentSources.schemaVersion, 4);
   assert.equal(componentSources.sources.length, 200);
   assert.deepEqual(componentSources.sources[0], {
     providerId: "shadcn-ui",
@@ -600,7 +660,12 @@ test("catalog refresh writes generated provider indexes without cloning", () => 
   updateCatalog({ cacheDir, generatedDir: join(dir, "generated"), clone: false });
   const changedStyleSources = JSON.parse(readFileSync(styleSourcesPath, "utf8"));
   const changedRootSource = changedStyleSources.sources.find((source) => source.path === "DESIGN.md");
+  const changedInventory = JSON.parse(readFileSync(inventoryPath, "utf8"));
+  const changedInventorySource = changedInventory.providers
+    .find((provider) => provider.id === "shadcn-ui")
+    .styleSources.find((source) => source.path === "DESIGN.md");
   assert.notEqual(changedRootSource.contentHash, rootStyleSource.contentHash);
+  assert.equal(changedInventorySource.contentHash, changedRootSource.contentHash);
   assert.deepEqual(
     {
       providerId: changedRootSource.providerId,
@@ -626,6 +691,26 @@ test("generated catalog validation rejects denormalized source provenance", () =
   assert.equal(valid.providerCount, currentProviders.length);
   assert.equal(valid.styleSourceCount, currentStyles.sources.length);
   assert.equal(valid.componentSourceCount, currentComponents.sources.length);
+
+  const inventoryPath = join(generatedDir, "provider-inventory.json");
+  const inventory = JSON.parse(readFileSync(inventoryPath, "utf8"));
+  const providerWithStyles = inventory.providers.find((provider) => provider.styleSources.length > 0);
+  providerWithStyles.styleSources[0].sourceType = "theme-css";
+  writeFileSync(inventoryPath, `${JSON.stringify(inventory, null, 2)}\n`, "utf8");
+  assert.throws(
+    () => validateGeneratedCatalog({ generatedDir }),
+    /sourceType must match adapter/u
+  );
+  copyFileSync(join(rootDir, "catalog", "generated", "provider-inventory.json"), inventoryPath);
+
+  const invalidPathInventory = JSON.parse(readFileSync(inventoryPath, "utf8"));
+  invalidPathInventory.providers.find((provider) => provider.styleSources.length > 0).styleSources[0].path = "styles/not-a-source.txt";
+  writeFileSync(inventoryPath, `${JSON.stringify(invalidPathInventory, null, 2)}\n`, "utf8");
+  assert.throws(
+    () => validateGeneratedCatalog({ generatedDir }),
+    /path must match adapter/u
+  );
+  copyFileSync(join(rootDir, "catalog", "generated", "provider-inventory.json"), inventoryPath);
 
   const componentPath = join(generatedDir, "component-sources.json");
   const components = JSON.parse(readFileSync(componentPath, "utf8"));

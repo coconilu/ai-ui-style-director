@@ -869,7 +869,7 @@ const IGNORED_SCAN_DIRS = new Set([
   ".cache"
 ]);
 
-const GENERATED_CATALOG_SCHEMA_VERSION = 3;
+const GENERATED_CATALOG_SCHEMA_VERSION = 4;
 
 function posixPath(path) {
   return path.split("\\").join("/");
@@ -924,9 +924,22 @@ function providerSnapshot(provider, providerDir) {
   const branch = exists ? safeGit(["branch", "--show-current"], providerDir) : null;
   const adapter = resolveProviderAdapter(provider);
 
-  const designMdFiles = exists
+  const styleSourcePaths = exists
     ? findProviderFiles(providerDir, adapter.matchesStyleSource)
     : [];
+  const styleSourceRecords = exists
+    ? buildStyleSourceRecords({ provider, providerDir, paths: styleSourcePaths })
+    : [];
+  for (const source of styleSourceRecords) {
+    if (source.providerId !== provider.id) {
+      throw new Error(`Provider adapter ${adapter.id} returned an unexpected providerId for ${source.path}.`);
+    }
+  }
+  const styleSources = styleSourceRecords.map((source) => ({
+    path: source.path,
+    sourceType: source.sourceType,
+    contentHash: source.contentHash
+  }));
   const registryFiles = exists
     ? findProviderFiles(providerDir, (relativePath, name) => {
         const ext = extname(name).toLowerCase();
@@ -955,11 +968,11 @@ function providerSnapshot(provider, providerDir) {
     branch,
     revision,
     counts: {
-      designMdFiles: designMdFiles.length,
+      styleSources: styleSources.length,
       registryFiles: registryFiles.length,
       docsFiles: docsFiles.length
     },
-    designMdFiles,
+    styleSources,
     registryFiles,
     docsFiles
   };
@@ -975,12 +988,13 @@ export function updateCatalog({
 
   const providers = loadProviders();
   const snapshots = providers.map((provider) => providerSnapshot(provider, join(cacheDir, provider.id)));
-  const styleSources = snapshots.flatMap((snapshot, index) =>
-    buildStyleSourceRecords({
-      provider: providers[index],
-      providerDir: join(cacheDir, snapshot.id),
-      paths: snapshot.designMdFiles
-    })
+  const styleSources = snapshots.flatMap((snapshot) =>
+    snapshot.styleSources.map((source) => ({
+      providerId: snapshot.id,
+      path: source.path,
+      sourceType: source.sourceType,
+      contentHash: source.contentHash
+    }))
   );
   const componentSources = snapshots.flatMap((snapshot) =>
     snapshot.registryFiles.map((path) => ({
