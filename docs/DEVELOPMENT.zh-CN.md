@@ -6,7 +6,7 @@
 ai-ui-style-director/
   bin/                         # CLI 入口
   src/                         # 推荐、应用与 provider 逻辑
-  scripts/                     # 确定性预览生成
+  scripts/                     # 确定性预览与静态站点生成
   catalog/                     # 风格、视觉、预览、provider 与问题
   skills/web-style-director/   # agent skill
   examples/new-site/           # 示例 brief 与生成的 DESIGN.md
@@ -52,6 +52,17 @@ npm run previews:check
 `previews:check` 会确认提交的 SVG 与当前渲染结果一致；更完整的字段、参考和
 文件对应关系由 `catalog:curated:validate` 检查。
 
+构建可部署的完整目录站点：
+
+```bash
+npm run catalog:build
+```
+
+该命令会重建 `dist/pages`，其中包含 schema v3 `catalog.json`、页面与资源，
+以及每个已策展 profile 的一张 SVG。产物是确定性的，并全部使用适配 GitHub
+项目子路径的相对引用；它不提交到仓库。`.github/workflows/pages.yml` 会在 PR
+中运行构建，并从 `main` 通过 GitHub Pages 部署。
+
 ## 新增或修改风格
 
 1. 从 `catalog/generated/style-sources.json` 的候选路径中研究可用参考，但不要
@@ -71,8 +82,9 @@ npm run previews:check
    Top 1、Top 5 覆盖和确定性。
 7. 最后运行 `npm run check`，确保预览、目录检索、推荐和完整回归全部通过。
 
-目录浏览器会从 profile 动态生成 schema v2、倒排索引和 facets，无需维护第二
-份手工搜索索引。每个条目只携带 `previewUrl`，SVG 由独立同源路由加载；前端
+目录浏览器会从 profile 动态生成 schema v3、倒排索引、facets 和
+`catalogRevision`，无需维护第二份手工搜索索引。每个条目只携带相对
+`previewUrl`，SVG 由同源静态路径加载；前端
 按 24 张卡片一批渐进渲染，因此新增条目不会让首屏 JSON 或 DOM 与 SVG 总体积
 一起线性膨胀。
 

@@ -57,28 +57,31 @@ live links remain usable.
 
 ## Complete catalog browser
 
-`serve` reuses the committed neutral SVG cards in a different browsing
-surface. Instead of showing one five-direction recommendation batch, it lists
-all curated profiles with text search and family, page type, density, tone,
-and component-kit filters:
+The GitHub Pages catalog reuses the committed neutral SVG cards in a different
+browsing surface. Instead of showing one five-direction recommendation batch,
+it lists all curated profiles with text search and family, page type, density,
+tone, and component-kit filters:
 
 ```bash
-node bin/ai-ui-style-director.mjs serve --open
+node bin/ai-ui-style-director.mjs browse --open
 ```
 
-The foreground service binds only to `127.0.0.1`, chooses an available port by
-default, and stops on Ctrl+C. It is read-only and does not create recommendation
+`browse` opens the hosted project site and returns immediately. The old
+`serve` name remains a compatibility alias; it no longer starts a local
+complete-catalog service. Both are read-only and do not create recommendation
 session state or modify a target project.
 
 The page also reports the current upstream style-source index count as
 provenance context. Those paths do not have the reviewed metadata required for
 complete cards, so they remain a count rather than additional styles.
 
-The browser's schema-v2 JSON keeps each card lightweight by returning a
-`previewUrl`, not an embedded SVG. Previews load from independent same-origin
-`/previews/<style-id>.svg` routes. An inverted token index handles exact search
+The browser's schema-v3 JSON keeps each card lightweight by returning a
+relative `previewUrl`, not an embedded SVG. Previews load from independent
+same-origin `previews/<style-id>.svg` paths. An inverted token index handles exact search
 terms, substring matching remains available for partial terms, and the client
-adds matching cards in batches of 24.
+adds matching cards in batches of 24. A deterministic revision lets the page
+warn when its deployed HTML or JSON is older than the local catalog expected by
+the CLI.
 
 ## Project draft
 

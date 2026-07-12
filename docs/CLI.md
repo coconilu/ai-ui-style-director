@@ -40,24 +40,24 @@ reference labels. A self-contained gallery is written next to the session file
 as `.ui-style-director/recommendations.html`; the text output includes both its
 local path and a `file://` URL.
 
-## `serve`
+## `browse`
 
-Start the read-only browser for the complete curated style catalog:
+Print the read-only GitHub Pages URL for the complete curated style catalog:
 
 ```bash
-node bin/ai-ui-style-director.mjs serve
+node bin/ai-ui-style-director.mjs browse --open
 ```
 
 Options:
 
-- `--port <number>`: request a loopback port; without this option, the default
-  `0` asks the operating system for an available port.
-- `--open`: open the HTTP URL with the operating system's default browser.
-- `--json`: emit machine-readable startup information while the foreground
-  service continues running.
+- `--open`: open the hosted URL with the operating system's default browser.
+- `--json`: emit machine-readable hosted-catalog information.
 
-The JSON object contains `catalogUrl`, `host`, `port`, `styleCount`,
-`sourceCount`, and `opened`.
+The JSON object contains `catalogUrl`, `hosted`, `catalogRevision`,
+`styleCount`, `sourceCount`, and `opened`. The command returns immediately and
+does not start a local server. `serve` remains a compatibility alias that emits
+a migration notice and otherwise has the same behavior. `--port` is rejected
+for both commands; use it only with `preview --serve`.
 
 The current page lists 48 curated entries from `catalog/style-profiles.json`,
 balanced as four profiles in each of 12 families. Each entry includes reviewed
@@ -69,24 +69,29 @@ different groups and the search query combine with AND. Search and filter
 state is kept in the page URL so a filtered view survives refresh and can be
 copied.
 
-`/catalog.json` uses schema version 2. It contains lightweight `previewUrl`
+The hosted `catalog.json` uses schema version 3. It contains lightweight `previewUrl`
 values, an inverted token-to-numeric-entry postings index, and an ID-to-entry index rather than
 embedding SVG data. Exact query tokens use postings intersections; partial or
 unknown tokens use a substring fallback. The client progressively renders 24
 matching cards at a time while preserving the total match count. Preview
-images are fetched from validated, same-origin
-`/previews/<style-id>.svg` routes.
+images are fetched from validated, relative same-origin
+`previews/<style-id>.svg` paths so the site works under the GitHub project
+subpath.
+
+The schema also carries a deterministic `catalogRevision`. The CLI adds its
+local expected revision to the hosted URL, and the page compares it with the
+deployed HTML and JSON revisions. A mismatch produces a non-blocking stale-site
+warning; search and filtering remain available.
 
 `catalog/generated/style-sources.json` currently contains 74 indexed upstream
 source paths. The browser reports that source-pool count for context but does
 not turn those paths into style cards; only the 48 reviewed profiles appear as
 full entries.
 
-`serve` binds only to `127.0.0.1` and runs in the foreground until Ctrl+C. It
-does not create or modify a target project's `.ui-style-director/` directory.
-This is intentionally different from `preview --serve`: `serve` browses the
-complete curated catalog, while `preview --serve` exposes only one generated
-recommendation gallery.
+`browse` and its `serve` alias do not create or modify a target project's
+`.ui-style-director/` directory. This hosted complete catalog is intentionally
+different from `preview --serve`, which still starts a loopback server for one
+generated recommendation gallery.
 
 ## `preview`
 

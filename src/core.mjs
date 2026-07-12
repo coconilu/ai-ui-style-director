@@ -511,7 +511,7 @@ export function openPreviewUrl(previewUrl, { platform = process.platform, run = 
   const result = run(opener.command, opener.args, { encoding: "utf8", windowsHide: true });
   if (result.error || result.status !== 0) {
     const detail = result.error?.message || result.stderr?.trim() || `exit code ${result.status}`;
-    throw new Error(`Could not open the preview server automatically (${detail}). Open ${previewUrl} manually.`);
+    throw new Error(`Could not open the URL automatically (${detail}). Open ${previewUrl} manually.`);
   }
   return { opened: true, previewUrl };
 }

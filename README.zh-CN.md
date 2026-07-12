@@ -47,34 +47,40 @@ agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Da
 Codex：
 
 ```text
-$web-style-director serve
+$web-style-director browse
 ```
 
 Claude Code：
 
 ```text
-/web-style-director serve
+/web-style-director browse
 ```
 
 也可以直接运行 CLI 并自动打开页面：
 
 ```bash
-node bin/ai-ui-style-director.mjs serve --open
+node bin/ai-ui-style-director.mjs browse --open
 ```
 
+目录由
+[coconilu.github.io/ai-ui-style-director](https://coconilu.github.io/ai-ui-style-director/)
+托管。旧的 `serve` 指令保留为 `browse` 的兼容别名，但不再启动完整目录的本地
+服务。
+
 页面会列出全部已审查的风格 profile，并支持文本搜索以及 family、页面类型、
-密度、调性和组件库过滤。目录接口使用轻量 schema v2：卡片只携带
+密度、调性和组件库过滤。目录接口使用轻量 schema v3：卡片只携带
 `previewUrl`，SVG 通过独立的同源路由按需加载；搜索优先使用倒排索引的精确
 词项 postings，未命中时回退到子串匹配，结果再以每批 24 张卡片渐进渲染。
+命令会把确定性的 Catalog revision 附在页面 URL 上；若 Pages 部署仍是旧版，
+页面会给出提示，但不会阻止继续浏览。
 
 当前生成索引中的 74 条 style source 是上游来源路径，只构成候选素材池；页面
 会动态展示该数量，但不会把它们伪装成 74 个完整风格。只有经过 profile、视觉
-配置、3 条参考和 SVG 校验的条目才进入上述 48 个已策展方向。`serve` 是只读
+配置、3 条参考和 SVG 校验的条目才进入上述 48 个已策展方向。`browse` 是只读
 操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
 
-服务以前台方式运行，只监听 `127.0.0.1`，默认选择可用端口，按 Ctrl+C 后
-停止。可用 `--port <number>` 指定端口、`--open` 自动打开浏览器，或用
-`--json` 输出机器可读的启动信息。
+命令会立即返回。可用 `--open` 自动打开浏览器，或用 `--json` 输出机器可读的
+托管目录信息。`--port` 只保留给项目级 `preview --serve` 使用。
 
 ## 示例：为管理台选择 UI 方向
 

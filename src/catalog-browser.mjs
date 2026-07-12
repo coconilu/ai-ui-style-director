@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
@@ -12,7 +13,10 @@ import { expandVisualReferences } from "./preview.mjs";
 const FACET_GROUPS = ["family", "pageTypes", "density", "tones", "componentKits"];
 const DENSITY_ORDER = ["low", "low-medium", "medium", "medium-high", "high"];
 export const CATALOG_PAGE_SIZE = 24;
+export const DEFAULT_HOSTED_CATALOG_URL = "https://coconilu.github.io/ai-ui-style-director/";
 const STYLE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CATALOG_CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+const CATALOG_META_CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'";
 const SEARCH_ALIASES = new Map([
   ["developer", ["开发者", "开发工具", "技术产品"]],
   ["saas", ["软件服务", "工作流", "管理台"]],
@@ -65,8 +69,12 @@ function previewPath(styleId) {
   return join(repoRoot(), "catalog", "previews", `${assertSafeStyleId(styleId)}.svg`);
 }
 
-function previewUrl(styleId) {
-  return `/previews/${assertSafeStyleId(styleId)}.svg`;
+function previewAssetPath(styleId) {
+  return `previews/${assertSafeStyleId(styleId)}.svg`;
+}
+
+function previewUrl(styleId, catalogRevision) {
+  return `${previewAssetPath(styleId)}?v=${encodeURIComponent(catalogRevision)}`;
 }
 
 function aliasesFor(values) {
@@ -101,9 +109,21 @@ function buildSearchIndex(entries) {
   return Object.fromEntries([...postings.entries()].sort(([left], [right]) => left.localeCompare(right)));
 }
 
+export function computeCatalogRevision({ profiles, visuals }) {
+  if (!Array.isArray(profiles) || !Array.isArray(visuals)) {
+    throw new Error("Catalog revision requires profile and visual arrays.");
+  }
+  return createHash("sha256")
+    .update(JSON.stringify({ profiles, visuals }))
+    .digest("hex")
+    .slice(0, 16);
+}
+
 export function buildStyleCatalog() {
   const profiles = loadStyleProfiles();
-  const visualMap = new Map(loadStyleVisuals().map((visual) => [visual.styleId, visual]));
+  const visuals = loadStyleVisuals();
+  const catalogRevision = computeCatalogRevision({ profiles, visuals });
+  const visualMap = new Map(visuals.map((visual) => [visual.styleId, visual]));
   const sourceIndex = readCatalog("generated/style-sources.json");
 
   const entries = profiles.map((profile) => {
@@ -152,7 +172,7 @@ export function buildStyleCatalog() {
         ...searchableValues,
         ...aliasesFor(searchableValues)
       ].join(" ")),
-      previewUrl: previewUrl(profile.id),
+      previewUrl: previewUrl(profile.id, catalogRevision),
       references: expandVisualReferences(visual.references)
     };
   });
@@ -165,7 +185,8 @@ export function buildStyleCatalog() {
   const searchIndex = buildSearchIndex(entries);
 
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
+    catalogRevision,
     styleCount: entries.length,
     sourceCount: Array.isArray(sourceIndex.sources) ? sourceIndex.sources.length : 0,
     pageSize: CATALOG_PAGE_SIZE,
@@ -180,6 +201,29 @@ export function buildStyleCatalog() {
       postingValue: "entry-index"
     },
     entries
+  };
+}
+
+export function hostedCatalogInfo({
+  catalog = buildStyleCatalog(),
+  baseUrl = process.env.AI_UI_STYLE_DIRECTOR_CATALOG_URL || DEFAULT_HOSTED_CATALOG_URL
+} = {}) {
+  let catalogUrl;
+  try {
+    catalogUrl = new URL(baseUrl);
+  } catch {
+    throw new Error(`Invalid hosted catalog URL: ${baseUrl}`);
+  }
+  if (!["http:", "https:"].includes(catalogUrl.protocol) || catalogUrl.username || catalogUrl.password) {
+    throw new Error(`Invalid hosted catalog URL: ${baseUrl}`);
+  }
+  catalogUrl.searchParams.set("expectedRevision", catalog.catalogRevision);
+  return {
+    catalogUrl: catalogUrl.href,
+    hosted: true,
+    catalogRevision: catalog.catalogRevision,
+    styleCount: catalog.styleCount,
+    sourceCount: catalog.sourceCount
   };
 }
 
@@ -246,8 +290,10 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/styles.css">
+  <meta http-equiv="Content-Security-Policy" content="${escapeHtml(CATALOG_META_CONTENT_SECURITY_POLICY)}">
+  <meta name="catalog-revision" content="${escapeHtml(catalog.catalogRevision)}">
+  <link rel="icon" href="favicon.svg?v=${escapeHtml(catalog.catalogRevision)}" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=${escapeHtml(catalog.catalogRevision)}">
   <title>UI 风格目录 · Web Style Director</title>
 </head>
 <body>
@@ -264,6 +310,11 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
         <small>${escapeHtml(catalog.sourceCount)} source records</small>
       </div>
     </header>
+
+    <section id="revision-warning" class="revision-warning" role="status" aria-live="polite" hidden>
+      <strong id="revision-warning-title">目录版本不一致</strong>
+      <span id="revision-warning-message">在线目录与本地工具版本不同，请先更新 Web Style Director。</span>
+    </section>
 
     <section class="catalog-toolbar" aria-labelledby="search-label">
       <div class="search-wrap">
@@ -300,7 +351,7 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
     </div>
   </main>
   <noscript>此页面需要 JavaScript 才能进行搜索和标签过滤。</noscript>
-  <script src="/app.js"></script>
+  <script src="app.js?v=${escapeHtml(catalog.catalogRevision)}"></script>
 </body>
 </html>\n`;
 }
@@ -335,6 +386,10 @@ a { color: inherit; }
 .page-shell { width: min(1540px, calc(100% - 40px)); margin: 34px auto 64px; }
 .hero { display: flex; justify-content: space-between; gap: 34px; padding: 32px; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: var(--shadow); }
 .hero-copy { max-width: 820px; }
+.revision-warning { display: flex; align-items: baseline; gap: 12px; margin: 18px 0 0; padding: 13px 16px; border: 1px solid #d7a640; border-radius: 14px; color: #5c4108; background: #fff4d5; }
+.revision-warning[hidden] { display: none; }
+.revision-warning strong { flex: 0 0 auto; font-size: 13px; }
+.revision-warning span { font-size: 12px; line-height: 1.55; }
 .eyebrow { margin: 0 0 12px; color: var(--muted); font-size: 12px; font-weight: 780; letter-spacing: .12em; }
 h1 { margin: 0; font-size: clamp(36px, 5vw, 64px); line-height: .98; letter-spacing: -.055em; }
 .subtitle { max-width: 760px; margin: 17px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
@@ -408,6 +463,7 @@ noscript { display: block; padding: 20px; text-align: center; }
 @media (max-width: 760px) {
   .page-shell { width: min(100% - 22px, 720px); margin: 12px auto 36px; }
   .hero { flex-direction: column; padding: 23px; }
+  .revision-warning { align-items: flex-start; flex-direction: column; gap: 4px; }
   .catalog-stat { justify-items: start; padding: 18px 0 0; border-top: 1px solid var(--line); border-left: 0; }
   .catalog-stat strong { font-size: 42px; }
   .catalog-toolbar { position: static; align-items: stretch; flex-direction: column; }
@@ -438,6 +494,7 @@ noscript { display: block; padding: 20px; text-align: center; }
     --shadow: 0 18px 54px rgba(0, 0, 0, .18);
   }
   .catalog-toolbar { background: color-mix(in srgb, var(--panel) 92%, transparent); }
+  .revision-warning { color: #f4d88b; border-color: #70581f; background: #2b2517; }
 }
 `;
 
@@ -458,8 +515,11 @@ const CATALOG_APP_JS = String.raw`
       dark: "深色",
       loadMore: "加载更多",
       loadMoreLabel: "再显示 {count} 个风格",
+      revisionTitle: "目录版本不一致",
+      revisionMismatch: "在线目录版本为 {online}，当前工具期望 {expected}。页面仍可浏览；应用风格前请刷新页面，并确认 Pages 已部署或 Web Style Director 已更新。",
+      pageRevisionMismatch: "页面资源与目录数据版本不一致，请强制刷新页面后重试。",
       facet: { family: "风格家族", pageTypes: "页面类型", density: "信息密度", tones: "视觉调性", componentKits: "组件库" },
-      loadError: "目录载入失败，请刷新页面或重新启动服务。"
+      loadError: "目录载入失败，请刷新页面或检查 Pages 部署状态。"
     },
     en: {
       result: "matching styles",
@@ -471,8 +531,11 @@ const CATALOG_APP_JS = String.raw`
       dark: "Dark",
       loadMore: "Load more",
       loadMoreLabel: "Show {count} more styles",
+      revisionTitle: "Catalog version mismatch",
+      revisionMismatch: "The hosted catalog is {online}, while the current tool expects {expected}. Browsing remains available; before applying a style, refresh the page and confirm Pages has deployed or Web Style Director is updated.",
+      pageRevisionMismatch: "The page assets and catalog data use different revisions. Force-refresh the page and try again.",
       facet: { family: "Family", pageTypes: "Page type", density: "Density", tones: "Tone", componentKits: "Component kits" },
-      loadError: "Could not load the catalog. Refresh the page or restart the server."
+      loadError: "Could not load the catalog. Refresh the page or check the Pages deployment."
     }
   };
   var locale = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
@@ -486,6 +549,10 @@ const CATALOG_APP_JS = String.raw`
   var activeCount = document.getElementById("active-filter-count");
   var emptyState = document.getElementById("empty-state");
   var loadMore = document.getElementById("load-more");
+  var revisionWarning = document.getElementById("revision-warning");
+  var revisionWarningTitle = document.getElementById("revision-warning-title");
+  var revisionWarningMessage = document.getElementById("revision-warning-message");
+  var pageRevision = document.querySelector('meta[name="catalog-revision"]')?.content || "";
 
   document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
 
@@ -507,6 +574,29 @@ const CATALOG_APP_JS = String.raw`
       state.filters[group].push(value);
     });
     search.value = state.query;
+  }
+
+  function interpolate(template, values) {
+    return Object.keys(values).reduce(function (result, key) {
+      return result.replaceAll("{" + key + "}", values[key]);
+    }, template);
+  }
+
+  function renderRevisionWarning(catalog) {
+    var expectedRevision = new URLSearchParams(window.location.search).get("expectedRevision") || "";
+    var onlineRevision = catalog.catalogRevision || "unknown";
+    var message = "";
+    if (pageRevision && pageRevision !== onlineRevision) {
+      message = copy.pageRevisionMismatch;
+    } else if (expectedRevision && expectedRevision !== onlineRevision) {
+      message = interpolate(copy.revisionMismatch, {
+        online: onlineRevision,
+        expected: expectedRevision
+      });
+    }
+    revisionWarning.hidden = !message;
+    revisionWarningTitle.textContent = copy.revisionTitle;
+    revisionWarningMessage.textContent = message;
   }
 
   function writeUrlState() {
@@ -709,13 +799,15 @@ const CATALOG_APP_JS = String.raw`
   });
 
   readUrlState();
-  fetch("/catalog.json", { cache: "no-store" })
+  var catalogRequestUrl = "catalog.json" + (pageRevision ? "?v=" + encodeURIComponent(pageRevision) : "");
+  fetch(catalogRequestUrl, { cache: "no-store" })
     .then(function (response) {
       if (!response.ok) throw new Error("HTTP " + response.status);
       return response.json();
     })
     .then(function (catalog) {
       state.catalog = catalog;
+      renderRevisionWarning(catalog);
       resetPagination();
       render();
     })
@@ -726,39 +818,76 @@ const CATALOG_APP_JS = String.raw`
 }());
 `;
 
-export async function startStyleCatalogServer({ port = 0, catalog = buildStyleCatalog() } = {}) {
-  const html = renderCatalogBrowserPage(catalog);
-  const catalogJson = `${JSON.stringify(catalog)}\n`;
-  const contentSecurityPolicy = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
-  const routes = {
-    "/": { body: html, contentType: "text/html; charset=utf-8" },
-    "/catalog.json": { body: catalogJson, contentType: "application/json; charset=utf-8" },
-    "/app.js": { body: CATALOG_APP_JS, contentType: "text/javascript; charset=utf-8" },
-    "/styles.css": { body: CATALOG_STYLES_CSS, contentType: "text/css; charset=utf-8" }
-  };
+const CATALOG_FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Web Style Director">
+  <rect width="64" height="64" rx="16" fill="#202820"/>
+  <path d="M15 18h8l5 24h-7zm13 0h8l-5 24h-7zm13 0h8l-5 24h-7z" fill="#eff4ea"/>
+</svg>\n`;
+
+export function buildStyleCatalogStaticAssets({ catalog = buildStyleCatalog() } = {}) {
+  const assets = new Map([
+    ["index.html", { body: renderCatalogBrowserPage(catalog), contentType: "text/html; charset=utf-8" }],
+    ["catalog.json", { body: `${JSON.stringify(catalog)}\n`, contentType: "application/json; charset=utf-8" }],
+    ["app.js", { body: CATALOG_APP_JS, contentType: "text/javascript; charset=utf-8" }],
+    ["styles.css", { body: CATALOG_STYLES_CSS, contentType: "text/css; charset=utf-8" }],
+    ["favicon.svg", { body: CATALOG_FAVICON_SVG, contentType: "image/svg+xml; charset=utf-8" }],
+    [".nojekyll", { body: "", contentType: "application/octet-stream" }]
+  ]);
 
   for (const entry of catalog.entries) {
-    const routePath = previewUrl(entry.id);
-    if (entry.previewUrl !== routePath) {
+    const assetPath = previewAssetPath(entry.id);
+    const expectedUrl = previewUrl(entry.id, catalog.catalogRevision);
+    if (entry.previewUrl !== expectedUrl) {
       throw new Error(`Unexpected preview URL for style ${entry.id}: ${entry.previewUrl}`);
     }
-    routes[routePath] = {
+    assets.set(assetPath, {
       body: readFileSync(previewPath(entry.id), "utf8"),
       contentType: "image/svg+xml; charset=utf-8",
       headers: { "Cross-Origin-Resource-Policy": "same-origin" }
-    };
+    });
+  }
+
+  return { catalog, assets };
+}
+
+function normalizeCatalogBasePath(basePath = "/") {
+  const trimmed = String(basePath || "/").trim();
+  const normalized = trimmed === "/"
+    ? "/"
+    : `/${trimmed.replace(/^\/+|\/+$/g, "")}/`;
+  if (!/^\/(?:[a-z0-9._~-]+\/)*$/iu.test(normalized) || normalized.includes("../")) {
+    throw new Error(`Invalid style catalog base path: ${basePath}`);
+  }
+  return normalized;
+}
+
+export async function startStyleCatalogServer({
+  port = 0,
+  catalog = buildStyleCatalog(),
+  basePath = "/"
+} = {}) {
+  const normalizedBasePath = normalizeCatalogBasePath(basePath);
+  const { assets } = buildStyleCatalogStaticAssets({ catalog });
+  const routes = {};
+  for (const [assetPath, asset] of assets) {
+    const routePath = assetPath === "index.html"
+      ? normalizedBasePath
+      : `${normalizedBasePath}${assetPath}`;
+    routes[routePath] = asset;
   }
 
   const served = await startLoopbackServer({
     port,
-    serverName: "style catalog server",
+    serverName: "style catalog development server",
     routes,
-    contentSecurityPolicy
+    contentSecurityPolicy: CATALOG_CONTENT_SECURITY_POLICY
   });
+  const catalogUrl = new URL(normalizedBasePath.slice(1), served.url).href;
 
   return {
     ...served,
-    catalogUrl: served.url,
+    catalogUrl,
+    basePath: normalizedBasePath,
+    catalogRevision: catalog.catalogRevision,
     styleCount: catalog.styleCount,
     sourceCount: catalog.sourceCount
   };

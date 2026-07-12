@@ -37,10 +37,9 @@ and an optional cross-platform `--open` action. For terminal clients it can
 also start a minimal foreground HTTP server on `127.0.0.1`; the server exposes
 only the selected gallery and uses an OS-assigned port by default.
 
-`src/loopback-server.mjs` provides the shared local-only HTTP boundary used by
-both recommendation preview and complete-catalog browsing. Keeping host,
-port, request, cache, and shutdown handling in one module prevents the two
-surfaces from drifting while their content remains separate.
+`src/loopback-server.mjs` provides the local-only HTTP boundary for generated
+recommendation previews. Host, port, request, cache, and shutdown handling stay
+isolated from the publicly hosted complete catalog.
 
 The preview layer keeps generated neutral cards separate from external
 Light/Dark references. Upstream previews are links for comparison, not assets
@@ -48,16 +47,18 @@ to vendor or ship.
 
 ## 3. Catalog Browser
 
-`src/catalog-browser.mjs` builds a schema-v2 browser view model from the curated
+`src/catalog-browser.mjs` builds a schema-v3 browser view model from the curated
 style profiles, visual metadata, profile component-kit tags, and the upstream
 style-source count. Each entry carries a lightweight `previewUrl` instead of
-an embedded SVG. `serve` exposes that model through a read-only page with text
-search and family, page type, density, tone, and component-kit filters.
+an embedded SVG. `scripts/build-catalog-site.mjs` writes the complete static
+site to `dist/pages`, including HTML, JSON, CSS, JavaScript, favicon, and one
+preview SVG per curated style.
 
-The browser serves `/`, `/catalog.json`, `/app.js`, `/styles.css`, and one
-same-origin `/previews/<style-id>.svg` route per curated profile on
-`127.0.0.1`. The SVG routes are validated against curated IDs and carry a
-same-origin resource policy.
+All site references are relative, so the artifact works under the GitHub
+project-site subpath. `.github/workflows/pages.yml` builds the artifact for pull
+requests and deploys it to GitHub Pages from `main`. `browse` prints or opens
+the hosted URL; the old `serve` name is a non-blocking compatibility alias and
+does not start a local complete-catalog server.
 
 The catalog payload contains an inverted token-to-numeric-entry postings index
 and a direct ID-to-entry index. Numeric postings avoid repeating long style IDs
@@ -68,9 +69,14 @@ limits initial layout and image work as the catalog grows. Entries in
 `catalog/generated/style-sources.json` remain a provenance index and are shown
 only as a current count, never promoted into unreviewed style profiles.
 
+The model also carries a deterministic `catalogRevision`, derived from the
+curated profiles and visual metadata. The CLI adds its local expected revision
+to the Pages URL. The browser compares that value with the deployed HTML and
+JSON revisions and shows a non-blocking warning if deployment is stale.
+
 This surface is intentionally distinct from `preview --serve`: the former
-browses the complete reviewed Catalog, while the latter serves one generated
-recommendation batch. Neither surface is a public hosting mechanism.
+browses the publicly hosted complete reviewed Catalog, while the latter serves
+one generated recommendation batch on `127.0.0.1`.
 
 ## 4. Recommendation Core
 
@@ -135,8 +141,8 @@ contract instead of improvising a new direction.
 The skill can be used directly from this repository or copied into a supported
 Codex or Claude Code personal skill directory. Both agents use the same
 `SKILL.md`; only installation paths and explicit invocation syntax differ.
-It routes an explicit `serve` or catalog-browsing request directly to the
-foreground catalog browser without entering the five-direction website
+It routes an explicit `browse`, legacy `serve`, or catalog-browsing request
+directly to the hosted catalog without entering the five-direction website
 workflow. It also routes explicit update and uninstall requests to the
 lifecycle contract in the root `INSTALL.md`, keeping installed-tool updates
 separate from provider catalog maintenance.

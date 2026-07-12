@@ -17,16 +17,18 @@ flowchart LR
   W --> C[Node.js CLI]
   K[Curated Catalog] --> C
   C --> R[recommend]
-  C --> B[serve catalog browser]
+  C --> B[browse hosted catalog]
   C --> A[apply]
   R --> H[recommendations.html]
-  H -. preview --serve .-> L[shared loopback server]
-  B --> L
+  H -. preview --serve .-> L[local loopback server]
   L --> V[local browser]
+  K --> X[static catalog build]
+  X --> PAGES[GitHub Pages]
+  B --> PAGES
   A --> D[DESIGN.md and project state]
   P[Upstream provider repositories] --> G[clone/pull and path scan]
   G --> I[catalog/generated]
-  I -. source index count .-> B
+  I -. source index count .-> X
   I -. manually reviewed updates .-> K
 ```
 
@@ -38,10 +40,10 @@ Runtime recommendation and upstream synchronization are deliberately separate. R
 
 `skills/web-style-director/SKILL.md` is the workflow entrypoint for coding agents such as Codex and Claude Code. It requires the agent to gather missing context, present five directions, support rerolling with `--again`, run `apply` after selection, and wait for first-viewport confirmation before writing UI code.
 
-An explicit `serve` or complete-catalog browsing request takes a separate
-top-level route through `references/catalog-browser.md`. The agent starts the
-foreground service and does not gather a website brief, recommend five styles,
-run `apply`, or modify a target project.
+An explicit `browse`, legacy `serve`, or complete-catalog browsing request
+takes a separate top-level route through `references/catalog-browser.md`. The
+agent opens the hosted Pages URL and does not gather a website brief, recommend
+five styles, run `apply`, or modify a target project.
 
 The Skill defines behavior and gates. It does not contain or improvise the
 recommendation algorithm; the deterministic Node.js core performs matching.
@@ -56,14 +58,15 @@ This lets multiple agents share the same core implementation without requiring t
 
 `bin/ai-ui-style-director.mjs` is a thin command layer. Recommendation,
 project-contract, preview, and provider operations dispatch to `src/core.mjs`;
-the complete-catalog command dispatches directly to
-`startStyleCatalogServer` in `src/catalog-browser.mjs`.
+the complete-catalog command obtains its revision-aware Pages URL from
+`hostedCatalogInfo` in `src/catalog-browser.mjs`.
 
 | Command | Responsibility |
 | --- | --- |
 | `questions` | Return intake questions for an underspecified brief |
 | `recommend` | Rank directions, update session state, and generate an HTML gallery |
-| `serve` | Browse all curated styles with search and tag filters |
+| `browse` | Open the hosted catalog with search and tag filters |
+| `serve` | Compatibility alias for `browse` |
 | `preview` | Inspect or open one generated recommendation gallery |
 | `apply` | Generate the project design contract and state files |
 | `sync` | Clone or update configured provider repositories |
@@ -71,25 +74,26 @@ the complete-catalog command dispatches directly to
 
 `update` is a compatibility alias for `refresh-catalog`; it does not update an installed copy of the tool.
 
-### 4. Catalog browser and shared loopback server
+### 4. Catalog browser and static Pages build
 
-`src/catalog-browser.mjs` exports four focused operations:
+`src/catalog-browser.mjs` provides the catalog model and browser assets:
 
 - `buildStyleCatalog`: join curated profiles, visual metadata, generated SVG
-  preview URLs, indexes, and source-index statistics into the schema-v2 browser
+  preview URLs, indexes, source-index statistics, and a deterministic revision
+  into the schema-v3 browser
   view model;
+- `hostedCatalogInfo`: add the local expected revision to the configured Pages
+  URL and return the CLI contract;
 - `filterCatalogEntries`: apply text search and family, page type, density,
   tone, and component-kit filters;
 - `renderCatalogBrowserPage`: render the browser shell;
-- `startStyleCatalogServer`: expose the page and assets as a foreground
-  loopback service.
+- `buildStyleCatalogStaticAssets`: assemble the deployable static files.
 
-The catalog service exposes `/`, `/catalog.json`, `/app.js`, `/styles.css`, and
-one validated `/previews/<style-id>.svg` route per curated profile. The JSON
-uses lightweight `previewUrl` values instead of embedded image data; preview
-routes are same-origin and use a same-origin resource policy. Page state is
-encoded in the URL query, allowing a filtered view to survive refresh without
-server-side state.
+`scripts/build-catalog-site.mjs` writes those assets to `dist/pages`.
+References such as `catalog.json`, `styles.css`, and
+`previews/<style-id>.svg` are relative so the artifact works at the GitHub
+project subpath. Page state is encoded in the URL query, allowing a filtered
+view to survive refresh without server-side state.
 
 The browser model includes a token-to-numeric-entry postings index and an
 ID-to-entry index. Numeric postings keep repeated style IDs out of the search
@@ -98,12 +102,15 @@ exact token falls back to substring search so partial terms still work. The
 client renders the current result set in batches of 24 cards, limiting initial
 DOM and image work without changing the total match count.
 
-`src/loopback-server.mjs` owns the common `127.0.0.1` listener, port
-validation, no-cache response behavior, method and path handling, and graceful
-shutdown. `src/core.mjs` keeps the existing
-`startRecommendationPreviewServer` API but delegates its HTTP transport to
-this shared module. The two callers therefore share the same local-only
-boundary while serving different content.
+The HTML and JSON both carry `catalogRevision`; the CLI also adds its local
+expected revision to the hosted URL. The browser warns when those values differ
+but continues to search and filter. `.github/workflows/pages.yml` builds on
+pull requests, uploads the static artifact on `main`, and deploys it through the
+GitHub Pages environment.
+
+`src/loopback-server.mjs` remains responsible only for the project-specific
+`preview --serve` listener on `127.0.0.1`. A catalog server helper is retained
+for tests and local static-site QA, not as a user-facing CLI surface.
 
 ## Catalog: the runtime knowledge source
 
@@ -195,17 +202,17 @@ to visit upstream references. The server stops on Ctrl+C.
 
 ### Complete-catalog browser
 
-`serve` creates no recommendation session and writes no project files. It
-starts `startStyleCatalogServer`, prints the selected
-`http://127.0.0.1:<port>/` URL, optionally opens it, and stays in the foreground
-until Ctrl+C. Port `0` lets the operating system choose an available port;
-`--port` requests a specific port and `--json` makes the startup output
-machine-readable.
+`browse` creates no recommendation session and writes no project files. It
+prints the revision-aware GitHub Pages URL, optionally opens it, and returns
+immediately. `--json` emits the hosted URL, revision, curated style count,
+source count, and opened state. `serve` remains an alias with a migration
+notice; neither command accepts `--port`.
 
-The client loads the reviewed schema-v2 view model from `/catalog.json`, uses
+The client loads the reviewed schema-v3 view model from relative
+`catalog.json`, uses
 the inverted search index and facet tags in the page, and progressively renders
 24 matching cards at a time. Generated SVG previews load independently from
-same-origin routes, while upstream references remain subject to the same
+relative same-origin paths, while upstream references remain subject to the same
 neutral-asset and external-link boundaries as recommendation galleries.
 
 ## `apply` and the project design contract

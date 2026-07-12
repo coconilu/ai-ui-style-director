@@ -657,18 +657,32 @@ test("installed wrapper finds the Codex repository from an .agents skill", () =>
   assert.deepEqual(output.args, ["recommend", "--brief", "test"]);
 });
 
-test("installed wrapper forwards the serve command and options unchanged", () => {
+test("installed wrapper forwards the browse command and options unchanged", () => {
+  const homeDir = mkdtempSync(join(tmpdir(), "style-director-codex-browse-home-"));
+  const output = runInstalledWrapper({
+    homeDir,
+    skillDir: join(homeDir, ".agents", "skills", "web-style-director"),
+    repositoryDir: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
+    marker: "codex-browse",
+    commandArgs: ["browse", "--open", "--json"]
+  });
+
+  assert.equal(output.marker, "codex-browse");
+  assert.deepEqual(output.args, ["browse", "--open", "--json"]);
+});
+
+test("installed wrapper preserves the serve compatibility alias", () => {
   const homeDir = mkdtempSync(join(tmpdir(), "style-director-codex-serve-home-"));
   const output = runInstalledWrapper({
     homeDir,
     skillDir: join(homeDir, ".agents", "skills", "web-style-director"),
     repositoryDir: join(homeDir, ".codex", "tools", "ai-ui-style-director"),
     marker: "codex-serve",
-    commandArgs: ["serve", "--port", "4173", "--json"]
+    commandArgs: ["serve", "--json"]
   });
 
   assert.equal(output.marker, "codex-serve");
-  assert.deepEqual(output.args, ["serve", "--port", "4173", "--json"]);
+  assert.deepEqual(output.args, ["serve", "--json"]);
 });
 
 test("installed wrapper keeps the legacy .codex skill layout working", () => {

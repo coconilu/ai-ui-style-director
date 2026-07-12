@@ -48,22 +48,24 @@ graphics、Sixel 等特定终端图片协议。如果浏览器不在同一台机
 
 ## 完整目录浏览器
 
-`serve` 会在另一个浏览入口中复用已经提交的中性 SVG 卡片。它不只展示某次
-推荐的五个方向，而是列出全部已策展 profile，并支持文本搜索以及
+GitHub Pages 目录会在另一个浏览入口中复用已经提交的中性 SVG 卡片。它不只
+展示某次推荐的五个方向，而是列出全部已策展 profile，并支持文本搜索以及
 family、页面类型、密度、调性和组件库过滤：
 
 ```bash
-node bin/ai-ui-style-director.mjs serve --open
+node bin/ai-ui-style-director.mjs browse --open
 ```
 
-服务以前台方式运行，只绑定 `127.0.0.1`，默认选择可用端口，并在按下 Ctrl+C
-后停止。它是只读入口，不会创建推荐 session 状态，也不会修改目标项目。
+`browse` 会打开托管的项目站点并立即返回。旧 `serve` 仍是兼容别名，但不再
+启动完整目录的本地服务。两者都是只读入口，不会创建推荐 session 状态，也
+不会修改目标项目。
 
-目录的 `/catalog.json` 使用轻量 schema v2，卡片只保存 `previewUrl`，不会把
+目录的 `catalog.json` 使用轻量 schema v3，卡片只保存相对 `previewUrl`，不会把
 48 张 SVG 作为 data URI 一次塞进 JSON。预览通过
-`/previews/<style-id>.svg` 独立同源路由按需加载；搜索优先使用倒排索引的精确
+`previews/<style-id>.svg` 独立同源路径按需加载；搜索优先使用倒排索引的精确
 词项 postings，未命中时回退到子串匹配，页面则按 24 张卡片一批渐进渲染。
-这与单次推荐的自包含 HTML 画廊是两种有意不同的交付方式。
+确定性的 revision 会在已部署 HTML 或 JSON 落后于 CLI 所期待的本地 Catalog
+时显示提示。这与单次推荐的自包含 HTML 画廊是两种有意不同的交付方式。
 
 页面还会把当前 74 条上游 style-source 索引作为来源背景统计展示。这些路径
 缺少完整卡片所需的已审查元数据，因此只保留为候选素材池和数量，不会成为
