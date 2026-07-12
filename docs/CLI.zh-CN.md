@@ -80,9 +80,11 @@ schema 还包含确定性的 `catalogRevision`。CLI 会把本地预期 revision
 URL 上，页面再与已部署 HTML 和 JSON 的 revision 比较。若 Pages 尚未更新，
 页面会显示不阻断操作的旧版本提示，搜索和过滤仍然可用。
 
-`catalog/generated/style-sources.json` 当前保存 74 条已索引的上游来源路径。
-浏览器只把它们作为候选素材池和背景统计，不会把这些路径扩充成 74 张风格
-卡片；只有通过策展与校验的 profile 才作为完整条目展示。
+`catalog/generated/style-sources.json` 当前保存来自 7 个 Provider 的 109 条上游
+来源路径，component 索引为 600 条。原有 74 条 `DESIGN.md` 来源仍是 baseline，
+新增 35 条 daisyUI 主题从 pending 开始。浏览器只把这些来源作为候选素材池和背景
+统计，不会将其扩充成 109 张风格卡片；只有通过策展与校验的 profile 才作为完整
+条目展示。
 
 `browse` 及其 `serve` 兼容别名都不会创建或修改目标项目中的
 `.ui-style-director/` 目录。这个在线完整目录与 `preview --serve` 有意保持
@@ -166,11 +168,16 @@ node bin/ai-ui-style-director.mjs sync
 
 ## `refresh-catalog`
 
-刷新 provider 缓存，扫描设计与组件元数据，并把可提交索引写入 `catalog/generated/`：
+刷新 Provider 缓存，运行配置的来源 Adapter、扫描组件元数据，并把可提交的
+schema-v4 Provider 索引写入 `catalog/generated/`：
 
 ```bash
 node bin/ai-ui-style-director.mjs refresh-catalog --clone
 ```
+
+`daisyui-theme-css` 只发现 35 个主题 CSS 文件，在确定性转换 OKLCH 后输出规范
+JSON。这个生成索引 schema 与托管浏览器继续使用的 schema-v3 `catalog.json`
+彼此独立。
 
 参数：
 

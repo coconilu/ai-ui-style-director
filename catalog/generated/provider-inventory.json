@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "providers": [
     {
       "id": "awesome-design-md",
@@ -12,85 +12,381 @@
       "branch": "main",
       "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
       "counts": {
-        "designMdFiles": 74,
+        "styleSources": 74,
         "registryFiles": 0,
         "docsFiles": 0
       },
-      "designMdFiles": [
-        "design-md/airbnb/DESIGN.md",
-        "design-md/airtable/DESIGN.md",
-        "design-md/apple/DESIGN.md",
-        "design-md/binance/DESIGN.md",
-        "design-md/bmw-m/DESIGN.md",
-        "design-md/bmw/DESIGN.md",
-        "design-md/bugatti/DESIGN.md",
-        "design-md/cal/DESIGN.md",
-        "design-md/claude/DESIGN.md",
-        "design-md/clay/DESIGN.md",
-        "design-md/clickhouse/DESIGN.md",
-        "design-md/cohere/DESIGN.md",
-        "design-md/coinbase/DESIGN.md",
-        "design-md/composio/DESIGN.md",
-        "design-md/cursor/DESIGN.md",
-        "design-md/dell-1996/DESIGN.md",
-        "design-md/elevenlabs/DESIGN.md",
-        "design-md/expo/DESIGN.md",
-        "design-md/ferrari/DESIGN.md",
-        "design-md/figma/DESIGN.md",
-        "design-md/framer/DESIGN.md",
-        "design-md/hashicorp/DESIGN.md",
-        "design-md/hp/DESIGN.md",
-        "design-md/ibm/DESIGN.md",
-        "design-md/intercom/DESIGN.md",
-        "design-md/kraken/DESIGN.md",
-        "design-md/lamborghini/DESIGN.md",
-        "design-md/linear.app/DESIGN.md",
-        "design-md/lovable/DESIGN.md",
-        "design-md/mastercard/DESIGN.md",
-        "design-md/meta/DESIGN.md",
-        "design-md/minimax/DESIGN.md",
-        "design-md/mintlify/DESIGN.md",
-        "design-md/miro/DESIGN.md",
-        "design-md/mistral.ai/DESIGN.md",
-        "design-md/mongodb/DESIGN.md",
-        "design-md/nike/DESIGN.md",
-        "design-md/nintendo-2001/DESIGN.md",
-        "design-md/notion/DESIGN.md",
-        "design-md/nvidia/DESIGN.md",
-        "design-md/ollama/DESIGN.md",
-        "design-md/opencode.ai/DESIGN.md",
-        "design-md/pinterest/DESIGN.md",
-        "design-md/playstation/DESIGN.md",
-        "design-md/posthog/DESIGN.md",
-        "design-md/raycast/DESIGN.md",
-        "design-md/renault/DESIGN.md",
-        "design-md/replicate/DESIGN.md",
-        "design-md/resend/DESIGN.md",
-        "design-md/revolut/DESIGN.md",
-        "design-md/runwayml/DESIGN.md",
-        "design-md/sanity/DESIGN.md",
-        "design-md/sentry/DESIGN.md",
-        "design-md/shopify/DESIGN.md",
-        "design-md/slack/DESIGN.md",
-        "design-md/spacex/DESIGN.md",
-        "design-md/spotify/DESIGN.md",
-        "design-md/starbucks/DESIGN.md",
-        "design-md/stripe/DESIGN.md",
-        "design-md/supabase/DESIGN.md",
-        "design-md/superhuman/DESIGN.md",
-        "design-md/tesla/DESIGN.md",
-        "design-md/theverge/DESIGN.md",
-        "design-md/together.ai/DESIGN.md",
-        "design-md/uber/DESIGN.md",
-        "design-md/vercel/DESIGN.md",
-        "design-md/vodafone/DESIGN.md",
-        "design-md/voltagent/DESIGN.md",
-        "design-md/warp/DESIGN.md",
-        "design-md/webflow/DESIGN.md",
-        "design-md/wired/DESIGN.md",
-        "design-md/wise/DESIGN.md",
-        "design-md/x.ai/DESIGN.md",
-        "design-md/zapier/DESIGN.md"
+      "styleSources": [
+        {
+          "path": "design-md/airbnb/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:add34130d67209ad105346d60fe2b290728b9711683969db4b7760e29477a5fe"
+        },
+        {
+          "path": "design-md/airtable/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:1d225e511213044d3c705bde50265ad010932bfd8a15740a144dd4f480128889"
+        },
+        {
+          "path": "design-md/apple/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:83fbc614443a9b3d7569e9956a43e7b8740f9d0f939f58b8154f7a7cec3002b2"
+        },
+        {
+          "path": "design-md/binance/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:378ff97d568ccbc316519b9d45a29d6649ed8961c9c486c3ed4cea7501d72371"
+        },
+        {
+          "path": "design-md/bmw-m/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:824a1707c0a8d1609d72477d0fa211b9ebe4bdeb3e1fd701790af7b7bb669a4a"
+        },
+        {
+          "path": "design-md/bmw/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:b7268279e7c98e85fb80890e06765f4ee8340ba1ea1ccb5a8a5b134de43dac3e"
+        },
+        {
+          "path": "design-md/bugatti/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:375f0a20ada88cdee5e995ca7edcfbd584ddf5f887024deebd1bc75bfd55b1bc"
+        },
+        {
+          "path": "design-md/cal/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:8cd21b7d67e94c899843d517f4b426e4fee33d47354a433d6a63ebcf79d5a654"
+        },
+        {
+          "path": "design-md/claude/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:3d972f34f8d4f33b442fa28220cf3b7ca2f13c0a97c468e3988148f82521f9df"
+        },
+        {
+          "path": "design-md/clay/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:1abd803a207fbe950a06e155adcd6013c2e149b13e7b88844f5069f9d3d99eb3"
+        },
+        {
+          "path": "design-md/clickhouse/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:50987e29b603cc7503ebe724af810fcf43845e96fdd4083e0fbe5fe00d2cdd2e"
+        },
+        {
+          "path": "design-md/cohere/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:1c49a5a5f88d43841d4f4afa33831328d47a5715048700a3b75086a822575883"
+        },
+        {
+          "path": "design-md/coinbase/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:c8c67800dd7f58fcc87ed7d267a3bba862e3419e499e8a66d67731a69d2de1d6"
+        },
+        {
+          "path": "design-md/composio/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:e7db886dabecca61f29b83e8f46d7a1e8a43889d30b81bc6e48162ccaafcbb2f"
+        },
+        {
+          "path": "design-md/cursor/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:a3db9b3019dc2f514fdee7cd0ca0a5232c0bd0119e23178e8eebaf6916258d9d"
+        },
+        {
+          "path": "design-md/dell-1996/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:e186c614b1223fe7015670472ac6bc84b5b3fdd5de5325b3ce5bfb7fbe9c8d6e"
+        },
+        {
+          "path": "design-md/elevenlabs/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:3b359acfaafadbb499c7ed3eebe813a76e0be497a7157b77de207fe275068a66"
+        },
+        {
+          "path": "design-md/expo/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:1be7e129b6f75afaa12318a7c51ab22f6f74a214dec22c4827cecc519f112363"
+        },
+        {
+          "path": "design-md/ferrari/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:1199e2832641cac7e384aaf3b1f3db87f992240cea5d3d1eee04d9dc00acb17c"
+        },
+        {
+          "path": "design-md/figma/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:716ce8431f47eb8b8135552710e3c4d538bccccf1202e4ceac5428c9aada9972"
+        },
+        {
+          "path": "design-md/framer/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:a5d47dddacf5a04577cec0be6fe0fc53b7402254c7686874af3e59bcc7588cb4"
+        },
+        {
+          "path": "design-md/hashicorp/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:d2df9be72d867e48d318fd18db04e60a78357c27e392ab921fc2ba7f46951442"
+        },
+        {
+          "path": "design-md/hp/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:4c9a248046684bdde5311a0c9881814f50e2381c2b0f3c75b02a35fc64bc8bb8"
+        },
+        {
+          "path": "design-md/ibm/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:46f6fd65b5e7524fed1133b9b3c0dd619f9a0f145fbb2b87f3675c701a88f3bd"
+        },
+        {
+          "path": "design-md/intercom/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:962be23cd947e87a86b2ffbc0440e9d0808243a6ef3af2aa04e8e7cc04d48ba3"
+        },
+        {
+          "path": "design-md/kraken/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:41bcbd5642c926a549f0d50f1151484c5776b4536233240c8415cfb79bcf1f38"
+        },
+        {
+          "path": "design-md/lamborghini/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:9aa68c53b481a0befdf72859db5625f85454122294509989aa58414aaee04b34"
+        },
+        {
+          "path": "design-md/linear.app/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:30bd30e72c48a16e4bdbd010f2d1c85fab657c6fae3cc85389399aab10f9cb5f"
+        },
+        {
+          "path": "design-md/lovable/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:92790895c833104072643929ba56ebbf42c8f88ffb7bff1926462545d0ace6c7"
+        },
+        {
+          "path": "design-md/mastercard/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:e76ceaa187f43bd24b8338d2b2314e71e9225b36492e40f32a55782281a10437"
+        },
+        {
+          "path": "design-md/meta/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:306dfad97c006d47b134fb0dbd55ff68d3baa526844d6eb37346373c9ef35339"
+        },
+        {
+          "path": "design-md/minimax/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:2658b96488bb629749259b152c5ba2912a0e8feb6a03477e265879abd9264c50"
+        },
+        {
+          "path": "design-md/mintlify/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:754ffcf35dcd39ef8aef450085ce936aaca5b872ff92caa66be99e91a5c3d5ec"
+        },
+        {
+          "path": "design-md/miro/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:87c71f76297277d64f9679e015a50da88e72d86d7b41badf8733eae1e4cde335"
+        },
+        {
+          "path": "design-md/mistral.ai/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:40e2c692d72c54bae1e43446e2d059b71d773668d39d71ccb7ededa9fa07d145"
+        },
+        {
+          "path": "design-md/mongodb/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:4523f10efd5ccd46f9aeac3b98626e24bcf907bc0c1e46500cb0e3920f932e71"
+        },
+        {
+          "path": "design-md/nike/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:d2a3d363665839e2ddc15c91b8a9f3e92b1962ff55a7ca5d964ab3bb88b8186c"
+        },
+        {
+          "path": "design-md/nintendo-2001/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:9630af17090d5c39ba9d8b5915a597a96c7552efe1422b3b8c3f31fb3e636716"
+        },
+        {
+          "path": "design-md/notion/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:fa9d6e78216d8f3e5d3990709ca2de6bc2e268e945bb94f255fd1bfb15455266"
+        },
+        {
+          "path": "design-md/nvidia/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:d649be85daf075c98a17071e707e3901c6e19150044a81716acd01ef1169cc83"
+        },
+        {
+          "path": "design-md/ollama/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:3f36f897e5aad870344dd97e282c8f125ad208dc99449bb08dd38b9259d2f451"
+        },
+        {
+          "path": "design-md/opencode.ai/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:d1a8893c4b8ac90b1e86230eee2effa8bd15add3582853477920e32432336dda"
+        },
+        {
+          "path": "design-md/pinterest/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:26a202fd244e9213d5e2475d81581828da1dd97e089e44639d9783d04f96e4a8"
+        },
+        {
+          "path": "design-md/playstation/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:2a56c109af6cb847fa091b768f719b498ac56b582d010860e73ea5fb72a1590d"
+        },
+        {
+          "path": "design-md/posthog/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:01f497f751d56296bfcd5eb8806325a4bb4786d364941ec6e65c65fa9ee6d362"
+        },
+        {
+          "path": "design-md/raycast/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:6e2c5137e4d914b70996d589688374a801b6f29a35c9c019c22abb5e0170bda3"
+        },
+        {
+          "path": "design-md/renault/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:b343df9a67e57f248e9eee704f52b17dff9cf6a46d1dc9f8d7ab36741940db59"
+        },
+        {
+          "path": "design-md/replicate/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:c22062d7b4174bf9ced7bc61c48389086cf6eed96a958e098ee70389893b0a15"
+        },
+        {
+          "path": "design-md/resend/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:99536f1b2380511a539f7f3466d46d351e4bf35a5af0c0df395bdc20af05c9be"
+        },
+        {
+          "path": "design-md/revolut/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:b7fa8473315541f5d7e7d76f68a77105d255e6dae00d31d5eb34621d1d52de59"
+        },
+        {
+          "path": "design-md/runwayml/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:b0e69bf643f89bb57ac0b82a3bf025e59ff1478c244cb0528ad1e38b3f80dac9"
+        },
+        {
+          "path": "design-md/sanity/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:ea1c442de2b23443f79af46524a81f33951606c8ff043ea9c25ba886264fbdd8"
+        },
+        {
+          "path": "design-md/sentry/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:655c91d7d23b5e869a966b7f1b63ae650567ad5d69003cfc64b0ee62c8e02c1f"
+        },
+        {
+          "path": "design-md/shopify/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:495e89b8d0a1848ded013c040f7a2ae62077e9d87fc4385350e25dee02ccdb38"
+        },
+        {
+          "path": "design-md/slack/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:03cb243015a2e11d0faf05caba7f3d0c7fda6839b1f5ce707a23e8d46d1a11bd"
+        },
+        {
+          "path": "design-md/spacex/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:495450c79faab54d12d677649ca0a2c30a60f64f536a802e945ad54185c5baad"
+        },
+        {
+          "path": "design-md/spotify/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:72e964a6cf551d0603f9854f2f42ee08e97ad4d9e17e037f50f6233508288295"
+        },
+        {
+          "path": "design-md/starbucks/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:e20338ee10226c63cf2588207288c08e12d60754a53f681657adaf364dfe8fa7"
+        },
+        {
+          "path": "design-md/stripe/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:5c8806b7dd3e0c2554ccba9d1e2a7c78e7c6e50e44fcf6ff5daea6026f8a9ed9"
+        },
+        {
+          "path": "design-md/supabase/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:f57287d7f44d59e8169dc4b4304ff03c1a2efb37f5433b9c04460caae7710880"
+        },
+        {
+          "path": "design-md/superhuman/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:3640298bd2957aee80ce88eb465a7541ba835ec105cba364a6a621d885c7f34f"
+        },
+        {
+          "path": "design-md/tesla/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:19f2f7e6073d708f46d2512e6bab3c7c417cf2b4d9f57ff6ec6f2e056ea942b0"
+        },
+        {
+          "path": "design-md/theverge/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:5da2c3116e6845826b043ac115a80896a399efda2cebc0188981fba2ef9bb526"
+        },
+        {
+          "path": "design-md/together.ai/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:aee472c583f55a2f2c7ee1c403a96dddadb3ff6dc518335451f431e313bf43cf"
+        },
+        {
+          "path": "design-md/uber/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:f30d2257d2d090790332d00ccb16cd2516c3c6008be61ad2ce83c4e991bcc803"
+        },
+        {
+          "path": "design-md/vercel/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:d0951b93c2b4ce9840c715c9f9b3e58a386c6c58ae5cc0f804dec3b116b95bd8"
+        },
+        {
+          "path": "design-md/vodafone/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:293a40951e654283978fa744b24177a159d8f2a60f402bc735bf081618af0ef6"
+        },
+        {
+          "path": "design-md/voltagent/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:4457887741ae5e965e205282b03c4bff83e47dd7a03cd7f38c64623a17569fcd"
+        },
+        {
+          "path": "design-md/warp/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:5b1201f7b1b4e72570d148d1f980fd1cb35e6e4122d48dd271787aa3538a25ad"
+        },
+        {
+          "path": "design-md/webflow/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:9230c7b3951371fc2edc04958962e32bb7ec9a9b703aa6b72eaf5c7991b7c984"
+        },
+        {
+          "path": "design-md/wired/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:eb439dcc573401dc30583f40e7eef8a60b769232da59e524de6dce56d5c3593e"
+        },
+        {
+          "path": "design-md/wise/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:442df0ad7380efd8712f5574bdca34a73cfb41a2a43454ff459863a6258af547"
+        },
+        {
+          "path": "design-md/x.ai/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:9c9ef45d8c0c3b9a7622833cdff8bd125ed6bf296a82cc7274215276706e52eb"
+        },
+        {
+          "path": "design-md/zapier/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:9aee43ba8ece1b4fd0753b4cad0a29f3497331882fa376f0dd4fea8a018c32fc"
+        }
       ],
       "registryFiles": [],
       "docsFiles": []
@@ -106,11 +402,11 @@
       "branch": "main",
       "revision": "1c062d4e200bb7025ad90d79b7d3d186ee130003",
       "counts": {
-        "designMdFiles": 0,
+        "styleSources": 0,
         "registryFiles": 0,
         "docsFiles": 0
       },
-      "designMdFiles": [],
+      "styleSources": [],
       "registryFiles": [],
       "docsFiles": []
     },
@@ -125,11 +421,11 @@
       "branch": "main",
       "revision": "3cdaa6eb2f0da27aca8598cb752c32d840e06940",
       "counts": {
-        "designMdFiles": 0,
+        "styleSources": 0,
         "registryFiles": 200,
         "docsFiles": 100
       },
-      "designMdFiles": [],
+      "styleSources": [],
       "registryFiles": [
         "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
         "apps/v4/content/docs/changelog/2025-07-universal-registry.mdx",
@@ -446,11 +742,11 @@
       "branch": "main",
       "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
       "counts": {
-        "designMdFiles": 0,
+        "styleSources": 0,
         "registryFiles": 200,
         "docsFiles": 1
       },
-      "designMdFiles": [],
+      "styleSources": [],
       "registryFiles": [
         "components/copy-registry.tsx",
         "registry.json",
@@ -668,11 +964,11 @@
       "branch": "main",
       "revision": "61f1aa5aa28dafa459e7d011e46ce2392b22ee24",
       "counts": {
-        "designMdFiles": 0,
+        "styleSources": 0,
         "registryFiles": 200,
         "docsFiles": 91
       },
-      "designMdFiles": [],
+      "styleSources": [],
       "registryFiles": [
         "apps/www/lib/registry.ts",
         "apps/www/public/r/registry.json",
@@ -980,13 +1276,309 @@
       "branch": "main",
       "revision": "ca4d588f47820ff3d514d37fa4ee08a4222dec11",
       "counts": {
-        "designMdFiles": 0,
+        "styleSources": 0,
         "registryFiles": 0,
         "docsFiles": 0
       },
-      "designMdFiles": [],
+      "styleSources": [],
       "registryFiles": [],
       "docsFiles": []
+    },
+    {
+      "id": "daisyui-themes",
+      "repo": "saadeghi/daisyui",
+      "url": "https://github.com/saadeghi/daisyui",
+      "role": "visual-theme-reference",
+      "type": "theme-token-corpus",
+      "license": "MIT",
+      "cachePresent": true,
+      "branch": "master",
+      "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+      "counts": {
+        "styleSources": 35,
+        "registryFiles": 0,
+        "docsFiles": 100
+      },
+      "styleSources": [
+        {
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334"
+        },
+        {
+          "path": "packages/daisyui/src/themes/acid.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0"
+        },
+        {
+          "path": "packages/daisyui/src/themes/aqua.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073"
+        },
+        {
+          "path": "packages/daisyui/src/themes/autumn.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06"
+        },
+        {
+          "path": "packages/daisyui/src/themes/black.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7"
+        },
+        {
+          "path": "packages/daisyui/src/themes/bumblebee.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7"
+        },
+        {
+          "path": "packages/daisyui/src/themes/business.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a"
+        },
+        {
+          "path": "packages/daisyui/src/themes/caramellatte.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576"
+        },
+        {
+          "path": "packages/daisyui/src/themes/cmyk.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d"
+        },
+        {
+          "path": "packages/daisyui/src/themes/coffee.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557"
+        },
+        {
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b"
+        },
+        {
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28"
+        },
+        {
+          "path": "packages/daisyui/src/themes/cyberpunk.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19"
+        },
+        {
+          "path": "packages/daisyui/src/themes/dark.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec"
+        },
+        {
+          "path": "packages/daisyui/src/themes/dim.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096"
+        },
+        {
+          "path": "packages/daisyui/src/themes/dracula.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7"
+        },
+        {
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06"
+        },
+        {
+          "path": "packages/daisyui/src/themes/fantasy.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209"
+        },
+        {
+          "path": "packages/daisyui/src/themes/forest.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38"
+        },
+        {
+          "path": "packages/daisyui/src/themes/garden.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b"
+        },
+        {
+          "path": "packages/daisyui/src/themes/halloween.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e"
+        },
+        {
+          "path": "packages/daisyui/src/themes/lemonade.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05"
+        },
+        {
+          "path": "packages/daisyui/src/themes/light.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c"
+        },
+        {
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0"
+        },
+        {
+          "path": "packages/daisyui/src/themes/luxury.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522"
+        },
+        {
+          "path": "packages/daisyui/src/themes/night.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36"
+        },
+        {
+          "path": "packages/daisyui/src/themes/nord.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2"
+        },
+        {
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d"
+        },
+        {
+          "path": "packages/daisyui/src/themes/retro.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234"
+        },
+        {
+          "path": "packages/daisyui/src/themes/silk.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:0b8eb8d807eeb506e086c95a46793f92ec2c18463825df9e618fdca269d7f30c"
+        },
+        {
+          "path": "packages/daisyui/src/themes/sunset.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80"
+        },
+        {
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f"
+        },
+        {
+          "path": "packages/daisyui/src/themes/valentine.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1"
+        },
+        {
+          "path": "packages/daisyui/src/themes/winter.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85"
+        },
+        {
+          "path": "packages/daisyui/src/themes/wireframe.css",
+          "sourceType": "theme-css",
+          "contentHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb"
+        }
+      ],
+      "registryFiles": [],
+      "docsFiles": [
+        "packages/docs/AGENTS.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/angular-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/astro-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/django-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/electron-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/htmx-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/laravel-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/lit-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/nextjs-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/nuxt-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/qwik-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/rails-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/react-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/solid-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/svelte-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/unocss-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(component-library)/vue-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/angular-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/astro-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/django-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/electron-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/htmx-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/laravel-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/lit-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/nextjs-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/nuxt-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/qwik-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/rails-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/react-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/solid-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/svelte-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/unocss-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(tailwind-css)/vue-tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/angular-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/astro-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/django-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/electron-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/htmx-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/laravel-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/lit-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/nextjs-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/nuxt-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/qwik-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/rails-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/react-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/solid-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/svelte-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/unocss-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/(frameworks)/(ui-library)/vue-ui-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ai-frontend-code-generation/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ai-tailwind-code-generator/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ai-ui-code-generation/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-claude-code-design-skill-2026/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-codex-design-skill-2026/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-component-library-for-2026/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-component-library-for-beginners/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-cursor-design-skill-2026/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-free-component-library-for-claude-code/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-free-component-library-for-codex/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/best-free-component-library-for-cursor/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/claude-code-free-design-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/claude-code-frontend-design-plugin/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/claude-code-frontend-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/claude-code-ui-design-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/claude-code-web-design-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/claude-ui-design-prompt/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/codex-free-design-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/css-framework-for-school-project/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/css-library-for-html/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/cursor-free-design-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/cursor-frontend-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/cursor-ui-design-skill/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/cursor-use-less-tokens/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/design-website-with-ai/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/easy-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/easy-css-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/generate-ui-from-text/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/generate-ui-with-claude/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/generate-ui-with-codex/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/generate-ui-with-llm/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/how-to-design-ui-with-claude-code/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/how-to-design-ui-with-codex/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/how-to-design-ui-with-cursor/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/install-tailwind-css-vite/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/llm-ui-generation/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/minimal-css-framework/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/prompt-to-ui/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/scalable-component-library/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/tailwind-agent/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/tailwind-css-alternative/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/tailwind-css-without-node/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/tailwind-css/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/tailwind-ui-components/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-mcp-server-for-claude-code/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-mcp-server-for-codex/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-mcp-server-for-cursor/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-plugin-for-claude-code/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-plugin-for-codex/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-plugin-for-cursor/+page.md",
+        "packages/docs/src/routes/(routes)/(marketing)/pages/ui-design-skill-for-claude-code/+page.md"
+      ]
     }
   ]
 }

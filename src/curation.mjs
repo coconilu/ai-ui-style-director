@@ -13,14 +13,15 @@ import { fileURLToPath } from "node:url";
 import { createOpenAICompatibleClient } from "./openai-compatible.mjs";
 import { renderStylePreviewSvg } from "./preview.mjs";
 import {
-  hashStyleSourceContent,
+  loadStyleSourceDocument,
   pinnedProviderSourceUrl,
   resolveProviderAdapter
 } from "./provider-adapters.mjs";
 
 export const CURATION_SCHEMA_VERSION = 1;
-export const CURATION_PROMPT_VERSION = "style-curation-v2";
+export const CURATION_PROMPT_VERSION = "style-curation-v3";
 export const DEFAULT_DUPLICATE_THRESHOLD = 0.85;
+export const DEFAULT_THEME_DUPLICATE_THRESHOLD = 0.04;
 export const DEFAULT_REFERENCE_POOL_SIZE = 60;
 export const DEFAULT_PROFILE_CONTEXT_SIZE = 40;
 
@@ -385,6 +386,7 @@ export function buildCurationMessages({
   source,
   content,
   truncated,
+  requiredTheme = null,
   referencePool,
   profileContext,
   policy,
@@ -398,6 +400,7 @@ export function buildCurationMessages({
     "Use decision=skip when the source adds no distinct, reusable direction.",
     "When sourceWasTruncated is true, prefer decision=skip unless the visible portion is already clearly sufficient to support a reusable direction.",
     "For decision=promote, choose only the supplied taxonomy and design-primitive enum values. Use exactly three unique references from the allowed reference pool, including the primary source.",
+    "When requiredTheme is present, copy all seven colors exactly; they were derived deterministically by the trusted source adapter.",
     "Do not write user-facing prose, labels, names, layout instructions, risks, IDs, URLs, hashes, status, scores, or audit metadata; the program generates those fields from controlled templates."
   ].join(" ");
   const contract = {
@@ -441,6 +444,7 @@ export function buildCurationMessages({
       allowedReferenceRoles: Object.keys(REFERENCE_ROLES),
       allowedTaxonomy: taxonomyVocabulary,
       requiredReferenceCount: 3,
+      requiredTheme,
       contract
     },
     allowedReferencePool: referencePool,
@@ -463,6 +467,7 @@ export function validateCandidate(candidate, {
   source,
   styleSources,
   referencePool = styleSources.sources,
+  requiredTheme = null,
   policy,
   componentKitIds,
   taxonomyVocabulary
@@ -512,6 +517,12 @@ export function validateCandidate(candidate, {
     } else {
       for (const field of THEME_FIELDS) {
         if (!/^#(?:[0-9a-f]{6})$/iu.test(candidate.visual.theme[field] || "")) errors.push(`visual.theme.${field} must be #RRGGBB`);
+        if (
+          requiredTheme &&
+          String(candidate.visual.theme[field] || "").toUpperCase() !== String(requiredTheme[field] || "").toUpperCase()
+        ) {
+          errors.push(`visual.theme.${field} must match the adapter-derived required theme`);
+        }
       }
     }
     if (!Array.isArray(candidate.visual.references) || candidate.visual.references.length !== 3) {
@@ -593,13 +604,39 @@ function generatedStyleId(profile, source) {
   return `${profile.family}-${profile.composition}-${profile.emphasis}-${hashSuffix}`;
 }
 
+function themesEqual(left, right) {
+  return Boolean(left && right) && THEME_FIELDS.every((field) => (
+    String(left[field] || "").toUpperCase() === String(right[field] || "").toUpperCase()
+  ));
+}
+
+function themeDistance(left, right) {
+  if (!left || !right) return null;
+  const toChannels = (value) => /^#[0-9a-f]{6}$/iu.test(value || "")
+    ? [1, 3, 5].map((offset) => Number.parseInt(value.slice(offset, offset + 2), 16))
+    : null;
+  let total = 0;
+  for (const field of THEME_FIELDS) {
+    const leftChannels = toChannels(left[field]);
+    const rightChannels = toChannels(right[field]);
+    if (!leftChannels || !rightChannels) return null;
+    const squared = leftChannels.reduce(
+      (sum, channel, index) => sum + (channel - rightChannels[index]) ** 2,
+      0
+    );
+    total += Math.sqrt(squared) / (Math.sqrt(3) * 255);
+  }
+  return total / THEME_FIELDS.length;
+}
+
 function awesomeSourceSlug(path) {
   return path.match(/^design-md\/([a-z0-9]+(?:[._-][a-z0-9]+)*)\/DESIGN\.md$/u)?.[1] || null;
 }
 
-function generatedSourceSlug(source, adapterId) {
+function generatedSourceSlug(source, metadata) {
   const hashSlug = `source-${source.contentHash.slice("sha256:".length, "sha256:".length + 8)}`;
-  return adapterId === "awesome-design-md" ? awesomeSourceSlug(source.path) || hashSlug : hashSlug;
+  if (metadata.sourceSlug) return metadata.sourceSlug;
+  return metadata.adapterId === "awesome-design-md" ? awesomeSourceSlug(source.path) || hashSlug : hashSlug;
 }
 
 function generatedRisks(profile) {
@@ -622,12 +659,14 @@ function pinnedSourceMetadata(source, inventory, providers) {
   if (!sourceUrl || !SHA256.test(source.contentHash || "")) {
     throw new Error(`Cannot pin provenance for ${source.providerId}/${source.path}.`);
   }
+  const adapter = resolveProviderAdapter(provider);
   return {
     repo,
     revision,
     contentHash: source.contentHash,
     sourceUrl,
-    adapterId: resolveProviderAdapter(provider).id
+    adapterId: adapter.id,
+    sourceSlug: typeof adapter.sourceSlug === "function" ? adapter.sourceSlug(source.path) : null
   };
 }
 
@@ -638,7 +677,7 @@ function promotedProfile(candidate, source, metadata) {
     id: styleId,
     name: `${titleToken(profile.family)} ${titleToken(profile.composition)} ${titleToken(profile.emphasis)}`,
     sourceProvider: source.providerId,
-    sourceSlug: generatedSourceSlug(source, metadata.adapterId),
+    sourceSlug: generatedSourceSlug(source, metadata),
     sourcePath: source.path,
     sourceRepo: metadata.repo,
     sourceRevision: metadata.revision,
@@ -792,11 +831,24 @@ function revisionFor(inventory, providerId) {
   return inventory.providers.find((provider) => provider.id === providerId)?.revision || null;
 }
 
-function recordIdFor({ source, promptVersion, createdAt, responseId, responseHash, fromHash, eventNonce }) {
+function recordIdFor({
+  source,
+  adapterId,
+  normalizerVersion,
+  promptVersion,
+  createdAt,
+  responseId,
+  responseHash,
+  fromHash,
+  eventNonce
+}) {
   return bareSha256([
     source.providerId,
     source.path,
     source.contentHash,
+    source.sourceType,
+    adapterId,
+    String(normalizerVersion),
     promptVersion,
     fromHash || "unseen",
     responseId || "no-response-id",
@@ -916,6 +968,8 @@ export async function curateStyleSources({
     maxRetries: requestMaxRetries
   });
   const profiles = readJson(profilesPath);
+  const visuals = readJson(visualsPath);
+  if (!Array.isArray(profiles) || !Array.isArray(visuals)) throw new Error("Catalog file is not a JSON array.");
   const profileIds = new Set(profiles.map((profile) => profile.id));
   const newProfiles = [];
   const newVisuals = [];
@@ -931,12 +985,24 @@ export async function curateStyleSources({
     if (!SHA256.test(source.contentHash || "")) throw new Error(`${source.providerId}/${source.path} has no valid contentHash.`);
     const sourcePath = safeResolvedPath(join(cacheDir, source.providerId), source.path);
     if (!existsSync(sourcePath)) throw new Error(`Pinned source file is missing: ${source.providerId}/${source.path}`);
-    const sourceBuffer = readFileSync(sourcePath);
-    const actualHash = hashStyleSourceContent(sourcePath);
-    if (actualHash !== source.contentHash) {
-      throw new Error(`Content hash mismatch for ${source.providerId}/${source.path}: expected ${source.contentHash}, got ${actualHash}.`);
+    const provider = providers.find((item) => item.id === source.providerId);
+    if (!provider) throw new Error(`Unknown provider for indexed source: ${source.providerId}`);
+    const sourceDocument = loadStyleSourceDocument({
+      provider,
+      providerDir: join(cacheDir, source.providerId),
+      path: source.path
+    });
+    if (sourceDocument.sourceType !== source.sourceType) {
+      throw new Error(
+        `Source type mismatch for ${source.providerId}/${source.path}: expected ${source.sourceType}, got ${sourceDocument.sourceType}.`
+      );
     }
-    const fullContent = sourceBuffer.toString("utf8");
+    if (sourceDocument.contentHash !== source.contentHash) {
+      throw new Error(
+        `Content hash mismatch for ${source.providerId}/${source.path}: expected ${source.contentHash}, got ${sourceDocument.contentHash}.`
+      );
+    }
+    const fullContent = sourceDocument.content;
     const truncated = fullContent.length > maxInputChars;
     const content = fullContent.slice(0, maxInputChars);
     const referencePool = selectReferencePool(source, styleSources.sources, content, referencePoolSize);
@@ -946,6 +1012,7 @@ export async function curateStyleSources({
         source,
         content,
         truncated,
+        requiredTheme: sourceDocument.candidateTheme,
         referencePool,
         profileContext,
         policy,
@@ -961,28 +1028,48 @@ export async function curateStyleSources({
       source,
       styleSources,
       referencePool,
+      requiredTheme: sourceDocument.candidateTheme,
       policy,
       componentKitIds,
       taxonomyVocabulary
     });
+    const governedCandidate = errors.length === 0 && candidate.decision === "promote" && sourceDocument.candidateTheme
+      ? {
+          ...candidate,
+          visual: {
+            ...candidate.visual,
+            theme: sourceDocument.candidateTheme
+          }
+        }
+      : candidate;
     const proposedProfile = errors.length === 0 && candidate.decision === "promote"
-      ? promotedProfile(candidate, source, pinnedSourceMetadata(source, inventory, providers))
+      ? promotedProfile(governedCandidate, source, pinnedSourceMetadata(source, inventory, providers))
       : null;
     const nearest = proposedProfile
       ? (profileIds.has(proposedProfile.id)
           ? { styleId: proposedProfile.id, score: 1 }
           : findNearestProfile(proposedProfile, [...profiles, ...newProfiles]))
       : { styleId: null, score: 0 };
+    const nearestVisual = nearest.styleId
+      ? [...visuals, ...newVisuals].find((visual) => visual.styleId === nearest.styleId)
+      : null;
+    const paletteDistance = sourceDocument.candidateTheme
+      ? themeDistance(sourceDocument.candidateTheme, nearestVisual?.theme)
+      : null;
+    const isDuplicate = nearest.score >= duplicateThreshold && (
+      sourceDocument.candidateTheme === null ||
+      (paletteDistance !== null && paletteDistance <= DEFAULT_THEME_DUPLICATE_THRESHOLD)
+    );
     let decision = "invalid";
     let promotion = null;
     if (errors.length === 0 && candidate.decision === "skip") {
       decision = "skipped";
-    } else if (errors.length === 0 && nearest.score >= duplicateThreshold) {
+    } else if (errors.length === 0 && isDuplicate) {
       decision = "duplicate";
     } else if (errors.length === 0) {
       decision = "promoted";
       const profile = proposedProfile;
-      const visual = promotedVisual(candidate, profile.id, { styleSources, inventory, providers });
+      const visual = promotedVisual(governedCandidate, profile.id, { styleSources, inventory, providers });
       const preview = renderStylePreviewSvg({ style: profile, visual });
       newProfiles.push(profile);
       newVisuals.push(visual);
@@ -1016,6 +1103,8 @@ export async function curateStyleSources({
         responseId: response.id || null,
         responseHash,
         fromHash: transition.fromHash,
+        adapterId: sourceDocument.adapterId,
+        normalizerVersion: sourceDocument.normalizerVersion,
         eventNonce
       });
       eventNonce += 1;
@@ -1039,6 +1128,9 @@ export async function curateStyleSources({
       source: {
         providerId: source.providerId,
         path: source.path,
+        sourceType: sourceDocument.sourceType,
+        adapterId: sourceDocument.adapterId,
+        normalizerVersion: sourceDocument.normalizerVersion,
         contentHash: source.contentHash,
         revision: revisionFor(inventory, source.providerId),
         truncated,
@@ -1056,14 +1148,28 @@ export async function curateStyleSources({
       checks: {
         schema: { passed: errors.length === 0, errors },
         provenance: {
-          passed: !errors.some((error) => error.includes("reference") || error.includes("source")),
+          passed: !errors.some((error) => (
+            error.includes("reference") ||
+            error.includes("source") ||
+            error.includes("adapter-derived required theme")
+          )),
           primarySourceRequired: true
+        },
+        themeBinding: {
+          required: sourceDocument.candidateTheme !== null,
+          applied: candidate?.decision === "promote",
+          passed: sourceDocument.candidateTheme === null ||
+            candidate?.decision !== "promote" ||
+            themesEqual(candidate?.visual?.theme, sourceDocument.candidateTheme),
+          expectedTheme: sourceDocument.candidateTheme
         },
         duplicate: {
           threshold: duplicateThreshold,
           nearestStyleId: nearest.styleId,
           score: Number(nearest.score.toFixed(6)),
-          passed: nearest.score < duplicateThreshold
+          paletteThreshold: sourceDocument.candidateTheme ? DEFAULT_THEME_DUPLICATE_THRESHOLD : null,
+          paletteDistance: paletteDistance === null ? null : Number(paletteDistance.toFixed(6)),
+          passed: !isDuplicate
         }
       },
       decision,
@@ -1117,7 +1223,7 @@ export async function curateStyleSources({
       decision: record.decision,
       reason: {
         promoted: "Passed controlled-candidate, provenance, duplicate, and preview gates.",
-        duplicate: "Matched an existing profile at or above the deterministic duplicate threshold.",
+        duplicate: "Matched an existing profile at both the semantic and visual duplicate thresholds.",
         skipped: "The model selected the governed skip outcome.",
         invalid: "Failed controlled-candidate or provenance validation."
       }[record.decision],

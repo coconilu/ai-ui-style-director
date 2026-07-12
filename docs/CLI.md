@@ -83,10 +83,12 @@ local expected revision to the hosted URL, and the page compares it with the
 deployed HTML and JSON revisions. A mismatch produces a non-blocking stale-site
 warning; search and filtering remain available.
 
-`catalog/generated/style-sources.json` currently contains 74 indexed upstream
-source paths. The browser reports that source-pool count for context but does
-not turn those paths into style cards; only reviewed profiles appear as
-full entries.
+`catalog/generated/style-sources.json` currently contains 109 indexed upstream
+source paths from 7 providers; the component index contains 600 paths. The
+original 74 `DESIGN.md` sources remain the baseline and the 35 daisyUI themes
+begin as pending. The browser reports the source-pool count for context but does
+not turn those paths into style cards; only reviewed profiles appear as full
+entries.
 
 `browse` and its `serve` alias do not create or modify a target project's
 `.ui-style-director/` directory. This hosted complete catalog is intentionally
@@ -175,8 +177,9 @@ the local cache. Use `--cache-dir <path>` to override the cache location.
 
 ## `refresh-catalog`
 
-Refresh cached providers, scan their design and component metadata, and write
-committable indexes under `catalog/generated/`:
+Refresh cached providers, run configured source adapters, scan component
+metadata, and write committable schema-v4 provider indexes under
+`catalog/generated/`:
 
 ```bash
 node bin/ai-ui-style-director.mjs refresh-catalog --clone
@@ -197,6 +200,10 @@ catalog/generated/
   style-sources.json
   component-sources.json
 ```
+
+`daisyui-theme-css` restricts discovery to the 35 theme CSS files and emits
+canonical JSON after deterministic OKLCH conversion. This generated-index
+schema is separate from the hosted browser's schema-v3 `catalog.json`.
 
 `update` remains a compatibility alias for `refresh-catalog`. It does **not**
 update an installed Web Style Director skill. User-facing tool updates follow

@@ -16,9 +16,10 @@ ai-ui-style-director/
 
 The project has no runtime npm dependencies and requires Node.js 20 or newer.
 The reviewed baseline starts with four profiles in each of 12 families and can
-grow through audited curation PRs. The 74 provider paths in
-`catalog/generated/style-sources.json` are a source pool, not additional
-curated profiles.
+grow through audited curation PRs. The generated indexes currently contain 7
+providers, 109 style sources, and 600 component sources. The original 74
+`DESIGN.md` sources remain the baseline and the 35 daisyUI themes begin as
+pending; source paths are not additional curated profiles.
 
 ## Checks
 
@@ -121,6 +122,11 @@ npm run check
 
 `.github/workflows/refresh-providers.yml` performs this work daily and opens a
 pull request if `catalog/generated/` changes.
+
+The `daisyui-theme-css` adapter scopes discovery to 35 theme files, converts
+OKLCH deterministically, and emits canonical JSON for hashing and Kimi. When
+adding another non-`DESIGN.md` format, add equivalent matcher, normalization,
+hash, and malformed-input tests instead of widening the generic scanner.
 
 After a source hash changes, `.github/workflows/curate-style-sources.yml`
 proposes governed additions in a separate audited PR. Deterministic refresh

@@ -1,9 +1,9 @@
 # Automated AI-Assisted Style Curation
 
-This pipeline turns newly indexed upstream `DESIGN.md` material into governed
-catalog proposals. The model participates in interpretation and synthesis, but
-it cannot directly approve files, invent provenance, or bypass repository
-checks.
+This pipeline turns newly indexed upstream `DESIGN.md` documents and normalized
+theme CSS into governed catalog proposals. The model participates in
+interpretation and synthesis, but it cannot directly approve files, invent
+provenance, or bypass repository checks.
 
 ## End-to-end flow
 
@@ -13,7 +13,8 @@ checks.
 2. `curate-style-sources.yml` detects source paths whose current hash is not in
    `catalog/curation/source-state.json`.
 3. The workflow checks out the exact provider revision recorded in
-   `provider-inventory.json` and verifies the source hash before any model call.
+   `provider-inventory.json`, runs the source through its configured adapter,
+   and verifies the normalized source hash before any model call.
 4. The OpenAI-compatible client sends a bounded request to Kimi Code, marks the
    source as untrusted data, and supplies only a small relevant profile context,
    a bounded reference pool, and the allowed catalog taxonomy.
@@ -21,7 +22,8 @@ checks.
    theme colors, and exact source selections. It does not author consumer prose.
 6. Programmatic gates validate the schema, trusted vocabulary, component kits,
    exact source paths, three unique references, primary-source inclusion, theme
-   colors, unique style ID, and deterministic duplicate score.
+   colors, unique style ID, and deterministic semantic plus theme-palette
+   duplicate scores when the Adapter binds a theme.
 7. Program-owned templates turn passing primitives into the name, first viewport,
    layout rules, typography, risks, and reference labels; a deterministic neutral
    SVG preview is generated. Duplicate, skipped,
@@ -62,16 +64,25 @@ contains:
 - any promoted style IDs.
 
 Record IDs are SHA-256 digests of the immutable processing event: provider,
-path, current and previous content hashes, prompt version, response identity and
-hash, timestamp, and a collision sequence. This keeps repeated A→B→A source transitions append-only
-instead of overwriting an older decision. A record also preserves source
-revision, token usage, the normalized candidate, deterministic gate results,
-promotion files, and the GitHub Actions run. API keys, authorization headers,
-and raw requests are never stored.
+path, source type, Adapter and normalizer versions, current and previous content
+hashes, prompt version, response identity and hash, timestamp, and a collision
+sequence. This keeps repeated A→B→A source transitions append-only instead of
+overwriting an older decision. A record also preserves source revision,
+normalization identity, token usage, the normalized candidate, Adapter-derived
+theme binding, deterministic gate results, promotion files, and the GitHub
+Actions run. API keys, authorization headers, and raw requests are never stored.
 
-The initial 74 sources are committed as `baseline`. They are not sent to the
-model retroactively. Only a new source path or changed content hash becomes
-pending.
+The original 74 `DESIGN.md` sources are committed as `baseline`. They are not
+sent to the model retroactively. Adding daisyUI contributes 35 `theme-css`
+sources, so the current generated index contains 109 style sources across 7
+providers while curation state initially remains at 74. Those 35 sources are
+pending and are processed in bounded batches; they must not be added to the
+baseline by the onboarding PR.
+
+The adapter-aware request contract is versioned as `style-curation-v3`.
+Changing the state root to that prompt version documents the new normalized
+input semantics; it does not retroactively make the original 74 baseline
+sources pending.
 
 ## Provider adapters
 
@@ -81,15 +92,25 @@ to `catalog/providers.json`; a non-Awesome provider defaults to the
 The existing corpus explicitly uses `awesome-design-md` to preserve its hosted
 overview and Light/Dark preview URLs.
 
+The `daisyui-themes` Provider explicitly uses `daisyui-theme-css`. It discovers
+only `packages/daisyui/src/themes/*.css`, assigns `sourceType=theme-css`, parses the
+governed color, radius, border, depth, and noise declarations, converts OKLCH
+colors deterministically, and serializes canonical JSON. That canonical JSON is
+both the hash input and the bounded material sent to Kimi. Arbitrary CSS,
+imports, comments, and instructions are not passed through as catalog prose.
+The generated provider/style/component indexes use schema v4 for this generic
+source contract; the hosted browser's `catalog.json` remains schema v3.
+
 Generic visual references use exact `{ provider, path }` provenance. Their
 source link is generated from the provider repository, pinned inventory
 revision, and encoded path. Adding a future source format should be done by
 adding an adapter that produces the same normalized source record, not by
 changing the curation and catalog contracts.
 
-All matching `DESIGN.md` files are indexed; there is no fixed style-source or
-user-choice count. The five-source value below is a per-run cost limit, not a
-catalog-size limit.
+All matching `DESIGN.md` files and the 35 explicitly scoped daisyUI theme files
+are indexed; there is no fixed style-source or user-choice count. The current
+indexes contain 7 providers, 109 style sources, and 600 component sources. The
+five-source value below is a per-run cost limit, not a catalog-size limit.
 
 ## GitHub configuration
 

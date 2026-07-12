@@ -71,9 +71,11 @@ node bin/ai-ui-style-director.mjs browse --open
 complete-catalog service. Both are read-only and do not create recommendation
 session state or modify a target project.
 
-The page also reports the current upstream style-source index count as
-provenance context. Those paths do not have the reviewed metadata required for
-complete cards, so they remain a count rather than additional styles.
+The page also reports the current 109-source upstream index from 7 providers as
+provenance context; the component-source index contains 600 paths. The original
+74 sources are the baseline and the 35 daisyUI themes begin as pending. Those
+paths do not have the reviewed metadata required for complete cards, so they
+remain a count rather than additional styles.
 
 The browser's schema-v3 JSON keeps each card lightweight by returning a
 relative `previewUrl`, not an embedded SVG. Previews load from independent

@@ -249,7 +249,7 @@ async function main() {
         for (const provider of result.providers) {
           process.stdout.write(
             `- ${provider.id}: ${provider.cachePresent ? provider.revision || "cached" : "not cached"} ` +
-              `(DESIGN.md ${provider.counts.designMdFiles}, registry ${provider.counts.registryFiles}, docs ${provider.counts.docsFiles})\n`
+              `(style sources ${provider.counts.styleSources}, registry ${provider.counts.registryFiles}, docs ${provider.counts.docsFiles})\n`
           );
         }
       }

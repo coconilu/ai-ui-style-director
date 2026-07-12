@@ -26,7 +26,7 @@ flowchart LR
   X --> PAGES[GitHub Pages]
   B --> PAGES
   A --> D[DESIGN.md and project state]
-  P[Upstream provider repositories] --> G[clone/pull and path scan]
+  P[Upstream provider repositories] --> G[clone/pull and adapter normalization]
   G --> I[catalog/generated]
   I -. source index count .-> X
   I --> Q[bounded AI candidate]
@@ -139,10 +139,11 @@ The supply-side curator reads only new/changed hashes and writes a governed PR;
 the consumer continues to read only merged profiles.
 
 The catalog browser reads `catalog/generated/style-sources.json` only to show
-its current source-index count. At this revision the file contains 74 provider
-paths, but those paths are not semantically parsed and are not returned as 74
-complete style cards. Browser entries still come only from reviewed profiles in
-`catalog/style-profiles.json`.
+its current source-index count. The generated indexes currently contain 7
+providers, 109 style sources, and 600 component sources, but the 109 style paths
+are not returned as complete style cards. Browser entries still come only from
+reviewed profiles in `catalog/style-profiles.json`. The hosted browser payload
+remains schema v3 independently of the generated provider-index schema.
 
 `scripts/validate-curated-catalog.mjs` applies `catalog/curation-policy.json`,
 which requires at least four profiles and three distinct visual variants in
@@ -246,9 +247,10 @@ An existing `DESIGN.md` is protected by default and is replaced only when `--for
 Open-source material is connected through provider metadata and explicit source
 adapters, not declared as runtime npm dependencies.
 
-| Provider | Role | Integration |
+| Upstream repository | Role | Integration |
 | --- | --- | --- |
 | `VoltAgent/awesome-design-md` | Style-reference corpus | Scan and hash `DESIGN.md`, preserve legacy preview URLs, and feed changed sources to governed curation |
+| `saadeghi/daisyui` | Theme-token reference corpus | Configure Provider ID `daisyui-themes`, parse the 35 scoped theme CSS files, convert OKLCH deterministically, and feed canonical theme JSON to governed curation |
 | `Harzva/design-md-flow` | Workflow reference | Track source and revision while implementing a local selection gate |
 | `shadcn-ui/ui` | Base components | Scan registry sources and recommend the kit from matching profiles |
 | `shadcn/originui` | Application and marketing blocks | Scan registry sources and map the kit to practical SaaS surfaces |
@@ -261,7 +263,11 @@ A component-kit selection only adds guidance to recommendation output and `DESIG
 
 `syncProviders` shallow-clones missing repositories, fast-forward pulls existing caches, and writes `providers-lock.json` with status and cache locations.
 
-`updateCatalog` then recursively scans each cache while ignoring Git metadata, dependencies, build outputs, and cache directories. It records revisions, branches, `DESIGN.md` paths, registry paths, and documentation paths in:
+`updateCatalog` then recursively scans each cache while ignoring Git metadata,
+dependencies, build outputs, and cache directories. Each Provider Adapter
+discovers its own style-source paths and produces canonical material for
+hashing; the refresh also records revisions, branches, registry paths, and
+documentation paths in:
 
 ```text
 catalog/generated/provider-inventory.json
@@ -269,7 +275,7 @@ catalog/generated/style-sources.json
 catalog/generated/component-sources.json
 ```
 
-Generated catalog schema v3 keeps repository-level provenance in
+Generated provider-index schema v4 keeps repository-level provenance in
 `provider-inventory.json`. Each provider records its repository and commit
 revision once. The style-source index contains `providerId`, `path`,
 `sourceType`, and normalized `contentHash`; component sources retain the first
@@ -280,10 +286,14 @@ before capped source selection, making the indexed subset stable across operatin
 systems and filesystems.
 
 The scanner is a lightweight path indexer, not a semantic component parser. It
-indexes every matching `DESIGN.md`; user-facing style count is not capped by a
-source scanner constant. Registry and documentation indexes retain maintenance
-caps of 200 and 100 files per provider. The current 74 style-source paths are a
-checked-in baseline, not automatically promoted styles.
+indexes every matching `DESIGN.md`; the format-specific `daisyui-theme-css`
+adapter additionally indexes only `packages/daisyui/src/themes/*.css`, parses
+governed tokens, converts OKLCH colors deterministically, and emits canonical
+JSON for hashing and Kimi. User-facing style count is not capped by a source
+scanner constant. Registry and documentation indexes retain maintenance caps
+of 200 and 100 files per provider. The current index has 109 style sources:
+the original 74 are the checked-in baseline and the 35 daisyUI themes begin as
+pending, not automatically promoted styles.
 
 `.github/workflows/refresh-providers.yml` runs the same process daily, validates the repository, and opens a pull request only when generated indexes change.
 
@@ -324,7 +334,9 @@ The implementation favors explainability, reproducibility, and a small dependenc
 
 - strengths: offline consumer operation, straightforward tests, traceable recommendations, and audited upstream changes;
 - cost: supply-side semantic curation requires a model credential, while consumer matching remains keyword/profile based;
-- maintenance: a new `DESIGN.md` provider is configuration-driven; a new source format or taxonomy still requires a reviewed adapter or policy change;
+- maintenance: a new `DESIGN.md` provider is configuration-driven; a new source
+  format uses a reviewed Adapter such as `daisyui-theme-css`, and a new taxonomy
+  still requires a reviewed policy change;
 - extension requirement: future recommendation entrypoints should reuse or verify the same scoring and diversification rules so different surfaces stay consistent.
 
 Tests cover intake checks, the 12-case deterministic recommendation benchmark,

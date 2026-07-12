@@ -7,6 +7,7 @@ of the user-facing workflow.
 ## Current roles
 
 - `awesome-design-md`: style reference corpus.
+- `daisyui-themes`: theme-token reference corpus backed by `saadeghi/daisyui`.
 - `design-md-flow`: workflow reference.
 - `shadcn-ui`: foundational components.
 - `origin-ui`: application and marketing sections.
@@ -21,18 +22,29 @@ Run:
 node bin/ai-ui-style-director.mjs refresh-catalog --clone
 ```
 
-The command refreshes local provider checkouts, scans `DESIGN.md`, registry,
-and documentation files, then writes normalized indexes under
-`catalog/generated/`. It does not automatically rewrite the curated
-`catalog/style-profiles.json`.
+The command refreshes local provider checkouts, lets each configured adapter
+discover and normalize its style sources, scans registry and documentation
+files, then writes normalized indexes under `catalog/generated/`. It does not
+automatically rewrite the curated `catalog/style-profiles.json`.
 
-The current `style-sources.json` contains 74 provider paths. These paths form a
-source pool; they are not 74 user-facing styles. The checked-in 74 are baseline
-sources. A future new or changed source can enter the separate AI-assisted
-curation workflow, but it reaches the curated catalog only after structured
-candidate, provenance, duplicate, preview, and repository gates pass. The
-curated catalog starts from a reviewed baseline of four profiles in each of 12
-families and can grow through audited curation PRs.
+The generated indexes currently describe 7 providers, 109 style sources, and
+600 component sources. These paths form a source pool; they are not 109
+user-facing styles. The original 74 `DESIGN.md` sources remain the checked-in
+baseline, while the 35 daisyUI themes begin as pending sources. A new or changed
+source can enter the separate AI-assisted curation workflow, but it reaches the
+curated catalog only after structured candidate, provenance, duplicate,
+preview, and repository gates pass. The curated catalog starts from a reviewed
+baseline of four profiles in each of 12 families and can grow through audited
+curation PRs.
+
+The `daisyui-theme-css` adapter is deliberately format-specific. It matches
+only `packages/daisyui/src/themes/*.css`, extracts governed theme tokens,
+converts OKLCH colors deterministically, and produces canonical JSON for both
+content hashing and bounded Kimi input. It does not treat arbitrary repository
+CSS as a style source.
+
+The generated provider/style/component indexes use schema v4. This does not
+change the hosted browser's independent schema-v3 `catalog.json` contract.
 
 The scheduled GitHub workflow performs the same refresh daily, runs repository
 checks, and opens a pull request only when generated indexes change.

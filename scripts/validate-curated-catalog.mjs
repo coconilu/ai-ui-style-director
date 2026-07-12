@@ -81,7 +81,7 @@ function isSafeRelativePath(value) {
     isNonEmptyString(value) &&
     !value.startsWith("/") &&
     !value.includes("\\") &&
-    !value.split("/").includes("..")
+    value.split("/").every((segment) => segment.length > 0 && segment !== "." && segment !== "..")
   );
 }
 
@@ -131,7 +131,7 @@ export function validateCuratedCatalog({
   expect(Array.isArray(profilesDocument), "style-profiles.json root must be an array");
   expect(Array.isArray(visualsDocument), "style-visuals.json root must be an array");
   expect(Array.isArray(styleSources?.sources), "style-sources.json sources must be an array");
-  expect(styleSources?.schemaVersion === 3, "style-sources.json schemaVersion must be 3");
+  expect(styleSources?.schemaVersion === 4, "style-sources.json schemaVersion must be 4");
   expect(policy && typeof policy === "object" && !Array.isArray(policy), "curation-policy.json root must be an object");
   expect(policy?.schemaVersion === 1, "curation-policy.json schemaVersion must be 1");
   expect(

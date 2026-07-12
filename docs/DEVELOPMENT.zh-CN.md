@@ -16,8 +16,9 @@ ai-ui-style-director/
 
 当前实现没有运行时 npm 依赖，需要 Node.js 20 或更高版本。已策展 Catalog
 从 12 个 family、每组 4 个方向的审查基线开始，并可通过受保护的策展 PR 增长；
-`catalog/generated/style-sources.json` 中当前 74 条 provider 路径只作为候选
-素材池，不会自动进入推荐或目录页面。
+生成索引当前包含 7 个 Provider、109 条 style source 和 600 条 component source。
+原有 74 条 `DESIGN.md` 来源仍是 baseline，新增 35 条 daisyUI 主题从 pending
+开始；来源路径不会自动进入推荐或目录页面。
 
 ## 检查
 
@@ -113,6 +114,10 @@ npm run check
 ```
 
 `.github/workflows/refresh-providers.yml` 每天执行该流程，并在 `catalog/generated/` 发生变化时创建 PR。
+
+`daisyui-theme-css` Adapter 只发现 35 个主题文件，确定性转换 OKLCH，并输出用于
+内容哈希与 Kimi 的规范 JSON。未来接入其他非 `DESIGN.md` 格式时，应为 matcher、
+规范化、哈希和非法输入补齐同等测试，而不是扩大通用扫描器范围。
 
 来源哈希变化后，`.github/workflows/curate-style-sources.yml` 会在另一条可审计 PR
 中提出受治理的 Catalog 新增。确定性刷新结果与模型辅助策展结果继续使用彼此独立的

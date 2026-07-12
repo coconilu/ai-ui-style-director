@@ -75,11 +75,16 @@ independent same-origin SVG paths, and progressively renders 24 cards at a
 time. A deterministic catalog revision is attached to the URL and assets so
 the page can warn about a stale deployment without blocking browsing.
 
-The 74 generated style-source entries are upstream provider paths and remain a
-governed source pool; they are not 74 additional styles. New or changed hashes
-can enter the audited AI-assisted curation workflow, but only passing candidates
-become user-facing profiles. The page
-reports that count without misrepresenting unreviewed paths as style cards.
+The generated indexes currently describe 7 providers, 109 upstream style
+sources, and 600 component sources. The 109 style-source paths remain a
+governed source pool; they are not 109 additional styles. The original 74
+`DESIGN.md` sources remain the no-cost baseline, while 35 daisyUI theme CSS
+sources enter the audited AI-assisted curation queue. Only passing candidates
+become user-facing profiles. The page reports the current source count without
+misrepresenting unreviewed paths as style cards.
+The `daisyui-themes` Provider uses a format-specific adapter that converts
+governed CSS tokens and OKLCH colors into canonical JSON before hashing and
+bounded Kimi processing.
 `browse` is read-only and does not create or modify project
 `.ui-style-director/` state.
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "promptVersion": "style-curation-v2",
+  "promptVersion": "style-curation-v3",
   "sources": [
     {
       "providerId": "awesome-design-md",

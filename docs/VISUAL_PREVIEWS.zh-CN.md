@@ -67,9 +67,10 @@ node bin/ai-ui-style-director.mjs browse --open
 确定性的 revision 会在已部署 HTML 或 JSON 落后于 CLI 所期待的本地 Catalog
 时显示提示。这与单次推荐的自包含 HTML 画廊是两种有意不同的交付方式。
 
-页面还会把当前 74 条上游 style-source 索引作为来源背景统计展示。这些路径
-缺少完整卡片所需的已审查元数据，因此只保留为候选素材池和数量，不会成为
-额外风格条目。
+页面还会把当前来自 7 个 Provider 的 109 条上游 style-source 索引作为来源背景
+统计展示；component-source 索引为 600 条。原有 74 条来源是 baseline，新增
+35 条 daisyUI 主题从 pending 开始。这些路径缺少完整卡片所需的已审查元数据，
+因此只保留为候选素材池和数量，不会成为额外风格条目。
 
 ## 项目草图
 
