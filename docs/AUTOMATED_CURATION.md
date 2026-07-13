@@ -85,8 +85,8 @@ The original 74 `DESIGN.md` sources are committed as `baseline`. They are not
 sent to the model retroactively. Adding daisyUI contributes 35 `theme-css`
 sources, so the current generated index contains 109 style sources across 7
 providers while curation state initially remains at 74. Those 35 sources are
-pending and are processed in bounded batches; they must not be added to the
-baseline by the onboarding PR.
+pending and are drained in bounded model batches within one workflow run; they
+must not be added to the baseline by the onboarding PR.
 
 The adapter-aware request contract is versioned as `style-curation-v3`.
 Changing the state root to that prompt version documents the new normalized
@@ -128,7 +128,8 @@ changing the curation and catalog contracts.
 All matching `DESIGN.md` files and the 35 explicitly scoped daisyUI theme files
 are indexed; there is no fixed style-source or user-choice count. The current
 indexes contain 7 providers, 109 style sources, and 600 component sources. The
-five-source value below is a per-run cost limit, not a catalog-size limit.
+five-source value below is a model-batch size, not a per-run or catalog-size
+limit.
 
 On each upstream refresh, a changed governed value changes the canonical JSON
 and its content hash. Curation identity remains `providerId + path`, but the
@@ -155,7 +156,7 @@ Defaults are:
 CURATOR_BASE_URL=https://api.kimi.com/coding/v1
 CURATOR_MODEL=kimi-for-coding
 CURATOR_TEMPERATURE=1
-CURATOR_MAX_SOURCES=5
+CURATOR_BATCH_SIZE=5
 CURATOR_MAX_INPUT_CHARS=80000
 CURATOR_MAX_OUTPUT_TOKENS=4096
 CURATOR_MAX_RETRIES=1
@@ -165,10 +166,10 @@ CURATOR_REQUEST_TIMEOUT_MS=120000
 `kimi-for-coding` requires `CURATOR_TEMPERATURE=1`. The generic curator keeps
 `0` as its default when the variable is omitted for another compatible model.
 
-The five-source batch is implemented today, not reserved for a future phase:
-`.github/workflows/curate-style-sources.yml` sets
-`CURATOR_MAX_SOURCES: "5"` and passes that value to the curator CLI. Changing it
-changes only the per-run cost envelope, never the total source or catalog size.
+The workflow sets `CURATOR_BATCH_SIZE: "5"` and repeatedly invokes the trusted
+single-batch curator until no pending source remains. The model still processes
+at most five sources at a time, but one workflow run validates and proposes all
+initially pending sources in a single guarded Draft PR.
 
 The theme-palette duplicate threshold is `0.04`: each semantic field uses RGB
 Euclidean distance divided by `sqrt(3) * 255`, then the seven fields are averaged.
@@ -204,7 +205,7 @@ CURATOR_BASE_URL=https://api.kimi.com/coding/v1 \
 CURATOR_MODEL=kimi-for-coding \
 CURATOR_TEMPERATURE=1 \
 CURATOR_API_KEY=... \
-npm run catalog:curate -- --clone --max-sources 5
+npm run catalog:curate -- --drain --clone --batch-size 5
 ```
 
 The command is a clean no-op when nothing is pending, so it does not require an
@@ -214,11 +215,15 @@ without advancing state. A structurally invalid model result is recorded as
 
 ## Scale and cost controls
 
-The workflow processes at most five sources per run, clips each upstream
-document at 80,000 characters, passes at most 60 reference candidates and 40
-nearby profiles to the model, and retries at most once. A daily run provides a
-retry path if an earlier infrastructure call fails; source-state changes also
-drain larger batches across successive guarded PRs.
+The workflow partitions model work into batches of at most five sources and
+drains all pending sources before publishing one Draft PR. Each upstream
+document is clipped at 80,000 characters, the model sees at most 60 reference
+candidates and 40 nearby profiles per request, and a request retries at most
+once. The job timeout is 120 minutes. Batch continuity and strictly decreasing
+remaining counts prevent a stalled loop from publishing partial results.
+Before any model call, every run uses the read-only workflow token to skip when
+an earlier curation PR is still open, preventing the same pending queue from
+being paid for twice.
 
 Duplicate comparison is deterministic and scans the curated profile metadata,
 not the raw provider corpus. This is sufficient for tens to hundreds of styles.

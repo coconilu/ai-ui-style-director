@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { curateStyleSources } from "../src/curation.mjs";
+import { curateStyleSources, drainStyleSources } from "../src/curation.mjs";
 
 function parseArgs(argv) {
   const args = {};
@@ -42,17 +42,23 @@ function writeResult(path, result) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const rootDir = args.root ? resolve(args.root) : undefined;
+  if (args["batch-size"] !== undefined && args["max-sources"] !== undefined) {
+    throw new Error("Use either batch-size or the max-sources compatibility alias, not both.");
+  }
+  const batchSize = positiveInteger(args["batch-size"] ?? args["max-sources"], 5, "batch-size");
   const options = {
     baseline: Boolean(args.baseline),
     clone: Boolean(args.clone),
     cacheDir: args["cache-dir"] ? resolve(args["cache-dir"]) : undefined,
-    maxSources: positiveInteger(args["max-sources"], 5, "max-sources"),
     maxInputChars: positiveInteger(args["max-input-chars"], 80_000, "max-input-chars"),
     maxOutputTokens: positiveInteger(args["max-output-tokens"], 4_096, "max-output-tokens")
   };
   if (rootDir) options.rootDir = rootDir;
   if (options.cacheDir === undefined) delete options.cacheDir;
-  const result = await curateStyleSources(options);
+  if (args.drain && options.baseline) throw new Error("drain cannot be combined with baseline.");
+  const result = args.drain
+    ? await drainStyleSources({ ...options, batchSize })
+    : await curateStyleSources({ ...options, maxSources: batchSize });
   writeResult(args.output, result);
 }
 

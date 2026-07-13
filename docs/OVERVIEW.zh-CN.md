@@ -70,9 +70,9 @@ Adapter。Adapter 负责把不同格式压缩成项目认可的规范数据：
 6. 通过后由程序模板生成名称、布局规则、风险说明和中性 SVG 预览；
 7. 每条决定写入不可变审计记录，并更新 source state。
 
-当前 Workflow 按配置的批次上限处理 pending 来源；未处理的条目继续留在队列中。
-模型返回非法候选时会记录为 `invalid`，不会进入用户目录，也不会对同一内容哈希
-形成无限付费重试。
+当前 Workflow 按配置的模型批次处理 pending 来源，并循环到初始队列清空。模型
+返回非法候选时会记录为已处理的 `invalid`，不会进入用户目录，也不会对同一内容
+哈希形成无限付费重试。全部批次结果统一校验后只创建一个 Draft PR。
 
 完整校验通过后，Workflow 才创建短期 GitHub App Token，提交白名单内的 Catalog
 产物并创建 Draft PR。策展 PR 不启用 auto-merge，必须由维护者检查、标记为 Ready

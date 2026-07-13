@@ -20,11 +20,12 @@ test("curation workflow uses trusted main-only triggers and bounded execution", 
   assert.match(curationWorkflow, /workflow_dispatch:/u);
   assert.doesNotMatch(curationWorkflow, /^\s{2}pull_request:/mu);
   assert.match(curationWorkflow, /permissions:\s*\n\s+contents: read/u);
+  assert.match(curationWorkflow, /pull-requests: read/u);
   assert.match(curationWorkflow, /if: github\.ref == 'refs\/heads\/main'/u);
   assert.match(curationWorkflow, /group: curate-style-sources/u);
   assert.match(curationWorkflow, /cancel-in-progress: false/u);
-  assert.match(curationWorkflow, /timeout-minutes: 30/u);
-  assert.match(curationWorkflow, /CURATOR_MAX_SOURCES: "5"/u);
+  assert.match(curationWorkflow, /timeout-minutes: 120/u);
+  assert.match(curationWorkflow, /CURATOR_BATCH_SIZE: "5"/u);
   assert.match(curationWorkflow, /CURATOR_MAX_INPUT_CHARS: "80000"/u);
   assert.match(curationWorkflow, /CURATOR_MAX_OUTPUT_TOKENS: "4096"/u);
   assert.match(curationWorkflow, /CURATOR_MAX_RETRIES: "1"/u);
@@ -38,28 +39,37 @@ test("curation workflow calls Kimi through the OpenAI-compatible environment and
   assert.match(curationWorkflow, /CURATOR_API_KEY: \$\{\{ secrets\.KIMI_CODE_API_KEY \}\}/u);
   assert.match(
     curationWorkflow,
-    /node scripts\/curate-style-sources\.mjs \\\s*\n\s+--clone \\\s*\n\s+--cache-dir \.ui-style-director\/cache\/providers/u
+    /node scripts\/curate-style-sources\.mjs \\\s*\n\s+--drain \\\s*\n\s+--clone \\\s*\n\s+--cache-dir \.ui-style-director\/cache\/providers/u
   );
-  assert.match(curationWorkflow, /--max-sources "\$CURATOR_MAX_SOURCES"/u);
+  assert.match(curationWorkflow, /--batch-size "\$CURATOR_BATCH_SIZE"/u);
   assert.match(curationWorkflow, /--max-input-chars "\$CURATOR_MAX_INPUT_CHARS"/u);
   assert.match(curationWorkflow, /--max-output-tokens "\$CURATOR_MAX_OUTPUT_TOKENS"/u);
   assert.match(curationWorkflow, /Reject undeclared changes on no-op/u);
   assert.match(curationWorkflow, /No new or changed source content was found/u);
+  assert.match(curationWorkflow, /curation drain must finish with zero remaining sources/u);
+  assert.match(curationWorkflow, /curation drain must process all/u);
+  assert.match(curationWorkflow, /Detect existing curation pull request/u);
+  assert.match(curationWorkflow, /startswith\("automation\/curate-style-sources-"\)/u);
+  assert.match(curationWorkflow, /steps\.guard\.outputs\.skip != 'true'/u);
 });
 
 test("write-capable GitHub App token is unavailable to the model and only created after gates pass", () => {
+  const guardIndex = curationWorkflow.indexOf("- name: Detect existing curation pull request");
   const curateIndex = curationWorkflow.indexOf("- name: Curate changed sources");
   const validateIndex = curationWorkflow.indexOf("- name: Validate curated output");
   const tokenIndex = curationWorkflow.indexOf("- name: Create curation bot token");
   const publishIndex = curationWorkflow.indexOf("- name: Commit and open draft pull request");
 
-  assert.ok(curateIndex >= 0);
+  assert.ok(guardIndex >= 0);
+  assert.ok(curateIndex > guardIndex);
   assert.ok(validateIndex > curateIndex);
   assert.ok(tokenIndex > validateIndex);
   assert.ok(publishIndex > tokenIndex);
 
   const modelStep = curationWorkflow.slice(curateIndex, curationWorkflow.indexOf("- name: Read curation result"));
   assert.doesNotMatch(modelStep, /REFRESH_APP|GH_TOKEN|app-token/u);
+  const guardStep = curationWorkflow.slice(guardIndex, curationWorkflow.indexOf("- name: Validate trusted base"));
+  assert.match(guardStep, /GH_TOKEN: \$\{\{ github\.token \}\}/u);
   assert.match(curationWorkflow, /persist-credentials: false/u);
   assert.match(curationWorkflow, /actions\/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3/u);
   assert.match(curationWorkflow, /client-id: \$\{\{ vars\.REFRESH_APP_CLIENT_ID \}\}/u);
@@ -75,6 +85,9 @@ test("curation automation leaves an allowlisted, append-only draft PR for mainta
   assert.match(curationWorkflow, /Pinned provider revision and source content hash: passed/u);
   assert.match(curationWorkflow, /Input tokens:/u);
   assert.match(curationWorkflow, /Output tokens:/u);
+  assert.match(curationWorkflow, /Batch size:/u);
+  assert.match(curationWorkflow, /Pending at start:/u);
+  assert.match(curationWorkflow, /records\.length > 50/u);
   assert.match(curationWorkflow, /`skipped=\$\{count\("skipped"\)\}`/u);
   assert.match(curationWorkflow, /SKIPPED: \$\{\{ steps\.result\.outputs\.skipped \}\}/u);
   assert.doesNotMatch(curationWorkflow, / — /u);
