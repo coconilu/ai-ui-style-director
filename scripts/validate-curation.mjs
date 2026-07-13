@@ -117,6 +117,40 @@ export function validateCurationArtifacts({
     if (record?.agent?.responseId !== null && typeof record?.agent?.responseId !== "string") {
       errors.push(`${file}: agent.responseId must be null or a string`);
     }
+    if (record?.agent?.promptVersion === "style-curation-v4") {
+      const attempts = record.agent.attempts;
+      if (
+        !Number.isInteger(record.agent.attemptCount) ||
+        record.agent.attemptCount < 1 ||
+        record.agent.attemptCount > 2 ||
+        !Array.isArray(attempts) ||
+        attempts.length !== record.agent.attemptCount
+      ) {
+        errors.push(`${file}: v4 agent metadata must contain one or two matching attempts`);
+      } else {
+        for (const [index, attempt] of attempts.entries()) {
+          const expectedPhase = index === 0 ? "initial" : "repair";
+          if (attempt?.phase !== expectedPhase) errors.push(`${file}: agent.attempts[${index}].phase must be ${expectedPhase}`);
+          if (!HASH.test(attempt?.responseHash || "")) errors.push(`${file}: agent.attempts[${index}].responseHash must be SHA-256`);
+          if (attempt?.responseId !== null && typeof attempt?.responseId !== "string") {
+            errors.push(`${file}: agent.attempts[${index}].responseId must be null or a string`);
+          }
+          if (typeof attempt?.model !== "string" || attempt.model.trim() === "") {
+            errors.push(`${file}: agent.attempts[${index}].model must be a non-empty string`);
+          }
+          if (!Array.isArray(attempt?.validationErrors) || !attempt.validationErrors.every((error) => typeof error === "string")) {
+            errors.push(`${file}: agent.attempts[${index}].validationErrors must be a string array`);
+          }
+        }
+        const finalAttempt = attempts.at(-1);
+        if (finalAttempt.responseHash !== record.agent.responseHash || finalAttempt.responseId !== record.agent.responseId) {
+          errors.push(`${file}: final attempt must match the top-level agent response identity`);
+        }
+        if (JSON.stringify(finalAttempt.validationErrors) !== JSON.stringify(record?.checks?.schema?.errors)) {
+          errors.push(`${file}: final attempt validation errors must match checks.schema.errors`);
+        }
+      }
+    }
     if (
       !record?.transition ||
       (record.transition.fromHash !== null && !HASH.test(record.transition.fromHash || "")) ||

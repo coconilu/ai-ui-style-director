@@ -68,7 +68,7 @@ Authorization Header 或原始请求。
 35 条 `theme-css` 来源不会写入 baseline，而是作为 pending 在同一次 Workflow 中按
 受限模型批次处理完毕。
 
-支持 Adapter 的请求契约版本为 `style-curation-v3`。把 state 根级 prompt version
+支持 Adapter 的请求契约版本为 `style-curation-v4`。把 state 根级 prompt version
 更新到该版本用于记录新的规范输入语义，不会让原有 74 条 baseline 被追溯重处理。
 
 ## Provider Adapter
@@ -189,8 +189,9 @@ npm run catalog:curate -- --drain --clone --batch-size 5
 ```
 
 没有待办时命令会干净退出，因此针对已提交的基线不需要 API Key。网络、认证等基础
-设施错误不会推进 state；模型返回的结构非法时会记录为 `invalid`，避免同一来源哈希
-形成无限付费重试。
+设施错误不会推进 state；模型候选未通过确定性校验时，程序会把具体错误反馈给模型，
+进行一次有上限的语义修复。两次尝试都会计入 token 汇总和审计元数据；第二次仍失败
+才记录为终态 `invalid`，避免同一来源哈希形成无限付费重试。
 
 ## 规模与成本控制
 
