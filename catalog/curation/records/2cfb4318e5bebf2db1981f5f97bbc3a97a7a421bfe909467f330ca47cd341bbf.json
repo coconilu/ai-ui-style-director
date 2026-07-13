@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "2cfb4318e5bebf2db1981f5f97bbc3a97a7a421bfe909467f330ca47cd341bbf",
+  "createdAt": "2026-07-13T05:39:55.503Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/wireframe.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3723
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "dadae8e0-7644-4cc5-b70b-a8f525742902",
+    "responseHash": "sha256:07ed5b0d24ead67594b6f31a263fe34e1cbb0043f6b7a56fd564577df5767c3e",
+    "usage": {
+      "prompt_tokens": 12641,
+      "completion_tokens": 453,
+      "total_tokens": 13094,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12385
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "dadae8e0-7644-4cc5-b70b-a8f525742902",
+        "responseHash": "sha256:07ed5b0d24ead67594b6f31a263fe34e1cbb0043f6b7a56fd564577df5767c3e",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12641,
+          "completion_tokens": 453,
+          "total_tokens": 13094,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12385
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Wireframe theme provides a distinct, reusable grayscale palette with zero chroma, suitable for developer-focused documentation and technical interfaces. The minimal geometry (no border radius, thin borders) reinforces a clean, structural aesthetic.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "docs",
+        "api-reference",
+        "developer-portal"
+      ],
+      "audiences": [
+        "developers",
+        "technical-integrators",
+        "solution-engineers"
+      ],
+      "goals": [
+        "docs-adoption",
+        "first-success",
+        "integration"
+      ],
+      "density": "medium",
+      "tones": [
+        "precise",
+        "technical",
+        "clean",
+        "credible"
+      ],
+      "keywords": [
+        "api reference",
+        "docs",
+        "code",
+        "integration",
+        "documentation"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "editorial-stack",
+      "emphasis": "content",
+      "typographyStyle": "technical-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "developer",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#EBEBEB",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#D4D4D4",
+        "border": "#EBEBEB"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/wireframe.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "content-hierarchy"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "role": "typography"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#EBEBEB",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#D4D4D4",
+        "border": "#EBEBEB"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-editorial-stack-content-0b8eb8d8",
+      "score": 1,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.168937,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-editorial-stack-content-0beed9d3",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-editorial-stack-content-0beed9d3.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

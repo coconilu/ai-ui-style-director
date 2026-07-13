@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "recordId": "74f89736079b67670a10fb22f1fe6b6b7560e50fa24f0d0c2109d205b3b40887",
+  "createdAt": "2026-07-13T05:39:13.928Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/night.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3893
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "58ad73c0-d0f7-4bdd-b6db-485c54878ace",
+    "responseHash": "sha256:460a83cd42d111915f39e52b23a49858b04f4013e67b39da296d4f23c42d0f5d",
+    "usage": {
+      "prompt_tokens": 13240,
+      "completion_tokens": 436,
+      "total_tokens": 13676,
+      "prompt_tokens_details": {
+        "cached_tokens": 12800
+      },
+      "prompt_cache_hit_tokens": 12800,
+      "prompt_cache_miss_tokens": 440
+    },
+    "attemptCount": 2,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "e693ff1b-d629-4e1d-a82e-97d2e4681694",
+        "responseHash": "sha256:2fcec5cbff6d54269380d215fe00f2d88141b71040ef92acc30dbdc256d764cb",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12807,
+          "completion_tokens": 439,
+          "total_tokens": 13246,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12551
+        },
+        "validationErrors": [
+          "profile.keywords contains value outside the trusted catalog vocabulary: dark"
+        ]
+      },
+      {
+        "phase": "repair",
+        "responseId": "58ad73c0-d0f7-4bdd-b6db-485c54878ace",
+        "responseHash": "sha256:460a83cd42d111915f39e52b23a49858b04f4013e67b39da296d4f23c42d0f5d",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 13240,
+          "completion_tokens": 436,
+          "total_tokens": 13676,
+          "prompt_tokens_details": {
+            "cached_tokens": 12800
+          },
+          "prompt_cache_hit_tokens": 12800,
+          "prompt_cache_miss_tokens": 440
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Night theme provides a distinct dark, high-contrast palette with a cool blue accent, suitable for developer-focused dashboards and data-heavy interfaces.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "dashboard",
+        "developer-portal",
+        "monitoring"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "operators"
+      ],
+      "goals": [
+        "monitoring",
+        "decision-support",
+        "show-capability"
+      ],
+      "density": "medium",
+      "tones": [
+        "technical",
+        "focused",
+        "precise",
+        "modern"
+      ],
+      "keywords": [
+        "dashboard",
+        "developer",
+        "monitoring",
+        "api",
+        "terminal"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "compact",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#0F172A",
+        "surface": "#0C1425",
+        "surfaceAlt": "#0A1120",
+        "text": "#C9CBD0",
+        "muted": "#7F838E",
+        "accent": "#3ABDF7",
+        "border": "#0A1120"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#0F172A",
+        "surface": "#0C1425",
+        "surfaceAlt": "#0A1120",
+        "text": "#C9CBD0",
+        "muted": "#7F838E",
+        "accent": "#3ABDF7",
+        "border": "#0A1120"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-6ced1427",
+      "score": 0.68595,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.16335,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-6be14a36",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-6be14a36.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "recordId": "a3c5bca2ba06f5526355be3e68582d4d579fd8ef04332b889f1dbf02195786f9",
+  "createdAt": "2026-07-13T05:39:28.474Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/retro.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3844
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "e04f235c-4ab2-465e-bce2-573d9bb1877e",
+    "responseHash": "sha256:22cc518f8bdb5df55c421cdc1c2aec3f048d1b2fd78924b5fa446872a6d56372",
+    "usage": {
+      "prompt_tokens": 13240,
+      "completion_tokens": 432,
+      "total_tokens": 13672,
+      "prompt_tokens_details": {
+        "cached_tokens": 12672
+      },
+      "prompt_cache_hit_tokens": 12672,
+      "prompt_cache_miss_tokens": 568
+    },
+    "attemptCount": 2,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "67aa2bf8-ded9-4317-a83e-19523a81d679",
+        "responseHash": "sha256:26f00aa0c107a34340609acf98297b42e3c23203ce4f67d161bd20cb85680087",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12749,
+          "completion_tokens": 437,
+          "total_tokens": 13186,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12493
+        },
+        "validationErrors": [
+          "profile.keywords contains value outside the trusted catalog vocabulary: retro",
+          "profile.keywords contains value outside the trusted catalog vocabulary: vintage",
+          "profile.keywords contains value outside the trusted catalog vocabulary: warm",
+          "profile.keywords contains value outside the trusted catalog vocabulary: earthy",
+          "profile.keywords contains value outside the trusted catalog vocabulary: nostalgic",
+          "visual.references must be unique"
+        ]
+      },
+      {
+        "phase": "repair",
+        "responseId": "e04f235c-4ab2-465e-bce2-573d9bb1877e",
+        "responseHash": "sha256:22cc518f8bdb5df55c421cdc1c2aec3f048d1b2fd78924b5fa446872a6d56372",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 13240,
+          "completion_tokens": 432,
+          "total_tokens": 13672,
+          "prompt_tokens_details": {
+            "cached_tokens": 12672
+          },
+          "prompt_cache_hit_tokens": 12672,
+          "prompt_cache_miss_tokens": 568
+        },
+        "validationErrors": [
+          "visual.references must be unique"
+        ]
+      }
+    ]
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#ECE3CA",
+        "surface": "#E4D8B4",
+        "surfaceAlt": "#DBCA9B",
+        "text": "#793205",
+        "muted": "#A77954",
+        "accent": "#FF9FA0",
+        "border": "#DBCA9B"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

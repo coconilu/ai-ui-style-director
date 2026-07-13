@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "recordId": "a12c510985599787b28a87d742143ad24022cd338a69b2962b43f11859f3a940",
+  "createdAt": "2026-07-13T05:38:48.711Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/lemonade.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3884
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "f275198a-5797-4f54-953a-82908c92a7e4",
+    "responseHash": "sha256:da982c6ad8803d298b22680b12e2f5a0edffe75ad847a539fdf96794a35610b8",
+    "usage": {
+      "prompt_tokens": 13272,
+      "completion_tokens": 441,
+      "total_tokens": 13713,
+      "prompt_tokens_details": {
+        "cached_tokens": 12800
+      },
+      "prompt_cache_hit_tokens": 12800,
+      "prompt_cache_miss_tokens": 472
+    },
+    "attemptCount": 2,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "fd0f6aa1-dc47-4c10-98b6-1a24763e9fa2",
+        "responseHash": "sha256:5d63a95643144da1871490e7d9f2ae3a4c707adb2b410aba56d9e7c9f9a9091d",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12824,
+          "completion_tokens": 440,
+          "total_tokens": 13264,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12568
+        },
+        "validationErrors": [
+          "profile.keywords contains value outside the trusted catalog vocabulary: nature",
+          "profile.keywords contains value outside the trusted catalog vocabulary: organic"
+        ]
+      },
+      {
+        "phase": "repair",
+        "responseId": "f275198a-5797-4f54-953a-82908c92a7e4",
+        "responseHash": "sha256:da982c6ad8803d298b22680b12e2f5a0edffe75ad847a539fdf96794a35610b8",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 13272,
+          "completion_tokens": 441,
+          "total_tokens": 13713,
+          "prompt_tokens_details": {
+            "cached_tokens": 12800
+          },
+          "prompt_cache_hit_tokens": 12800,
+          "prompt_cache_miss_tokens": 472
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Fresh green accent on light warm canvas offers a distinct natural, organic feel suitable for wellness, education, or community-focused interfaces.",
+    "profile": {
+      "family": "consumer",
+      "pageTypes": [
+        "landing",
+        "product-site",
+        "community-site"
+      ],
+      "audiences": [
+        "consumers",
+        "wellness-seekers",
+        "families"
+      ],
+      "goals": [
+        "signup",
+        "build-trust",
+        "habit-adoption"
+      ],
+      "density": "medium",
+      "tones": [
+        "warm",
+        "approachable",
+        "optimistic",
+        "gentle"
+      ],
+      "keywords": [
+        "wellness",
+        "health",
+        "community",
+        "lifestyle",
+        "trust"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "community",
+      "typographyStyle": "humanist-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#F8FDEF",
+        "surface": "#E1E6D9",
+        "surfaceAlt": "#CBCFC3",
+        "text": "#151614",
+        "muted": "#70726C",
+        "accent": "#4C9100",
+        "border": "#CBCFC3"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lemonade.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#F8FDEF",
+        "surface": "#E1E6D9",
+        "surfaceAlt": "#CBCFC3",
+        "text": "#151614",
+        "muted": "#70726C",
+        "accent": "#4C9100",
+        "border": "#CBCFC3"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "consumer-wellness-companion-soft",
+      "score": 0.479452,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.102337,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "consumer-centered-hero-community-4ab63e7f",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/consumer-centered-hero-community-4ab63e7f.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}
