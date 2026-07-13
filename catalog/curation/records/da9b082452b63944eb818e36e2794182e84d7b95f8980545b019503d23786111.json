@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "da9b082452b63944eb818e36e2794182e84d7b95f8980545b019503d23786111",
+  "createdAt": "2026-07-13T05:37:43.604Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/caramellatte.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3817
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "bb08c082-fdd2-434c-92d0-fb60ae3ed50f",
+    "responseHash": "sha256:2521ecd3387a3f296db624bb5b9b15838abd919397fe6c1c08ae64badb98acea",
+    "usage": {
+      "prompt_tokens": 12907,
+      "completion_tokens": 437,
+      "total_tokens": 13344,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12651
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "bb08c082-fdd2-434c-92d0-fb60ae3ed50f",
+        "responseHash": "sha256:2521ecd3387a3f296db624bb5b9b15838abd919397fe6c1c08ae64badb98acea",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12907,
+          "completion_tokens": 437,
+          "total_tokens": 13344,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12651
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Caramellatte theme provides a warm, earthy palette with high contrast and soft borders, suitable for consumer or portfolio sites emphasizing comfort and trust.",
+    "profile": {
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "communities",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "purchase",
+        "signup"
+      ],
+      "density": "medium",
+      "tones": [
+        "warm",
+        "approachable",
+        "trustworthy",
+        "human"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "lifestyle",
+        "story",
+        "trust"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "trust",
+      "typographyStyle": "humanist-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#FFF7ED",
+        "surface": "#FEECD3",
+        "surfaceAlt": "#FFD6A7",
+        "text": "#7C2808",
+        "muted": "#B07B64",
+        "accent": "#000000",
+        "border": "#FFD6A7"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/caramellatte.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/retro.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFF7ED",
+        "surface": "#FEECD3",
+        "surfaceAlt": "#FFD6A7",
+        "text": "#7C2808",
+        "muted": "#B07B64",
+        "accent": "#000000",
+        "border": "#FFD6A7"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "consumer-centered-hero-story-2f0b340c",
+      "score": 0.870968,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.165753,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "consumer-centered-hero-trust-1884cccb",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/consumer-centered-hero-trust-1884cccb.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

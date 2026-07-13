@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "promptVersion": "style-curation-v3",
+  "promptVersion": "style-curation-v4",
   "sources": [
     {
       "providerId": "awesome-design-md",
@@ -641,6 +641,296 @@
       "status": "invalid",
       "recordId": "5b7a947935bab570896d068fa88ee372572d17c53003dfe3598f8a5d3a61f3e5",
       "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/bumblebee.css",
+      "processedHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+      "status": "promoted",
+      "recordId": "a5d84e5b90bb04ac7c5b1ca79a4ea9f54c77d6fd521233f4c59bcc2b7d26baf9",
+      "styleIds": [
+        "launch-centered-hero-trust-dc16f9c6"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/business.css",
+      "processedHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+      "status": "promoted",
+      "recordId": "16b28998ef07cf3bdce0d023d9315ed91342ea3b53a508deb127be5937ba904b",
+      "styleIds": [
+        "enterprise-dashboard-grid-data-7e324226"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/caramellatte.css",
+      "processedHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+      "status": "promoted",
+      "recordId": "da9b082452b63944eb818e36e2794182e84d7b95f8980545b019503d23786111",
+      "styleIds": [
+        "consumer-centered-hero-trust-1884cccb"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/cmyk.css",
+      "processedHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+      "status": "promoted",
+      "recordId": "2ac29fbbd82fe1933bcf88fb8c6d19f6d78430265628f01d56370211e9f339be",
+      "styleIds": [
+        "developer-editorial-stack-content-3862b164"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/coffee.css",
+      "processedHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557",
+      "status": "invalid",
+      "recordId": "e1e1c5f248a7ffde986e3a47934844716ae87e3bde407852f78177abb18487b8",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/corporate.css",
+      "processedHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+      "status": "promoted",
+      "recordId": "7d9114c738cec2b1f5412bd547f576095b72e24a10d5a2f1e5ae61fe4b840298",
+      "styleIds": [
+        "enterprise-dashboard-grid-data-817068c8"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/cupcake.css",
+      "processedHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+      "status": "promoted",
+      "recordId": "4cbbb22298c4ef869dd1d7b8cb53355ce0321130d625dba0b236e04303f5c3a1",
+      "styleIds": [
+        "consumer-centered-hero-community-72832e30"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/cyberpunk.css",
+      "processedHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19",
+      "status": "invalid",
+      "recordId": "424903f5124dd65aaf23c3214880ab5607038d685d81d1a7d663ae3cbc5b31cf",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/dark.css",
+      "processedHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+      "status": "invalid",
+      "recordId": "75d2b0b39caf2c512d5cdd50a85abc304d3b63c8a54cc16db21381ebd225e46d",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/dim.css",
+      "processedHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+      "status": "promoted",
+      "recordId": "b1f33e9f561827b3e7ee0c93f9fd8326d615f2675fa9a5866861f33852781c37",
+      "styleIds": [
+        "developer-dashboard-grid-data-29261d80"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/dracula.css",
+      "processedHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+      "status": "promoted",
+      "recordId": "a10f43c5a6757122d1b8c100b1739db3c80225ce6041316670deb897cde308a1",
+      "styleIds": [
+        "developer-dashboard-grid-data-b0deb9dd"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/emerald.css",
+      "processedHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+      "status": "promoted",
+      "recordId": "a8750345f0f619f134993c4305a58cc4833cd6e9f2e4c23deaf55625fcf7c0e0",
+      "styleIds": [
+        "developer-dashboard-grid-data-fa0a21e2"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/fantasy.css",
+      "processedHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+      "status": "promoted",
+      "recordId": "b525fd46e769bf13919366b1a7f19b7a4da79d4a6cdd73f0237be7eb332a25ec",
+      "styleIds": [
+        "developer-dashboard-grid-data-8137dc5b"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/forest.css",
+      "processedHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+      "status": "promoted",
+      "recordId": "7d802dba38b97c4a6c09cd2fa395ff35af24d9aad50b82ec6a946a972aab128c",
+      "styleIds": [
+        "developer-dashboard-grid-data-184a9fda"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/garden.css",
+      "processedHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+      "status": "promoted",
+      "recordId": "da7a70917878040be473ea4d2179b7d2ac172addd7a7f24b4ecce2e07e1448cf",
+      "styleIds": [
+        "consumer-centered-hero-trust-bdad6a9a"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/halloween.css",
+      "processedHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+      "status": "promoted",
+      "recordId": "e6d99a656236d48238f18d522c3d56b5ef31582789f9fa0720bfc3d71fa42055",
+      "styleIds": [
+        "developer-dashboard-grid-data-a98dce44"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/lemonade.css",
+      "processedHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+      "status": "promoted",
+      "recordId": "a12c510985599787b28a87d742143ad24022cd338a69b2962b43f11859f3a940",
+      "styleIds": [
+        "consumer-centered-hero-community-4ab63e7f"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/light.css",
+      "processedHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+      "status": "invalid",
+      "recordId": "38f7c8fc8d0281604bd006b08e1e2fc1c030af4e691b5b0f819a5e88b3792fa5",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/lofi.css",
+      "processedHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+      "status": "promoted",
+      "recordId": "b9dc47d95da7e1d35c53f574bb317ebedde6b7351dee3bf21a3dda66855a83b9",
+      "styleIds": [
+        "developer-editorial-stack-content-7a607af2"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/luxury.css",
+      "processedHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+      "status": "promoted",
+      "recordId": "5723d6c7718649af34cb9d2bda9f2c02134c8fb5c7bc10c7ff0d3f163dfdc34e",
+      "styleIds": [
+        "developer-dashboard-grid-data-41fb4cb8"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/night.css",
+      "processedHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+      "status": "promoted",
+      "recordId": "74f89736079b67670a10fb22f1fe6b6b7560e50fa24f0d0c2109d205b3b40887",
+      "styleIds": [
+        "developer-dashboard-grid-data-6be14a36"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/nord.css",
+      "processedHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+      "status": "promoted",
+      "recordId": "b39b68b74345d26c62b533a9dce6c51a1e07a5f46f1bd09b469b4b4c342b2a22",
+      "styleIds": [
+        "developer-editorial-stack-content-4ab099d9"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/pastel.css",
+      "processedHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+      "status": "promoted",
+      "recordId": "2cefe71f35c0115515d9740d68c67e17378cc8ee75a102fcc5d2d69afba04ea4",
+      "styleIds": [
+        "consumer-centered-hero-community-a251fa4c"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/retro.css",
+      "processedHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234",
+      "status": "invalid",
+      "recordId": "a3c5bca2ba06f5526355be3e68582d4d579fd8ef04332b889f1dbf02195786f9",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/silk.css",
+      "processedHash": "sha256:0b8eb8d807eeb506e086c95a46793f92ec2c18463825df9e618fdca269d7f30c",
+      "status": "promoted",
+      "recordId": "81f4aefc0dbebc7ce28136748f00113c2c0cab00a3ed5bff90f2b0883fda5e61",
+      "styleIds": [
+        "developer-editorial-stack-content-0b8eb8d8"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/sunset.css",
+      "processedHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+      "status": "promoted",
+      "recordId": "ab9e2f83c5e302ba0aa5a36f393253c08be25b2310b6b016809257ecf404a389",
+      "styleIds": [
+        "developer-dashboard-grid-data-98d119d6"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/synthwave.css",
+      "processedHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+      "status": "promoted",
+      "recordId": "b5080ad883ce5c0d03d0dd02f03df8225047b58c367531c44b88407cc02c4997",
+      "styleIds": [
+        "portfolio-centered-hero-story-d5726f45"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/valentine.css",
+      "processedHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+      "status": "promoted",
+      "recordId": "acda56edcb68aa731648fe1ddb0f0e343c4987d3f17ed1839c7da8657d50e157",
+      "styleIds": [
+        "consumer-centered-hero-community-4c776093"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/winter.css",
+      "processedHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+      "status": "promoted",
+      "recordId": "f14a518bf8b6d7abfa298dd54edac09ff5befeeb1a0034d19b8bcd3f29eb5796",
+      "styleIds": [
+        "developer-editorial-stack-content-30765d74"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/wireframe.css",
+      "processedHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+      "status": "promoted",
+      "recordId": "2cfb4318e5bebf2db1981f5f97bbc3a97a7a421bfe909467f330ca47cd341bbf",
+      "styleIds": [
+        "developer-editorial-stack-content-0beed9d3"
+      ]
     }
   ]
 }

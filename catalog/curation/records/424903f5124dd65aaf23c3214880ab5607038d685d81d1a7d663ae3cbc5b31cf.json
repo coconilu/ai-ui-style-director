@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "recordId": "424903f5124dd65aaf23c3214880ab5607038d685d81d1a7d663ae3cbc5b31cf",
+  "createdAt": "2026-07-13T05:38:08.701Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/cyberpunk.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3810
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "dc372a89-d873-4787-9aef-ed57478fb002",
+    "responseHash": "sha256:2db7c771641ba1d86539f45c3c437601fe0390977cae9e63d65aa1854a9f05eb",
+    "usage": {
+      "prompt_tokens": 13343,
+      "completion_tokens": 443,
+      "total_tokens": 13786,
+      "prompt_tokens_details": {
+        "cached_tokens": 13184
+      },
+      "prompt_cache_hit_tokens": 13184,
+      "prompt_cache_miss_tokens": 159
+    },
+    "attemptCount": 2,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "46ce665e-597c-41aa-abff-67684ac09f1a",
+        "responseHash": "sha256:d17968176abbe19004a285b8231ad13d957039db2e0c679217f4446cae57b0dd",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12880,
+          "completion_tokens": 332,
+          "total_tokens": 13212,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12624
+        },
+        "validationErrors": [
+          "profile.keywords contains value outside the trusted catalog vocabulary: cyberpunk",
+          "profile.keywords contains value outside the trusted catalog vocabulary: neon",
+          "visual.references must be unique"
+        ]
+      },
+      {
+        "phase": "repair",
+        "responseId": "dc372a89-d873-4787-9aef-ed57478fb002",
+        "responseHash": "sha256:2db7c771641ba1d86539f45c3c437601fe0390977cae9e63d65aa1854a9f05eb",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 13343,
+          "completion_tokens": 443,
+          "total_tokens": 13786,
+          "prompt_tokens_details": {
+            "cached_tokens": 13184
+          },
+          "prompt_cache_hit_tokens": 13184,
+          "prompt_cache_miss_tokens": 159
+        },
+        "validationErrors": [
+          "visual.references must be unique"
+        ]
+      }
+    ]
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFF25E",
+        "surface": "#F7E83A",
+        "surfaceAlt": "#E3D40E",
+        "text": "#000000",
+        "muted": "#666126",
+        "accent": "#FF7A9B",
+        "border": "#E3D40E"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

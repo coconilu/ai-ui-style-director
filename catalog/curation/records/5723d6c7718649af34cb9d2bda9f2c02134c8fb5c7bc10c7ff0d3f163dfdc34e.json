@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "5723d6c7718649af34cb9d2bda9f2c02134c8fb5c7bc10c7ff0d3f163dfdc34e",
+  "createdAt": "2026-07-13T05:39:06.320Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/luxury.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3886
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "dba4fde6-949e-4e75-8b53-ecb676f7bee2",
+    "responseHash": "sha256:8beb550e8d3f86853fea8a56ed74e62664b74f748b1ab7f027dff59b3a02f713",
+    "usage": {
+      "prompt_tokens": 12803,
+      "completion_tokens": 431,
+      "total_tokens": 13234,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12547
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "dba4fde6-949e-4e75-8b53-ecb676f7bee2",
+        "responseHash": "sha256:8beb550e8d3f86853fea8a56ed74e62664b74f748b1ab7f027dff59b3a02f713",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12803,
+          "completion_tokens": 431,
+          "total_tokens": 13234,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12547
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Luxury theme provides a distinct dark, gold-accented palette suitable for premium or high-end developer tools and dashboards.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "developer-portal",
+        "dashboard",
+        "api-platform"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "analysts"
+      ],
+      "goals": [
+        "monitoring",
+        "show-capability",
+        "decision-support"
+      ],
+      "density": "medium",
+      "tones": [
+        "premium",
+        "confident",
+        "precise",
+        "technical"
+      ],
+      "keywords": [
+        "dashboard",
+        "developer",
+        "monitoring",
+        "api",
+        "premium"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "compact",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#09090B",
+        "surface": "#171618",
+        "surfaceAlt": "#1E1D1F",
+        "text": "#DCA54D",
+        "muted": "#886733",
+        "accent": "#FFFFFF",
+        "border": "#1E1D1F"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/luxury.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#09090B",
+        "surface": "#171618",
+        "surfaceAlt": "#1E1D1F",
+        "text": "#DCA54D",
+        "muted": "#886733",
+        "accent": "#FFFFFF",
+        "border": "#1E1D1F"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-8137dc5b",
+      "score": 0.854545,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.66293,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-41fb4cb8",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-41fb4cb8.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

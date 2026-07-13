@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "a5d84e5b90bb04ac7c5b1ca79a4ea9f54c77d6fd521233f4c59bcc2b7d26baf9",
+  "createdAt": "2026-07-13T05:37:36.113Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/bumblebee.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3773
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "41fc140d-3681-4466-bfc7-d983ab3706be",
+    "responseHash": "sha256:3bca87d22cb03c8e0bc80d80534889b464f9b176318f603be7667ee3138617fb",
+    "usage": {
+      "prompt_tokens": 12887,
+      "completion_tokens": 447,
+      "total_tokens": 13334,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 12887
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "41fc140d-3681-4466-bfc7-d983ab3706be",
+        "responseHash": "sha256:3bca87d22cb03c8e0bc80d80534889b464f9b176318f603be7667ee3138617fb",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12887,
+          "completion_tokens": 447,
+          "total_tokens": 13334,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 12887
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Bumblebee theme provides a clean, light, high-contrast palette with a warm yellow accent, suitable for launch and consumer-focused pages that need an energetic, trustworthy feel.",
+    "profile": {
+      "family": "launch",
+      "pageTypes": [
+        "landing",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "early-adopters",
+        "founders",
+        "creators"
+      ],
+      "goals": [
+        "launch",
+        "signup",
+        "brand-awareness"
+      ],
+      "density": "medium",
+      "tones": [
+        "energetic",
+        "trustworthy",
+        "modern",
+        "warm"
+      ],
+      "keywords": [
+        "launch",
+        "waitlist",
+        "startup",
+        "brand",
+        "community"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "trust",
+      "typographyStyle": "humanist-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#E4E4E4",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#F7C800",
+        "border": "#E4E4E4"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/bumblebee.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "content-hierarchy"
+        },
+        {
+          "providerId": "awesome-design-md",
+          "path": "design-md/framer/DESIGN.md",
+          "role": "interaction"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#E4E4E4",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#F7C800",
+        "border": "#E4E4E4"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "launch-centered-hero-story-cff58e59",
+      "score": 0.831776,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.122569,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "launch-centered-hero-trust-dc16f9c6",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/launch-centered-hero-trust-dc16f9c6.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

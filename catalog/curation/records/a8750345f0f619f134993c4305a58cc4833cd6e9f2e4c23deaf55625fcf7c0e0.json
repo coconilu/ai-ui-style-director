@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "a8750345f0f619f134993c4305a58cc4833cd6e9f2e4c23deaf55625fcf7c0e0",
+  "createdAt": "2026-07-13T05:38:26.651Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/emerald.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3773
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "073dcceb-3a9d-4d51-9042-9b69d3ff6295",
+    "responseHash": "sha256:10b87a575663fa30111d85496b45560b99c0291ef38d9e2683b9eb0e723d7179",
+    "usage": {
+      "prompt_tokens": 12819,
+      "completion_tokens": 429,
+      "total_tokens": 13248,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12563
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "073dcceb-3a9d-4d51-9042-9b69d3ff6295",
+        "responseHash": "sha256:10b87a575663fa30111d85496b45560b99c0291ef38d9e2683b9eb0e723d7179",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12819,
+          "completion_tokens": 429,
+          "total_tokens": 13248,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12563
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Clean, light theme with green accent, suitable for developer/enterprise dashboards and docs.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "dashboard",
+        "docs",
+        "developer-portal"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "analysts"
+      ],
+      "goals": [
+        "monitoring",
+        "docs-adoption",
+        "decision-support"
+      ],
+      "density": "medium",
+      "tones": [
+        "clean",
+        "focused",
+        "professional",
+        "technical"
+      ],
+      "keywords": [
+        "dashboard",
+        "docs",
+        "developer",
+        "analytics",
+        "monitoring"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#333C4D",
+        "muted": "#858A94",
+        "accent": "#66CC8A",
+        "border": "#D1D1D1"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "content-hierarchy"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "role": "layout"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#333C4D",
+        "muted": "#858A94",
+        "accent": "#66CC8A",
+        "border": "#D1D1D1"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-29261d80",
+      "score": 0.523438,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.512675,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-fa0a21e2",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-fa0a21e2.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

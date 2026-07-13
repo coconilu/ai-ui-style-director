@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "recordId": "e1e1c5f248a7ffde986e3a47934844716ae87e3bde407852f78177abb18487b8",
+  "createdAt": "2026-07-13T05:37:54.078Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/coffee.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3898
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "21093b4c-2a07-4971-97df-09f6376f59fc",
+    "responseHash": "sha256:cccf216c38ad693c34c6006fe6a2d367fd2181ec9f681b3d4660e6b09ceada14",
+    "usage": {
+      "prompt_tokens": 13328,
+      "completion_tokens": 432,
+      "total_tokens": 13760,
+      "prompt_tokens_details": {
+        "cached_tokens": 12800
+      },
+      "prompt_cache_hit_tokens": 12800,
+      "prompt_cache_miss_tokens": 528
+    },
+    "attemptCount": 2,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "02fe11fb-93c3-4e12-baba-5ea42f21dc5d",
+        "responseHash": "sha256:cccf216c38ad693c34c6006fe6a2d367fd2181ec9f681b3d4660e6b09ceada14",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12907,
+          "completion_tokens": 432,
+          "total_tokens": 13339,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12651
+        },
+        "validationErrors": [
+          "visual.references must be unique"
+        ]
+      },
+      {
+        "phase": "repair",
+        "responseId": "21093b4c-2a07-4971-97df-09f6376f59fc",
+        "responseHash": "sha256:cccf216c38ad693c34c6006fe6a2d367fd2181ec9f681b3d4660e6b09ceada14",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 13328,
+          "completion_tokens": 432,
+          "total_tokens": 13760,
+          "prompt_tokens_details": {
+            "cached_tokens": 12800
+          },
+          "prompt_cache_hit_tokens": 12800,
+          "prompt_cache_miss_tokens": 528
+        },
+        "validationErrors": [
+          "visual.references must be unique"
+        ]
+      }
+    ]
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#261B25",
+        "surface": "#1E151D",
+        "surfaceAlt": "#120A11",
+        "text": "#C59F61",
+        "muted": "#856A49",
+        "accent": "#DB924C",
+        "border": "#120A11"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

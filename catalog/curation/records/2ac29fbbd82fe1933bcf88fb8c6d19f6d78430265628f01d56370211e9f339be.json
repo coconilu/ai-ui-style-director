@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "recordId": "2ac29fbbd82fe1933bcf88fb8c6d19f6d78430265628f01d56370211e9f339be",
+  "createdAt": "2026-07-13T05:37:47.398Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/cmyk.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3841
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "172e66a4-ae78-48ec-8b2b-918b98e0a3a8",
+    "responseHash": "sha256:c3de686bf84e8e2fa2e2de11aca48e130b203889bbb58c78a31fa76b73bb1aac",
+    "usage": {
+      "prompt_tokens": 12875,
+      "completion_tokens": 432,
+      "total_tokens": 13307,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12619
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "172e66a4-ae78-48ec-8b2b-918b98e0a3a8",
+        "responseHash": "sha256:c3de686bf84e8e2fa2e2de11aca48e130b203889bbb58c78a31fa76b73bb1aac",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12875,
+          "completion_tokens": 432,
+          "total_tokens": 13307,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12619
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "CMYK theme provides a clean, high-contrast light palette with a vibrant blue accent, suitable for developer-focused documentation and API platforms.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "api-reference",
+        "docs",
+        "developer-portal"
+      ],
+      "audiences": [
+        "developers",
+        "technical-integrators",
+        "solution-engineers"
+      ],
+      "goals": [
+        "docs-adoption",
+        "first-success",
+        "integration"
+      ],
+      "density": "medium",
+      "tones": [
+        "precise",
+        "technical",
+        "clean",
+        "credible"
+      ],
+      "keywords": [
+        "api reference",
+        "sdk",
+        "endpoint",
+        "code",
+        "integration",
+        "docs"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "editorial-stack",
+      "emphasis": "content",
+      "typographyStyle": "technical-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "docs",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#DEDEDE",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#45AEEE",
+        "border": "#DEDEDE"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cmyk.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "awesome-design-md",
+          "path": "design-md/hashicorp/DESIGN.md",
+          "role": "typography"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#DEDEDE",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#45AEEE",
+        "border": "#DEDEDE"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "docs-api-reference-workbench",
+      "score": 0.562914,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.079733,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-editorial-stack-content-3862b164",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-editorial-stack-content-3862b164.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

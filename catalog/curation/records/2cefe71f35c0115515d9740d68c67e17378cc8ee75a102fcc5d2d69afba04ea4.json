@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "2cefe71f35c0115515d9740d68c67e17378cc8ee75a102fcc5d2d69afba04ea4",
+  "createdAt": "2026-07-13T05:39:21.331Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/pastel.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3821
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "b5a4a6bb-d76e-4b20-b696-641b241d3579",
+    "responseHash": "sha256:8568405d418a41772bdcb7255fa21185f64b1f1d5fedd4c9fe4f8080dde6796a",
+    "usage": {
+      "prompt_tokens": 12733,
+      "completion_tokens": 438,
+      "total_tokens": 13171,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12477
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "b5a4a6bb-d76e-4b20-b696-641b241d3579",
+        "responseHash": "sha256:8568405d418a41772bdcb7255fa21185f64b1f1d5fedd4c9fe4f8080dde6796a",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12733,
+          "completion_tokens": 438,
+          "total_tokens": 13171,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12477
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Pastel theme provides a soft, light color palette with pastel accents suitable for consumer or portfolio use cases emphasizing warmth and approachability.",
+    "profile": {
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "portfolio"
+      ],
+      "audiences": [
+        "consumers",
+        "communities",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "build-trust",
+        "express-identity"
+      ],
+      "density": "low-medium",
+      "tones": [
+        "warm",
+        "approachable",
+        "gentle",
+        "playful"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "lifestyle",
+        "story",
+        "trust"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "community",
+      "typographyStyle": "humanist-sans",
+      "spacing": "spacious",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F9FAFB",
+        "surfaceAlt": "#E5E6E7",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#E8D4FF",
+        "border": "#E5E6E7"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F9FAFB",
+        "surfaceAlt": "#E5E6E7",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#E8D4FF",
+        "border": "#E5E6E7"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "consumer-centered-hero-trust-bdad6a9a",
+      "score": 0.920792,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.173708,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "consumer-centered-hero-community-a251fa4c",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/consumer-centered-hero-community-a251fa4c.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

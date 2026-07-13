@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "recordId": "e6d99a656236d48238f18d522c3d56b5ef31582789f9fa0720bfc3d71fa42055",
+  "createdAt": "2026-07-13T05:38:41.557Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/halloween.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3855
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "798c41e9-3b4d-4251-92eb-c22a450c6ad9",
+    "responseHash": "sha256:93906307ac7d41ea7a5e10d0141a66bbc90ba64d532119b37237d86a522402de",
+    "usage": {
+      "prompt_tokens": 12792,
+      "completion_tokens": 424,
+      "total_tokens": 13216,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12536
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "798c41e9-3b4d-4251-92eb-c22a450c6ad9",
+        "responseHash": "sha256:93906307ac7d41ea7a5e10d0141a66bbc90ba64d532119b37237d86a522402de",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12792,
+          "completion_tokens": 424,
+          "total_tokens": 13216,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12536
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Halloween theme provides a distinct dark, high-contrast palette with a vibrant orange accent, suitable for developer or launch contexts.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "developer-portal",
+        "dashboard",
+        "api-platform"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "operators"
+      ],
+      "goals": [
+        "monitoring",
+        "show-capability",
+        "docs-adoption"
+      ],
+      "density": "medium",
+      "tones": [
+        "technical",
+        "focused",
+        "precise"
+      ],
+      "keywords": [
+        "dashboard",
+        "developer",
+        "monitoring",
+        "api",
+        "terminal"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "compact",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#1B1816",
+        "surface": "#0B0908",
+        "surfaceAlt": "#000000",
+        "text": "#CDCDCD",
+        "muted": "#868584",
+        "accent": "#FF9A33",
+        "border": "#000000"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/halloween.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#1B1816",
+        "surface": "#0B0908",
+        "surfaceAlt": "#000000",
+        "text": "#CDCDCD",
+        "muted": "#868584",
+        "accent": "#FF9A33",
+        "border": "#000000"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-184a9fda",
+      "score": 1,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.099555,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-a98dce44",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-a98dce44.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}

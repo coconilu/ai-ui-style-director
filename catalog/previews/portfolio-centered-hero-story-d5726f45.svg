@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title description">
+  <title id="title">Portfolio Centered Hero Story draft style preview</title>
+  <desc id="description">Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorab…</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#F861B4"/></marker>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#1C184B" stroke-width="1" opacity="0.18"/></pattern>
+  </defs>
+  <rect width="1200" height="720" fill="#09002F"/>
+  <rect width="1200" height="720" fill="url(#grid)"/>
+  <text x="42" y="45" fill="#656BAC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="750" text-anchor="start">AI UI STYLE DIRECTION</text>
+  <text x="1158" y="45" fill="#F861B4" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="750" text-anchor="end">DRAFT / WIREFRAME</text>
+  <text x="42" y="92" fill="#A2B2FF" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="780" text-anchor="start">Portfolio Centered Hero Story</text>
+  <text x="42" y="124" fill="#656BAC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="450" text-anchor="start">Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorab…</text>
+  <g transform="translate(40 160)">
+    <rect x="0" y="0" width="1120" height="520" rx="20" fill="#120B3D" stroke="#1C184B" />
+    <rect x="28" y="30" width="500" height="252" rx="18" fill="#F861B4" stroke="#1C184B" opacity="0.9"/><text x="50" y="256" fill="#120B3D" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="start">PROJECT 01</text><rect x="554" y="30" width="538" height="160" rx="18" fill="#1C184B" stroke="#1C184B" /><text x="576" y="164" fill="#656BAC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="start">PROJECT 02</text><circle cx="1004" cy="106" r="45" fill="#F861B4" opacity="0.3"/><rect x="554" y="216" width="258" height="276" rx="18" fill="#1C184B" stroke="#1C184B" /><text x="576" y="466" fill="#656BAC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="start">PROJECT 03</text><rect x="838" y="216" width="254" height="276" rx="18" fill="#1C184B" stroke="#1C184B" /><text x="860" y="466" fill="#656BAC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="start">PROJECT 04</text><rect x="28" y="308" width="500" height="184" rx="18" fill="#1C184B" stroke="#1C184B" /><text x="50" y="466" fill="#656BAC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="start">PROJECT 05</text><text x="52" y="82" fill="#120B3D" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="760" text-anchor="start">Selected work</text><text x="52" y="116" fill="#120B3D" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="500" text-anchor="start">A disciplined visual archive.</text>
+  </g>
+</svg>

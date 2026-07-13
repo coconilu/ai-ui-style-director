@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordId": "b525fd46e769bf13919366b1a7f19b7a4da79d4a6cdd73f0237be7eb332a25ec",
+  "createdAt": "2026-07-13T05:38:30.361Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/fantasy.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3794
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v4",
+    "responseId": "0bea15ac-6126-47ae-b91d-440a7b79a79b",
+    "responseHash": "sha256:16a854c5d58e76a8eea8df67317d527c596ba50c0dae383bd41a618d7eac870a",
+    "usage": {
+      "prompt_tokens": 12820,
+      "completion_tokens": 433,
+      "total_tokens": 13253,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 12564
+    },
+    "attemptCount": 1,
+    "attempts": [
+      {
+        "phase": "initial",
+        "responseId": "0bea15ac-6126-47ae-b91d-440a7b79a79b",
+        "responseHash": "sha256:16a854c5d58e76a8eea8df67317d527c596ba50c0dae383bd41a618d7eac870a",
+        "model": "deepseek-v4-flash",
+        "usage": {
+          "prompt_tokens": 12820,
+          "completion_tokens": 433,
+          "total_tokens": 13253,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 12564
+        },
+        "validationErrors": []
+      }
+    ]
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Clean, high-contrast light theme with a purple accent and subtle geometry, suitable for developer and enterprise dashboards.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "dashboard",
+        "developer-portal",
+        "api-platform"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "analysts"
+      ],
+      "goals": [
+        "monitoring",
+        "decision-support",
+        "show-capability"
+      ],
+      "density": "medium",
+      "tones": [
+        "clean",
+        "focused",
+        "professional",
+        "technical"
+      ],
+      "keywords": [
+        "dashboard",
+        "developer",
+        "analytics",
+        "monitoring",
+        "api"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#1F2937",
+        "muted": "#797F87",
+        "accent": "#6B0072",
+        "border": "#D1D1D1"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/fantasy.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "role": "layout"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#1F2937",
+        "muted": "#797F87",
+        "accent": "#6B0072",
+        "border": "#D1D1D1"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-29261d80",
+      "score": 0.697479,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.584839,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-8137dc5b",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-8137dc5b.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29226757844",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29226757844",
+    "commitSha": "1278905f2ef2dcba328b8f920390609cade1d76e"
+  }
+}
