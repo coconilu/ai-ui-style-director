@@ -641,6 +641,280 @@
       "status": "invalid",
       "recordId": "5b7a947935bab570896d068fa88ee372572d17c53003dfe3598f8a5d3a61f3e5",
       "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/bumblebee.css",
+      "processedHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+      "status": "promoted",
+      "recordId": "87cc4710478f2610bf2ca7731a98fc9ec731f635ec0ecac520650b39e73c89bd",
+      "styleIds": [
+        "launch-centered-hero-story-dc16f9c6"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/business.css",
+      "processedHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+      "status": "promoted",
+      "recordId": "448e094a414690044996ac43e82d20775235de85c09b13f025e72b2ca0b2847d",
+      "styleIds": [
+        "enterprise-dashboard-grid-data-7e324226"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/caramellatte.css",
+      "processedHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+      "status": "promoted",
+      "recordId": "848b3b3007c635d4c7645147cfb44a4de1e521ebe1e79a31e4a13d0dd54ace9c",
+      "styleIds": [
+        "consumer-centered-hero-story-1884cccb"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/cmyk.css",
+      "processedHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+      "status": "promoted",
+      "recordId": "dbd4381b1ea0953bccc52e46b44d5cc5ae54ac6659dd6de2b3f69f59f1b7607c",
+      "styleIds": [
+        "developer-dashboard-grid-data-3862b164"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/coffee.css",
+      "processedHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557",
+      "status": "invalid",
+      "recordId": "d6a94e2debe87cec964f577bfaf4955555a3554fb5b1fc3d1091ac609b31b45e",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/corporate.css",
+      "processedHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+      "status": "invalid",
+      "recordId": "ef6efca8ca470e95b33ed5826b23f7e3de8c2a1a20cac3a6ae982ee0af18af8d",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/cupcake.css",
+      "processedHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+      "status": "invalid",
+      "recordId": "e21b424a3321d4008354fc53da64b1a63e20aab665adffe4e540ae85591ac1cf",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/cyberpunk.css",
+      "processedHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19",
+      "status": "invalid",
+      "recordId": "4d6bac42420142d381a353a991b563968a120e119c62f865bec89ab7b665a59e",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/dark.css",
+      "processedHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+      "status": "invalid",
+      "recordId": "f52bb798d6c6ccf9363f0e03fa2d7200874e5fdf88b19d87ebaf5a341d5c0f71",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/dim.css",
+      "processedHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+      "status": "promoted",
+      "recordId": "4f4247b180937507aaed9015dd83cc9543fffd0549aef665d0371124e6799da4",
+      "styleIds": [
+        "developer-dashboard-grid-data-29261d80"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/dracula.css",
+      "processedHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+      "status": "promoted",
+      "recordId": "599eea76d303dba52c7c1c6a4ef2f5175751dd93c886d2149df3ed5f877cbffc",
+      "styleIds": [
+        "developer-dashboard-grid-data-b0deb9dd"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/emerald.css",
+      "processedHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+      "status": "promoted",
+      "recordId": "cf6b0ba70c82334265acb649eedcf8db5971cf480c98df6bd272344e17f06476",
+      "styleIds": [
+        "developer-dashboard-grid-data-fa0a21e2"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/fantasy.css",
+      "processedHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+      "status": "promoted",
+      "recordId": "4d498b0ec1c07ace7fc2aa5478cd63689d329e3934c540d6952ed393dc84d321",
+      "styleIds": [
+        "developer-dashboard-grid-data-8137dc5b"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/forest.css",
+      "processedHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+      "status": "promoted",
+      "recordId": "b2e0974fa39fbf9e7d8b7396492fe25859eb41029a47b11d4314876e57293f9d",
+      "styleIds": [
+        "developer-dashboard-grid-data-184a9fda"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/garden.css",
+      "processedHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+      "status": "promoted",
+      "recordId": "b1a13a314df495ed85273d3ea47e62cda63db0a861b97470791b5f2c865d5eb1",
+      "styleIds": [
+        "consumer-centered-hero-community-bdad6a9a"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/halloween.css",
+      "processedHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+      "status": "promoted",
+      "recordId": "6b7ae841eb03a0b184759f6bf5e87e9e8de2f4227177c18bc800a86f069b91ee",
+      "styleIds": [
+        "developer-centered-hero-product-proof-a98dce44"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/lemonade.css",
+      "processedHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+      "status": "invalid",
+      "recordId": "9e7a1a21aa2de5d81ffabb25d60e14462cc6f84bda94ac9b12f204b9a0e3b431",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/light.css",
+      "processedHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+      "status": "invalid",
+      "recordId": "44e857da4e47c3778f99e517de6f0054ac693bbc1aab285dc260b2c0b9f8828e",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/lofi.css",
+      "processedHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+      "status": "invalid",
+      "recordId": "e42e81bf3815b13c9047d805af7533b90c457b1bd8a301c2c7ba92232817eff7",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/luxury.css",
+      "processedHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+      "status": "promoted",
+      "recordId": "3c12a9774a8ec54994b435b04434ee71f760f26277bcf487df7d71db406dfe4e",
+      "styleIds": [
+        "enterprise-centered-hero-trust-41fb4cb8"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/night.css",
+      "processedHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+      "status": "promoted",
+      "recordId": "9c84d3e40662476420fc97ad032ba508fa7016060b751721739fb25d4900a4b4",
+      "styleIds": [
+        "developer-dashboard-grid-data-6be14a36"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/nord.css",
+      "processedHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+      "status": "invalid",
+      "recordId": "29095eb50b97b23bf6ad1fc72775c6f306857e0baa5ef9b3d9d5adb79b181510",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/pastel.css",
+      "processedHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+      "status": "invalid",
+      "recordId": "a74d4588a93332a712eb0997fd44a0dd0f9c9fda08a5e198860a7ec1a67e34bb",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/retro.css",
+      "processedHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234",
+      "status": "invalid",
+      "recordId": "e042956eb40a4495cfa0e97cf14003725fe557dcf31ea328901ba93e1c05dedb",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/silk.css",
+      "processedHash": "sha256:0b8eb8d807eeb506e086c95a46793f92ec2c18463825df9e618fdca269d7f30c",
+      "status": "invalid",
+      "recordId": "bd97a4e4313ad52f84d027fed338f86a5fc7f61d9ddc42b212aaa6ec9418cb50",
+      "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/sunset.css",
+      "processedHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+      "status": "promoted",
+      "recordId": "b3d5a51f1b87662c273354867c55d9729da007cd2b11c2ce76b67307e28a9b92",
+      "styleIds": [
+        "developer-dashboard-grid-data-98d119d6"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/synthwave.css",
+      "processedHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+      "status": "promoted",
+      "recordId": "238c77f89b6fc67a70a5ec068b0c43f11e5db2e00d4c917826ff6df07e134138",
+      "styleIds": [
+        "developer-dashboard-grid-product-proof-d5726f45"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/valentine.css",
+      "processedHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+      "status": "promoted",
+      "recordId": "58e404cc407f04f9442567f430291ed94772b8129e976119612b24252e0b20e4",
+      "styleIds": [
+        "consumer-centered-hero-community-4c776093"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/winter.css",
+      "processedHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+      "status": "promoted",
+      "recordId": "4b030082cd53729aece51073feb818c4601eef14a00c3e183909a37c7dcae5a0",
+      "styleIds": [
+        "developer-dashboard-grid-data-30765d74"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/wireframe.css",
+      "processedHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+      "status": "invalid",
+      "recordId": "8e9c46e01332ed824378e115041b337ffb779902848883bebe8e37932d399923",
+      "styleIds": []
     }
   ]
 }

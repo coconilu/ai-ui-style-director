@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordId": "b2e0974fa39fbf9e7d8b7396492fe25859eb41029a47b11d4314876e57293f9d",
+  "createdAt": "2026-07-13T05:09:11.363Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/forest.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3824
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "2e724772-25f2-41db-aa52-0e77a8a1d84f",
+    "responseHash": "sha256:179db92183ea94599c24f01f4ae322052f2c0caf0f74c4565854f744d37588e1",
+    "usage": {
+      "prompt_tokens": 12767,
+      "completion_tokens": 308,
+      "total_tokens": 13075,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11743
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Dark, earthy theme with a vibrant green accent; suitable for developer or enterprise tools emphasizing data and trust.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "dashboard",
+        "developer-portal",
+        "monitoring"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "operators"
+      ],
+      "goals": [
+        "monitoring",
+        "decision-support",
+        "show-capability"
+      ],
+      "density": "medium",
+      "tones": [
+        "technical",
+        "focused",
+        "calm"
+      ],
+      "keywords": [
+        "dashboard",
+        "developer",
+        "monitoring",
+        "terminal",
+        "api"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "compact",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#1B1717",
+        "surface": "#161212",
+        "surfaceAlt": "#110D0D",
+        "text": "#CAC9C9",
+        "muted": "#848282",
+        "accent": "#1FB854",
+        "border": "#110D0D"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/forest.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "role": "content-hierarchy"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "role": "density"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#1B1717",
+        "surface": "#161212",
+        "surfaceAlt": "#110D0D",
+        "text": "#CAC9C9",
+        "muted": "#848282",
+        "accent": "#1FB854",
+        "border": "#110D0D"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-29261d80",
+      "score": 0.846939,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.122431,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-184a9fda",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-184a9fda.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

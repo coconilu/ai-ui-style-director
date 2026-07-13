@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordId": "dbd4381b1ea0953bccc52e46b44d5cc5ae54ac6659dd6de2b3f69f59f1b7607c",
+  "createdAt": "2026-07-13T05:08:35.956Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/cmyk.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3841
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "10b27f2a-c258-45a1-9571-e6f539f2b300",
+    "responseHash": "sha256:5bc9440c0ee3e1b7a19c72aaf2662d6d8df8d2c0d670ca9df0b6f017747178c5",
+    "usage": {
+      "prompt_tokens": 12834,
+      "completion_tokens": 421,
+      "total_tokens": 13255,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "prompt_cache_hit_tokens": 1280,
+      "prompt_cache_miss_tokens": 11554
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Clean, high-contrast light theme with a blue accent and neutral grays, suitable for developer and dashboard contexts.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "developer-portal",
+        "dashboard",
+        "api-platform"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "operators"
+      ],
+      "goals": [
+        "monitoring",
+        "show-capability",
+        "docs-adoption"
+      ],
+      "density": "medium",
+      "tones": [
+        "technical",
+        "focused",
+        "precise"
+      ],
+      "keywords": [
+        "api",
+        "dashboard",
+        "developer",
+        "monitoring",
+        "terminal"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#DEDEDE",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#45AEEE",
+        "border": "#DEDEDE"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cmyk.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#DEDEDE",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#45AEEE",
+        "border": "#DEDEDE"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-ccf39d86",
+      "score": 0.980392,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.600469,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-3862b164",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-3862b164.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

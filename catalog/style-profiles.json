@@ -1297,5 +1297,1218 @@
     "risks": [
       "Balanced visual treatment still requires domain-specific content and evidence."
     ]
+  },
+  {
+    "id": "launch-centered-hero-story-dc16f9c6",
+    "name": "Launch Centered Hero Story",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "bumblebee",
+    "sourcePath": "packages/daisyui/src/themes/bumblebee.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/bumblebee.css",
+    "family": "launch",
+    "pageTypes": [
+      "landing",
+      "launch-page",
+      "product-site"
+    ],
+    "audiences": [
+      "early-adopters",
+      "founders",
+      "creators"
+    ],
+    "goals": [
+      "launch",
+      "signup",
+      "brand-awareness"
+    ],
+    "density": "medium",
+    "tones": [
+      "energetic",
+      "playful",
+      "expressive",
+      "modern"
+    ],
+    "keywords": [
+      "launch",
+      "waitlist",
+      "startup",
+      "new product",
+      "creative"
+    ],
+    "bestFor": [
+      "Landing interfaces",
+      "Launch Page interfaces",
+      "Product Site interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorable visual moments dominant.",
+    "layoutRules": [
+      "Use a centered opening statement followed by one concrete proof surface.",
+      "Keep narrative progression and memorable visual moments dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use expressive motion only for hierarchy and product-state transitions."
+    ],
+    "palette": [
+      "canvas #FFFFFF",
+      "surface #F5F5F5",
+      "text #161616",
+      "muted #737373",
+      "accent #F7C800",
+      "border #E4E4E4"
+    ],
+    "typography": "Expressive display typography constrained by a calm supporting text system.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Expressive motion can distract from product evidence when overused."
+    ]
+  },
+  {
+    "id": "enterprise-dashboard-grid-data-7e324226",
+    "name": "Enterprise Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "business",
+    "sourcePath": "packages/daisyui/src/themes/business.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/business.css",
+    "family": "enterprise",
+    "pageTypes": [
+      "dashboard",
+      "analytics",
+      "internal-tool"
+    ],
+    "audiences": [
+      "analysts",
+      "operators",
+      "executives"
+    ],
+    "goals": [
+      "monitoring",
+      "decision-support",
+      "daily-operation"
+    ],
+    "density": "medium",
+    "tones": [
+      "analytical",
+      "focused",
+      "reliable"
+    ],
+    "keywords": [
+      "dashboard",
+      "analytics",
+      "monitor",
+      "kpi",
+      "enterprise"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Analytics interfaces",
+      "Internal Tool interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use compact spacing while preserving scan paths and target separation.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #202020",
+      "surface #1C1C1C",
+      "text #CDCDCD",
+      "muted #888888",
+      "accent #1C4E80",
+      "border #181818"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "tremor"
+    ],
+    "risks": [
+      "Compact spacing can reduce clarity when too many secondary states are shown."
+    ]
+  },
+  {
+    "id": "consumer-centered-hero-story-1884cccb",
+    "name": "Consumer Centered Hero Story",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "caramellatte",
+    "sourcePath": "packages/daisyui/src/themes/caramellatte.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/caramellatte.css",
+    "family": "consumer",
+    "pageTypes": [
+      "brand-site",
+      "landing",
+      "product-site"
+    ],
+    "audiences": [
+      "consumers",
+      "communities",
+      "fans"
+    ],
+    "goals": [
+      "brand-awareness",
+      "purchase",
+      "signup"
+    ],
+    "density": "low-medium",
+    "tones": [
+      "warm",
+      "curated",
+      "human",
+      "memorable"
+    ],
+    "keywords": [
+      "consumer",
+      "brand",
+      "community",
+      "lifestyle",
+      "story"
+    ],
+    "bestFor": [
+      "Brand Site interfaces",
+      "Landing interfaces",
+      "Product Site interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorable visual moments dominant.",
+    "layoutRules": [
+      "Use a centered opening statement followed by one concrete proof surface.",
+      "Keep narrative progression and memorable visual moments dominant.",
+      "Use spacious grouping and limit each viewport to a small number of focal elements.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #FFF7ED",
+      "surface #FEECD3",
+      "text #7C2808",
+      "muted #B07B64",
+      "accent #000000",
+      "border #FFD6A7"
+    ],
+    "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Spacious composition can hide important comparison context when content grows."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-3862b164",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "cmyk",
+    "sourcePath": "packages/daisyui/src/themes/cmyk.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cmyk.css",
+    "family": "developer",
+    "pageTypes": [
+      "developer-portal",
+      "dashboard",
+      "api-platform"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "show-capability",
+      "docs-adoption"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "precise"
+    ],
+    "keywords": [
+      "api",
+      "dashboard",
+      "developer",
+      "monitoring",
+      "terminal"
+    ],
+    "bestFor": [
+      "Developer Portal interfaces",
+      "Dashboard interfaces",
+      "Api Platform interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #FFFFFF",
+      "surface #EEEEEE",
+      "text #161616",
+      "muted #737373",
+      "accent #45AEEE",
+      "border #DEDEDE"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-29261d80",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "dim",
+    "sourcePath": "packages/daisyui/src/themes/dim.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dim.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "monitoring"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "debugging",
+      "decision-support"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "calm"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "terminal",
+      "api"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Monitoring interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use compact spacing while preserving scan paths and target separation.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #2A303C",
+      "surface #242933",
+      "text #B2CCD6",
+      "muted #7C8E98",
+      "accent #9FE88D",
+      "border #20252E"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Compact spacing can reduce clarity when too many secondary states are shown."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-b0deb9dd",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "dracula",
+    "sourcePath": "packages/daisyui/src/themes/dracula.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dracula.css",
+    "family": "developer",
+    "pageTypes": [
+      "developer-portal",
+      "dashboard",
+      "api-platform"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "show-capability",
+      "docs-adoption"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "precise"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "terminal",
+      "api"
+    ],
+    "bestFor": [
+      "Developer Portal interfaces",
+      "Dashboard interfaces",
+      "Api Platform interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #282A36",
+      "surface #232530",
+      "text #F8F8F3",
+      "muted #A5A6A7",
+      "accent #FF79C6",
+      "border #1F202A"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-fa0a21e2",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "emerald",
+    "sourcePath": "packages/daisyui/src/themes/emerald.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "api-platform"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "show-capability",
+      "docs-adoption"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "precise"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "api",
+      "terminal"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Api Platform interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #FFFFFF",
+      "surface #E8E8E8",
+      "text #333C4D",
+      "muted #858A94",
+      "accent #66CC8A",
+      "border #D1D1D1"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-8137dc5b",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "fantasy",
+    "sourcePath": "packages/daisyui/src/themes/fantasy.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/fantasy.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "api-platform"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "show-capability",
+      "docs-adoption"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "precise"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "api",
+      "terminal"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Api Platform interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #FFFFFF",
+      "surface #E8E8E8",
+      "text #1F2937",
+      "muted #797F87",
+      "accent #6B0072",
+      "border #D1D1D1"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-184a9fda",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "forest",
+    "sourcePath": "packages/daisyui/src/themes/forest.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/forest.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "monitoring"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "decision-support",
+      "show-capability"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "calm"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "terminal",
+      "api"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Monitoring interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use compact spacing while preserving scan paths and target separation.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #1B1717",
+      "surface #161212",
+      "text #CAC9C9",
+      "muted #848282",
+      "accent #1FB854",
+      "border #110D0D"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Compact spacing can reduce clarity when too many secondary states are shown."
+    ]
+  },
+  {
+    "id": "consumer-centered-hero-community-bdad6a9a",
+    "name": "Consumer Centered Hero Community",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "garden",
+    "sourcePath": "packages/daisyui/src/themes/garden.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css",
+    "family": "consumer",
+    "pageTypes": [
+      "brand-site",
+      "landing",
+      "product-site"
+    ],
+    "audiences": [
+      "consumers",
+      "communities",
+      "fans"
+    ],
+    "goals": [
+      "brand-awareness",
+      "purchase",
+      "signup"
+    ],
+    "density": "medium",
+    "tones": [
+      "warm",
+      "curated",
+      "human",
+      "memorable"
+    ],
+    "keywords": [
+      "consumer",
+      "brand",
+      "community",
+      "lifestyle",
+      "story"
+    ],
+    "bestFor": [
+      "Brand Site interfaces",
+      "Landing interfaces",
+      "Product Site interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep participation, shared activity, and belonging visually dominant.",
+    "layoutRules": [
+      "Use a centered opening statement followed by one concrete proof surface.",
+      "Keep participation, shared activity, and belonging visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #E9E7E7",
+      "surface #D4D2D2",
+      "text #100F0F",
+      "muted #676565",
+      "accent #F50076",
+      "border #BEBDBD"
+    ],
+    "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
+  },
+  {
+    "id": "developer-centered-hero-product-proof-a98dce44",
+    "name": "Developer Centered Hero Product Proof",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "halloween",
+    "sourcePath": "packages/daisyui/src/themes/halloween.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/halloween.css",
+    "family": "developer",
+    "pageTypes": [
+      "developer-portal",
+      "dashboard",
+      "landing"
+    ],
+    "audiences": [
+      "developers",
+      "early-adopters",
+      "founders"
+    ],
+    "goals": [
+      "show-capability",
+      "signup",
+      "launch"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "energetic",
+      "bold"
+    ],
+    "keywords": [
+      "developer",
+      "launch",
+      "terminal",
+      "dashboard",
+      "api"
+    ],
+    "bestFor": [
+      "Developer Portal interfaces",
+      "Dashboard interfaces",
+      "Landing interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep a concrete product artifact visually dominant.",
+    "layoutRules": [
+      "Use a centered opening statement followed by one concrete proof surface.",
+      "Keep a concrete product artifact visually dominant.",
+      "Use compact spacing while preserving scan paths and target separation.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #1B1816",
+      "surface #0B0908",
+      "text #CDCDCD",
+      "muted #868584",
+      "accent #FF9A33",
+      "border #000000"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Compact spacing can reduce clarity when too many secondary states are shown."
+    ]
+  },
+  {
+    "id": "enterprise-centered-hero-trust-41fb4cb8",
+    "name": "Enterprise Centered Hero Trust",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "luxury",
+    "sourcePath": "packages/daisyui/src/themes/luxury.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/luxury.css",
+    "family": "enterprise",
+    "pageTypes": [
+      "product-site",
+      "landing",
+      "sales-page"
+    ],
+    "audiences": [
+      "enterprise-buyers",
+      "executives",
+      "security-teams"
+    ],
+    "goals": [
+      "build-trust",
+      "book-call",
+      "explain-product"
+    ],
+    "density": "medium",
+    "tones": [
+      "premium",
+      "trustworthy",
+      "calm",
+      "confident"
+    ],
+    "keywords": [
+      "enterprise",
+      "security",
+      "compliance",
+      "trust",
+      "premium"
+    ],
+    "bestFor": [
+      "Product Site interfaces",
+      "Landing interfaces",
+      "Sales Page interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep evidence, governance, and credibility signals visually dominant.",
+    "layoutRules": [
+      "Use a centered opening statement followed by one concrete proof surface.",
+      "Keep evidence, governance, and credibility signals visually dominant.",
+      "Use spacious grouping and limit each viewport to a small number of focal elements.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #09090B",
+      "surface #171618",
+      "text #DCA54D",
+      "muted #886733",
+      "accent #FFFFFF",
+      "border #1E1D1F"
+    ],
+    "typography": "Editorial display typography paired with highly readable body text.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Spacious composition can hide important comparison context when content grows."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-6be14a36",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "night",
+    "sourcePath": "packages/daisyui/src/themes/night.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "monitoring"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "decision-support",
+      "show-capability"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "calm"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "terminal",
+      "api"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Monitoring interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use compact spacing while preserving scan paths and target separation.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #0F172A",
+      "surface #0C1425",
+      "text #C9CBD0",
+      "muted #7F838E",
+      "accent #3ABDF7",
+      "border #0A1120"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Compact spacing can reduce clarity when too many secondary states are shown."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-98d119d6",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "sunset",
+    "sourcePath": "packages/daisyui/src/themes/sunset.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/sunset.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "monitoring"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "decision-support",
+      "show-capability"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "calm"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "terminal",
+      "api"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Monitoring interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #121C22",
+      "surface #0E171E",
+      "text #9FB9D0",
+      "muted #677A8A",
+      "accent #FF865B",
+      "border #091319"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-product-proof-d5726f45",
+    "name": "Developer Dashboard Grid Product Proof",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "synthwave",
+    "sourcePath": "packages/daisyui/src/themes/synthwave.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+    "family": "developer",
+    "pageTypes": [
+      "developer-portal",
+      "dashboard",
+      "landing"
+    ],
+    "audiences": [
+      "developers",
+      "early-adopters",
+      "founders"
+    ],
+    "goals": [
+      "show-capability",
+      "signup",
+      "launch"
+    ],
+    "density": "medium",
+    "tones": [
+      "energetic",
+      "bold",
+      "technical"
+    ],
+    "keywords": [
+      "developer",
+      "launch",
+      "terminal",
+      "dashboard",
+      "api"
+    ],
+    "bestFor": [
+      "Developer Portal interfaces",
+      "Dashboard interfaces",
+      "Landing interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep a concrete product artifact visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep a concrete product artifact visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use expressive motion only for hierarchy and product-state transitions."
+    ],
+    "palette": [
+      "canvas #09002F",
+      "surface #120B3D",
+      "text #A2B2FF",
+      "muted #656BAC",
+      "accent #F861B4",
+      "border #1C184B"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Expressive motion can distract from product evidence when overused."
+    ]
+  },
+  {
+    "id": "consumer-centered-hero-community-4c776093",
+    "name": "Consumer Centered Hero Community",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "valentine",
+    "sourcePath": "packages/daisyui/src/themes/valentine.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/valentine.css",
+    "family": "consumer",
+    "pageTypes": [
+      "brand-site",
+      "landing",
+      "product-site"
+    ],
+    "audiences": [
+      "consumers",
+      "communities",
+      "fans"
+    ],
+    "goals": [
+      "brand-awareness",
+      "purchase",
+      "signup"
+    ],
+    "density": "low",
+    "tones": [
+      "warm",
+      "playful",
+      "memorable",
+      "human"
+    ],
+    "keywords": [
+      "consumer",
+      "brand",
+      "community",
+      "lifestyle",
+      "story"
+    ],
+    "bestFor": [
+      "Brand Site interfaces",
+      "Landing interfaces",
+      "Product Site interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep participation, shared activity, and belonging visually dominant.",
+    "layoutRules": [
+      "Use a centered opening statement followed by one concrete proof surface.",
+      "Keep participation, shared activity, and belonging visually dominant.",
+      "Use spacious grouping and limit each viewport to a small number of focal elements.",
+      "Use expressive motion only for hierarchy and product-state transitions."
+    ],
+    "palette": [
+      "canvas #FCF2F8",
+      "surface #F9E4F0",
+      "text #C0005B",
+      "muted #D8619A",
+      "accent #F43098",
+      "border #F9CBE5"
+    ],
+    "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Spacious composition can hide important comparison context when content grows.",
+      "Expressive motion can distract from product evidence when overused."
+    ]
+  },
+  {
+    "id": "developer-dashboard-grid-data-30765d74",
+    "name": "Developer Dashboard Grid Data",
+    "sourceProvider": "daisyui-themes",
+    "sourceSlug": "winter",
+    "sourcePath": "packages/daisyui/src/themes/winter.css",
+    "sourceRepo": "saadeghi/daisyui",
+    "sourceRevision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "sourceContentHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+    "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/winter.css",
+    "family": "developer",
+    "pageTypes": [
+      "dashboard",
+      "developer-portal",
+      "api-platform"
+    ],
+    "audiences": [
+      "developers",
+      "platform-engineers",
+      "operators"
+    ],
+    "goals": [
+      "monitoring",
+      "show-capability",
+      "docs-adoption"
+    ],
+    "density": "medium",
+    "tones": [
+      "technical",
+      "focused",
+      "precise"
+    ],
+    "keywords": [
+      "dashboard",
+      "developer",
+      "monitoring",
+      "api",
+      "terminal"
+    ],
+    "bestFor": [
+      "Dashboard interfaces",
+      "Developer Portal interfaces",
+      "Api Platform interfaces"
+    ],
+    "avoidFor": [
+      "Projects that require a different information-density policy.",
+      "Interfaces whose primary emphasis conflicts with this direction."
+    ],
+    "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+    "layoutRules": [
+      "Use an ordered metric and workflow grid with visible operational state.",
+      "Keep metrics, trends, and decision signals visually dominant.",
+      "Use balanced spacing with clear grouping and moderate information density.",
+      "Use restrained motion for continuity, feedback, and state changes only."
+    ],
+    "palette": [
+      "canvas #FFFFFF",
+      "surface #F2F7FE",
+      "text #394E6A",
+      "muted #8895A6",
+      "accent #0070ED",
+      "border #E3E9F4"
+    ],
+    "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+    "componentKits": [
+      "shadcn-ui"
+    ],
+    "risks": [
+      "Balanced visual treatment still requires domain-specific content and evidence."
+    ]
   }
 ]

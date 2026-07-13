@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "recordId": "87cc4710478f2610bf2ca7731a98fc9ec731f635ec0ecac520650b39e73c89bd",
+  "createdAt": "2026-07-13T05:08:25.436Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/bumblebee.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3773
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "aceef469-864d-45ca-9dcf-51b34c4254ab",
+    "responseHash": "sha256:1509ed0feb3156fdb9940f76b0e59f80a17044a17622447269049a9f77b7fbc0",
+    "usage": {
+      "prompt_tokens": 12863,
+      "completion_tokens": 443,
+      "total_tokens": 13306,
+      "prompt_tokens_details": {
+        "cached_tokens": 12800
+      },
+      "prompt_cache_hit_tokens": 12800,
+      "prompt_cache_miss_tokens": 63
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Bumblebee theme provides a warm, high-contrast light palette with a vibrant yellow accent, suitable for launch and consumer-focused pages needing energetic, trustworthy branding.",
+    "profile": {
+      "family": "launch",
+      "pageTypes": [
+        "landing",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "early-adopters",
+        "founders",
+        "creators"
+      ],
+      "goals": [
+        "launch",
+        "signup",
+        "brand-awareness"
+      ],
+      "density": "medium",
+      "tones": [
+        "energetic",
+        "playful",
+        "expressive",
+        "modern"
+      ],
+      "keywords": [
+        "launch",
+        "waitlist",
+        "startup",
+        "new product",
+        "creative"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "story",
+      "typographyStyle": "expressive-display",
+      "spacing": "balanced",
+      "motion": "expressive"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#E4E4E4",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#F7C800",
+        "border": "#E4E4E4"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/bumblebee.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "awesome-design-md",
+          "path": "design-md/framer/DESIGN.md",
+          "role": "typography"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#E4E4E4",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#F7C800",
+        "border": "#E4E4E4"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "launch-centered-hero-story-cff58e59",
+      "score": 1,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.122569,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "launch-centered-hero-story-dc16f9c6",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/launch-centered-hero-story-dc16f9c6.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

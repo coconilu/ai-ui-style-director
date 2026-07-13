@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "recordId": "e42e81bf3815b13c9047d805af7533b90c457b1bd8a301c2c7ba92232817eff7",
+  "createdAt": "2026-07-13T05:09:29.570Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/lofi.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3758
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "5ebe19df-27b4-405c-a442-cd7e379e1493",
+    "responseHash": "sha256:77ba2d4b81d8904740a15b6e1541fa3f57f754ca8a13860fd813d41f10e05407",
+    "usage": {
+      "prompt_tokens": 12675,
+      "completion_tokens": 418,
+      "total_tokens": 13093,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11651
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#EBEBEB",
+        "text": "#000000",
+        "muted": "#666666",
+        "accent": "#0D0D0D",
+        "border": "#EBEBEB"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "recordId": "d6a94e2debe87cec964f577bfaf4955555a3554fb5b1fc3d1091ac609b31b45e",
+  "createdAt": "2026-07-13T05:08:39.627Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/coffee.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:0713bd5bc353f1176eaeec19c4a30053a2ca1fc38ca8e9747eb88f02b8a92557",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3898
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "748a2aa4-2cb2-48f4-a444-2ec05d49734c",
+    "responseHash": "sha256:2dede4242f7da6a9dda540d153239fbc7d553d4126dca103fd2cedfff4852496",
+    "usage": {
+      "prompt_tokens": 12857,
+      "completion_tokens": 325,
+      "total_tokens": 13182,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11833
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "profile.keywords contains value outside the trusted catalog vocabulary: coffee",
+      "profile.keywords contains value outside the trusted catalog vocabulary: editorial",
+      "profile.keywords contains value outside the trusted catalog vocabulary: dark"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "profile.keywords contains value outside the trusted catalog vocabulary: coffee",
+        "profile.keywords contains value outside the trusted catalog vocabulary: editorial",
+        "profile.keywords contains value outside the trusted catalog vocabulary: dark"
+      ]
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#261B25",
+        "surface": "#1E151D",
+        "surfaceAlt": "#120A11",
+        "text": "#C59F61",
+        "muted": "#856A49",
+        "accent": "#DB924C",
+        "border": "#120A11"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

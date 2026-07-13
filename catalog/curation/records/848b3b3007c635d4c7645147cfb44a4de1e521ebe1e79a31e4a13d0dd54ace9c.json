@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "recordId": "848b3b3007c635d4c7645147cfb44a4de1e521ebe1e79a31e4a13d0dd54ace9c",
+  "createdAt": "2026-07-13T05:08:32.059Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/caramellatte.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3817
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "6573c9f4-393b-4fbb-9cfb-af389824d538",
+    "responseHash": "sha256:73caff5b6574fe6dea0479813ef9095d4d0c2ef4bbcdd8e365111c9c4f1380eb",
+    "usage": {
+      "prompt_tokens": 12867,
+      "completion_tokens": 433,
+      "total_tokens": 13300,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "prompt_cache_hit_tokens": 1408,
+      "prompt_cache_miss_tokens": 11459
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Warm, earthy caramel latte palette with high contrast black accent and soft borders. Distinctive for consumer/launch contexts.",
+    "profile": {
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "communities",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "purchase",
+        "signup"
+      ],
+      "density": "low-medium",
+      "tones": [
+        "warm",
+        "curated",
+        "human",
+        "memorable"
+      ],
+      "keywords": [
+        "consumer",
+        "brand",
+        "community",
+        "lifestyle",
+        "story"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "story",
+      "typographyStyle": "humanist-sans",
+      "spacing": "spacious",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#FFF7ED",
+        "surface": "#FEECD3",
+        "surfaceAlt": "#FFD6A7",
+        "text": "#7C2808",
+        "muted": "#B07B64",
+        "accent": "#000000",
+        "border": "#FFD6A7"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/caramellatte.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "content-hierarchy"
+        },
+        {
+          "providerId": "awesome-design-md",
+          "path": "design-md/airbnb/DESIGN.md",
+          "role": "typography"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFF7ED",
+        "surface": "#FEECD3",
+        "surfaceAlt": "#FFD6A7",
+        "text": "#7C2808",
+        "muted": "#B07B64",
+        "accent": "#000000",
+        "border": "#FFD6A7"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "consumer-centered-hero-story-2f0b340c",
+      "score": 1,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.165753,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "consumer-centered-hero-story-1884cccb",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/consumer-centered-hero-story-1884cccb.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

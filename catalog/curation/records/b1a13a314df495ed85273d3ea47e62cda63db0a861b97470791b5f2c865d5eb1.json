@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "recordId": "b1a13a314df495ed85273d3ea47e62cda63db0a861b97470791b5f2c865d5eb1",
+  "createdAt": "2026-07-13T05:09:14.797Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/garden.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3808
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "ddd98f77-1746-4c57-ba4a-bdd6d83030c9",
+    "responseHash": "sha256:1138c97b69b2ed9d8ed299c855005f522a4324879647ccd2cd22475cf0214524",
+    "usage": {
+      "prompt_tokens": 12764,
+      "completion_tokens": 335,
+      "total_tokens": 13099,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11740
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Garden theme offers a distinct warm, muted palette with a vibrant pink accent, suitable for a consumer brand or lifestyle product. The low-chroma neutrals and soft geometry create a calm, curated feel.",
+    "profile": {
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "communities",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "purchase",
+        "signup"
+      ],
+      "density": "medium",
+      "tones": [
+        "warm",
+        "curated",
+        "human",
+        "memorable"
+      ],
+      "keywords": [
+        "consumer",
+        "brand",
+        "community",
+        "lifestyle",
+        "story"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "community",
+      "typographyStyle": "humanist-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#E9E7E7",
+        "surface": "#D4D2D2",
+        "surfaceAlt": "#BEBDBD",
+        "text": "#100F0F",
+        "muted": "#676565",
+        "accent": "#F50076",
+        "border": "#BEBDBD"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#E9E7E7",
+        "surface": "#D4D2D2",
+        "surfaceAlt": "#BEBDBD",
+        "text": "#100F0F",
+        "muted": "#676565",
+        "accent": "#F50076",
+        "border": "#BEBDBD"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "consumer-centered-hero-story-1884cccb",
+      "score": 1,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.220782,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "consumer-centered-hero-community-bdad6a9a",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/consumer-centered-hero-community-bdad6a9a.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

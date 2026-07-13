@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "recordId": "ef6efca8ca470e95b33ed5826b23f7e3de8c2a1a20cac3a6ae982ee0af18af8d",
+  "createdAt": "2026-07-13T05:08:42.890Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/corporate.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3739
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "5e840f37-c7b1-4523-bf07-027cc564a7ef",
+    "responseHash": "sha256:c2793621867d8e0ba1a33d6ca84d8e52c1d6c857108a44c23fea6d71675d0ce0",
+    "usage": {
+      "prompt_tokens": 12773,
+      "completion_tokens": 317,
+      "total_tokens": 13090,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11749
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#181A2A",
+        "muted": "#74767F",
+        "accent": "#0082C4",
+        "border": "#D1D1D1"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

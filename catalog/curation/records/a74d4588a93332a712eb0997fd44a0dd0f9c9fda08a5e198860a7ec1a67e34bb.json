@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "recordId": "a74d4588a93332a712eb0997fd44a0dd0f9c9fda08a5e198860a7ec1a67e34bb",
+  "createdAt": "2026-07-13T05:09:43.941Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/pastel.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3821
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "ff6ca441-3d08-41e3-84c1-4de6b7427687",
+    "responseHash": "sha256:29b4fadf19c92290f73a664ed013d369779a2ab1223669a87851d4bdcdb4be3b",
+    "usage": {
+      "prompt_tokens": 12712,
+      "completion_tokens": 342,
+      "total_tokens": 13054,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "prompt_cache_hit_tokens": 1280,
+      "prompt_cache_miss_tokens": 11432
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "profile.keywords contains value outside the trusted catalog vocabulary: pastel",
+      "profile.keywords contains value outside the trusted catalog vocabulary: soft",
+      "profile.keywords contains value outside the trusted catalog vocabulary: playful",
+      "profile.keywords contains value outside the trusted catalog vocabulary: gentle",
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "profile.keywords contains value outside the trusted catalog vocabulary: pastel",
+        "profile.keywords contains value outside the trusted catalog vocabulary: soft",
+        "profile.keywords contains value outside the trusted catalog vocabulary: playful",
+        "profile.keywords contains value outside the trusted catalog vocabulary: gentle",
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F9FAFB",
+        "surfaceAlt": "#E5E6E7",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#E8D4FF",
+        "border": "#E5E6E7"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

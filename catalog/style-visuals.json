@@ -658,5 +658,772 @@
         "role": "content-hierarchy reference"
       }
     ]
+  },
+  {
+    "styleId": "launch-centered-hero-story-dc16f9c6",
+    "variant": "brand",
+    "theme": {
+      "canvas": "#FFFFFF",
+      "surface": "#F5F5F5",
+      "surfaceAlt": "#E4E4E4",
+      "text": "#161616",
+      "muted": "#737373",
+      "accent": "#F7C800",
+      "border": "#E4E4E4"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/bumblebee.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/bumblebee.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "awesome-design-md",
+        "path": "design-md/framer/DESIGN.md",
+        "slug": "framer",
+        "repo": "VoltAgent/awesome-design-md",
+        "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+        "contentHash": "sha256:a5d47dddacf5a04577cec0be6fe0fc53b7402254c7686874af3e59bcc7588cb4",
+        "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/framer/DESIGN.md",
+        "label": "Awesome Design Md reference 3",
+        "role": "typography-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "enterprise-dashboard-grid-data-7e324226",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#202020",
+      "surface": "#1C1C1C",
+      "surfaceAlt": "#181818",
+      "text": "#CDCDCD",
+      "muted": "#888888",
+      "accent": "#1C4E80",
+      "border": "#181818"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/business.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/business.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "consumer-centered-hero-story-1884cccb",
+    "variant": "brand",
+    "theme": {
+      "canvas": "#FFF7ED",
+      "surface": "#FEECD3",
+      "surfaceAlt": "#FFD6A7",
+      "text": "#7C2808",
+      "muted": "#B07B64",
+      "accent": "#000000",
+      "border": "#FFD6A7"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/caramellatte.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/caramellatte.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "content-hierarchy reference"
+      },
+      {
+        "provider": "awesome-design-md",
+        "path": "design-md/airbnb/DESIGN.md",
+        "slug": "airbnb",
+        "repo": "VoltAgent/awesome-design-md",
+        "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+        "contentHash": "sha256:add34130d67209ad105346d60fe2b290728b9711683969db4b7760e29477a5fe",
+        "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/airbnb/DESIGN.md",
+        "label": "Awesome Design Md reference 3",
+        "role": "typography-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-3862b164",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#FFFFFF",
+      "surface": "#EEEEEE",
+      "surfaceAlt": "#DEDEDE",
+      "text": "#161616",
+      "muted": "#737373",
+      "accent": "#45AEEE",
+      "border": "#DEDEDE"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/cmyk.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cmyk.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/corporate.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-29261d80",
+    "variant": "developer",
+    "theme": {
+      "canvas": "#2A303C",
+      "surface": "#242933",
+      "surfaceAlt": "#20252E",
+      "text": "#B2CCD6",
+      "muted": "#7C8E98",
+      "accent": "#9FE88D",
+      "border": "#20252E"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dim.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dim.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-b0deb9dd",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#282A36",
+      "surface": "#232530",
+      "surfaceAlt": "#1F202A",
+      "text": "#F8F8F3",
+      "muted": "#A5A6A7",
+      "accent": "#FF79C6",
+      "border": "#1F202A"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dracula.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dracula.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-fa0a21e2",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#FFFFFF",
+      "surface": "#E8E8E8",
+      "surfaceAlt": "#D1D1D1",
+      "text": "#333C4D",
+      "muted": "#858A94",
+      "accent": "#66CC8A",
+      "border": "#D1D1D1"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/emerald.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/nord.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-8137dc5b",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#FFFFFF",
+      "surface": "#E8E8E8",
+      "surfaceAlt": "#D1D1D1",
+      "text": "#1F2937",
+      "muted": "#797F87",
+      "accent": "#6B0072",
+      "border": "#D1D1D1"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/fantasy.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/fantasy.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/corporate.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-184a9fda",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#1B1717",
+      "surface": "#161212",
+      "surfaceAlt": "#110D0D",
+      "text": "#CAC9C9",
+      "muted": "#848282",
+      "accent": "#1FB854",
+      "border": "#110D0D"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/forest.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/forest.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "content-hierarchy reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "information-density reference"
+      }
+    ]
+  },
+  {
+    "styleId": "consumer-centered-hero-community-bdad6a9a",
+    "variant": "brand",
+    "theme": {
+      "canvas": "#E9E7E7",
+      "surface": "#D4D2D2",
+      "surfaceAlt": "#BEBDBD",
+      "text": "#100F0F",
+      "muted": "#676565",
+      "accent": "#F50076",
+      "border": "#BEBDBD"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/garden.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/cupcake.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-centered-hero-product-proof-a98dce44",
+    "variant": "developer",
+    "theme": {
+      "canvas": "#1B1816",
+      "surface": "#0B0908",
+      "surfaceAlt": "#000000",
+      "text": "#CDCDCD",
+      "muted": "#868584",
+      "accent": "#FF9A33",
+      "border": "#000000"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/halloween.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/halloween.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "enterprise-centered-hero-trust-41fb4cb8",
+    "variant": "enterprise",
+    "theme": {
+      "canvas": "#09090B",
+      "surface": "#171618",
+      "surfaceAlt": "#1E1D1F",
+      "text": "#DCA54D",
+      "muted": "#886733",
+      "accent": "#FFFFFF",
+      "border": "#1E1D1F"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/luxury.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/luxury.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "content-hierarchy reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "typography-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-6be14a36",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#0F172A",
+      "surface": "#0C1425",
+      "surfaceAlt": "#0A1120",
+      "text": "#C9CBD0",
+      "muted": "#7F838E",
+      "accent": "#3ABDF7",
+      "border": "#0A1120"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/abyss.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-98d119d6",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#121C22",
+      "surface": "#0E171E",
+      "surfaceAlt": "#091319",
+      "text": "#9FB9D0",
+      "muted": "#677A8A",
+      "accent": "#FF865B",
+      "border": "#091319"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/sunset.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/sunset.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/night.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-product-proof-d5726f45",
+    "variant": "developer",
+    "theme": {
+      "canvas": "#09002F",
+      "surface": "#120B3D",
+      "surfaceAlt": "#1C184B",
+      "text": "#A2B2FF",
+      "muted": "#656BAC",
+      "accent": "#F861B4",
+      "border": "#1C184B"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/synthwave.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/abyss.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "consumer-centered-hero-community-4c776093",
+    "variant": "brand",
+    "theme": {
+      "canvas": "#FCF2F8",
+      "surface": "#F9E4F0",
+      "surfaceAlt": "#F9CBE5",
+      "text": "#C0005B",
+      "muted": "#D8619A",
+      "accent": "#F43098",
+      "border": "#F9CBE5"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/valentine.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/valentine.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "content-hierarchy reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/cupcake.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "typography-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-30765d74",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#FFFFFF",
+      "surface": "#F2F7FE",
+      "surfaceAlt": "#E3E9F4",
+      "text": "#394E6A",
+      "muted": "#8895A6",
+      "accent": "#0070ED",
+      "border": "#E3E9F4"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/winter.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/winter.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "content-hierarchy reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/corporate.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "typography-system reference"
+      }
+    ]
   }
 ]

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "recordId": "e042956eb40a4495cfa0e97cf14003725fe557dcf31ea328901ba93e1c05dedb",
+  "createdAt": "2026-07-13T05:09:47.372Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/retro.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3844
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "c3e56418-f586-4ac8-a2d8-16a303f8206d",
+    "responseHash": "sha256:95f6b702bfbbf75c282f86c8ebea693559913722a584b563847496db9a6d4c85",
+    "usage": {
+      "prompt_tokens": 12741,
+      "completion_tokens": 326,
+      "total_tokens": 13067,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11717
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "profile.keywords contains value outside the trusted catalog vocabulary: retro",
+      "profile.keywords contains value outside the trusted catalog vocabulary: vintage",
+      "profile.keywords contains value outside the trusted catalog vocabulary: nostalgia",
+      "profile.keywords contains value outside the trusted catalog vocabulary: craft",
+      "visual.references must be unique"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "profile.keywords contains value outside the trusted catalog vocabulary: retro",
+        "profile.keywords contains value outside the trusted catalog vocabulary: vintage",
+        "profile.keywords contains value outside the trusted catalog vocabulary: nostalgia",
+        "profile.keywords contains value outside the trusted catalog vocabulary: craft",
+        "visual.references must be unique"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#ECE3CA",
+        "surface": "#E4D8B4",
+        "surfaceAlt": "#DBCA9B",
+        "text": "#793205",
+        "muted": "#A77954",
+        "accent": "#FF9FA0",
+        "border": "#DBCA9B"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

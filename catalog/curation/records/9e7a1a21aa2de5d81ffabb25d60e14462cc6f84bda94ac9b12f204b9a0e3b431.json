@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "recordId": "9e7a1a21aa2de5d81ffabb25d60e14462cc6f84bda94ac9b12f204b9a0e3b431",
+  "createdAt": "2026-07-13T05:09:22.356Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/lemonade.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3884
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "fdc6326e-0893-4b86-b650-fab739cd7ce2",
+    "responseHash": "sha256:b1dc7a90be7c6f652ebab930f6b2d75519065b31e538eb60c6d2790eede874ed",
+    "usage": {
+      "prompt_tokens": 12768,
+      "completion_tokens": 446,
+      "total_tokens": 13214,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11744
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "profile.tones contains value outside the trusted catalog vocabulary: fresh",
+      "profile.tones contains value outside the trusted catalog vocabulary: natural",
+      "profile.keywords contains value outside the trusted catalog vocabulary: green",
+      "profile.keywords contains value outside the trusted catalog vocabulary: organic",
+      "profile.keywords contains value outside the trusted catalog vocabulary: sustainability",
+      "profile.keywords contains value outside the trusted catalog vocabulary: nature",
+      "profile.keywords contains value outside the trusted catalog vocabulary: fresh"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "profile.tones contains value outside the trusted catalog vocabulary: fresh",
+        "profile.tones contains value outside the trusted catalog vocabulary: natural",
+        "profile.keywords contains value outside the trusted catalog vocabulary: green",
+        "profile.keywords contains value outside the trusted catalog vocabulary: organic",
+        "profile.keywords contains value outside the trusted catalog vocabulary: sustainability",
+        "profile.keywords contains value outside the trusted catalog vocabulary: nature",
+        "profile.keywords contains value outside the trusted catalog vocabulary: fresh"
+      ]
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#F8FDEF",
+        "surface": "#E1E6D9",
+        "surfaceAlt": "#CBCFC3",
+        "text": "#151614",
+        "muted": "#70726C",
+        "accent": "#4C9100",
+        "border": "#CBCFC3"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "recordId": "8e9c46e01332ed824378e115041b337ffb779902848883bebe8e37932d399923",
+  "createdAt": "2026-07-13T05:10:09.421Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/wireframe.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3723
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "c2293ece-d480-4b4e-8b81-74808f85da01",
+    "responseHash": "sha256:42d3d756cf0555503e2cd7ba6ddaf46ceb5fb5c2d18702a66b24d07c9028f5af",
+    "usage": {
+      "prompt_tokens": 12626,
+      "completion_tokens": 322,
+      "total_tokens": 12948,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "prompt_cache_hit_tokens": 1152,
+      "prompt_cache_miss_tokens": 11474
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "profile.tones contains value outside the trusted catalog vocabulary: minimal",
+      "profile.keywords contains value outside the trusted catalog vocabulary: wireframe",
+      "profile.keywords contains value outside the trusted catalog vocabulary: monochrome",
+      "profile.keywords contains value outside the trusted catalog vocabulary: grayscale",
+      "profile.keywords contains value outside the trusted catalog vocabulary: minimal"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "profile.tones contains value outside the trusted catalog vocabulary: minimal",
+        "profile.keywords contains value outside the trusted catalog vocabulary: wireframe",
+        "profile.keywords contains value outside the trusted catalog vocabulary: monochrome",
+        "profile.keywords contains value outside the trusted catalog vocabulary: grayscale",
+        "profile.keywords contains value outside the trusted catalog vocabulary: minimal"
+      ]
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#EBEBEB",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#D4D4D4",
+        "border": "#EBEBEB"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}

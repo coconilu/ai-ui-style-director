@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordId": "6b7ae841eb03a0b184759f6bf5e87e9e8de2f4227177c18bc800a86f069b91ee",
+  "createdAt": "2026-07-13T05:09:18.277Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/halloween.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3855
+  },
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "promptVersion": "style-curation-v3",
+    "responseId": "4272e215-1ad8-4801-8550-6404f76b85ba",
+    "responseHash": "sha256:45497374a48a7c58e9d55e47cfdf3fac70c4aa0ee2aa42953d65ad398a81c2a8",
+    "usage": {
+      "prompt_tokens": 12740,
+      "completion_tokens": 305,
+      "total_tokens": 13045,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "prompt_cache_hit_tokens": 1024,
+      "prompt_cache_miss_tokens": 11716
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Dark, high-contrast theme with a warm orange accent, suitable for developer or launch contexts.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "developer-portal",
+        "dashboard",
+        "landing"
+      ],
+      "audiences": [
+        "developers",
+        "early-adopters",
+        "founders"
+      ],
+      "goals": [
+        "show-capability",
+        "signup",
+        "launch"
+      ],
+      "density": "medium",
+      "tones": [
+        "technical",
+        "energetic",
+        "bold"
+      ],
+      "keywords": [
+        "developer",
+        "launch",
+        "terminal",
+        "dashboard",
+        "api"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "product-proof",
+      "typographyStyle": "technical-sans",
+      "spacing": "compact",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "developer",
+      "theme": {
+        "canvas": "#1B1816",
+        "surface": "#0B0908",
+        "surfaceAlt": "#000000",
+        "text": "#CDCDCD",
+        "muted": "#868584",
+        "accent": "#FF9A33",
+        "border": "#000000"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/halloween.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#1B1816",
+        "surface": "#0B0908",
+        "surfaceAlt": "#000000",
+        "text": "#CDCDCD",
+        "muted": "#868584",
+        "accent": "#FF9A33",
+        "border": "#000000"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-184a9fda",
+      "score": 0.448,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.099555,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-centered-hero-product-proof-a98dce44",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-centered-hero-product-proof-a98dce44.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29225542236",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29225542236",
+    "commitSha": "d03abd9d732daf2bc8dc391a545a3319687c378d"
+  }
+}
