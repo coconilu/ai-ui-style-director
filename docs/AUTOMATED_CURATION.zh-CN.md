@@ -12,7 +12,7 @@ Catalog 提案。模型负责理解和组合资料，但不能直接批准文件
    `catalog/curation/source-state.json` 中的新来源或变更来源。
 3. Workflow 按 `provider-inventory.json` 记录的精确 revision 检出 Provider，调用
    对应 Adapter 规范化来源，并在调用模型前核对规范化内容哈希。
-4. OpenAI-compatible 客户端向 Kimi Code 发送受预算约束的请求，明确把来源标记为
+4. OpenAI-compatible 客户端向当前配置的策展模型发送受预算约束的请求，明确把来源标记为
    不可信数据；上下文只包含当前来源、少量相关 Profile、有限参考池和允许使用的 taxonomy。
 5. 模型只能返回 `skip`，或受控 taxonomy/设计原语、主题颜色和精确来源选择，
    不能编写消费端说明文本。
@@ -29,7 +29,7 @@ Catalog 提案。模型负责理解和组合资料，但不能直接批准文件
    创建 Draft PR。维护者必须审查 diff、将 PR 标记为 Ready，再手动合并；
    Workflow 绝不开启 auto-merge。
 
-GitHub App 是可审计的仓库操作身份，不是推理引擎。Kimi Code 生成候选，Node.js
+GitHub App 是可审计的仓库操作身份，不是推理引擎。当前配置的模型生成候选，Node.js
 程序执行政策；GitHub 分支保护和必需检查是纵深防御，但 CI 通过不代表
 App 可以跳过维护者直接合并。
 
@@ -81,7 +81,7 @@ Authorization Header 或原始请求。
 `daisyui-themes` Provider 显式使用 `daisyui-theme-css` Adapter。它只发现
 `packages/daisyui/src/themes/*.css`，把来源标记为 `sourceType=theme-css`，解析受治理
 的颜色、圆角、边框、深度和噪点声明，确定性转换 OKLCH 颜色，再序列化为规范 JSON。
-这份规范 JSON 同时作为内容哈希与 Kimi 输入；任意 CSS、import、注释或指令不会被
+这份规范 JSON 同时作为内容哈希与策展模型输入；任意 CSS、import、注释或指令不会被
 直接透传成消费端文案。
 通用来源契约对应的 Provider/style/component 生成索引使用 schema v4；托管浏览器
 的 `catalog.json` 继续使用 schema v3。
@@ -113,18 +113,29 @@ Catalog 总量上限。
 - Repository Variable：`REFRESH_APP_CLIENT_ID`；
 - Repository Secret：`REFRESH_APP_PRIVATE_KEY`。
 
-在未来真正出现新来源前，新增一个模型凭证：
+当前默认使用 DeepSeek。先新增它的凭证，同时保留已有 Kimi 凭证，方便之后回切：
 
 ```text
+DEEPSEEK_API_KEY
 KIMI_CODE_API_KEY
 ```
 
-Workflow 只在模型步骤中把它映射为通用的 `CURATOR_API_KEY`。默认参数是：
+Workflow 只会在所选 Provider 的模型步骤中，把对应 Secret 映射为通用的
+`CURATOR_API_KEY`。Repository Variable `CURATOR_PROVIDER` 可不设置，默认值为
+`deepseek`；以后将它改为 `kimi` 即可回切，不需要改代码。手动触发时也可以直接选择。
+
+| Provider | Base URL | 模型 | Temperature | 思考模式 | Secret |
+| --- | --- | --- | ---: | --- | --- |
+| `deepseek`（默认） | `https://api.deepseek.com` | `deepseek-v4-flash` | `0` | `disabled` | `DEEPSEEK_API_KEY` |
+| `kimi` | `https://api.kimi.com/coding/v1` | `kimi-for-coding` | `1` | 不发送 | `KIMI_CODE_API_KEY` |
+
+DeepSeek Profile 遵循官方的[模型与价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)、
+[对话补全](https://api-docs.deepseek.com/zh-cn/api/create-chat-completion)和
+[JSON Output](https://api-docs.deepseek.com/zh-cn/guides/json_mode)契约。
+
+两者共用的批处理参数是：
 
 ```text
-CURATOR_BASE_URL=https://api.kimi.com/coding/v1
-CURATOR_MODEL=kimi-for-coding
-CURATOR_TEMPERATURE=1
 CURATOR_BATCH_SIZE=5
 CURATOR_MAX_INPUT_CHARS=80000
 CURATOR_MAX_OUTPUT_TOKENS=4096
@@ -132,8 +143,10 @@ CURATOR_MAX_RETRIES=1
 CURATOR_REQUEST_TIMEOUT_MS=120000
 ```
 
-`kimi-for-coding` 要求设置 `CURATOR_TEMPERATURE=1`；若其他兼容模型未设置该变量，
-通用 Curator 仍默认使用 `0`。
+DeepSeek JSON Output 支持当前 Curator 已在使用的
+`response_format={"type":"json_object"}`。`deepseek-v4-flash` 默认开启思考模式，
+所以该 Profile 显式发送 `thinking.type=disabled`，避免推理 token 挤占受限的 JSON
+输出预算。Kimi Profile 保留 `CURATOR_TEMPERATURE=1`，也不会收到 DeepSeek 专属参数。
 
 Workflow 设置 `CURATOR_BATCH_SIZE: "5"`，并重复调用可信的单批 Curator，直到
 pending 清空。模型每次仍最多处理 5 条，但一次 Workflow 会汇总全部初始待办，
@@ -163,12 +176,14 @@ npm run catalog:curation:validate
 npm run catalog:curate:baseline
 ```
 
-在本地处理待办来源：
+GitHub Actions 是主要执行入口。如需诊断，可在本地用 DeepSeek 运行：
 
 ```bash
-CURATOR_BASE_URL=https://api.kimi.com/coding/v1 \
-CURATOR_MODEL=kimi-for-coding \
-CURATOR_TEMPERATURE=1 \
+CURATOR_PROVIDER=deepseek \
+CURATOR_BASE_URL=https://api.deepseek.com \
+CURATOR_MODEL=deepseek-v4-flash \
+CURATOR_TEMPERATURE=0 \
+CURATOR_THINKING=disabled \
 CURATOR_API_KEY=... \
 npm run catalog:curate -- --drain --clone --batch-size 5
 ```

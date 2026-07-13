@@ -110,6 +110,37 @@ test("requests json_schema and parses fenced JSON from content arrays", async ()
   assert.deepEqual(result.value, { styleId: "developer-cli" });
 });
 
+test("passes an explicit thinking mode only when configured", async () => {
+  const bodies = [];
+  const client = createOpenAICompatibleClient({
+    baseUrl: "https://api.deepseek.com",
+    apiKey: "deepseek-key",
+    model: "deepseek-v4-flash",
+    fetchImpl: async (_url, options) => {
+      bodies.push(JSON.parse(options.body));
+      return mockResponse(200, successPayload('{"accepted":true}'));
+    }
+  });
+
+  await client.completeJson({
+    messages: [{ role: "user", content: "Return JSON" }],
+    thinking: "disabled"
+  });
+  await client.completeJson({
+    messages: [{ role: "user", content: "Return JSON" }]
+  });
+
+  assert.deepEqual(bodies[0].thinking, { type: "disabled" });
+  assert.equal("thinking" in bodies[1], false);
+  await assert.rejects(
+    client.completeJson({
+      messages: [{ role: "user", content: "Return JSON" }],
+      thinking: "sometimes"
+    }),
+    /thinking must be "enabled" or "disabled"/u
+  );
+});
+
 test("strips JSON fences without altering ordinary JSON", () => {
   assert.equal(stripJsonFence("```JSON\r\n{\"ok\":true}\r\n```"), '{"ok":true}');
   assert.equal(stripJsonFence("  {\"ok\":true}  "), '{"ok":true}');

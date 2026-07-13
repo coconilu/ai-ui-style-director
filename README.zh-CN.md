@@ -80,7 +80,7 @@ source。109 条 style source 只构成候选素材池，不等于 109 个完整
 CSS 来源进入可审计的 AI 策展队列。只有经过 profile、视觉配置、3 条参考和 SVG
 校验的条目才进入已策展方向；当前基线为 48 个，后续可通过可审计策展 PR 继续
 增长。`daisyui-themes` Provider 会先通过格式专用 Adapter，把受治理的 CSS token
-与 OKLCH 颜色转换成规范 JSON，再进行内容哈希和受限 Kimi 处理。`browse` 是只读
+与 OKLCH 颜色转换成规范 JSON，再进行内容哈希和受限策展模型处理。`browse` 是只读
 操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
 
 命令会立即返回。可用 `--open` 自动打开浏览器，或用 `--json` 输出机器可读的

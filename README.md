@@ -84,7 +84,7 @@ become user-facing profiles. The page reports the current source count without
 misrepresenting unreviewed paths as style cards.
 The `daisyui-themes` Provider uses a format-specific adapter that converts
 governed CSS tokens and OKLCH colors into canonical JSON before hashing and
-bounded Kimi processing.
+bounded processing by the configured curation model.
 `browse` is read-only and does not create or modify project
 `.ui-style-director/` state.
 

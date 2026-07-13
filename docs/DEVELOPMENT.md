@@ -124,7 +124,7 @@ npm run check
 pull request if `catalog/generated/` changes.
 
 The `daisyui-theme-css` adapter scopes discovery to 35 theme files, converts
-OKLCH deterministically, and emits canonical JSON for hashing and Kimi. When
+OKLCH deterministically, and emits canonical JSON for hashing and the configured curation model. When
 adding another non-`DESIGN.md` format, add equivalent matcher, normalization,
 hash, and malformed-input tests instead of widening the generic scanner.
 

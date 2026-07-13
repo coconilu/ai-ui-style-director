@@ -13,7 +13,7 @@ flowchart TD
     B --> C["Provider Adapter 发现并标准化资料"]
     C --> D["生成 style/component source 索引与 contentHash"]
     D --> E["Curate Style Sources 检测 pending 来源"]
-    E --> F["Kimi 提出结构化风格候选或 skip"]
+    E --> F["当前配置的模型提出结构化风格候选或 skip"]
     F --> G["Node.js 执行来源、taxonomy、去重和预览门禁"]
     G --> H["GitHub App 创建人工审核 Draft PR"]
     H --> I["合并到已策展 Catalog"]
@@ -63,8 +63,8 @@ Adapter。Adapter 负责把不同格式压缩成项目认可的规范数据：
 
 1. 按索引记录的精确 revision 检出 Provider；
 2. 再次运行 Adapter 并核对内容哈希，避免读取漂移的上游内容；
-3. 把当前来源、有限参考池、相关 Profile 和允许的 taxonomy 发给 Kimi；
-4. Kimi 只能返回结构化候选或 `skip`，不能直接修改仓库或批准风格；
+3. 把当前来源、有限参考池、相关 Profile 和允许的 taxonomy 发给当前配置的策展模型；
+4. 模型只能返回结构化候选或 `skip`，不能直接修改仓库或批准风格；
 5. 程序检查字段、taxonomy、组件库、精确来源、三条不重复参考、主题颜色、
    风格 ID 和重复风险；
 6. 通过后由程序模板生成名称、布局规则、风险说明和中性 SVG 预览；
@@ -109,7 +109,7 @@ Catalog 是供给侧与消费侧之间的稳定边界：
 
 网站创建或重构任务进入 `web-style-director` Skill 后，推荐核心会标准化 brief，
 根据结构化 Profile 做确定性加权评分和差异化，从已策展 Catalog 中返回 5 个相关
-方向。消费端推荐不调用 Kimi；AI 参与发生在供给侧策展，而匹配、排序和换一批由
+方向。消费端推荐不调用策展模型；AI 参与发生在供给侧策展，而匹配、排序和换一批由
 Node.js 程序完成，因此可以测试和复现。
 
 每个推荐包含：
@@ -143,7 +143,7 @@ Agent 必须先展示首屏草图并等待确认，之后才能依据 `DESIGN.md
 | 参与者 | 负责 | 不负责 |
 |---|---|---|
 | Provider Adapter | 发现、解析、标准化、计算稳定哈希 | 判断风格是否值得进入用户目录 |
-| Kimi 策展 Agent | 阅读规范来源，提出结构化候选或跳过理由 | 写仓库、批准来源、扩展 taxonomy、自动合并 |
+| 当前配置的策展模型 | 阅读规范来源，提出结构化候选或跳过理由 | 写仓库、批准来源、扩展 taxonomy、自动合并 |
 | Node.js 程序 | 校验来源与政策、去重、生成 Profile/Visual/SVG、推荐排序 | 对未知格式自由猜测 |
 | GitHub Actions/App | 执行流程、留下日志、创建受限 PR | 绕过 CI 或人工策展审核 |
 | 维护者 | 审查策展结果并决定是否合并 | 在消费端逐次重新解释原始上游仓库 |
@@ -165,7 +165,7 @@ Agent 必须先展示首屏草图并等待确认，之后才能依据 `DESIGN.md
 
 1. 扫描所有符合边界的资料并生成索引；
 2. 把新路径或新内容哈希放入 pending；
-3. 分批调用 Kimi 提出候选；
+3. 分批调用当前配置的模型提出候选；
 4. 通过确定性门禁的候选进入 Draft PR；
 5. 人工合并后成为新的用户可选风格；
 6. Catalog Pages、搜索索引和推荐核心自动消费扩展后的 Catalog。

@@ -48,4 +48,4 @@ and no force pushes or deletion.
 - Upstream repositories are scanned as data; their test fixtures are not run by
   this project's test command.
 - `daisyui-themes` CSS is reduced to governed canonical theme JSON before
-  hashing or Kimi curation; arbitrary repository CSS is not indexed.
+  hashing or model-assisted curation; arbitrary repository CSS is not indexed.

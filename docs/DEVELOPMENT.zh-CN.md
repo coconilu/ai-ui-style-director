@@ -116,7 +116,7 @@ npm run check
 `.github/workflows/refresh-providers.yml` 每天执行该流程，并在 `catalog/generated/` 发生变化时创建 PR。
 
 `daisyui-theme-css` Adapter 只发现 35 个主题文件，确定性转换 OKLCH，并输出用于
-内容哈希与 Kimi 的规范 JSON。未来接入其他非 `DESIGN.md` 格式时，应为 matcher、
+内容哈希与策展模型的规范 JSON。未来接入其他非 `DESIGN.md` 格式时，应为 matcher、
 规范化、哈希和非法输入补齐同等测试，而不是扩大通用扫描器范围。
 
 来源哈希变化后，`.github/workflows/curate-style-sources.yml` 会在另一条可审计 PR

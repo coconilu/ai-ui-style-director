@@ -12,6 +12,15 @@ on:
       - catalog/style-profiles.json
       - catalog/style-visuals.json
   workflow_dispatch:
+    inputs:
+      curator_provider:
+        description: Model provider for this run
+        required: false
+        default: deepseek
+        type: choice
+        options:
+          - deepseek
+          - kimi
 
 permissions:
   contents: read
@@ -27,9 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
-      CURATOR_BASE_URL: https://api.kimi.com/coding/v1
-      CURATOR_MODEL: kimi-for-coding
-      CURATOR_TEMPERATURE: "1"
+      CURATOR_PROVIDER: ${{ github.event.inputs.curator_provider || vars.CURATOR_PROVIDER || 'deepseek' }}
       CURATOR_BATCH_SIZE: "5"
       CURATOR_MAX_INPUT_CHARS: "80000"
       CURATOR_MAX_OUTPUT_TOKENS: "4096"
@@ -66,12 +73,62 @@ jobs:
         if: steps.guard.outputs.skip != 'true'
         run: npm run check
 
-      - name: Curate changed sources
+      - name: Resolve curator provider
         if: steps.guard.outputs.skip != 'true'
+        shell: bash
+        run: |
+          case "$CURATOR_PROVIDER" in
+            deepseek)
+              {
+                echo "CURATOR_BASE_URL=https://api.deepseek.com"
+                echo "CURATOR_MODEL=deepseek-v4-flash"
+                echo "CURATOR_TEMPERATURE=0"
+                echo "CURATOR_THINKING=disabled"
+              } >> "$GITHUB_ENV"
+              ;;
+            kimi)
+              {
+                echo "CURATOR_BASE_URL=https://api.kimi.com/coding/v1"
+                echo "CURATOR_MODEL=kimi-for-coding"
+                echo "CURATOR_TEMPERATURE=1"
+                echo "CURATOR_THINKING="
+              } >> "$GITHUB_ENV"
+              ;;
+            *)
+              echo "::error::Unsupported CURATOR_PROVIDER: $CURATOR_PROVIDER"
+              exit 1
+              ;;
+          esac
+
+      - name: Curate changed sources with DeepSeek
+        if: steps.guard.outputs.skip != 'true' && env.CURATOR_PROVIDER == 'deepseek'
+        env:
+          CURATOR_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        shell: bash
+        run: |
+          if [ -z "$CURATOR_API_KEY" ]; then
+            echo "::error::DEEPSEEK_API_KEY is not configured"
+            exit 1
+          fi
+          node scripts/curate-style-sources.mjs \
+            --drain \
+            --clone \
+            --cache-dir .ui-style-director/cache/providers \
+            --output "$CURATION_RESULT" \
+            --batch-size "$CURATOR_BATCH_SIZE" \
+            --max-input-chars "$CURATOR_MAX_INPUT_CHARS" \
+            --max-output-tokens "$CURATOR_MAX_OUTPUT_TOKENS"
+
+      - name: Curate changed sources with Kimi
+        if: steps.guard.outputs.skip != 'true' && env.CURATOR_PROVIDER == 'kimi'
         env:
           CURATOR_API_KEY: ${{ secrets.KIMI_CODE_API_KEY }}
         shell: bash
         run: |
+          if [ -z "$CURATOR_API_KEY" ]; then
+            echo "::error::KIMI_CODE_API_KEY is not configured"
+            exit 1
+          fi
           node scripts/curate-style-sources.mjs \
             --drain \
             --clone \
@@ -301,7 +358,7 @@ jobs:
             "",
             `- Workflow: ${process.env.RUN_URL}`,
             `- Base commit: ${process.env.BASE_SHA}`,
-            `- Provider: OpenAI-compatible (${process.env.CURATOR_BASE_URL})`,
+            `- Provider: ${safe(process.env.CURATOR_PROVIDER, 40)} (OpenAI-compatible: ${process.env.CURATOR_BASE_URL})`,
             `- Model: ${safe(process.env.CURATOR_MODEL, 80)}`,
             `- Prompt version: ${safe(result.promptVersion || "not reported", 80)}`,
             `- Batch size: ${process.env.BATCH_SIZE}`,
