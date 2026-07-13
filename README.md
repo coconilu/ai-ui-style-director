@@ -155,6 +155,7 @@ Claude Code:
 
 ## Documentation
 
+- [Project overview](docs/OVERVIEW.md)
 - [Workflow](docs/WORKFLOW.md)
 - [Visual previews](docs/VISUAL_PREVIEWS.md)
 - [Supported platforms](docs/PLATFORMS.md)

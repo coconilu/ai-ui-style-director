@@ -147,6 +147,7 @@ Claude Code：
 
 ## 详细文档
 
+- [项目总览](docs/OVERVIEW.zh-CN.md)
 - [工作流程](docs/WORKFLOW.zh-CN.md)
 - [视觉预览](docs/VISUAL_PREVIEWS.zh-CN.md)
 - [支持平台](docs/PLATFORMS.zh-CN.md)
