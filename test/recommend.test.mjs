@@ -197,6 +197,28 @@ test("diversification promotes only near-score alternatives from a new family", 
   );
 });
 
+test("catalog growth cannot let one family crowd relevant alternatives out of the Top 5", () => {
+  const scored = [
+    { profile: { id: "developer-one", name: "Developer One", family: "developer" }, score: 100 },
+    { profile: { id: "developer-two", name: "Developer Two", family: "developer" }, score: 95 },
+    { profile: { id: "developer-three", name: "Developer Three", family: "developer" }, score: 90 },
+    { profile: { id: "developer-four", name: "Developer Four", family: "developer" }, score: 85 },
+    { profile: { id: "developer-five", name: "Developer Five", family: "developer" }, score: 80 },
+    { profile: { id: "docs-one", name: "Docs One", family: "docs" }, score: 60 },
+    { profile: { id: "research-one", name: "Research One", family: "research" }, score: 55 }
+  ];
+
+  const selected = diversifyScoredProfiles(scored, 5);
+  const families = selected.map((item) => item.profile.family);
+  assert.equal(families.filter((family) => family === "developer").length, 3);
+  assert.equal(families.includes("docs"), true);
+  assert.equal(families.includes("research"), true);
+});
+
+test("docs family and documentation briefs share one canonical matching term", () => {
+  assert.equal(scoreProfile({ id: "docs", family: "docs" }, "API documentation") > 0, true);
+});
+
 test("recommendation benchmarks preserve intent coverage and deterministic ranking", () => {
   assert.equal(recommendationBenchmarks.schemaVersion, 1);
   assert.equal(Array.isArray(recommendationBenchmarks.cases), true);
@@ -223,7 +245,11 @@ test("recommendation benchmarks preserve intent coverage and deterministic ranki
       `${benchmark.id}: unexpected top family ${topFamilies[0]}`
     );
     for (const family of benchmark.requiredFamiliesInTop5) {
-      assert.equal(topFamilies.includes(family), true, `${benchmark.id}: missing required Top 5 family ${family}`);
+      assert.equal(
+        topFamilies.includes(family),
+        true,
+        `${benchmark.id}: missing required Top 5 family ${family}; got ${topFamilies.join(", ")}`
+      );
     }
     for (let index = 1; index < first.recommendations.length; index += 1) {
       const previous = first.recommendations[index - 1];

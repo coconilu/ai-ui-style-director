@@ -170,7 +170,8 @@ Profile fields use three weight groups:
 - medium: tones, density, and best-fit scenarios;
 - low: layout rules.
 
-Matching uses normalized token boundaries and light plural canonicalization,
+Matching uses normalized token boundaries, light plural canonicalization, and
+governed semantic aliases such as `docs`/`documentation`,
 while generic words such as `website`, `product`, and `team` do not qualify a
 brief by themselves. Identical inputs and Catalog data produce identical
 ordering, which keeps recommendation testable and reproducible.
@@ -178,10 +179,12 @@ ordering, which keeps recommendation testable and reproducible.
 ### Diversification and rerolling
 
 Diversification first discards zero-score entries and results below 15% of the
-best score. It otherwise keeps score order, promoting a new `family` only when
-its score is at least 80% of the best remaining candidate. This keeps
-relevance primary while allowing near-score alternatives to add useful visual
-range.
+best score. Before ranking the requested result set, it limits one `family` to
+60% of the candidate pool when enough relevant alternatives exist; overflow is
+used only when the pool would otherwise be too small. It then keeps score order,
+promoting a new `family` only when its score is at least 80% of the best
+remaining candidate. This prevents Catalog growth from crowding an intent out
+of the Top 5 while keeping relevance primary.
 
 The 12-case benchmark asserts the expected Top-1 family, required Top-5 family
 coverage, and identical style IDs and scores across repeated runs.

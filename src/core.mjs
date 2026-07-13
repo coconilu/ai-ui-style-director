@@ -68,6 +68,7 @@ const GENERIC_BRIEF_TERMS = new Set([
 const SCENARIO_PROFILE_ARRAY_FIELDS = ["pageTypes", "audiences", "goals", "keywords", "bestFor"];
 const DIVERSITY_RELEVANCE_RATIO = 0.15;
 const DIVERSITY_PROMOTION_RATIO = 0.8;
+const DIVERSITY_MAX_FAMILY_SHARE = 0.6;
 
 export function repoRoot() {
   return ROOT_DIR;
@@ -127,6 +128,9 @@ function normalizeBrief(brief) {
 }
 
 function canonicalToken(token) {
+  if (["doc", "docs", "document", "documents", "documentation"].includes(token)) {
+    return "documentation";
+  }
   if (token.length > 4 && token.endsWith("ies")) return `${token.slice(0, -3)}y`;
   if (token.length > 4 && token.endsWith("s") && !token.endsWith("ss")) return token.slice(0, -1);
   return token;
@@ -249,7 +253,8 @@ function compareScoredProfiles(left, right) {
 
 export function diversifyScoredProfiles(scored, count, {
   relevanceRatio = DIVERSITY_RELEVANCE_RATIO,
-  diversityPromotionRatio = DIVERSITY_PROMOTION_RATIO
+  diversityPromotionRatio = DIVERSITY_PROMOTION_RATIO,
+  maxFamilyShare = DIVERSITY_MAX_FAMILY_SHARE
 } = {}) {
   const limit = Math.max(0, Number.isFinite(count) ? Math.floor(count) : 0);
   if (limit === 0) return [];
@@ -264,8 +269,36 @@ export function diversifyScoredProfiles(scored, count, {
   const promotionRatio = Number.isFinite(diversityPromotionRatio)
     ? Math.max(0, Math.min(1, diversityPromotionRatio))
     : DIVERSITY_PROMOTION_RATIO;
+  const familyShare = Number.isFinite(maxFamilyShare)
+    ? Math.max(0, Math.min(1, maxFamilyShare))
+    : DIVERSITY_MAX_FAMILY_SHARE;
   const minimumScore = Math.max(1, Math.ceil(ordered[0].score * ratio));
-  const remaining = ordered.filter((item) => item.score >= minimumScore);
+  const eligible = ordered.filter((item) => item.score >= minimumScore);
+  const maxFamilyItems = Math.max(1, Math.ceil(limit * familyShare));
+  const balanced = [];
+  const overflow = [];
+  const familyCounts = new Map();
+
+  for (const item of eligible) {
+    const family = item.profile.family;
+    if (!family) {
+      balanced.push(item);
+      continue;
+    }
+    const familyCount = familyCounts.get(family) || 0;
+    if (familyCount < maxFamilyItems) {
+      balanced.push(item);
+      familyCounts.set(family, familyCount + 1);
+    } else {
+      overflow.push(item);
+    }
+  }
+
+  const remaining = balanced.slice(0, limit);
+  if (remaining.length < limit) {
+    remaining.push(...overflow.slice(0, limit - remaining.length));
+    remaining.sort(compareScoredProfiles);
+  }
   const selected = [];
   const families = new Set();
 
