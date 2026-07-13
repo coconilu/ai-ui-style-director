@@ -74,9 +74,10 @@ For each selected source, the pipeline:
    program templates;
 7. appends an immutable audit record and advances source state.
 
-The workflow currently processes pending sources up to its configured batch
-limit; remaining items stay queued. Invalid candidates are recorded but never
-enter the consumer catalog or cause endless paid retries for the same hash.
+The workflow processes pending sources in configured model batches and loops
+until the initial queue is empty. Invalid candidates are recorded as processed,
+but never enter the consumer catalog or cause endless paid retries for the same
+hash. All batch results are validated and proposed in one Draft PR.
 
 Only after the complete repository passes validation does the workflow create a
 short-lived GitHub App token, commit allowlisted Catalog artifacts, and open a

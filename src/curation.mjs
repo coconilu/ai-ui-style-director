@@ -3,6 +3,7 @@ import { spawnSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   renameSync,
   rmSync,
@@ -1231,4 +1232,190 @@ export async function curateStyleSources({
     })),
     usage: usageTotals(responses)
   };
+}
+
+const CURATION_RESULT_COUNTS = Object.freeze([
+  "processed",
+  "promoted",
+  "duplicates",
+  "skipped",
+  "invalid"
+]);
+
+function nonNegativeInteger(value, name) {
+  if (!Number.isInteger(value) || value < 0) {
+    throw new Error(`${name} must be a non-negative integer.`);
+  }
+  return value;
+}
+
+function normalizedBatchResult(result, batchSize) {
+  if (!result || typeof result !== "object" || typeof result.changed !== "boolean") {
+    throw new Error("Curation batch must return an object with a boolean changed field.");
+  }
+  const pending = nonNegativeInteger(result.pending ?? 0, "Curation batch pending");
+  const remaining = nonNegativeInteger(result.remaining ?? 0, "Curation batch remaining");
+  const counts = Object.fromEntries(CURATION_RESULT_COUNTS.map((field) => [
+    field,
+    nonNegativeInteger(result[field] ?? 0, `Curation batch ${field}`)
+  ]));
+  const records = Array.isArray(result.records) ? result.records : [];
+  if (records.length !== counts.processed) {
+    throw new Error("Curation batch records must match its processed count.");
+  }
+  if (counts.promoted + counts.duplicates + counts.skipped + counts.invalid !== counts.processed) {
+    throw new Error("Curation batch decision counts must add up to its processed count.");
+  }
+
+  if (!result.changed) {
+    if (pending !== 0 || remaining !== 0 || counts.processed !== 0) {
+      throw new Error("A no-op curation batch cannot leave pending or processed sources.");
+    }
+  } else {
+    if (result.baseline) throw new Error("Baseline creation cannot run inside the pending-source drain loop.");
+    if (counts.processed === 0) throw new Error("Curation batch made no progress: processed must be greater than zero.");
+    if (counts.processed > batchSize) throw new Error("Curation batch processed more sources than its batch size.");
+    if (remaining !== pending - counts.processed) {
+      throw new Error("Curation batch remaining must equal pending minus processed.");
+    }
+  }
+
+  return { ...result, ...counts, pending, remaining, records };
+}
+
+function usageNumber(usage, keys, fallback = 0) {
+  for (const key of keys) {
+    if (usage[key] === undefined) continue;
+    const value = Number(usage[key]);
+    if (!Number.isFinite(value) || value < 0) throw new Error(`Curation usage ${key} must be a non-negative number.`);
+    return value;
+  }
+  return fallback;
+}
+
+function mergeCurationUsage(total, usage) {
+  if (usage === null || usage === undefined) return total;
+  if (typeof usage !== "object") throw new Error("Curation usage must be an object when reported.");
+  const promptTokens = usageNumber(usage, ["promptTokens", "prompt_tokens", "inputTokens", "input_tokens"]);
+  const completionTokens = usageNumber(usage, ["completionTokens", "completion_tokens", "outputTokens", "output_tokens"]);
+  const reportedTotal = usageNumber(usage, ["totalTokens", "total_tokens"], promptTokens + completionTokens);
+  const totalTokens = reportedTotal === 0 && promptTokens + completionTokens > 0
+    ? promptTokens + completionTokens
+    : reportedTotal;
+  const next = total || { promptTokens: 0, completionTokens: 0, totalTokens: 0 };
+  return {
+    promptTokens: next.promptTokens + promptTokens,
+    completionTokens: next.completionTokens + completionTokens,
+    totalTokens: next.totalTokens + totalTokens
+  };
+}
+
+function drainTransactionSnapshot(options) {
+  const rootDir = options.rootDir || ROOT_DIR;
+  const files = [
+    options.profilesPath || join(rootDir, "catalog", "style-profiles.json"),
+    options.visualsPath || join(rootDir, "catalog", "style-visuals.json"),
+    options.statePath || join(rootDir, "catalog", "curation", "source-state.json")
+  ].map((path) => ({
+    path,
+    content: existsSync(path) ? readFileSync(path, "utf8") : null
+  }));
+  const directories = [
+    options.recordsDir || join(rootDir, "catalog", "curation", "records"),
+    options.previewsDir || join(rootDir, "catalog", "previews")
+  ].map((path) => ({
+    path,
+    existed: existsSync(path),
+    entries: existsSync(path) ? new Set(readdirSync(path)) : new Set()
+  }));
+  return { files, directories };
+}
+
+function restoreDrainTransaction(snapshot) {
+  for (const file of snapshot.files) {
+    if (file.content === null) rmSync(file.path, { force: true });
+    else atomicWrite(file.path, file.content);
+  }
+  // Directory snapshots intentionally track entry names only. Curation is append-only here:
+  // records are immutable and previews are created only for newly promoted profiles.
+  for (const directory of snapshot.directories) {
+    if (!directory.existed) {
+      rmSync(directory.path, { recursive: true, force: true });
+      continue;
+    }
+    for (const entry of readdirSync(directory.path)) {
+      if (!directory.entries.has(entry)) rmSync(join(directory.path, entry), { recursive: true, force: true });
+    }
+  }
+}
+
+export async function drainStyleSources({
+  batchSize = 5,
+  curateBatch = curateStyleSources,
+  rollbackOnFailure = true,
+  maxSources,
+  ...options
+} = {}) {
+  if (!Number.isInteger(batchSize) || batchSize <= 0) throw new TypeError("batchSize must be a positive integer.");
+  if (typeof curateBatch !== "function") throw new TypeError("curateBatch must be a function.");
+  if (typeof rollbackOnFailure !== "boolean") throw new TypeError("rollbackOnFailure must be a boolean.");
+  if (maxSources !== undefined) throw new TypeError("maxSources is not supported in drain mode; use batchSize.");
+  if (options.baseline) throw new Error("Baseline creation cannot be combined with pending-source drain mode.");
+
+  const aggregate = {
+    changed: false,
+    baseline: false,
+    promptVersion: null,
+    batchSize,
+    batches: 0,
+    pending: 0,
+    remaining: 0,
+    processed: 0,
+    promoted: 0,
+    duplicates: 0,
+    skipped: 0,
+    invalid: 0,
+    records: [],
+    usage: null
+  };
+  let expectedPending = null;
+  const transaction = rollbackOnFailure ? drainTransactionSnapshot(options) : null;
+
+  try {
+    while (true) {
+      const batch = normalizedBatchResult(await curateBatch({ ...options, maxSources: batchSize }), batchSize);
+      if (expectedPending !== null && batch.pending !== expectedPending) {
+        throw new Error(`Curation batch continuity failed: expected ${expectedPending} pending sources, got ${batch.pending}.`);
+      }
+      if (aggregate.promptVersion && batch.promptVersion !== aggregate.promptVersion) {
+        throw new Error("Curation prompt version changed while draining pending sources.");
+      }
+      aggregate.promptVersion ||= batch.promptVersion || CURATION_PROMPT_VERSION;
+
+      if (!batch.changed) {
+        aggregate.remaining = 0;
+        return aggregate;
+      }
+
+      if (aggregate.batches === 0) aggregate.pending = batch.pending;
+      aggregate.changed = true;
+      aggregate.batches += 1;
+      aggregate.remaining = batch.remaining;
+      for (const field of CURATION_RESULT_COUNTS) aggregate[field] += batch[field];
+      aggregate.records.push(...batch.records);
+      aggregate.usage = mergeCurationUsage(aggregate.usage, batch.usage);
+
+      if (batch.remaining === 0) return aggregate;
+      expectedPending = batch.remaining;
+    }
+  } catch (error) {
+    if (transaction) {
+      try {
+        restoreDrainTransaction(transaction);
+      } catch (rollbackError) {
+        throw new AggregateError([error, rollbackError], "Curation drain failed and could not restore its starting state.");
+      }
+    }
+    throw error;
+  }
 }

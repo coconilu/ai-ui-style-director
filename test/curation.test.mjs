@@ -18,6 +18,7 @@ import {
   createBaselineState,
   curateStyleSources,
   detectPendingSources,
+  drainStyleSources,
   findNearestProfile,
   preparePinnedProviderCaches,
   validateCurationState,
@@ -269,6 +270,196 @@ test("baseline records current sources without invoking an agent and then become
   assert.equal(noOp.changed, false);
   assert.equal(noOp.pending, 0);
   assert.equal(calls, 0);
+});
+
+test("drains 22 pending sources in stable batches of 5 and aggregates every result", async () => {
+  const sourcePaths = Array.from({ length: 25 }, (_, index) => `styles/source-${index + 1}/DESIGN.md`);
+  const contents = sourcePaths.map((_, index) => `# Source ${index + 1}\nReusable governed reference ${index + 1}.\n`);
+  const data = fixture({ sourcePaths, contents });
+  const skip = {
+    decision: "skip",
+    rationale: "This source does not add a distinct governed style direction.",
+    profile: null,
+    visual: null
+  };
+  let calls = 0;
+  const result = await drainStyleSources({
+    rootDir: data.rootDir,
+    cacheDir: data.cacheDir,
+    batchSize: 5,
+    client: {
+      async completeJson() {
+        calls += 1;
+        const value = calls === 5 ? { decision: "promote" } : skip;
+        return {
+          value,
+          content: JSON.stringify(value),
+          usage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 0 },
+          model: "mock-curator",
+          id: `response-${calls}`
+        };
+      }
+    }
+  });
+
+  assert.equal(calls, 22);
+  assert.equal(result.batchSize, 5);
+  assert.equal(result.batches, 5);
+  assert.equal(result.pending, 22);
+  assert.equal(result.remaining, 0);
+  assert.equal(result.processed, 22);
+  assert.equal(result.skipped, 21);
+  assert.equal(result.invalid, 1);
+  assert.equal(result.records.length, 22);
+  assert.deepEqual(
+    result.records.map((record) => record.path),
+    sourcePaths.slice(3).sort((left, right) => left.localeCompare(right, "en"))
+  );
+  assert.deepEqual(result.usage, { promptTokens: 2_200, completionTokens: 1_100, totalTokens: 3_300 });
+  const state = JSON.parse(readFileSync(join(data.catalogDir, "curation", "source-state.json"), "utf8"));
+  assert.equal(state.sources.length, 25);
+  assert.equal(state.sources.filter((source) => source.status === "skipped").length, 21);
+  assert.equal(state.sources.filter((source) => source.status === "invalid").length, 1);
+  assert.equal(readdirSync(join(data.catalogDir, "curation", "records")).length, 22);
+  assert.equal(JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8")).length, 1);
+});
+
+test("drain mode returns a clean no-op and rejects batches that make no progress", async () => {
+  let calls = 0;
+  const noOp = await drainStyleSources({
+    batchSize: 5,
+    rollbackOnFailure: false,
+    curateBatch: async () => {
+      calls += 1;
+      return {
+        changed: false,
+        baseline: false,
+        promptVersion: CURATION_PROMPT_VERSION,
+        pending: 0,
+        processed: 0,
+        promoted: 0,
+        duplicates: 0,
+        skipped: 0,
+        invalid: 0,
+        records: [],
+        usage: null
+      };
+    }
+  });
+  assert.equal(calls, 1);
+  assert.equal(noOp.changed, false);
+  assert.equal(noOp.batches, 0);
+  assert.equal(noOp.remaining, 0);
+  assert.equal(noOp.usage, null);
+
+  await assert.rejects(
+    drainStyleSources({
+      batchSize: 5,
+      rollbackOnFailure: false,
+      curateBatch: async () => ({
+        changed: true,
+        baseline: false,
+        promptVersion: CURATION_PROMPT_VERSION,
+        pending: 5,
+        remaining: 5,
+        processed: 0,
+        promoted: 0,
+        duplicates: 0,
+        skipped: 0,
+        invalid: 0,
+        records: [],
+        usage: null
+      })
+    }),
+    /made no progress/u
+  );
+  let batch = 0;
+  await assert.rejects(
+    drainStyleSources({
+      batchSize: 5,
+      rollbackOnFailure: false,
+      curateBatch: async () => {
+        batch += 1;
+        const pending = batch === 1 ? 6 : 2;
+        const processed = batch === 1 ? 5 : 2;
+        return {
+          changed: true,
+          baseline: false,
+          promptVersion: CURATION_PROMPT_VERSION,
+          pending,
+          remaining: pending - processed,
+          processed,
+          promoted: 0,
+          duplicates: 0,
+          skipped: processed,
+          invalid: 0,
+          records: Array.from({ length: processed }, (_, index) => ({ recordId: `${batch}-${index}` })),
+          usage: null
+        };
+      }
+    }),
+    /batch continuity failed/u
+  );
+  await assert.rejects(drainStyleSources({ batchSize: 0 }), /batchSize must be a positive integer/u);
+  await assert.rejects(drainStyleSources({ rollbackOnFailure: "yes" }), /rollbackOnFailure must be a boolean/u);
+  await assert.rejects(drainStyleSources({ maxSources: 5 }), /maxSources is not supported in drain mode; use batchSize/u);
+  await assert.rejects(drainStyleSources({ baseline: true }), /Baseline creation cannot be combined/u);
+});
+
+test("drain mode restores its starting files when a later batch fails", async () => {
+  const sourcePaths = Array.from({ length: 9 }, (_, index) => `styles/rollback-${index + 1}/DESIGN.md`);
+  const contents = sourcePaths.map((_, index) => `# Rollback ${index + 1}\nStable source ${index + 1}.\n`);
+  const data = fixture({ sourcePaths, contents });
+  const statePath = join(data.catalogDir, "curation", "source-state.json");
+  const profilesPath = join(data.catalogDir, "style-profiles.json");
+  const visualsPath = join(data.catalogDir, "style-visuals.json");
+  const recordsDir = join(data.catalogDir, "curation", "records");
+  const previewsDir = join(data.catalogDir, "previews");
+  const before = {
+    state: readFileSync(statePath, "utf8"),
+    profiles: readFileSync(profilesPath, "utf8"),
+    visuals: readFileSync(visualsPath, "utf8"),
+    previews: readdirSync(previewsDir)
+  };
+  const skip = {
+    decision: "skip",
+    rationale: "This source does not add a distinct governed style direction.",
+    profile: null,
+    visual: null
+  };
+  const promotion = candidateFor([sourcePaths[3], sourcePaths[0], sourcePaths[1]]);
+  let calls = 0;
+
+  await assert.rejects(
+    drainStyleSources({
+      rootDir: data.rootDir,
+      cacheDir: data.cacheDir,
+      batchSize: 5,
+      curateBatch: (options) => curateStyleSources(options),
+      client: {
+        async completeJson() {
+          calls += 1;
+          if (calls === 6) throw new Error("simulated second-batch API failure");
+          const value = calls === 1 ? promotion : skip;
+          return {
+            value,
+            content: JSON.stringify(value),
+            usage: null,
+            model: "mock-curator",
+            id: `rollback-${calls}`
+          };
+        }
+      }
+    }),
+    /simulated second-batch API failure/u
+  );
+
+  assert.equal(calls, 6);
+  assert.equal(readFileSync(statePath, "utf8"), before.state);
+  assert.equal(readFileSync(profilesPath, "utf8"), before.profiles);
+  assert.equal(readFileSync(visualsPath, "utf8"), before.visuals);
+  assert.deepEqual(readdirSync(previewsDir), before.previews);
+  assert.equal(existsSync(recordsDir), false);
 });
 
 test("curation state rejects current-directory and empty relative-path segments", () => {

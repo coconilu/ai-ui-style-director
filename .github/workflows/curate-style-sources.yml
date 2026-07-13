@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: curate-style-sources
@@ -24,12 +25,12 @@ jobs:
   curate:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 120
     env:
       CURATOR_BASE_URL: https://api.kimi.com/coding/v1
       CURATOR_MODEL: kimi-for-coding
       CURATOR_TEMPERATURE: "1"
-      CURATOR_MAX_SOURCES: "5"
+      CURATOR_BATCH_SIZE: "5"
       CURATOR_MAX_INPUT_CHARS: "80000"
       CURATOR_MAX_OUTPUT_TOKENS: "4096"
       CURATOR_MAX_RETRIES: "1"
@@ -45,23 +46,43 @@ jobs:
         with:
           node-version: 20
 
+      - name: Detect existing curation pull request
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          open_prs="$(gh pr list --state open --limit 1000 --json headRefName,url \
+            --jq '.[] | select(.headRefName | startswith("automation/curate-style-sources-")) | .url')"
+          if [ -n "$open_prs" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            printf '### Automated style curation\n\nSkipped because an earlier curation PR is still open:\n\n%s\n' \
+              "$open_prs" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Validate trusted base
+        if: steps.guard.outputs.skip != 'true'
         run: npm run check
 
       - name: Curate changed sources
+        if: steps.guard.outputs.skip != 'true'
         env:
           CURATOR_API_KEY: ${{ secrets.KIMI_CODE_API_KEY }}
         shell: bash
         run: |
           node scripts/curate-style-sources.mjs \
+            --drain \
             --clone \
             --cache-dir .ui-style-director/cache/providers \
             --output "$CURATION_RESULT" \
-            --max-sources "$CURATOR_MAX_SOURCES" \
+            --batch-size "$CURATOR_BATCH_SIZE" \
             --max-input-chars "$CURATOR_MAX_INPUT_CHARS" \
             --max-output-tokens "$CURATOR_MAX_OUTPUT_TOKENS"
 
       - name: Read curation result
+        if: steps.guard.outputs.skip != 'true'
         id: result
         env:
           RESULT_PATH: ${{ env.CURATION_RESULT }}
@@ -83,9 +104,23 @@ jobs:
             return value;
           };
 
+          const pending = count("pending");
+          const remaining = count("remaining");
+          const processed = count("processed");
+          if (result.changed && remaining !== 0) {
+            throw new Error(`curation drain must finish with zero remaining sources, got ${remaining}`);
+          }
+          if (result.changed && processed !== pending) {
+            throw new Error(`curation drain must process all ${pending} pending sources, got ${processed}`);
+          }
+
           const output = [
             `changed=${result.changed}`,
-            `processed=${count("processed")}`,
+            `batch_size=${count("batchSize")}`,
+            `batches=${count("batches")}`,
+            `pending=${pending}`,
+            `remaining=${remaining}`,
+            `processed=${processed}`,
             `promoted=${count("promoted")}`,
             `duplicates=${count("duplicates")}`,
             `skipped=${count("skipped")}`,
@@ -136,7 +171,7 @@ jobs:
           git diff --check
 
       - name: Reject undeclared changes on no-op
-        if: steps.result.outputs.changed != 'true'
+        if: steps.guard.outputs.skip != 'true' && steps.result.outputs.changed != 'true'
         shell: bash
         run: |
           if [ -n "$(git status --porcelain=v1)" ]; then
@@ -181,6 +216,10 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           RESULT_PATH: ${{ env.CURATION_RESULT }}
+          BATCH_SIZE: ${{ steps.result.outputs.batch_size }}
+          BATCHES: ${{ steps.result.outputs.batches }}
+          PENDING: ${{ steps.result.outputs.pending }}
+          REMAINING: ${{ steps.result.outputs.remaining }}
           PROCESSED: ${{ steps.result.outputs.processed }}
           PROMOTED: ${{ steps.result.outputs.promoted }}
           DUPLICATES: ${{ steps.result.outputs.duplicates }}
@@ -265,9 +304,13 @@ jobs:
             `- Provider: OpenAI-compatible (${process.env.CURATOR_BASE_URL})`,
             `- Model: ${safe(process.env.CURATOR_MODEL, 80)}`,
             `- Prompt version: ${safe(result.promptVersion || "not reported", 80)}`,
+            `- Batch size: ${process.env.BATCH_SIZE}`,
+            `- Batches: ${process.env.BATCHES}`,
             "",
             "## Decisions",
             "",
+            `- Pending at start: ${process.env.PENDING}`,
+            `- Remaining: ${process.env.REMAINING}`,
             `- Processed: ${process.env.PROCESSED}`,
             `- Promoted: ${process.env.PROMOTED}`,
             `- Duplicates: ${process.env.DUPLICATES}`,
@@ -281,6 +324,7 @@ jobs:
             const reason = safe(record.reason || "See the machine-readable curation record.", 260);
             lines.push(`- ${source}: ${decision} - ${reason}`);
           }
+          if (records.length > 50) lines.push(`- ...and ${records.length - 50} more audited decisions.`);
 
           lines.push(
             "",
@@ -310,5 +354,5 @@ jobs:
             --head "$branch" \
             --draft)"
 
-          printf '### Automated style curation\n\n- Draft PR: %s\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Review: maintainer review and manual merge required\n' \
-            "$pr_url" "$PROCESSED" "$PROMOTED" "$DUPLICATES" "$SKIPPED" "$INVALID" >> "$GITHUB_STEP_SUMMARY"
+          printf '### Automated style curation\n\n- Draft PR: %s\n- Batches: %s × up to %s sources\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Review: maintainer review and manual merge required\n' \
+            "$pr_url" "$BATCHES" "$BATCH_SIZE" "$PROCESSED" "$PROMOTED" "$DUPLICATES" "$SKIPPED" "$INVALID" >> "$GITHUB_STEP_SUMMARY"
