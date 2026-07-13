@@ -593,6 +593,54 @@
       "status": "baseline",
       "recordId": null,
       "styleIds": []
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/abyss.css",
+      "processedHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+      "status": "promoted",
+      "recordId": "fa0231b885b44879aa3adf801d516f1b8bdd736a3c9ee96e07f8774143ddaf0c",
+      "styleIds": [
+        "developer-dashboard-grid-data-6ced1427"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/acid.css",
+      "processedHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0",
+      "status": "promoted",
+      "recordId": "671d3a3eeb97cda0b0ad9f896fd5f578b9c97b132ca0b4379272ccc35e8ce779",
+      "styleIds": [
+        "launch-centered-hero-story-cff58e59"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/aqua.css",
+      "processedHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073",
+      "status": "promoted",
+      "recordId": "04ab67c627c40d2d1e4f0348206d83feeb30fc858241158b53bbb35274e441b0",
+      "styleIds": [
+        "developer-dashboard-grid-data-ccf39d86"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/autumn.css",
+      "processedHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06",
+      "status": "promoted",
+      "recordId": "dc412658da6514f9ba6ed611c7f04e98b76b66cf9225122d400791bd827250b8",
+      "styleIds": [
+        "consumer-centered-hero-story-2f0b340c"
+      ]
+    },
+    {
+      "providerId": "daisyui-themes",
+      "path": "packages/daisyui/src/themes/black.css",
+      "processedHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7",
+      "status": "invalid",
+      "recordId": "5b7a947935bab570896d068fa88ee372572d17c53003dfe3598f8a5d3a61f3e5",
+      "styleIds": []
     }
   ]
 }

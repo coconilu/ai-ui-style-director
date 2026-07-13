@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordId": "671d3a3eeb97cda0b0ad9f896fd5f578b9c97b132ca0b4379272ccc35e8ce779",
+  "createdAt": "2026-07-13T00:07:12.926Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/acid.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3836
+  },
+  "agent": {
+    "provider": "openai-compatible:api.kimi.com",
+    "model": "kimi-for-coding",
+    "promptVersion": "style-curation-v3",
+    "responseId": "chatcmpl-eIDsXAlVLxOpVe3eu2607vhE",
+    "responseHash": "sha256:64fe2fd045291a92dab1b80919c100a3ef64a5d018908079812277d20df3d22d",
+    "usage": {
+      "prompt_tokens": 11877,
+      "completion_tokens": 2197,
+      "total_tokens": 14074,
+      "cached_tokens": 6400,
+      "prompt_tokens_details": {
+        "cached_tokens": 6400
+      }
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "The acid theme provides a distinct, high-energy palette with near-white base and neon magenta/lime accents, paired with large rounded geometry that supports an expressive, launch-oriented consumer style.",
+    "profile": {
+      "family": "launch",
+      "pageTypes": [
+        "landing",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "early-adopters",
+        "founders",
+        "creators"
+      ],
+      "goals": [
+        "launch",
+        "signup",
+        "brand-awareness"
+      ],
+      "density": "low",
+      "tones": [
+        "energetic",
+        "playful",
+        "expressive",
+        "modern"
+      ],
+      "keywords": [
+        "launch",
+        "waitlist",
+        "startup",
+        "new product",
+        "creative"
+      ],
+      "componentKits": [
+        "magic-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "story",
+      "typographyStyle": "expressive-display",
+      "spacing": "spacious",
+      "motion": "expressive"
+    },
+    "visual": {
+      "variant": "launch",
+      "theme": {
+        "canvas": "#F8F8F8",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#E1E1E1",
+        "text": "#000000",
+        "muted": "#636363",
+        "accent": "#FF42F4",
+        "border": "#E1E1E1"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/acid.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cyberpunk.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "role": "color"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#F8F8F8",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#E1E1E1",
+        "text": "#000000",
+        "muted": "#636363",
+        "accent": "#FF42F4",
+        "border": "#E1E1E1"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "motion-rich-launch",
+      "score": 0.496403,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.68742,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "launch-centered-hero-story-cff58e59",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/launch-centered-hero-story-cff58e59.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29214622679",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29214622679",
+    "commitSha": "4b6084c3797ce0457b36ea002e8e1598f01845ab"
+  }
+}
