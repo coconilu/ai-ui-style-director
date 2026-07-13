@@ -49,6 +49,7 @@ test("curation workflow calls Kimi through the OpenAI-compatible environment and
   assert.match(curationWorkflow, /curation drain must finish with zero remaining sources/u);
   assert.match(curationWorkflow, /curation drain must process all/u);
   assert.match(curationWorkflow, /Detect existing curation pull request/u);
+  assert.match(curationWorkflow, /gh pr list --state open --limit 1000/u);
   assert.match(curationWorkflow, /startswith\("automation\/curate-style-sources-"\)/u);
   assert.match(curationWorkflow, /steps\.guard\.outputs\.skip != 'true'/u);
 });

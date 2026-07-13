@@ -52,7 +52,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          open_prs="$(gh pr list --state open --limit 100 --json headRefName,url \
+          open_prs="$(gh pr list --state open --limit 1000 --json headRefName,url \
             --jq '.[] | select(.headRefName | startswith("automation/curate-style-sources-")) | .url')"
           if [ -n "$open_prs" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"

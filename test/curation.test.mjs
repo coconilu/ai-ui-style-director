@@ -328,6 +328,7 @@ test("drain mode returns a clean no-op and rejects batches that make no progress
   let calls = 0;
   const noOp = await drainStyleSources({
     batchSize: 5,
+    rollbackOnFailure: false,
     curateBatch: async () => {
       calls += 1;
       return {
@@ -354,6 +355,7 @@ test("drain mode returns a clean no-op and rejects batches that make no progress
   await assert.rejects(
     drainStyleSources({
       batchSize: 5,
+      rollbackOnFailure: false,
       curateBatch: async () => ({
         changed: true,
         baseline: false,
@@ -375,6 +377,7 @@ test("drain mode returns a clean no-op and rejects batches that make no progress
   await assert.rejects(
     drainStyleSources({
       batchSize: 5,
+      rollbackOnFailure: false,
       curateBatch: async () => {
         batch += 1;
         const pending = batch === 1 ? 6 : 2;
@@ -398,6 +401,8 @@ test("drain mode returns a clean no-op and rejects batches that make no progress
     /batch continuity failed/u
   );
   await assert.rejects(drainStyleSources({ batchSize: 0 }), /batchSize must be a positive integer/u);
+  await assert.rejects(drainStyleSources({ rollbackOnFailure: "yes" }), /rollbackOnFailure must be a boolean/u);
+  await assert.rejects(drainStyleSources({ maxSources: 5 }), /maxSources is not supported in drain mode; use batchSize/u);
   await assert.rejects(drainStyleSources({ baseline: true }), /Baseline creation cannot be combined/u);
 });
 
@@ -430,6 +435,7 @@ test("drain mode restores its starting files when a later batch fails", async ()
       rootDir: data.rootDir,
       cacheDir: data.cacheDir,
       batchSize: 5,
+      curateBatch: (options) => curateStyleSources(options),
       client: {
         async completeJson() {
           calls += 1;

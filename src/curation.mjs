@@ -1336,6 +1336,8 @@ function restoreDrainTransaction(snapshot) {
     if (file.content === null) rmSync(file.path, { force: true });
     else atomicWrite(file.path, file.content);
   }
+  // Directory snapshots intentionally track entry names only. Curation is append-only here:
+  // records are immutable and previews are created only for newly promoted profiles.
   for (const directory of snapshot.directories) {
     if (!directory.existed) {
       rmSync(directory.path, { recursive: true, force: true });
@@ -1350,10 +1352,14 @@ function restoreDrainTransaction(snapshot) {
 export async function drainStyleSources({
   batchSize = 5,
   curateBatch = curateStyleSources,
+  rollbackOnFailure = true,
+  maxSources,
   ...options
 } = {}) {
   if (!Number.isInteger(batchSize) || batchSize <= 0) throw new TypeError("batchSize must be a positive integer.");
   if (typeof curateBatch !== "function") throw new TypeError("curateBatch must be a function.");
+  if (typeof rollbackOnFailure !== "boolean") throw new TypeError("rollbackOnFailure must be a boolean.");
+  if (maxSources !== undefined) throw new TypeError("maxSources is not supported in drain mode; use batchSize.");
   if (options.baseline) throw new Error("Baseline creation cannot be combined with pending-source drain mode.");
 
   const aggregate = {
@@ -1373,7 +1379,7 @@ export async function drainStyleSources({
     usage: null
   };
   let expectedPending = null;
-  const transaction = curateBatch === curateStyleSources ? drainTransactionSnapshot(options) : null;
+  const transaction = rollbackOnFailure ? drainTransactionSnapshot(options) : null;
 
   try {
     while (true) {
