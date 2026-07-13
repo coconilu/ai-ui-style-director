@@ -250,6 +250,24 @@ function mockClient(candidate, inspect) {
   };
 }
 
+function mockSequenceClient(candidates, inspect) {
+  let index = 0;
+  return {
+    async completeJson(request) {
+      inspect?.(request, index);
+      const candidate = candidates[Math.min(index, candidates.length - 1)];
+      index += 1;
+      return {
+        value: candidate,
+        content: JSON.stringify(candidate),
+        usage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 150 },
+        model: "mock-curator",
+        id: `response-${index}`
+      };
+    }
+  };
+}
+
 test("baseline records current sources without invoking an agent and then becomes a no-op", async () => {
   const data = fixture();
   const statePath = join(data.catalogDir, "curation", "source-state.json");
@@ -290,7 +308,7 @@ test("drains 22 pending sources in stable batches of 5 and aggregates every resu
     client: {
       async completeJson() {
         calls += 1;
-        const value = calls === 5 ? { decision: "promote" } : skip;
+        const value = skip;
         return {
           value,
           content: JSON.stringify(value),
@@ -308,8 +326,8 @@ test("drains 22 pending sources in stable batches of 5 and aggregates every resu
   assert.equal(result.pending, 22);
   assert.equal(result.remaining, 0);
   assert.equal(result.processed, 22);
-  assert.equal(result.skipped, 21);
-  assert.equal(result.invalid, 1);
+  assert.equal(result.skipped, 22);
+  assert.equal(result.invalid, 0);
   assert.equal(result.records.length, 22);
   assert.deepEqual(
     result.records.map((record) => record.path),
@@ -318,8 +336,8 @@ test("drains 22 pending sources in stable batches of 5 and aggregates every resu
   assert.deepEqual(result.usage, { promptTokens: 2_200, completionTokens: 1_100, totalTokens: 3_300 });
   const state = JSON.parse(readFileSync(join(data.catalogDir, "curation", "source-state.json"), "utf8"));
   assert.equal(state.sources.length, 25);
-  assert.equal(state.sources.filter((source) => source.status === "skipped").length, 21);
-  assert.equal(state.sources.filter((source) => source.status === "invalid").length, 1);
+  assert.equal(state.sources.filter((source) => source.status === "skipped").length, 22);
+  assert.equal(state.sources.filter((source) => source.status === "invalid").length, 0);
   assert.equal(readdirSync(join(data.catalogDir, "curation", "records")).length, 22);
   assert.equal(JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8")).length, 1);
 });
@@ -570,6 +588,66 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
 
   const rerun = await curateStyleSources({ rootDir: data.rootDir, cacheDir: data.cacheDir, client: mockClient(null) });
   assert.equal(rerun.changed, false);
+});
+
+test("deterministic validation errors receive one audited semantic repair attempt", async () => {
+  const data = fixture();
+  const references = [data.sourcePaths[3], data.sourcePaths[0], data.sourcePaths[1]];
+  const invalid = candidateFor(references, {
+    profile: candidateProfile({ keywords: ["quiet", "not-in-the-trusted-vocabulary"] })
+  });
+  const repaired = candidateFor(references);
+  const requests = [];
+  const result = await curateStyleSources({
+    rootDir: data.rootDir,
+    cacheDir: data.cacheDir,
+    client: mockSequenceClient([invalid, repaired], (request) => requests.push(request))
+  });
+
+  assert.equal(requests.length, 2);
+  assert.equal(requests[0].messages.length, 2);
+  assert.equal(requests[1].messages.length, 4);
+  assert.deepEqual(JSON.parse(requests[1].messages[2].content), invalid);
+  const repair = JSON.parse(requests[1].messages[3].content);
+  assert.match(repair.validationErrors.join("\n"), /trusted catalog vocabulary/u);
+  assert.equal(result.promoted, 1);
+  assert.equal(result.invalid, 0);
+  assert.deepEqual(result.usage, { promptTokens: 200, completionTokens: 100, totalTokens: 300 });
+
+  const record = JSON.parse(readFileSync(
+    join(data.catalogDir, "curation", "records", `${result.records[0].recordId}.json`),
+    "utf8"
+  ));
+  assert.equal(record.agent.attemptCount, 2);
+  assert.deepEqual(record.agent.attempts.map((attempt) => attempt.phase), ["initial", "repair"]);
+  assert.match(record.agent.attempts[0].validationErrors.join("\n"), /trusted catalog vocabulary/u);
+  assert.deepEqual(record.agent.attempts[1].validationErrors, []);
+  assert.deepEqual(record.candidate, repaired);
+});
+
+test("semantic repair is bounded to one attempt before terminal invalid", async () => {
+  const data = fixture();
+  const references = [data.sourcePaths[3], data.sourcePaths[0], data.sourcePaths[1]];
+  const invalid = candidateFor(references, {
+    profile: candidateProfile({ keywords: ["not-in-the-trusted-vocabulary"] })
+  });
+  let calls = 0;
+  const result = await curateStyleSources({
+    rootDir: data.rootDir,
+    cacheDir: data.cacheDir,
+    client: mockSequenceClient([invalid, invalid, candidateFor(references)], () => { calls += 1; })
+  });
+
+  assert.equal(calls, 2);
+  assert.equal(result.promoted, 0);
+  assert.equal(result.invalid, 1);
+  assert.match(result.records[0].reason, /after one repair attempt/u);
+  const record = JSON.parse(readFileSync(
+    join(data.catalogDir, "curation", "records", `${result.records[0].recordId}.json`),
+    "utf8"
+  ));
+  assert.equal(record.agent.attemptCount, 2);
+  assert.equal(record.agent.attempts[1].validationErrors.length > 0, true);
 });
 
 test("theme-css sources are normalized before the agent call and enforce adapter-derived colors", async () => {

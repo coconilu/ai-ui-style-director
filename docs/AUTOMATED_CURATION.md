@@ -88,7 +88,7 @@ providers while curation state initially remains at 74. Those 35 sources are
 pending and are drained in bounded model batches within one workflow run; they
 must not be added to the baseline by the onboarding PR.
 
-The adapter-aware request contract is versioned as `style-curation-v3`.
+The adapter-aware request contract is versioned as `style-curation-v4`.
 Changing the state root to that prompt version documents the new normalized
 input semantics; it does not retroactively make the original 74 baseline
 sources pending.
@@ -228,8 +228,11 @@ npm run catalog:curate -- --drain --clone --batch-size 5
 
 The command is a clean no-op when nothing is pending, so it does not require an
 API key for the checked-in baseline. Infrastructure/authentication errors fail
-without advancing state. A structurally invalid model result is recorded as
-`invalid`, which prevents an endless paid retry loop for the same source hash.
+without advancing state. When a model result fails deterministic candidate
+validation, the program sends those exact errors back for one bounded semantic
+repair attempt. Both attempts are included in usage totals and audit metadata.
+Only a second invalid result is recorded as terminal `invalid`, which prevents
+an endless paid retry loop for the same source hash.
 
 ## Scale and cost controls
 
