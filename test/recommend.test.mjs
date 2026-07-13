@@ -24,6 +24,7 @@ import {
   startRecommendationPreviewServer,
   updateCatalog
 } from "../src/core.mjs";
+import { visualReferenceSource } from "../src/provider-adapters.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
 const rootDir = join(dirname(binPath), "..");
@@ -282,11 +283,8 @@ test("every style has a generated preview and three real visual references", () 
   const generatedSources = JSON.parse(
     readFileSync(join(rootDir, "catalog", "generated", "style-sources.json"), "utf8")
   ).sources;
-  const upstreamSlugs = new Set(
-    generatedSources
-      .filter((source) => source.providerId === "awesome-design-md")
-      .map((source) => source.path.match(/^design-md\/([^/]+)\/DESIGN\.md$/)?.[1])
-      .filter(Boolean)
+  const generatedSourceKeys = new Set(
+    generatedSources.map((source) => `${source.providerId}\0${source.path}`)
   );
 
   assert.equal(visuals.length, profiles.length);
@@ -296,7 +294,13 @@ test("every style has a generated preview and three real visual references", () 
     assert.equal(visual.references.length, 3);
     assert.equal(existsSync(join(rootDir, "catalog", "previews", `${profile.id}.svg`)), true);
     for (const reference of visual.references) {
-      assert.equal(upstreamSlugs.has(reference.slug), true, `Unknown upstream slug: ${reference.slug}`);
+      const source = visualReferenceSource(reference);
+      assert.ok(source, `Unresolvable upstream reference for ${profile.id}`);
+      assert.equal(
+        generatedSourceKeys.has(`${source.providerId}\0${source.path}`),
+        true,
+        `Unknown upstream reference: ${source.providerId}/${source.path}`
+      );
     }
   }
 });

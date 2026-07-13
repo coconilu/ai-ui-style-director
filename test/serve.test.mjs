@@ -95,8 +95,10 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
     assert.equal(entry.references.length, 3);
     for (const reference of entry.references) {
       assert.equal(typeof reference.label, "string");
-      assert.match(reference.lightPreviewUrl, /^https:\/\//);
-      assert.match(reference.darkPreviewUrl, /^https:\/\//);
+      const referenceUrls = [reference.lightPreviewUrl, reference.darkPreviewUrl, reference.pageUrl]
+        .filter(Boolean);
+      assert.equal(referenceUrls.length > 0, true, `${entry.id} references must expose a consumer URL`);
+      assert.equal(referenceUrls.every((url) => /^https:\/\//u.test(url)), true);
     }
   }
 
@@ -189,6 +191,7 @@ test("static catalog assets are project-subpath safe and complete", () => {
 });
 
 test("static catalog build writes a deterministic Pages artifact", () => {
+  const profileCount = loadStyleProfiles().length;
   const tempDir = mkdtempSync(join(tmpdir(), "style-director-pages-"));
   const outputDir = join(tempDir, "site");
   assert.throws(
@@ -200,12 +203,15 @@ test("static catalog build writes a deterministic Pages artifact", () => {
   const second = writeCatalogSite({ outputDir, allowExternalOutput: true });
   const secondSnapshot = readDirectorySnapshot(outputDir);
 
-  assert.equal(first.fileCount, 54);
-  assert.equal(first.styleCount, 48);
+  assert.equal(first.fileCount, profileCount + 6);
+  assert.equal(first.styleCount, profileCount);
   assert.equal(first.catalogRevision, second.catalogRevision);
   assert.deepEqual(secondSnapshot, firstSnapshot);
   assert.equal(firstSnapshot[".nojekyll"], "");
-  assert.equal(Object.keys(firstSnapshot).filter((path) => path.startsWith("previews/")).length, 48);
+  assert.equal(
+    Object.keys(firstSnapshot).filter((path) => path.startsWith("previews/")).length,
+    profileCount
+  );
 });
 
 test("filterCatalogEntries supports English queries, Chinese aliases, and case folding", () => {
