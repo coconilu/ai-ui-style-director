@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "recordId": "5b7a947935bab570896d068fa88ee372572d17c53003dfe3598f8a5d3a61f3e5",
+  "createdAt": "2026-07-13T00:07:48.891Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/black.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3755
+  },
+  "agent": {
+    "provider": "openai-compatible:api.kimi.com",
+    "model": "kimi-for-coding",
+    "promptVersion": "style-curation-v3",
+    "responseId": "chatcmpl-ESGruqzopdlOFSwD01kvDVFy",
+    "responseHash": "sha256:ae831b807136cbbfd932a9d1a7a057f5ed3477f61de8fb0089c6bbc2b240f2c0",
+    "usage": {
+      "prompt_tokens": 11781,
+      "completion_tokens": 1617,
+      "total_tokens": 13398,
+      "cached_tokens": 6400,
+      "prompt_tokens_details": {
+        "cached_tokens": 6400
+      }
+    }
+  },
+  "candidate": {
+    "rejected": true,
+    "declaredDecision": "promote",
+    "validationErrors": [
+      "visual.references[0] has unexpected fields",
+      "visual.references[1] has unexpected fields",
+      "visual.references[2] has unexpected fields",
+      "visual.references must include the primary source"
+    ]
+  },
+  "checks": {
+    "schema": {
+      "passed": false,
+      "errors": [
+        "visual.references[0] has unexpected fields",
+        "visual.references[1] has unexpected fields",
+        "visual.references[2] has unexpected fields",
+        "visual.references must include the primary source"
+      ]
+    },
+    "provenance": {
+      "passed": false,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#000000",
+        "surface": "#141414",
+        "surfaceAlt": "#1B1B1B",
+        "text": "#D6D6D6",
+        "muted": "#808080",
+        "accent": "#3A3A3A",
+        "border": "#1B1B1B"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": null,
+      "score": 0,
+      "paletteThreshold": 0.04,
+      "paletteDistance": null,
+      "passed": true
+    }
+  },
+  "decision": "invalid",
+  "promotion": null,
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29214622679",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29214622679",
+    "commitSha": "4b6084c3797ce0457b36ea002e8e1598f01845ab"
+  }
+}

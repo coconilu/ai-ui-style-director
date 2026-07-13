@@ -478,5 +478,185 @@
       { "provider": "awesome-design-md", "slug": "mintlify", "label": "Mintlify", "role": "clear study navigation and reference content" },
       { "provider": "awesome-design-md", "slug": "airtable", "label": "Airtable", "role": "progress tracking and competency organization" }
     ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-6ced1427",
+    "variant": "developer",
+    "theme": {
+      "canvas": "#001A1E",
+      "surface": "#000E11",
+      "surfaceAlt": "#000405",
+      "text": "#FFD6A7",
+      "muted": "#998B70",
+      "accent": "#C2FD00",
+      "border": "#000405"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/abyss.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/black.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/black.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "information-density reference"
+      }
+    ]
+  },
+  {
+    "styleId": "launch-centered-hero-story-cff58e59",
+    "variant": "launch",
+    "theme": {
+      "canvas": "#F8F8F8",
+      "surface": "#EEEEEE",
+      "surfaceAlt": "#E1E1E1",
+      "text": "#000000",
+      "muted": "#636363",
+      "accent": "#FF42F4",
+      "border": "#E1E1E1"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/acid.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/acid.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/cyberpunk.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cyberpunk.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/synthwave.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "color-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "developer-dashboard-grid-data-ccf39d86",
+    "variant": "dashboard",
+    "theme": {
+      "canvas": "#1A368B",
+      "surface": "#162455",
+      "surfaceAlt": "#091444",
+      "text": "#B8E6FE",
+      "muted": "#79A0D0",
+      "accent": "#13ECF3",
+      "border": "#091444"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/aqua.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/aqua.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/dark.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "interaction-pattern reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/abyss.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "typography-system reference"
+      }
+    ]
+  },
+  {
+    "styleId": "consumer-centered-hero-story-2f0b340c",
+    "variant": "brand",
+    "theme": {
+      "canvas": "#F1F1F1",
+      "surface": "#DBDBDB",
+      "surfaceAlt": "#C5C5C5",
+      "text": "#141414",
+      "muted": "#6C6C6C",
+      "accent": "#8C0327",
+      "border": "#C5C5C5"
+    },
+    "references": [
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/autumn.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/autumn.css",
+        "label": "Daisyui Themes reference 1",
+        "role": "color-system reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/corporate.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+        "label": "Daisyui Themes reference 2",
+        "role": "layout-structure reference"
+      },
+      {
+        "provider": "daisyui-themes",
+        "path": "packages/daisyui/src/themes/light.css",
+        "repo": "saadeghi/daisyui",
+        "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+        "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+        "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+        "label": "Daisyui Themes reference 3",
+        "role": "content-hierarchy reference"
+      }
+    ]
   }
 ]

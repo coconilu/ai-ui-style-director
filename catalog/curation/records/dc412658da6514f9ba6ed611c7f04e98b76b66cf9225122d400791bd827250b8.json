@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordId": "dc412658da6514f9ba6ed611c7f04e98b76b66cf9225122d400791bd827250b8",
+  "createdAt": "2026-07-13T00:07:38.014Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/autumn.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3863
+  },
+  "agent": {
+    "provider": "openai-compatible:api.kimi.com",
+    "model": "kimi-for-coding",
+    "promptVersion": "style-curation-v3",
+    "responseId": "chatcmpl-ieu9iXOzn7kZXKdKvNi9IbXk",
+    "responseHash": "sha256:3ab403210fff2f5aefcc63a0f30be4bb07ce979b747a6570adf6fa3ce5cb834a",
+    "usage": {
+      "prompt_tokens": 11861,
+      "completion_tokens": 1935,
+      "total_tokens": 13796,
+      "cached_tokens": 6400,
+      "prompt_tokens_details": {
+        "cached_tokens": 6400
+      }
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Light warm grayscale with a deep burgundy accent and rounded, low-noise geometry suggests a curated, human brand story suitable for consumer-facing pages.",
+    "profile": {
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "communities",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "purchase",
+        "signup"
+      ],
+      "density": "medium",
+      "tones": [
+        "warm",
+        "curated",
+        "human",
+        "memorable"
+      ],
+      "keywords": [
+        "consumer",
+        "brand",
+        "community",
+        "lifestyle",
+        "story"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "centered-hero",
+      "emphasis": "story",
+      "typographyStyle": "humanist-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "brand",
+      "theme": {
+        "canvas": "#F1F1F1",
+        "surface": "#DBDBDB",
+        "surfaceAlt": "#C5C5C5",
+        "text": "#141414",
+        "muted": "#6C6C6C",
+        "accent": "#8C0327",
+        "border": "#C5C5C5"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/autumn.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "role": "layout"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "role": "content-hierarchy"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#F1F1F1",
+        "surface": "#DBDBDB",
+        "surfaceAlt": "#C5C5C5",
+        "text": "#141414",
+        "muted": "#6C6C6C",
+        "accent": "#8C0327",
+        "border": "#C5C5C5"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "consumer-brand-story",
+      "score": 0.685185,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.12421,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "consumer-centered-hero-story-2f0b340c",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/consumer-centered-hero-story-2f0b340c.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29214622679",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29214622679",
+    "commitSha": "4b6084c3797ce0457b36ea002e8e1598f01845ab"
+  }
+}

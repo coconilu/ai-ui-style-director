@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordId": "04ab67c627c40d2d1e4f0348206d83feeb30fc858241158b53bbb35274e441b0",
+  "createdAt": "2026-07-13T00:07:25.300Z",
+  "eventNonce": 0,
+  "transition": {
+    "fromHash": null,
+    "toHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073"
+  },
+  "source": {
+    "providerId": "daisyui-themes",
+    "path": "packages/daisyui/src/themes/aqua.css",
+    "sourceType": "theme-css",
+    "adapterId": "daisyui-theme-css",
+    "normalizerVersion": 1,
+    "contentHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073",
+    "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+    "truncated": false,
+    "consumedCharacters": 3874
+  },
+  "agent": {
+    "provider": "openai-compatible:api.kimi.com",
+    "model": "kimi-for-coding",
+    "promptVersion": "style-curation-v3",
+    "responseId": "chatcmpl-5hcPPBMWVvuFOgjNMzu469pn",
+    "responseHash": "sha256:6fe76c760de7787f67924093195258f6ac1b772c7f07433e4fd18386c030b638",
+    "usage": {
+      "prompt_tokens": 11863,
+      "completion_tokens": 1838,
+      "total_tokens": 13701,
+      "cached_tokens": 6400,
+      "prompt_tokens_details": {
+        "cached_tokens": 6400
+      }
+    }
+  },
+  "candidate": {
+    "decision": "promote",
+    "rationale": "Dark, high-contrast surface with cyan accent maps cleanly to a developer dashboard direction.",
+    "profile": {
+      "family": "developer",
+      "pageTypes": [
+        "developer-portal",
+        "dashboard",
+        "api-platform"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "operators"
+      ],
+      "goals": [
+        "monitoring",
+        "show-capability",
+        "docs-adoption"
+      ],
+      "density": "medium-high",
+      "tones": [
+        "technical",
+        "focused",
+        "precise"
+      ],
+      "keywords": [
+        "api",
+        "cli",
+        "dashboard",
+        "developer",
+        "monitoring",
+        "terminal"
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "composition": "dashboard-grid",
+      "emphasis": "data",
+      "typographyStyle": "technical-sans",
+      "spacing": "balanced",
+      "motion": "restrained"
+    },
+    "visual": {
+      "variant": "dashboard",
+      "theme": {
+        "canvas": "#1A368B",
+        "surface": "#162455",
+        "surfaceAlt": "#091444",
+        "text": "#B8E6FE",
+        "muted": "#79A0D0",
+        "accent": "#13ECF3",
+        "border": "#091444"
+      },
+      "references": [
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/aqua.css",
+          "role": "color"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "role": "interaction"
+        },
+        {
+          "providerId": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "role": "typography"
+        }
+      ]
+    }
+  },
+  "checks": {
+    "schema": {
+      "passed": true,
+      "errors": []
+    },
+    "provenance": {
+      "passed": true,
+      "primarySourceRequired": true
+    },
+    "themeBinding": {
+      "required": true,
+      "applied": true,
+      "passed": true,
+      "expectedTheme": {
+        "canvas": "#1A368B",
+        "surface": "#162455",
+        "surfaceAlt": "#091444",
+        "text": "#B8E6FE",
+        "muted": "#79A0D0",
+        "accent": "#13ECF3",
+        "border": "#091444"
+      }
+    },
+    "duplicate": {
+      "threshold": 0.85,
+      "nearestStyleId": "developer-dashboard-grid-data-6ced1427",
+      "score": 0.93578,
+      "paletteThreshold": 0.04,
+      "paletteDistance": 0.271125,
+      "passed": true
+    }
+  },
+  "decision": "promoted",
+  "promotion": {
+    "styleId": "developer-dashboard-grid-data-ccf39d86",
+    "files": [
+      "catalog/style-profiles.json",
+      "catalog/style-visuals.json",
+      "catalog/previews/developer-dashboard-grid-data-ccf39d86.svg"
+    ]
+  },
+  "workflow": {
+    "repository": "coconilu/ai-ui-style-director",
+    "runId": "29214622679",
+    "runUrl": "https://github.com/coconilu/ai-ui-style-director/actions/runs/29214622679",
+    "commitSha": "4b6084c3797ce0457b36ea002e8e1598f01845ab"
+  }
+}
