@@ -14,7 +14,7 @@ flowchart TD
     B --> C["Provider Adapter discovers and normalizes material"]
     C --> D["Generate style/component source indexes and contentHash"]
     D --> E["Curate Style Sources detects pending sources"]
-    E --> F["Kimi proposes a structured style candidate or skip"]
+    E --> F["Configured model proposes a structured style candidate or skip"]
     F --> G["Node.js enforces provenance, taxonomy, duplicate, and preview gates"]
     G --> H["GitHub App opens a human-review Draft PR"]
     H --> I["Merge into the curated Catalog"]
@@ -66,8 +66,8 @@ For each selected source, the pipeline:
 1. checks out the exact Provider revision recorded by the index;
 2. reruns the Adapter and verifies the canonical content hash;
 3. sends the current source, a bounded reference pool, nearby Profiles, and the
-   approved taxonomy to Kimi;
-4. allows Kimi to return only a structured candidate or `skip`;
+   approved taxonomy to the configured curation model;
+4. allows the model to return only a structured candidate or `skip`;
 5. validates fields, taxonomy, component kits, exact paths, three distinct
    references, theme colors, style identity, and duplicate risk;
 6. generates names, layout rules, risks, and a brand-neutral SVG from trusted
@@ -119,7 +119,7 @@ target project.
 When a website creation or redesign task enters the `web-style-director` Skill,
 the recommendation core normalizes the brief, performs deterministic weighted
 matching and relevance-first diversification, and returns five directions from
-the curated Catalog. Kimi is not called at consumption time: AI participates in
+the curated Catalog. The curation model is not called at consumption time: AI participates in
 supply-side curation, while matching, ranking, and rerolls are implemented in
 testable Node.js code.
 
@@ -151,7 +151,7 @@ names, proprietary copy, and exact layouts are never production assets to copy.
 | Participant | Responsible for | Not responsible for |
 |---|---|---|
 | Provider Adapter | Discovery, parsing, normalization, and stable hashing | Deciding whether a style deserves promotion |
-| Kimi curation agent | Reading canonical sources and proposing a candidate or skip | Repository writes, source approval, taxonomy expansion, auto-merge |
+| Configured curation model | Reading canonical sources and proposing a candidate or skip | Repository writes, source approval, taxonomy expansion, auto-merge |
 | Node.js program | Policy and provenance validation, dedupe, Profile/Visual/SVG generation, recommendation ranking | Guessing arbitrary unknown formats |
 | GitHub Actions/App | Running workflows, retaining logs, and opening constrained PRs | Bypassing CI or human curation review |
 | Maintainer | Reviewing curated results and deciding whether to merge | Reinterpreting raw upstream repositories for every consumer request |
@@ -173,7 +173,7 @@ different source format requires an Adapter and tests. The system then:
 
 1. scans every in-boundary item and updates the generated indexes;
 2. puts new paths or content hashes into the pending queue;
-3. asks Kimi for candidates in governed batches;
+3. asks the configured model for candidates in governed batches;
 4. promotes only candidates that pass deterministic gates into a Draft PR;
 5. makes them user-selectable only after human merge;
 6. lets Catalog Pages, search, and recommendation consume the expanded Catalog.

@@ -15,8 +15,8 @@ provenance, or bypass repository checks.
 3. The workflow checks out the exact provider revision recorded in
    `provider-inventory.json`, runs the source through its configured adapter,
    and verifies the normalized source hash before any model call.
-4. The OpenAI-compatible client sends a bounded request to Kimi Code, marks the
-   source as untrusted data, and supplies only a small relevant profile context,
+4. The OpenAI-compatible client sends a bounded request to the configured
+   curation model, marks the source as untrusted data, and supplies only a small relevant profile context,
    a bounded reference pool, and the allowed catalog taxonomy.
 5. The model returns either `skip` or controlled taxonomy/design primitives,
    theme colors, and exact source selections. It does not author consumer prose.
@@ -38,7 +38,7 @@ provenance, or bypass repository checks.
    auto-merge.
 
 The GitHub App is the audited repository identity, not the reasoning engine.
-Kimi Code proposes the candidate; Node.js code applies policy; GitHub branch
+The configured model proposes the candidate; Node.js code applies policy; GitHub branch
 protection and required checks provide defense in depth, but passing CI does not
 authorize the App PR to merge without a maintainer.
 
@@ -105,7 +105,7 @@ The `daisyui-themes` Provider explicitly uses `daisyui-theme-css`. It discovers
 only `packages/daisyui/src/themes/*.css`, assigns `sourceType=theme-css`, parses the
 governed color, radius, border, depth, and noise declarations, converts OKLCH
 colors deterministically, and serializes canonical JSON. That canonical JSON is
-both the hash input and the bounded material sent to Kimi. Arbitrary CSS,
+both the hash input and the bounded material sent to the curation model. Arbitrary CSS,
 imports, comments, and instructions are not passed through as catalog prose.
 The generated provider/style/component indexes use schema v4 for this generic
 source contract; the hosted browser's `catalog.json` remains schema v3.
@@ -143,19 +143,31 @@ The existing App configuration is reused:
 - repository variable: `REFRESH_APP_CLIENT_ID`;
 - repository secret: `REFRESH_APP_PRIVATE_KEY`.
 
-Add one model credential before processing future changes:
+DeepSeek is the default provider. Add its credential before processing future
+changes, and retain the existing Kimi credential for a later rollback:
 
 ```text
+DEEPSEEK_API_KEY
 KIMI_CODE_API_KEY
 ```
 
-The workflow maps it to the generic `CURATOR_API_KEY` only for the model step.
-Defaults are:
+The workflow maps only the selected provider's secret to the generic
+`CURATOR_API_KEY` for that provider's model step. The repository variable
+`CURATOR_PROVIDER` is optional and defaults to `deepseek`; set it to `kimi` to
+switch back without changing code. Manual dispatch exposes the same choice.
+
+| Provider | Base URL | Model | Temperature | Thinking | Secret |
+| --- | --- | --- | ---: | --- | --- |
+| `deepseek` (default) | `https://api.deepseek.com` | `deepseek-v4-flash` | `0` | `disabled` | `DEEPSEEK_API_KEY` |
+| `kimi` | `https://api.kimi.com/coding/v1` | `kimi-for-coding` | `1` | omitted | `KIMI_CODE_API_KEY` |
+
+The DeepSeek profile follows the official [model and pricing](https://api-docs.deepseek.com/quick_start/pricing),
+[chat completion](https://api-docs.deepseek.com/api/create-chat-completion), and
+[JSON Output](https://api-docs.deepseek.com/guides/json_mode) contracts.
+
+Shared bounded-execution defaults are:
 
 ```text
-CURATOR_BASE_URL=https://api.kimi.com/coding/v1
-CURATOR_MODEL=kimi-for-coding
-CURATOR_TEMPERATURE=1
 CURATOR_BATCH_SIZE=5
 CURATOR_MAX_INPUT_CHARS=80000
 CURATOR_MAX_OUTPUT_TOKENS=4096
@@ -163,8 +175,11 @@ CURATOR_MAX_RETRIES=1
 CURATOR_REQUEST_TIMEOUT_MS=120000
 ```
 
-`kimi-for-coding` requires `CURATOR_TEMPERATURE=1`. The generic curator keeps
-`0` as its default when the variable is omitted for another compatible model.
+DeepSeek's JSON Output accepts `response_format={"type":"json_object"}`, which
+is the format already used by the curator. `deepseek-v4-flash` defaults to
+thinking mode, so its profile explicitly sends `thinking.type=disabled` to
+protect the bounded JSON output budget. `kimi-for-coding` keeps its required
+temperature of `1` and receives no DeepSeek-specific thinking parameter.
 
 The workflow sets `CURATOR_BATCH_SIZE: "5"` and repeatedly invokes the trusted
 single-batch curator until no pending source remains. The model still processes
@@ -198,12 +213,15 @@ Create a baseline only for a fresh deployment with no existing state:
 npm run catalog:curate:baseline
 ```
 
-Process pending sources locally:
+GitHub Actions is the primary execution path. For a diagnostic local run with
+DeepSeek, use:
 
 ```bash
-CURATOR_BASE_URL=https://api.kimi.com/coding/v1 \
-CURATOR_MODEL=kimi-for-coding \
-CURATOR_TEMPERATURE=1 \
+CURATOR_PROVIDER=deepseek \
+CURATOR_BASE_URL=https://api.deepseek.com \
+CURATOR_MODEL=deepseek-v4-flash \
+CURATOR_TEMPERATURE=0 \
+CURATOR_THINKING=disabled \
 CURATOR_API_KEY=... \
 npm run catalog:curate -- --drain --clone --batch-size 5
 ```

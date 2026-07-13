@@ -289,7 +289,7 @@ The scanner is a lightweight path indexer, not a semantic component parser. It
 indexes every matching `DESIGN.md`; the format-specific `daisyui-theme-css`
 adapter additionally indexes only `packages/daisyui/src/themes/*.css`, parses
 governed tokens, converts OKLCH colors deterministically, and emits canonical
-JSON for hashing and Kimi. User-facing style count is not capped by a source
+JSON for hashing and the configured curation model. User-facing style count is not capped by a source
 scanner constant. Registry and documentation indexes retain maintenance caps
 of 200 and 100 files per provider. The current index has 109 style sources:
 the original 74 are the checked-in baseline and the 35 daisyUI themes begin as

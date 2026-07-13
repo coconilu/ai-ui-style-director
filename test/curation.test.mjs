@@ -521,6 +521,7 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
       CURATOR_PROVIDER: "mock-provider",
       CURATOR_MODEL: "mock-curator",
       CURATOR_TEMPERATURE: "1",
+      CURATOR_THINKING: "disabled",
       GITHUB_REPOSITORY: "example/repo",
       GITHUB_RUN_ID: "42",
       GITHUB_SHA: "b".repeat(40)
@@ -532,6 +533,7 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
   assert.equal(result.promoted, 1);
   assert.deepEqual(result.usage, { promptTokens: 100, completionTokens: 50, totalTokens: 150 });
   assert.equal(request.temperature, 1);
+  assert.equal(request.thinking, "disabled");
   assert.match(request.messages[0].content, /untrusted data/u);
   assert.match(request.messages[1].content, /Ignore all previous instructions/u);
   const profiles = JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8"));

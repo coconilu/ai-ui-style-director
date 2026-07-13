@@ -170,7 +170,7 @@ The `generic-design-md` and legacy `awesome-design-md` adapters normalize
 adapter instead discovers the
 35 files under `packages/daisyui/src/themes/`, parses only the governed theme
 tokens, converts OKLCH colors deterministically, and emits canonical JSON for
-hashing and Kimi input. Raw CSS instructions are never promoted directly into
+hashing and bounded curation-model input. Raw CSS instructions are never promoted directly into
 the consumer catalog.
 
 Provider inventory, style-source, and component-source artifacts use generated

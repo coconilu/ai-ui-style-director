@@ -891,6 +891,7 @@ export async function curateStyleSources({
   client,
   env = process.env,
   requestTemperature = Number(env.CURATOR_TEMPERATURE ?? 0),
+  requestThinking = env.CURATOR_THINKING || undefined,
   requestTimeoutMs = Number(env.CURATOR_REQUEST_TIMEOUT_MS || 30_000),
   requestMaxRetries = Number(env.CURATOR_MAX_RETRIES ?? 1),
   now = () => new Date().toISOString()
@@ -1018,6 +1019,7 @@ export async function curateStyleSources({
         taxonomyVocabulary
       }),
       temperature: requestTemperature,
+      thinking: requestThinking,
       maxTokens: maxOutputTokens,
       maxRetries: requestMaxRetries
     });

@@ -315,7 +315,7 @@ style-source 索引保存 `providerId`、`path`、`sourceType` 和规范化
 扫描器是轻量路径索引器，不解析组件语义。它会索引所有匹配的 `DESIGN.md`；格式
 专用的 `daisyui-theme-css` Adapter 只额外索引
 `packages/daisyui/src/themes/*.css`，解析受治理 token、确定性转换 OKLCH，并输出同时
-用于哈希与 Kimi 输入的规范 JSON。用户可选风格数量不受扫描器常量限制；registry
+用于哈希与策展模型输入的规范 JSON。用户可选风格数量不受扫描器常量限制；registry
 与 docs 仍分别保留每个 Provider 200 和 100 个文件的维护性上限。当前 109 条 style
 source 中，原有 74 条是 baseline，35 条 daisyUI 主题则从 pending 开始，不会直接晋升。
 

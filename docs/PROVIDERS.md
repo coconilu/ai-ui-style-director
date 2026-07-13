@@ -40,7 +40,7 @@ curation PRs.
 The `daisyui-theme-css` adapter is deliberately format-specific. It matches
 only `packages/daisyui/src/themes/*.css`, extracts governed theme tokens,
 converts OKLCH colors deterministically, and produces canonical JSON for both
-content hashing and bounded Kimi input. It does not treat arbitrary repository
+content hashing and bounded curation-model input. It does not treat arbitrary repository
 CSS as a style source.
 
 The adapter accepts exactly 29 declarations: one `color-scheme`, 20 governed

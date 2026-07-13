@@ -153,6 +153,14 @@ function responseFormat(jsonSchema, schemaName) {
   };
 }
 
+function normalizeThinking(thinking) {
+  if (thinking === undefined || thinking === null || thinking === "") return undefined;
+  if (thinking !== "enabled" && thinking !== "disabled") {
+    throw new TypeError('thinking must be "enabled" or "disabled" when provided.');
+  }
+  return { type: thinking };
+}
+
 async function readResponse(response) {
   const text = await response.text();
   let payload = null;
@@ -273,6 +281,7 @@ export function createOpenAICompatibleClient({
       jsonSchema,
       schemaName = "response",
       temperature = 0,
+      thinking,
       maxTokens,
       signal,
       maxRetries: requestMaxRetries = configuredMaxRetries
@@ -292,6 +301,10 @@ export function createOpenAICompatibleClient({
         temperature,
         response_format: responseFormat(jsonSchema, schemaName)
       };
+      const normalizedThinking = normalizeThinking(thinking);
+      if (normalizedThinking !== undefined) {
+        body.thinking = normalizedThinking;
+      }
       if (maxTokens !== undefined) {
         body.max_tokens = maxTokens;
       }

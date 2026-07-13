@@ -18,6 +18,7 @@ test("curation workflow uses trusted main-only triggers and bounded execution", 
   assert.match(curationWorkflow, /schedule:\s*\n\s+- cron: "30 19 \* \* \*"/u);
   assert.match(curationWorkflow, /push:\s*\n\s+branches: \[main\]/u);
   assert.match(curationWorkflow, /workflow_dispatch:/u);
+  assert.match(curationWorkflow, /curator_provider:\s*\n\s+description: Model provider for this run/u);
   assert.doesNotMatch(curationWorkflow, /^\s{2}pull_request:/mu);
   assert.match(curationWorkflow, /permissions:\s*\n\s+contents: read/u);
   assert.match(curationWorkflow, /pull-requests: read/u);
@@ -32,11 +33,19 @@ test("curation workflow uses trusted main-only triggers and bounded execution", 
   assert.match(curationWorkflow, /CURATOR_REQUEST_TIMEOUT_MS: "120000"/u);
 });
 
-test("curation workflow calls Kimi through the OpenAI-compatible environment and supports a clean no-op", () => {
-  assert.match(curationWorkflow, /CURATOR_BASE_URL: https:\/\/api\.kimi\.com\/coding\/v1/u);
-  assert.match(curationWorkflow, /CURATOR_MODEL: kimi-for-coding/u);
-  assert.match(curationWorkflow, /CURATOR_TEMPERATURE: "1"/u);
+test("curation workflow defaults to DeepSeek, preserves Kimi fallback, and supports a clean no-op", () => {
+  assert.match(curationWorkflow, /CURATOR_PROVIDER: \$\{\{ github\.event\.inputs\.curator_provider \|\| vars\.CURATOR_PROVIDER \|\| 'deepseek' \}\}/u);
+  assert.match(curationWorkflow, /CURATOR_BASE_URL=https:\/\/api\.deepseek\.com/u);
+  assert.match(curationWorkflow, /CURATOR_MODEL=deepseek-v4-flash/u);
+  assert.match(curationWorkflow, /CURATOR_TEMPERATURE=0/u);
+  assert.match(curationWorkflow, /echo "CURATOR_THINKING=disabled"/u);
+  assert.match(curationWorkflow, /CURATOR_API_KEY: \$\{\{ secrets\.DEEPSEEK_API_KEY \}\}/u);
+  assert.match(curationWorkflow, /CURATOR_BASE_URL=https:\/\/api\.kimi\.com\/coding\/v1/u);
+  assert.match(curationWorkflow, /CURATOR_MODEL=kimi-for-coding/u);
+  assert.match(curationWorkflow, /CURATOR_TEMPERATURE=1/u);
+  assert.match(curationWorkflow, /echo "CURATOR_THINKING="/u);
   assert.match(curationWorkflow, /CURATOR_API_KEY: \$\{\{ secrets\.KIMI_CODE_API_KEY \}\}/u);
+  assert.match(curationWorkflow, /Unsupported CURATOR_PROVIDER/u);
   assert.match(
     curationWorkflow,
     /node scripts\/curate-style-sources\.mjs \\\s*\n\s+--drain \\\s*\n\s+--clone \\\s*\n\s+--cache-dir \.ui-style-director\/cache\/providers/u
@@ -56,7 +65,7 @@ test("curation workflow calls Kimi through the OpenAI-compatible environment and
 
 test("write-capable GitHub App token is unavailable to the model and only created after gates pass", () => {
   const guardIndex = curationWorkflow.indexOf("- name: Detect existing curation pull request");
-  const curateIndex = curationWorkflow.indexOf("- name: Curate changed sources");
+  const curateIndex = curationWorkflow.indexOf("- name: Curate changed sources with DeepSeek");
   const validateIndex = curationWorkflow.indexOf("- name: Validate curated output");
   const tokenIndex = curationWorkflow.indexOf("- name: Create curation bot token");
   const publishIndex = curationWorkflow.indexOf("- name: Commit and open draft pull request");
@@ -69,6 +78,13 @@ test("write-capable GitHub App token is unavailable to the model and only create
 
   const modelStep = curationWorkflow.slice(curateIndex, curationWorkflow.indexOf("- name: Read curation result"));
   assert.doesNotMatch(modelStep, /REFRESH_APP|GH_TOKEN|app-token/u);
+  const kimiIndex = modelStep.indexOf("- name: Curate changed sources with Kimi");
+  const deepseekStep = modelStep.slice(0, kimiIndex);
+  const kimiStep = modelStep.slice(kimiIndex);
+  assert.match(deepseekStep, /secrets\.DEEPSEEK_API_KEY/u);
+  assert.doesNotMatch(deepseekStep, /secrets\.KIMI_CODE_API_KEY/u);
+  assert.match(kimiStep, /secrets\.KIMI_CODE_API_KEY/u);
+  assert.doesNotMatch(kimiStep, /secrets\.DEEPSEEK_API_KEY/u);
   const guardStep = curationWorkflow.slice(guardIndex, curationWorkflow.indexOf("- name: Validate trusted base"));
   assert.match(guardStep, /GH_TOKEN: \$\{\{ github\.token \}\}/u);
   assert.match(curationWorkflow, /persist-credentials: false/u);
