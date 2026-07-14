@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -7,6 +8,7 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { resolveLegacyDirectionId } from "../scripts/migrate-direction-theme-catalog.mjs";
 import { validateDirectionThemeCatalog } from "../scripts/validate-direction-theme-catalog.mjs";
+import { validateGeneratedCatalog } from "../scripts/validate-generated-catalog.mjs";
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 const catalogDir = join(rootDir, "catalog");
@@ -24,6 +26,44 @@ const DOCUMENTS = Object.freeze({
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
+}
+
+function themeIdFor(tokens) {
+  const fields = ["canvas", "surface", "surfaceAlt", "text", "muted", "accent", "border"];
+  const signature = JSON.stringify(fields.map((field) => [field, tokens[field].toUpperCase()]));
+  return `theme-${createHash("sha256").update(signature).digest("hex").slice(0, 12)}`;
+}
+
+function addCanonicalOnlyPair(documents) {
+  const direction = structuredClone(documents.directions.directions[0]);
+  direction.id = "canonical-curated-direction";
+  direction.name = "Canonical Curated Direction";
+  delete direction.legacyStyleIds;
+  delete direction.legacyReferences;
+  documents.directions.directions.push(direction);
+
+  const sourceTheme = documents.themes.themes.find((theme) =>
+    theme.sources.some((source) => source.kind === "source-pinned")
+  );
+  const theme = structuredClone(sourceTheme);
+  theme.tokens.accent = "#123456";
+  theme.palette = theme.palette.map((entry) => entry.startsWith("accent ") ? "accent #123456" : entry);
+  theme.id = themeIdFor(theme.tokens);
+  theme.name = "Canonical Curated Theme";
+  delete theme.legacyStyleIds;
+  delete theme.legacyReferences;
+  documents.themes.themes.push(theme);
+
+  documents.directionThemes.links.push({
+    directionId: direction.id,
+    themeId: theme.id,
+    isDefault: true
+  });
+  const previewSpec = structuredClone(documents.previewSpecs.previewSpecs[0]);
+  previewSpec.directionId = direction.id;
+  delete previewSpec.legacyVariant;
+  documents.previewSpecs.previewSpecs.push(previewSpec);
+  return { direction, theme, previewSpec };
 }
 
 function writeFixture(mutate) {
@@ -46,6 +86,23 @@ function writeFixture(mutate) {
   }
   writeFileSync(paths.styleSourcesPath, `${JSON.stringify(documents.styleSources, null, 2)}\n`, "utf8");
   return paths;
+}
+
+function writeGeneratedFixture(mutateProviders) {
+  const dir = mkdtempSync(join(tmpdir(), "style-director-generated-validator-"));
+  const generatedDir = join(dir, "generated");
+  mkdirSync(generatedDir, { recursive: true });
+  const providers = readJson(join(catalogDir, "providers.json"));
+  mutateProviders?.(providers);
+  writeFileSync(join(dir, "providers.json"), `${JSON.stringify(providers, null, 2)}\n`, "utf8");
+  for (const file of ["provider-inventory.json", "style-sources.json", "component-sources.json"]) {
+    writeFileSync(
+      join(generatedDir, file),
+      `${JSON.stringify(readJson(join(catalogDir, "generated", file)), null, 2)}\n`,
+      "utf8"
+    );
+  }
+  return { providersPath: join(dir, "providers.json"), generatedDir };
 }
 
 test("real v2 catalog preserves all legacy styles and the five approved Theme clusters", () => {
@@ -176,11 +233,12 @@ test("v2 validator rejects incomplete legacy coverage and invalid defaults", () 
 test("v2 validator rejects provenance fabrication, token drift, and lost references", () => {
   const fabricatedProvenance = writeFixture(({ themes }) => {
     const theme = themes.themes.find((candidate) => candidate.sources[0].kind === "source-pinned");
-    theme.sources[0].contentHash = `sha256:${"0".repeat(64)}`;
+    const source = theme.sources[0];
+    source.sourceUrl = "https://example.invalid/fabricated";
   });
   assert.throws(
     () => validateDirectionThemeCatalog(fabricatedProvenance),
-    /contentHash must match style-sources\.json/u
+    /sourceUrl must be revision-pinned/u
   );
 
   const tokenDrift = writeFixture(({ themes }) => {
@@ -216,5 +274,87 @@ test("v2 validator rejects incomplete or ambiguous PreviewSpec hierarchy", () =>
   assert.throws(
     () => validateDirectionThemeCatalog(repeatedBlock),
     /hierarchy levels must not repeat content blocks/u
+  );
+});
+
+test("v2 validator accepts canonical-only Direction, Theme, and PreviewSpec with pinned provenance", () => {
+  const paths = writeFixture((documents) => {
+    addCanonicalOnlyPair(documents);
+  });
+  const result = validateDirectionThemeCatalog(paths);
+  const baseline = validateDirectionThemeCatalog();
+
+  assert.equal(result.directionCount, baseline.directionCount + 1);
+  assert.equal(result.themeCount, baseline.themeCount + 1);
+  assert.equal(result.linkCount, baseline.linkCount + 1);
+  assert.equal(result.previewSpecCount, baseline.previewSpecCount + 1);
+  assert.equal(result.aliasCount, baseline.aliasCount);
+});
+
+test("v2 validator keeps canonical provenance strict without relaxing legacy compatibility fields", () => {
+  const fabricatedSource = writeFixture((documents) => {
+    const { theme } = addCanonicalOnlyPair(documents);
+    const source = theme.sources[0];
+    source.sourceUrl = "https://example.invalid/fabricated";
+  });
+  assert.throws(
+    () => validateDirectionThemeCatalog(fabricatedSource),
+    /sourceUrl must be revision-pinned/u
+  );
+
+  const fabricatedLegacySource = writeFixture((documents) => {
+    const { theme } = addCanonicalOnlyPair(documents);
+    theme.sources = [{ kind: "legacy-curated", provider: "fabricated", slug: "fabricated" }];
+  });
+  assert.throws(
+    () => validateDirectionThemeCatalog(fabricatedLegacySource),
+    /canonical-only Theme provenance must be source-pinned/u
+  );
+
+  const fabricatedLegacyFields = writeFixture((documents) => {
+    const { direction, theme, previewSpec } = addCanonicalOnlyPair(documents);
+    direction.legacyStyleIds = ["fabricated-legacy-style"];
+    direction.legacyReferences = [{}];
+    theme.legacyStyleIds = ["fabricated-legacy-style"];
+    theme.legacyReferences = [{}];
+    previewSpec.legacyVariant = "dashboard";
+  });
+  assert.throws(
+    () => validateDirectionThemeCatalog(fabricatedLegacyFields),
+    /canonical-only Direction|canonical-only Theme/u
+  );
+});
+
+test("v2 validator preserves historical Theme provenance when an indexed source advances or disappears", () => {
+  const paths = writeFixture((documents) => {
+    const theme = documents.themes.themes.find((candidate) =>
+      candidate.sources.some((source) => source.kind === "source-pinned")
+    );
+    const source = theme.sources.find((candidate) => candidate.kind === "source-pinned");
+    const indexed = documents.styleSources.sources.find((candidate) =>
+      candidate.providerId === source.provider && candidate.path === source.path
+    );
+    documents.styleSources.sources = documents.styleSources.sources.filter((candidate) => candidate !== indexed);
+  });
+  assert.doesNotThrow(() => validateDirectionThemeCatalog(paths));
+});
+
+test("generated catalog resolves capability policy and rejects malformed declarations", () => {
+  const missingPolicy = writeGeneratedFixture((providers) => {
+    delete providers.find((provider) => provider.id === "awesome-design-md").capabilities;
+  });
+  assert.throws(
+    () => validateGeneratedCatalog(missingPolicy),
+    /must explicitly declare curation capabilities/u
+  );
+
+  const malformedPolicy = writeGeneratedFixture((providers) => {
+    providers.find((provider) => provider.id === "awesome-design-md").capabilities = {
+      createDirection: true
+    };
+  });
+  assert.throws(
+    () => validateGeneratedCatalog(malformedPolicy),
+    /invalid curation capabilities/u
   );
 });

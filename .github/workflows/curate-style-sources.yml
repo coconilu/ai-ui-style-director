@@ -6,11 +6,16 @@ on:
   push:
     branches: [main]
     paths:
+      - catalog/providers.json
+      - src/curation.mjs
+      - src/provider-adapters.mjs
       - catalog/generated/provider-inventory.json
       - catalog/generated/style-sources.json
       - catalog/curation/source-state.json
-      - catalog/style-profiles.json
-      - catalog/style-visuals.json
+      - catalog/style-directions.json
+      - catalog/style-themes.json
+      - catalog/style-direction-themes.json
+      - catalog/style-preview-specs.json
   workflow_dispatch:
     inputs:
       curator_provider:
@@ -164,6 +169,10 @@ jobs:
           const pending = count("pending");
           const remaining = count("remaining");
           const processed = count("processed");
+          const records = Array.isArray(result.records) ? result.records : [];
+          const actionCount = (action) => records.filter((record) => (
+            record?.action === action || record?.result?.action === action
+          )).length;
           if (result.changed && remaining !== 0) {
             throw new Error(`curation drain must finish with zero remaining sources, got ${remaining}`);
           }
@@ -181,7 +190,12 @@ jobs:
             `promoted=${count("promoted")}`,
             `duplicates=${count("duplicates")}`,
             `skipped=${count("skipped")}`,
-            `invalid=${count("invalid")}`
+            `invalid=${count("invalid")}`,
+            `created_direction_and_theme=${actionCount("created-direction-and-theme")}`,
+            `created_direction_with_existing_theme=${actionCount("created-direction-with-existing-theme")}`,
+            `added_theme_to_direction=${actionCount("added-theme-to-direction")}`,
+            `linked_existing_theme=${actionCount("linked-existing-theme")}`,
+            `duplicate_theme=${actionCount("duplicate-theme")}`
           ].join("\n");
           appendFileSync(process.env.GITHUB_OUTPUT, `${output}\n`, "utf8");
           NODE
@@ -190,7 +204,7 @@ jobs:
         if: steps.result.outputs.changed == 'true'
         shell: bash
         run: |
-          allowed='^(catalog/style-profiles\.json|catalog/style-visuals\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\.svg)$'
+          allowed='^(catalog/style-(directions|themes|direction-themes|preview-specs)\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json)$'
           changed_files="$(git status --porcelain=v1 --untracked-files=all | sed -E 's/^.. //')"
           unexpected="$(printf '%s\n' "$changed_files" | grep -Ev "$allowed" || true)"
           deleted="$(git status --porcelain=v1 --untracked-files=all | awk 'substr($0, 1, 2) ~ /D/ { print substr($0, 4) }')"
@@ -282,13 +296,19 @@ jobs:
           DUPLICATES: ${{ steps.result.outputs.duplicates }}
           SKIPPED: ${{ steps.result.outputs.skipped }}
           INVALID: ${{ steps.result.outputs.invalid }}
+          CREATED_DIRECTION_AND_THEME: ${{ steps.result.outputs.created_direction_and_theme }}
+          CREATED_DIRECTION_WITH_EXISTING_THEME: ${{ steps.result.outputs.created_direction_with_existing_theme }}
+          ADDED_THEME_TO_DIRECTION: ${{ steps.result.outputs.added_theme_to_direction }}
+          LINKED_EXISTING_THEME: ${{ steps.result.outputs.linked_existing_theme }}
+          DUPLICATE_THEME: ${{ steps.result.outputs.duplicate_theme }}
         run: |
           branch="automation/curate-style-sources-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           git checkout -b "$branch"
           git add \
-            catalog/style-profiles.json \
-            catalog/style-visuals.json \
-            catalog/previews \
+            catalog/style-directions.json \
+            catalog/style-themes.json \
+            catalog/style-direction-themes.json \
+            catalog/style-preview-specs.json \
             catalog/curation/source-state.json \
             catalog/curation/records
           git commit -m "feat(catalog): curate updated style sources"
@@ -308,7 +328,7 @@ jobs:
           npm run check
 
           changed_files="$(git diff --name-only origin/main...HEAD)"
-          allowed='^(catalog/style-profiles\.json|catalog/style-visuals\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\.svg)$'
+          allowed='^(catalog/style-(directions|themes|direction-themes|preview-specs)\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json)$'
           unexpected="$(printf '%s\n' "$changed_files" | grep -Ev "$allowed" || true)"
           deleted="$(git diff --diff-filter=D --name-only origin/main...HEAD)"
           non_added_records="$(git diff --name-status origin/main...HEAD | awk '$2 ~ /^catalog\/curation\/records\// && $1 != "A" { print }')"
@@ -372,14 +392,21 @@ jobs:
             `- Promoted: ${process.env.PROMOTED}`,
             `- Duplicates: ${process.env.DUPLICATES}`,
             `- Skipped: ${process.env.SKIPPED}`,
-            `- Invalid: ${process.env.INVALID}`
+            `- Invalid: ${process.env.INVALID}`,
+            `- Created Direction + Theme: ${process.env.CREATED_DIRECTION_AND_THEME}`,
+            `- Created Direction with existing Theme: ${process.env.CREATED_DIRECTION_WITH_EXISTING_THEME}`,
+            `- Added Theme to Direction: ${process.env.ADDED_THEME_TO_DIRECTION}`,
+            `- Linked existing Theme: ${process.env.LINKED_EXISTING_THEME}`,
+            `- Duplicate Theme: ${process.env.DUPLICATE_THEME}`
           ];
 
           for (const record of records.slice(0, 50)) {
             const source = safe(record.sourceId || `${record.providerId || "source"}:${record.path || "unknown"}`, 180);
-            const decision = safe(record.decision || record.status || "recorded", 40);
+            const action = safe(record.action || record.result?.action || record.decision || record.status || "recorded", 60);
+            const directionId = safe(record.directionId || record.result?.directionId || "none", 100);
+            const themeId = safe(record.themeId || record.result?.themeId || "none", 100);
             const reason = safe(record.reason || "See the machine-readable curation record.", 260);
-            lines.push(`- ${source}: ${decision} - ${reason}`);
+            lines.push(`- ${source}: ${action} | Direction: ${directionId} | Theme: ${themeId} - ${reason}`);
           }
           if (records.length > 50) lines.push(`- ...and ${records.length - 50} more audited decisions.`);
 
@@ -411,5 +438,7 @@ jobs:
             --head "$branch" \
             --draft)"
 
-          printf '### Automated style curation\n\n- Draft PR: %s\n- Batches: %s × up to %s sources\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Review: maintainer review and manual merge required\n' \
-            "$pr_url" "$BATCHES" "$BATCH_SIZE" "$PROCESSED" "$PROMOTED" "$DUPLICATES" "$SKIPPED" "$INVALID" >> "$GITHUB_STEP_SUMMARY"
+          printf '### Automated style curation\n\n- Draft PR: %s\n- Batches: %s × up to %s sources\n- Processed: %s\n- Promoted: %s\n- Duplicates: %s\n- Skipped: %s\n- Invalid: %s\n- Created Direction + Theme: %s\n- Created Direction with existing Theme: %s\n- Added Theme to Direction: %s\n- Linked existing Theme: %s\n- Duplicate Theme: %s\n- Review: maintainer review and manual merge required\n' \
+            "$pr_url" "$BATCHES" "$BATCH_SIZE" "$PROCESSED" "$PROMOTED" "$DUPLICATES" "$SKIPPED" "$INVALID" \
+            "$CREATED_DIRECTION_AND_THEME" "$CREATED_DIRECTION_WITH_EXISTING_THEME" "$ADDED_THEME_TO_DIRECTION" \
+            "$LINKED_EXISTING_THEME" "$DUPLICATE_THEME" >> "$GITHUB_STEP_SUMMARY"

@@ -1,94 +1,172 @@
 # Providers and Source Boundaries
 
-Provider configuration lives in `catalog/providers.json`. Providers supply
-design reference material or implementation components without becoming part
-of the user-facing workflow.
+Provider configuration lives in `catalog/providers.json`. A Provider supplies
+reference material or implementation components; it does not directly create a
+user-facing choice. Source indexing and catalog curation are separate stages.
 
-## Current roles
+## Current providers
 
-- `awesome-design-md`: style reference corpus.
-- `daisyui-themes`: theme-token reference corpus backed by `saadeghi/daisyui`.
-- `design-md-flow`: workflow reference.
-- `shadcn-ui`: foundational components.
-- `origin-ui`: application and marketing sections.
-- `magic-ui`: motion-rich marketing components.
-- `tremor`: dashboards and charts.
+| Provider | Role | Style Adapter | Effective curation capability |
+| --- | --- | --- | --- |
+| `awesome-design-md` | style reference corpus | `awesome-design-md` | Direction + Theme |
+| `daisyui-themes` | theme-token corpus | `daisyui-theme-css` | Theme only |
+| `design-md-flow` | workflow reference | none | none |
+| `shadcn-ui` | foundational components | none | none |
+| `origin-ui` | application and marketing sections | none | none |
+| `magic-ui` | motion-rich marketing components | none | none |
+| `tremor` | dashboards and charts | none | none |
 
-## Refreshing provider indexes
+The current generated snapshot contains 7 providers, 109 style sources, and
+600 component sources. These are source-pool counts, not fixed catalog limits
+or 109 user-facing styles.
 
-Run:
+## Source-to-catalog boundary
+
+```mermaid
+flowchart LR
+  A["Provider repository"] --> B["Adapter discovery + normalization"]
+  B --> C["catalog/generated indexes"]
+  C --> D["AI-assisted curation"]
+  D --> E["Canonical Direction/Theme files"]
+  E --> F["Draft PR + maintainer review"]
+```
+
+Run the index refresh with:
 
 ```bash
 node bin/ai-ui-style-director.mjs refresh-catalog --clone
 ```
 
-The command refreshes local provider checkouts, lets each configured adapter
-discover and normalize its style sources, scans registry and documentation
-files, then writes normalized indexes under `catalog/generated/`. It does not
-automatically rewrite the curated `catalog/style-profiles.json`.
+The command refreshes local Provider checkouts, lets each Adapter discover and
+normalize supported style sources, scans component registry/documentation
+files, and writes indexes under `catalog/generated/`. It does not modify the
+canonical Direction/Theme catalog or legacy profile/visual/alias files.
 
-The generated indexes currently describe 7 providers, 109 style sources, and
-600 component sources. These paths form a source pool; they are not 109
-user-facing styles. The original 74 `DESIGN.md` sources remain the checked-in
-baseline, while the 35 daisyUI themes begin as pending sources. A new or changed
-source can enter the separate AI-assisted curation workflow, but it reaches the
-curated catalog only after structured candidate, provenance, duplicate,
-preview, and repository gates pass. The curated catalog starts from a reviewed
-baseline of four profiles in each of 12 families and can grow through audited
-curation PRs.
+A new or changed indexed source enters the separate curation queue. It reaches
+the user-facing catalog only after schema, capability, provenance, two-stage
+duplicate, canonical catalog, immutable-record, and repository checks pass in
+a reviewed Draft PR.
 
-The `daisyui-theme-css` adapter is deliberately format-specific. It matches
-only `packages/daisyui/src/themes/*.css`, extracts governed theme tokens,
-converts OKLCH colors deterministically, and produces canonical JSON for both
-content hashing and bounded curation-model input. It does not treat arbitrary repository
-CSS as a style source.
+| Layer | Files | Ownership |
+| --- | --- | --- |
+| Generated source index | `catalog/generated/provider-inventory.json`, `style-sources.json`, component indexes | refresh workflow |
+| Canonical consumer catalog | `style-directions.json`, `style-themes.json`, `style-direction-themes.json`, `style-preview-specs.json` | reviewed curation |
+| Compatibility projection | `style-profiles.json`, `style-visuals.json`, `style-aliases.json`, legacy previews | read-only for automated curation |
 
-The adapter accepts exactly 29 declarations: one `color-scheme`, 20 governed
-color tokens, and eight geometry tokens. Unknown, missing, duplicated, or
-malformed declarations fail closed during refresh. If daisyUI adds or changes
-its token contract, support must arrive through a normal reviewed code PR that
-updates the allowlist and bumps the normalizer version; the refresh job does
-not silently absorb a new upstream schema.
+## Adapter and capability contract
 
-The catalog's single `canonicalTheme.accent` role is derived from daisyUI's
-`--color-primary`, because primary is the theme's dominant brand/action color;
-daisyUI's own `--color-accent` remains available in the normalized color-token
-map as a secondary highlight. When a governed upstream value changes, the
-canonical JSON and its hash change. The stable `providerId + path` source then
-becomes pending again because its current hash no longer matches source state.
+Style-source format handling belongs in an Adapter. Every Adapter defines:
 
-The generated provider/style/component indexes use schema v4. The hosted
-browser has an independent schema-v4 `catalog.json` contract for its
-Direction/Theme view model.
+- source discovery and `sourceType`;
+- strict normalization and `normalizerVersion`;
+- its maximum `createDirection` / `createTheme` capability;
+- optional format-derived constraints such as a required Theme.
 
-The scheduled GitHub workflow performs the same refresh daily, runs repository
-checks, and opens a pull request only when generated indexes change.
+A Provider may explicitly narrow the Adapter ceiling:
 
-## Visual references
+```json
+{
+  "id": "example-provider",
+  "adapter": "generic-design-md",
+  "capabilities": {
+    "createDirection": true,
+    "createTheme": true
+  }
+}
+```
 
-`catalog/style-visuals.json` maps each normalized internal style to three real
-sources. Legacy `awesome-design-md` slug references expand to getdesign.md
-overview and Light/Dark live-preview links. Generic providers use exact
-`provider + path` references and a GitHub source page pinned to the indexed
-revision.
+Effective capabilities are the boolean intersection of the Provider
+declaration and Adapter ceiling. Omitting `capabilities` accepts the Adapter
+ceiling; declaring `true` cannot override an Adapter's `false`.
 
-See [Automated AI-assisted style curation](AUTOMATED_CURATION.md) for adapter,
-state, audit, and GitHub Actions details.
+The effective result is bound into a per-source `processingPolicyHash` together
+with the explicit processing-policy version, Adapter ID, and normalizer
+version. Changing this policy makes affected sources pending without relying
+on a global prompt-version replay.
 
-The links are intentionally separate from `catalog/previews/`: local SVG cards
-are project-owned neutral wireframes, while hosted previews remain external
-reference material and are never vendored.
+### `DESIGN.md` adapters
+
+`awesome-design-md` preserves the existing Awesome corpus semantics and hosted
+overview/Light/Dark reference links. A non-Awesome Provider without an explicit
+Adapter defaults to `generic-design-md`, which recursively discovers files
+named `DESIGN.md`. Both Adapter ceilings allow Direction and Theme creation;
+the Provider declaration may narrow them.
+
+Model output is still constrained to governed taxonomy and exact indexed
+references. Supporting a genuinely new source format should add a reviewed
+Adapter instead of weakening the generic parser or passing arbitrary upstream
+content directly to the consumer catalog.
+
+### `daisyui-theme-css`
+
+This Adapter deliberately matches only:
+
+```text
+packages/daisyui/src/themes/*.css
+```
+
+It extracts governed theme tokens, converts OKLCH colors deterministically,
+and emits canonical JSON for both content hashing and bounded model input. It
+does not treat arbitrary repository CSS as a style source.
+
+The accepted contract is exactly 29 declarations: one `color-scheme`, 20 color
+tokens, and eight geometry tokens. Unknown, missing, duplicated, or malformed
+declarations fail closed. DaisyUI `--color-primary` becomes the catalog's
+single brand/action `accent`; DaisyUI `--color-accent` remains in the full
+normalized source map as an auxiliary highlight.
+
+The Adapter ceiling is Theme-only. `daisyui-themes` also declares that limit
+explicitly, so it can add or link a Theme only after trusted code selects an
+eligible existing Direction. It can never create a Direction. A historical
+source retains its alias-resolved Direction; a brand-new source must match an
+existing Direction from the bounded allowed context or becomes `invalid`.
+
+If upstream changes the token schema, support must arrive through a normal
+reviewed code PR that updates the allowlist and bumps `normalizerVersion`.
+
+## Adding a provider
+
+| Step | Required change | Review question |
+| --- | --- | --- |
+| 1 | Add repository metadata to `catalog/providers.json` | Is the role and license clear? |
+| 2 | Select an existing Adapter or implement a strict new one | Is the input format normalized and bounded? |
+| 3 | Declare capabilities when the Provider needs a narrower policy | Can this source add structure, Theme, or neither? |
+| 4 | Refresh generated indexes | Are discovery paths and hashes stable? |
+| 5 | Run `npm run check` | Do contracts, provenance, and migrations still hold? |
+| 6 | Merge the source-index PR | The curation workflow then drains all pending sources in batches of five |
+
+There is no fixed provider, source, Direction, or Theme count. Five is only the
+maximum number of sources processed in one curator batch; `--drain` loops until
+every pending source has been handled.
+
+## Provenance and revision semantics
+
+Every indexed source is addressed by exact `providerId + path` and versioned by
+its normalized content hash. Provider inventory pins a 40-character Git
+revision. New canonical Themes record a `source-pinned` reference containing
+provider, path, repository, revision, content hash, and source URL.
+
+That provenance is historical evidence. A later refresh may advance the
+Provider inventory, but it must not rewrite an existing Theme's pinned revision
+to the current upstream head. If the governed source content or processing
+policy changes, the stable source identity becomes pending and the new
+immutable event records its own snapshot.
+
+Legacy Awesome slug references can still expand to getdesign.md overview and
+Light/Dark links. Generic references use exact Provider paths and a GitHub page
+pinned to the event revision. Legacy `style-visuals.json` is a compatibility
+projection, not the write target for new curation.
+
+See [Automated AI-assisted style curation](AUTOMATED_CURATION.md) for state,
+duplicate, record, Action allowlist, and Draft PR details.
 
 ## Attribution and brand safety
 
-Provider repositories are inspiration sources and implementation materials, not
-permission to clone a brand. Generated websites should use:
-
-- project-owned assets;
-- generated assets with appropriate usage rights;
-- open-source component code under its license;
-- required source attribution and notices.
+Provider repositories are inspiration sources and implementation materials,
+not permission to clone a brand. Generated websites should use project-owned
+or properly licensed assets, comply with open-source licenses, and include
+required attribution/notices.
 
 Do not copy upstream logos, screenshots, protected brand names, proprietary
-copy, or exact page layouts. Review each provider's license before incorporating
+copy, or exact page layouts. Review each Provider license before incorporating
 its code. See `THIRD_PARTY_NOTICES.md` for repository notices.

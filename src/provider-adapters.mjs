@@ -57,6 +57,9 @@ const DAISYUI_REQUIRED_PROPERTIES = new Set([
 ]);
 let cachedProviderContext;
 
+const FULL_CURATION_CAPABILITIES = Object.freeze({ createDirection: true, createTheme: true });
+const THEME_ONLY_CURATION_CAPABILITIES = Object.freeze({ createDirection: false, createTheme: true });
+
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
 }
@@ -350,6 +353,7 @@ const PROVIDER_ADAPTERS = Object.freeze({
     id: "awesome-design-md",
     sourceType: "design-md",
     normalizerVersion: 1,
+    capabilities: FULL_CURATION_CAPABILITIES,
     matchesStyleSource: genericDesignMdMatcher,
     normalizeStyleSource: normalizeDesignMdStyleSource
   }),
@@ -357,6 +361,7 @@ const PROVIDER_ADAPTERS = Object.freeze({
     id: "generic-design-md",
     sourceType: "design-md",
     normalizerVersion: 1,
+    capabilities: FULL_CURATION_CAPABILITIES,
     matchesStyleSource: genericDesignMdMatcher,
     normalizeStyleSource: normalizeDesignMdStyleSource
   }),
@@ -364,6 +369,7 @@ const PROVIDER_ADAPTERS = Object.freeze({
     id: "daisyui-theme-css",
     sourceType: "theme-css",
     normalizerVersion: DAISYUI_NORMALIZER_VERSION,
+    capabilities: THEME_ONLY_CURATION_CAPABILITIES,
     matchesStyleSource: daisyuiThemeCssMatcher,
     sourceSlug: daisyuiThemeSourceSlug,
     normalizeStyleSource: normalizeDaisyuiThemeStyleSource
@@ -378,6 +384,39 @@ export function resolveProviderAdapter(provider = {}) {
   return adapter;
 }
 
+export function declaredProviderCapabilities(value) {
+  if (value === undefined) return null;
+  if (Array.isArray(value)) {
+    const allowed = new Set(["direction", "theme"]);
+    if (new Set(value).size !== value.length || !value.every((entry) => allowed.has(entry))) {
+      throw new Error("provider capabilities must contain unique direction/theme tokens only.");
+    }
+    return {
+      createDirection: value.includes("direction"),
+      createTheme: value.includes("theme")
+    };
+  }
+  if (
+    value === null
+    || typeof value !== "object"
+    || Object.keys(value).sort().join(",") !== "createDirection,createTheme"
+    || typeof value.createDirection !== "boolean"
+    || typeof value.createTheme !== "boolean"
+  ) {
+    throw new Error("provider capabilities must contain boolean createDirection and createTheme fields.");
+  }
+  return value;
+}
+
+export function resolveProviderCapabilities(provider = {}) {
+  const adapter = resolveProviderAdapter(provider);
+  const declared = declaredProviderCapabilities(provider.capabilities);
+  return Object.freeze({
+    createDirection: adapter.capabilities.createDirection && (declared?.createDirection ?? true),
+    createTheme: adapter.capabilities.createTheme && (declared?.createTheme ?? true)
+  });
+}
+
 export function hashStyleSourceContent(path) {
   const normalized = normalizeTextForHash(readFileSync(path, "utf8"));
   return hashNormalizedText(normalized);
@@ -389,6 +428,7 @@ export function loadStyleSourceDocument({ provider, providerDir, path } = {}) {
     throw new Error("A provider cache directory is required to load a style source.");
   }
   const adapter = resolveProviderAdapter(provider);
+  const capabilities = resolveProviderCapabilities(provider);
   if (!adapter.matchesStyleSource(path, basename(path || ""))) {
     throw new Error(`${provider.id}/${path} does not match the ${adapter.id} style-source contract.`);
   }
@@ -408,6 +448,7 @@ export function loadStyleSourceDocument({ provider, providerDir, path } = {}) {
     adapterId: adapter.id,
     sourceType: adapter.sourceType,
     normalizerVersion: adapter.normalizerVersion,
+    capabilities,
     content: normalized.content,
     contentHash: hashNormalizedText(normalized.content),
     candidateTheme: normalized.candidateTheme ?? null

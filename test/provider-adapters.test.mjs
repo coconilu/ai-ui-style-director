@@ -8,11 +8,13 @@ import { validateCuratedCatalog } from "../scripts/validate-curated-catalog.mjs"
 import { renderRecommendationGalleryHtml, renderRecommendations } from "../src/core.mjs";
 import {
   buildStyleSourceRecords,
+  declaredProviderCapabilities,
   expandProviderReference,
   hashStyleSourceContent,
   isSafeRelativePath,
   loadStyleSourceDocument,
   resolveProviderAdapter,
+  resolveProviderCapabilities,
   visualReferenceSource
 } from "../src/provider-adapters.mjs";
 import { expandVisualReferences } from "../src/preview.mjs";
@@ -90,6 +92,57 @@ test("generic design-md adapter builds stable content-hashed source records", ()
   assert.throws(
     () => resolveProviderAdapter({ id: "bad-provider", adapter: "not-real" }),
     /Unknown provider adapter/u
+  );
+});
+
+test("curation capabilities are the intersection of provider declaration and adapter maximum", () => {
+  assert.deepEqual(
+    resolveProviderCapabilities({ id: "generic", adapter: "generic-design-md" }),
+    { createDirection: true, createTheme: true }
+  );
+  assert.deepEqual(
+    resolveProviderCapabilities({ id: "awesome-design-md", adapter: "awesome-design-md" }),
+    { createDirection: true, createTheme: true }
+  );
+  assert.deepEqual(
+    resolveProviderCapabilities({ id: "daisyui", adapter: "daisyui-theme-css" }),
+    { createDirection: false, createTheme: true }
+  );
+  assert.deepEqual(
+    resolveProviderCapabilities({
+      id: "generic-theme-only",
+      adapter: "generic-design-md",
+      capabilities: { createDirection: false, createTheme: true }
+    }),
+    { createDirection: false, createTheme: true }
+  );
+  assert.deepEqual(
+    resolveProviderCapabilities({
+      id: "daisyui",
+      adapter: "daisyui-theme-css",
+      capabilities: { createDirection: true, createTheme: true }
+    }),
+    { createDirection: false, createTheme: true }
+  );
+  assert.deepEqual(declaredProviderCapabilities(["theme"]), {
+    createDirection: false,
+    createTheme: true
+  });
+  assert.throws(
+    () => declaredProviderCapabilities(["theme", "theme"]),
+    /unique direction\/theme tokens/u
+  );
+  assert.throws(
+    () => declaredProviderCapabilities(["theme", "unknown"]),
+    /unique direction\/theme tokens/u
+  );
+  assert.throws(
+    () => declaredProviderCapabilities({ createDirection: true }),
+    /boolean createDirection and createTheme/u
+  );
+  assert.throws(
+    () => declaredProviderCapabilities({ createDirection: true, createTheme: true, extra: false }),
+    /boolean createDirection and createTheme/u
   );
 });
 

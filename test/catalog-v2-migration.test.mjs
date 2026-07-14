@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 import {
   LEGACY_STYLE_DIRECTION_OVERRIDES,
+  assertLegacyProjectionSubset,
   buildCatalogV2Projection,
+  mergeLegacyProjectionIntoCanonical,
   resolveLegacyDirectionId
 } from "../scripts/migrate-direction-theme-catalog.mjs";
 
@@ -62,6 +64,104 @@ test("projects the live legacy catalog without freezing its style or Direction c
     "developer-editorial-stack-content": 6,
     "enterprise-dashboard-grid-data": 2
   });
+});
+
+test("migration check treats the legacy projection as a strict canonical subset", () => {
+  const projection = buildCatalogV2Projection(profiles, visuals);
+  const extras = {
+    directions: ["directions", { id: "future-curated-direction", name: "Future Curated Direction" }],
+    themes: ["themes", { id: "theme-futurecurated", name: "Future Curated Theme" }],
+    directionThemes: ["links", { directionId: "future-curated-direction", themeId: "theme-futurecurated", isDefault: true }],
+    previewSpecs: ["previewSpecs", { directionId: "future-curated-direction", layoutArchetype: "future-layout" }]
+  };
+  const canonicalByKey = {};
+  for (const [documentKey, [collection, extra]] of Object.entries(extras)) {
+    const canonical = structuredClone(projection[documentKey]);
+    canonical[collection].push(extra);
+    canonicalByKey[documentKey] = canonical;
+    assert.doesNotThrow(() => assertLegacyProjectionSubset(
+      documentKey,
+      projection[documentKey],
+      canonical
+    ));
+  }
+
+  const canonicalDirections = canonicalByKey.directions;
+  canonicalDirections.directions[0].experienceType = "developer-tool";
+  assert.doesNotThrow(() => assertLegacyProjectionSubset(
+    "directions",
+    projection.directions,
+    canonicalDirections
+  ));
+  canonicalDirections.directions[0].name = "Drifted legacy direction";
+  assert.throws(
+    () => assertLegacyProjectionSubset("directions", projection.directions, canonicalDirections),
+    /legacy projection field has drifted/u
+  );
+
+  const aliasesWithExtra = structuredClone(projection.aliases);
+  aliasesWithExtra.aliases.push({
+    legacyStyleId: "not-a-legacy-style",
+    directionId: projection.aliases.aliases[0].directionId,
+    themeId: projection.aliases.aliases[0].themeId
+  });
+  assert.throws(
+    () => assertLegacyProjectionSubset("aliases", projection.aliases, aliasesWithExtra),
+    /exact immutable legacy compatibility projection/u
+  );
+});
+
+test("migration write preserves canonical growth while restoring the legacy subset", () => {
+  const projection = buildCatalogV2Projection(profiles, visuals);
+  const extras = {
+    directions: ["directions", { id: "future-curated-direction", name: "Future Curated Direction" }],
+    themes: ["themes", { id: "theme-futurecurated", name: "Future Curated Theme" }],
+    directionThemes: ["links", { directionId: "future-curated-direction", themeId: "theme-futurecurated", isDefault: true }],
+    previewSpecs: ["previewSpecs", { directionId: "future-curated-direction", layoutArchetype: "future-layout" }]
+  };
+  for (const [documentKey, [collection, extra]] of Object.entries(extras)) {
+    const canonical = structuredClone(projection[documentKey]);
+    canonical.catalogRevision = `curated-${documentKey}`;
+    canonical[collection].push(extra);
+    const merged = mergeLegacyProjectionIntoCanonical(documentKey, projection[documentKey], canonical);
+    assert.equal(merged.catalogRevision, `curated-${documentKey}`);
+    assert.deepEqual(
+      merged[collection].find((entity) => (
+        documentKey === "directionThemes"
+          ? entity.directionId === extra.directionId && entity.themeId === extra.themeId
+          : entity[documentKey === "previewSpecs" ? "directionId" : "id"] === extra[documentKey === "previewSpecs" ? "directionId" : "id"]
+      )),
+      extra
+    );
+    assert.doesNotThrow(() => assertLegacyProjectionSubset(documentKey, projection[documentKey], merged));
+  }
+
+  const canonicalThemes = structuredClone(projection.themes);
+  const firstThemeId = canonicalThemes.themes[0].id;
+  canonicalThemes.themes[0].name = "Drifted legacy theme";
+  const mergedThemes = mergeLegacyProjectionIntoCanonical("themes", projection.themes, canonicalThemes);
+  assert.equal(
+    mergedThemes.themes.find((theme) => theme.id === firstThemeId).name,
+    projection.themes.themes[0].name
+  );
+  assert.doesNotThrow(() => assertLegacyProjectionSubset("themes", projection.themes, mergedThemes));
+
+  const enrichedDirections = structuredClone(projection.directions);
+  enrichedDirections.directions[0].experienceType = "developer-tool";
+  const mergedDirections = mergeLegacyProjectionIntoCanonical(
+    "directions",
+    projection.directions,
+    enrichedDirections
+  );
+  assert.equal(mergedDirections.directions[0].experienceType, "developer-tool");
+  assert.doesNotThrow(() => assertLegacyProjectionSubset("directions", projection.directions, mergedDirections));
+
+  const aliasesWithExtra = structuredClone(projection.aliases);
+  aliasesWithExtra.aliases.push({ legacyStyleId: "future", directionId: "future", themeId: "future" });
+  assert.deepEqual(
+    mergeLegacyProjectionIntoCanonical("aliases", projection.aliases, aliasesWithExtra),
+    projection.aliases
+  );
 });
 
 test("keeps an unknown future pinned profile independent instead of guessing from its hash", () => {

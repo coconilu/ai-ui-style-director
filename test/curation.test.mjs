@@ -13,14 +13,18 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { validateCurationArtifacts } from "../scripts/validate-curation.mjs";
 import { validateCuratedCatalog } from "../scripts/validate-curated-catalog.mjs";
+import { buildCatalogV2Projection } from "../scripts/migrate-direction-theme-catalog.mjs";
 import {
+  CURATION_PROCESSING_POLICY_VERSION,
   CURATION_PROMPT_VERSION,
   createBaselineState,
   curateStyleSources,
   detectPendingSources,
   drainStyleSources,
   findNearestProfile,
+  processingPolicyHashForProvider,
   preparePinnedProviderCaches,
+  upgradeCurationState,
   validateCurationState,
   weightedProfileSimilarity
 } from "../src/curation.mjs";
@@ -200,8 +204,8 @@ function fixture({
   writeJson(join(catalogDir, "component-kits.json"), [
     { id: "shadcn-ui", name: "shadcn/ui", bestFor: ["forms"], useWhen: "default", avoidWhen: "custom" }
   ]);
-  writeJson(join(catalogDir, "style-profiles.json"), [baseProfile({ sourceProvider: providerId })]);
-  writeJson(join(catalogDir, "style-visuals.json"), [{
+  const profiles = [baseProfile({ sourceProvider: providerId })];
+  const visuals = [{
     styleId: "existing-dense-console",
     variant: "dashboard",
     theme: {
@@ -223,14 +227,25 @@ function fixture({
       label: `Baseline ${index + 1}`,
       role: `Baseline role ${index + 1}`
     }))
-  }]);
+  }];
+  writeJson(join(catalogDir, "style-profiles.json"), profiles);
+  writeJson(join(catalogDir, "style-visuals.json"), visuals);
+  const projection = buildCatalogV2Projection(profiles, visuals);
+  writeJson(join(catalogDir, "style-directions.json"), projection.directions);
+  writeJson(join(catalogDir, "style-themes.json"), projection.themes);
+  writeJson(join(catalogDir, "style-direction-themes.json"), projection.directionThemes);
+  writeJson(join(catalogDir, "style-preview-specs.json"), projection.previewSpecs);
+  writeJson(join(catalogDir, "style-aliases.json"), projection.aliases);
   mkdirSync(join(catalogDir, "previews"), { recursive: true });
   writeFileSync(
     join(catalogDir, "previews", "existing-dense-console.svg"),
     '<svg xmlns="http://www.w3.org/2000/svg"/>\n',
     "utf8"
   );
-  const state = createBaselineState({ schemaVersion: 4, sources: sources.slice(0, 3) });
+  const state = createBaselineState(
+    { schemaVersion: 4, sources: sources.slice(0, 3) },
+    { providers: [provider] }
+  );
   writeJson(join(catalogDir, "curation", "source-state.json"), state);
   return { rootDir, catalogDir, cacheDir, sources, sourcePaths, contents, provider, providerId, repo };
 }
@@ -554,21 +569,25 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
   assert.equal(request.thinking, "disabled");
   assert.match(request.messages[0].content, /untrusted data/u);
   assert.match(request.messages[1].content, /Ignore all previous instructions/u);
-  const profiles = JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8"));
   const promotedStyleId = result.records[0].styleId;
-  const promoted = profiles.find((profile) => profile.id === promotedStyleId);
-  assert.match(promotedStyleId, /^developer-split-hero-product-proof-[0-9a-f]{8}$/u);
-  assert.equal(promoted.sourceProvider, "example-styles");
-  assert.match(promoted.sourceSlug, /^source-[0-9a-f]{8}$/u);
-  assert.equal(promoted.sourcePath, data.sourcePaths[3]);
-  assert.equal(promoted.sourceRevision, "a".repeat(40));
-  assert.equal(promoted.sourceContentHash, data.sources[3].contentHash);
-  assert.equal(existsSync(join(data.catalogDir, "previews", `${promotedStyleId}.svg`)), true);
-  const visual = JSON.parse(readFileSync(join(data.catalogDir, "style-visuals.json"), "utf8"))
-    .find((entry) => entry.styleId === promotedStyleId);
-  assert.deepEqual(visual.references.map((reference) => reference.path), [data.sourcePaths[3], data.sourcePaths[0], data.sourcePaths[1]]);
-  assert.equal(visual.references.every((reference) => reference.revision === "a".repeat(40)), true);
-  assert.equal(visual.references.every((reference) => reference.sourceUrl.includes(`/blob/${"a".repeat(40)}/`)), true);
+  assert.match(promotedStyleId, /^developer-split-hero-product-proof-[0-9a-f]{12}$/u);
+  const directions = JSON.parse(readFileSync(join(data.catalogDir, "style-directions.json"), "utf8")).directions;
+  const promoted = directions.find((direction) => direction.id === promotedStyleId);
+  assert.equal(promoted.legacyStyleIds.length, 0);
+  assert.equal(promoted.legacyReferences.length, 0);
+  const previewSpec = JSON.parse(readFileSync(join(data.catalogDir, "style-preview-specs.json"), "utf8"))
+    .previewSpecs.find((spec) => spec.directionId === promotedStyleId);
+  assert.equal(previewSpec.layoutArchetype, "split-hero");
+  assert.equal("legacyVariant" in previewSpec, false);
+  const promotedTheme = JSON.parse(readFileSync(join(data.catalogDir, "style-themes.json"), "utf8"))
+    .themes.find((theme) => theme.id === result.records[0].themeId);
+  assert.match(promotedTheme.sources[0].slug, /^source-[0-9a-f]{8}$/u);
+  assert.equal(promotedTheme.sources[0].path, data.sourcePaths[3]);
+  assert.equal(promotedTheme.sources[0].revision, "a".repeat(40));
+  assert.equal(promotedTheme.sources[0].contentHash, data.sources[3].contentHash);
+  assert.equal(promotedTheme.sources[0].sourceUrl.includes(`/blob/${"a".repeat(40)}/`), true);
+  assert.equal(JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8")).length, 1);
+  assert.equal(JSON.parse(readFileSync(join(data.catalogDir, "style-visuals.json"), "utf8")).length, 1);
 
   const recordPath = join(data.catalogDir, "curation", "records", `${result.records[0].recordId}.json`);
   const recordText = readFileSync(recordPath, "utf8");
@@ -584,7 +603,7 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
     styleSourcesPath: join(data.catalogDir, "generated", "style-sources.json"),
     previewsDir: join(data.catalogDir, "previews"),
     policyPath: join(data.catalogDir, "curation-policy.json")
-  }).profileCount, 2);
+  }).profileCount, 1);
 
   const rerun = await curateStyleSources({ rootDir: data.rootDir, cacheDir: data.cacheDir, client: mockClient(null) });
   assert.equal(rerun.changed, false);
@@ -683,7 +702,7 @@ test("theme-css sources are normalized before the agent call and enforce adapter
     keywords: existing.keywords,
     componentKits: existing.componentKits,
     composition: "dashboard-grid",
-    emphasis: "workflow",
+    emphasis: "data",
     typographyStyle: "compact-ui",
     spacing: "compact"
   });
@@ -699,16 +718,25 @@ test("theme-css sources are normalized before the agent call and enforce adapter
 
   const userMessage = JSON.parse(request.messages[1].content);
   const normalizedDocument = JSON.parse(userMessage.upstreamDocument);
+  assert.match(request.messages[0].content, /Theme-only.*decision=promote/u);
+  assert.doesNotMatch(request.messages[0].content, /skip when the source adds no distinct, reusable direction/u);
+  assert.deepEqual(
+    userMessage.governance.allowedDirectionIds,
+    JSON.parse(readFileSync(join(data.catalogDir, "style-directions.json"), "utf8"))
+      .directions.map((direction) => direction.id).sort()
+  );
   assert.equal(normalizedDocument.sourceType, "theme-css");
   assert.doesNotMatch(userMessage.upstreamDocument, /--color-primary:/u);
   assert.deepEqual(userMessage.governance.requiredTheme, pendingDocument.candidateTheme);
+  assert.equal(result.promoted, 1, JSON.stringify(result));
+  const promotedTheme = JSON.parse(readFileSync(join(data.catalogDir, "style-themes.json"), "utf8"))
+    .themes.find((theme) => theme.id === result.records[0].themeId);
   assert.deepEqual(
-    JSON.parse(readFileSync(join(data.catalogDir, "style-visuals.json"), "utf8")).at(-1).theme,
+    promotedTheme.tokens,
     pendingDocument.candidateTheme
   );
-  assert.equal(result.promoted, 1);
-  const promoted = JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8")).at(-1);
-  assert.equal(promoted.sourceSlug, "calm");
+  assert.equal(promotedTheme.sources[0].slug, "calm");
+  assert.equal(result.records[0].action, "added-theme-to-direction");
   const record = JSON.parse(readFileSync(
     join(data.catalogDir, "curation", "records", `${result.records[0].recordId}.json`),
     "utf8"
@@ -757,22 +785,22 @@ test("awesome-design-md promotions preserve the readable standard source slug", 
     cacheDir: data.cacheDir,
     client: mockClient(candidate)
   });
-  const profiles = JSON.parse(readFileSync(join(data.catalogDir, "style-profiles.json"), "utf8"));
-  const promoted = profiles.find((profile) => profile.id === result.records[0].styleId);
-  assert.equal(promoted.sourceSlug, "airbnb");
+  const promotedTheme = JSON.parse(readFileSync(join(data.catalogDir, "style-themes.json"), "utf8"))
+    .themes.find((theme) => theme.id === result.records[0].themeId);
+  assert.equal(promotedTheme.sources[0].slug, "airbnb");
 });
 
 test("catalog append preserves existing strings that contain closing brackets", async () => {
   const data = fixture();
-  const profilesPath = join(data.catalogDir, "style-profiles.json");
-  const visualsPath = join(data.catalogDir, "style-visuals.json");
-  const profiles = JSON.parse(readFileSync(profilesPath, "utf8"));
-  profiles[0].name = "Existing [warning] Style";
-  profiles[0].risks = ["Keep the literal ] character intact."];
-  writeJson(profilesPath, profiles);
-  const visuals = JSON.parse(readFileSync(visualsPath, "utf8"));
-  visuals[0].references[0].label = "Baseline ] reference";
-  writeJson(visualsPath, visuals);
+  const directionsPath = join(data.catalogDir, "style-directions.json");
+  const themesPath = join(data.catalogDir, "style-themes.json");
+  const directions = JSON.parse(readFileSync(directionsPath, "utf8"));
+  directions.directions[0].name = "Existing [warning] Direction";
+  directions.directions[0].risks = ["Keep the literal ] character intact."];
+  writeJson(directionsPath, directions);
+  const themes = JSON.parse(readFileSync(themesPath, "utf8"));
+  themes.themes[0].name = "Baseline ] Theme";
+  writeJson(themesPath, themes);
 
   const candidate = candidateFor([data.sourcePaths[3], data.sourcePaths[0], data.sourcePaths[1]]);
   const result = await curateStyleSources({
@@ -781,13 +809,13 @@ test("catalog append preserves existing strings that contain closing brackets", 
     client: mockClient(candidate)
   });
   assert.equal(result.promoted, 1);
-  const nextProfiles = JSON.parse(readFileSync(profilesPath, "utf8"));
-  const nextVisuals = JSON.parse(readFileSync(visualsPath, "utf8"));
-  assert.equal(nextProfiles[0].name, "Existing [warning] Style");
-  assert.deepEqual(nextProfiles[0].risks, ["Keep the literal ] character intact."]);
-  assert.equal(nextVisuals[0].references[0].label, "Baseline ] reference");
-  assert.equal(nextProfiles.length, 2);
-  assert.equal(nextVisuals.length, 2);
+  const nextDirections = JSON.parse(readFileSync(directionsPath, "utf8")).directions;
+  const nextThemes = JSON.parse(readFileSync(themesPath, "utf8")).themes;
+  assert.equal(nextDirections[0].name, "Existing [warning] Direction");
+  assert.deepEqual(nextDirections[0].risks, ["Keep the literal ] character intact."]);
+  assert.equal(nextThemes[0].name, "Baseline ] Theme");
+  assert.equal(nextDirections.length, 2);
+  assert.equal(nextThemes.length, 2);
 });
 
 test("catalog append rejects a valid JSON root that is not an array", async () => {
@@ -817,21 +845,30 @@ test("deterministic duplicate and invalid provenance gates leave the curated cat
         tones: existing.tones,
         keywords: existing.keywords,
         composition: "dashboard-grid",
-        emphasis: "workflow",
+        emphasis: "data",
         typographyStyle: "compact-ui",
         spacing: "compact"
       })
     }
   );
-  const before = readFileSync(join(duplicateData.catalogDir, "style-profiles.json"), "utf8");
+  duplicateCandidate.visual.theme = JSON.parse(
+    readFileSync(join(duplicateData.catalogDir, "style-themes.json"), "utf8")
+  ).themes[0].tokens;
+  const canonicalPaths = [
+    "style-directions.json",
+    "style-themes.json",
+    "style-direction-themes.json",
+    "style-preview-specs.json"
+  ].map((name) => join(duplicateData.catalogDir, name));
+  const before = canonicalPaths.map((path) => readFileSync(path, "utf8"));
   const duplicateResult = await curateStyleSources({
     rootDir: duplicateData.rootDir,
     cacheDir: duplicateData.cacheDir,
     client: mockClient(duplicateCandidate)
   });
-  assert.equal(duplicateResult.duplicates, 1);
+  assert.equal(duplicateResult.duplicates, 1, JSON.stringify(duplicateResult));
   assert.equal(duplicateResult.promoted, 0);
-  assert.equal(readFileSync(join(duplicateData.catalogDir, "style-profiles.json"), "utf8"), before);
+  assert.deepEqual(canonicalPaths.map((path) => readFileSync(path, "utf8")), before);
 
   const invalidData = fixture();
   const invalidCandidate = candidateFor([invalidData.sourcePaths[3], invalidData.sourcePaths[0], "styles/not-indexed/DESIGN.md"]);
@@ -842,7 +879,7 @@ test("deterministic duplicate and invalid provenance gates leave the curated cat
   });
   assert.equal(invalidResult.invalid, 1);
   assert.equal(invalidResult.promoted, 0);
-  assert.equal(JSON.parse(readFileSync(join(invalidData.catalogDir, "style-profiles.json"), "utf8")).length, 1);
+  assert.equal(JSON.parse(readFileSync(join(invalidData.catalogDir, "style-directions.json"), "utf8")).directions.length, 1);
 });
 
 test("an agent skip is audited without adding a user-facing style", async () => {
@@ -941,6 +978,148 @@ test("repeated A-B-A-B content transitions always append immutable event records
     readFileSync(join(data.catalogDir, "curation", "records", file), "utf8")
   ).eventNonce);
   assert.equal(nonces.includes(1), true);
+});
+
+test("one real change upgrades every schema-v1 state entry to canonical schema-v2 shape", async () => {
+  const sourcePaths = Array.from({ length: 110 }, (_, index) => `styles/source-${index + 1}/DESIGN.md`);
+  const contents = sourcePaths.map((_, index) => `# Source ${index + 1}\nReusable reference ${index + 1}.\n`);
+  const data = fixture({ sourcePaths, contents });
+  const legacyEntries = data.sources.slice(0, 109).map((source, index) => ({
+    providerId: source.providerId,
+    path: source.path,
+    processedHash: source.contentHash,
+    status: "baseline",
+    recordId: null,
+    styleIds: index === 0 ? ["existing-dense-console"] : []
+  })).sort((left, right) => (
+    `${left.providerId}\u0000${left.path}`.localeCompare(`${right.providerId}\u0000${right.path}`, "en")
+  ));
+  const statePath = join(data.catalogDir, "curation", "source-state.json");
+  writeJson(statePath, {
+    schemaVersion: 1,
+    promptVersion: "legacy-prompt-version",
+    sources: legacyEntries
+  });
+
+  const result = await curateStyleSources({
+    rootDir: data.rootDir,
+    cacheDir: data.cacheDir,
+    maxSources: 1,
+    client: mockClient({ decision: "skip", rationale: "No new direction.", profile: null, visual: null })
+  });
+  assert.equal(result.processed, 1);
+  const state = JSON.parse(readFileSync(statePath, "utf8"));
+  assert.equal(state.schemaVersion, 2);
+  assert.equal(state.sources.length, 110);
+  assert.equal(state.sources.every((entry) => /^sha256:[0-9a-f]{64}$/u.test(entry.processingPolicyHash)), true);
+  assert.equal(state.sources.every((entry) => Array.isArray(entry.directionIds) && Array.isArray(entry.themeIds)), true);
+  const aliased = state.sources.find((entry) => entry.styleIds.includes("existing-dense-console"));
+  assert.deepEqual(aliased.directionIds, ["existing-dense-console"]);
+  assert.equal(aliased.themeIds.length, 1);
+});
+
+test("pure curation state upgrade is deterministic and idempotent", () => {
+  const source = {
+    providerId: "example",
+    path: "styles/example/DESIGN.md",
+    contentHash: `sha256:${"a".repeat(64)}`
+  };
+  const legacy = {
+    schemaVersion: 1,
+    promptVersion: "legacy-prompt",
+    sources: [{
+      providerId: source.providerId,
+      path: source.path,
+      processedHash: source.contentHash,
+      status: "baseline",
+      recordId: null,
+      styleIds: ["legacy-example"]
+    }]
+  };
+  const catalog = {
+    directions: [{ id: "canonical-example" }],
+    themes: [{ id: "theme-0123456789ab" }],
+    aliases: [{
+      legacyStyleId: "legacy-example",
+      directionId: "canonical-example",
+      themeId: "theme-0123456789ab"
+    }]
+  };
+  const providers = [{ id: "example", adapter: "generic-design-md" }];
+  const upgraded = upgradeCurationState(legacy, { catalog, providers });
+  assert.deepEqual(upgraded.sources[0].directionIds, ["canonical-example"]);
+  assert.deepEqual(upgraded.sources[0].themeIds, ["theme-0123456789ab"]);
+  assert.deepEqual(upgradeCurationState(upgraded, { catalog, providers }), upgraded);
+});
+
+test("prompt changes do not replay sources, while a stale per-source policy hash does", () => {
+  const providers = [{
+    id: "example",
+    adapter: "generic-design-md",
+    capabilities: { createDirection: true, createTheme: true }
+  }];
+  const sources = ["a", "b", "c"].map((name) => ({
+    providerId: "example",
+    path: `styles/${name}/DESIGN.md`,
+    contentHash: `sha256:${name.repeat(64)}`
+  }));
+  const state = createBaselineState({ sources }, { providers });
+  state.promptVersion = "prompt-only-change";
+  assert.deepEqual(detectPendingSources({ sources }, state, { providers }), []);
+
+  state.sources.find((entry) => entry.path === sources[1].path).processingPolicyHash = `sha256:${"0".repeat(64)}`;
+  assert.deepEqual(detectPendingSources({ sources }, state, { providers }), [sources[1]]);
+  assert.notEqual(
+    processingPolicyHashForProvider(providers[0]),
+    processingPolicyHashForProvider({
+      ...providers[0],
+      capabilities: { createDirection: false, createTheme: true }
+    })
+  );
+  const historicalPolicyHash = processingPolicyHashForProvider(providers[0], {
+    processingPolicyVersion: CURATION_PROCESSING_POLICY_VERSION
+  });
+  const futurePolicyHash = processingPolicyHashForProvider(providers[0], {
+    processingPolicyVersion: CURATION_PROCESSING_POLICY_VERSION + 1
+  });
+  assert.equal(historicalPolicyHash, processingPolicyHashForProvider(providers[0], { processingPolicyVersion: 1 }));
+  assert.notEqual(historicalPolicyHash, futurePolicyHash);
+});
+
+test("policy-stale sources drain in bounded batches without marking later batches processed", async () => {
+  const sourcePaths = Array.from({ length: 22 }, (_, index) => `styles/policy-${index + 1}/DESIGN.md`);
+  const contents = sourcePaths.map((_, index) => `# Policy ${index + 1}\nReusable reference.\n`);
+  const data = fixture({ sourcePaths, contents });
+  const statePath = join(data.catalogDir, "curation", "source-state.json");
+  writeJson(statePath, createBaselineState(
+    { sources: data.sources },
+    { providers: [data.provider] }
+  ));
+  const narrowedProvider = {
+    ...data.provider,
+    capabilities: { createDirection: false, createTheme: true }
+  };
+  writeJson(join(data.catalogDir, "providers.json"), [narrowedProvider]);
+  let calls = 0;
+  const result = await drainStyleSources({
+    rootDir: data.rootDir,
+    cacheDir: data.cacheDir,
+    batchSize: 5,
+    client: {
+      async completeJson() {
+        calls += 1;
+        const value = { decision: "skip", rationale: "No new direction.", profile: null, visual: null };
+        return { value, content: JSON.stringify(value), model: "mock-curator", id: `policy-${calls}` };
+      }
+    }
+  });
+  assert.equal(result.pending, 22);
+  assert.equal(result.batches, 5);
+  assert.equal(result.processed, 22);
+  assert.equal(calls, 22);
+  const expectedHash = processingPolicyHashForProvider(narrowedProvider);
+  const nextState = JSON.parse(readFileSync(statePath, "utf8"));
+  assert.equal(nextState.sources.every((entry) => entry.processingPolicyHash === expectedHash), true);
 });
 
 test("pending detection uses provider/path identity plus content hash", () => {

@@ -1,77 +1,152 @@
 # Provider 与来源边界
 
-Provider 配置位于 `catalog/providers.json`。Provider 为系统提供设计参考或实现组件，但不会成为普通用户的操作入口。
+Provider 配置位于 `catalog/providers.json`。Provider 只提供参考资料或实现组件，不会
+直接变成用户可选条目；来源索引与 Catalog 策展是两个独立阶段。
 
-## 当前角色
+## 当前 Provider
 
-- `awesome-design-md`：风格参考语料。
-- `daisyui-themes`：由 `saadeghi/daisyui` 提供的主题 token 参考语料。
-- `design-md-flow`：工作流参考。
-- `shadcn-ui`：基础组件。
-- `origin-ui`：应用和营销页面区块。
-- `magic-ui`：动效丰富的营销组件。
-- `tremor`：dashboard 和图表组件。
+| Provider | 角色 | Style Adapter | 有效策展 capability |
+| --- | --- | --- | --- |
+| `awesome-design-md` | 风格参考语料 | `awesome-design-md` | Direction + Theme |
+| `daisyui-themes` | Theme token 语料 | `daisyui-theme-css` | 仅 Theme |
+| `design-md-flow` | 工作流参考 | 无 | 无 |
+| `shadcn-ui` | 基础组件 | 无 | 无 |
+| `origin-ui` | 应用和营销页面区块 | 无 | 无 |
+| `magic-ui` | 动效丰富的营销组件 | 无 | 无 |
+| `tremor` | Dashboard 和图表 | 无 | 无 |
 
-## 刷新 Provider 索引
+当前生成快照包含 7 个 Provider、109 条 style source 和 600 条 component source。
+它们是素材池数量，不是 Catalog 固定上限，也不等于 109 个用户可选风格。
 
-运行：
+## 从来源到 Catalog 的边界
+
+```mermaid
+flowchart LR
+  A["Provider 仓库"] --> B["Adapter 发现与规范化"]
+  B --> C["catalog/generated 索引"]
+  C --> D["AI 辅助策展"]
+  D --> E["规范 Direction/Theme 文件"]
+  E --> F["Draft PR 与维护者审查"]
+```
+
+运行索引刷新：
 
 ```bash
 node bin/ai-ui-style-director.mjs refresh-catalog --clone
 ```
 
-命令会刷新本地 Provider 仓库，由各自 Adapter 发现并规范化 style source，再扫描
-registry 和文档文件，并把标准化索引写入 `catalog/generated/`。当前生成索引包含
-7 个 Provider、109 条 style source 和 600 条 component source；这些路径只是候选
-素材池，不等于 109 个用户可选风格。原有 74 条 `DESIGN.md` 来源仍是 baseline，
-新增的 35 条 daisyUI 主题则从 pending 开始。新增或变化来源只有在结构化候选、
-精确溯源、确定性去重、预览和仓库门禁全部通过后才会进入已策展 Catalog。
+命令会刷新本地 Provider checkout，由各 Adapter 发现并规范化支持的 style source，
+扫描组件 registry/文档，再把索引写入 `catalog/generated/`。它不会修改规范
+Direction/Theme Catalog，也不会改旧版 profile/visual/alias 文件。
 
-`daisyui-theme-css` 是格式专用 Adapter：它只匹配
-`packages/daisyui/src/themes/*.css`，提取受治理的主题 token，确定性转换 OKLCH
-颜色，并生成同时用于内容哈希与受限策展模型输入的规范 JSON；仓库中的其他 CSS 不会
-被当作风格来源。
+新增或变化的索引来源会进入独立策展队列。只有通过 Schema、capability、精确溯源、
+两阶段去重、规范 Catalog、不可变 record 和仓库门禁，并由人工审查 Draft PR 后，
+它才会进入用户可见 Catalog。
 
-这个 Adapter 只接受精确的 29 个声明：1 个 `color-scheme`、20 个受治理的颜色
-token 和 8 个几何 token。未知、缺失、重复或格式非法的声明都会让刷新以 fail-closed
-方式失败。如果 daisyUI 新增或修改 token 契约，必须通过普通的人工审查代码 PR 更新
-白名单并提升 Normalizer 版本；刷新任务不会静默吸收新的上游 Schema。
+| 层 | 文件 | 所有者 |
+| --- | --- | --- |
+| 生成来源索引 | `catalog/generated/provider-inventory.json`、`style-sources.json`、组件索引 | refresh workflow |
+| 规范消费 Catalog | `style-directions.json`、`style-themes.json`、`style-direction-themes.json`、`style-preview-specs.json` | 人工审查后的策展 |
+| 兼容投影 | `style-profiles.json`、`style-visuals.json`、`style-aliases.json`、旧预览 | 自动策展只读 |
 
-Catalog 唯一的 `canonicalTheme.accent` 取自 daisyUI 的 `--color-primary`，因为
-primary 表达主题的主导品牌色/行动色；daisyUI 自身的 `--color-accent` 仍保留在规范
-颜色 token 表中，用作次级强调色。任一受治理上游值发生变化时，规范 JSON 及其哈希
-也会变化；稳定身份仍是 `providerId + path`，但当前哈希与 source state 不一致，
-因此该来源会重新进入 pending。
+## Adapter 与 capability 契约
 
-Provider/style/component 生成索引使用 schema v4；托管浏览器使用相互独立的
-schema-v4 `catalog.json` 契约来承载 Direction/Theme 视图模型。
+Style source 格式处理属于 Adapter。每个 Adapter 定义：
 
-定时 GitHub workflow 每天执行相同的刷新和仓库检查，只在生成索引发生变化时创建 PR。
+- 来源发现方式和 `sourceType`；
+- 严格规范化方式和 `normalizerVersion`；
+- `createDirection` / `createTheme` capability 上限；
+- 格式推导出的可选约束，例如必须采用的 Theme。
 
-## 视觉参考
+Provider 可以显式收窄 Adapter 上限：
 
-`catalog/style-visuals.json` 把每个标准化内部风格映射到 3 个真实来源。旧的
-`awesome-design-md` slug 仍会展开为 getdesign.md 的 overview 与 Light/Dark
-实时预览；通用 Provider 使用精确 `provider + path`，并生成固定到索引 revision
-的 GitHub 来源页链接。
+```json
+{
+  "id": "example-provider",
+  "adapter": "generic-design-md",
+  "capabilities": {
+    "createDirection": true,
+    "createTheme": true
+  }
+}
+```
 
-Adapter、state、审计和 GitHub Actions 细节见
+有效 capability 是 Provider 声明与 Adapter 上限的布尔交集。省略 `capabilities` 表示
+接受 Adapter 上限；Provider 声明 `true` 也不能覆盖 Adapter 的 `false`。
+
+程序把最终 capability、显式处理政策版本、Adapter ID 和 Normalizer 版本绑定为逐来源
+`processingPolicyHash`。政策变化会让受影响来源进入 pending，而不依赖全局 Prompt
+版本重放。
+
+### `DESIGN.md` Adapter
+
+`awesome-design-md` 保留既有 Awesome 语料语义和托管 overview/Light/Dark 参考链接。
+未显式配置 Adapter 的非 Awesome Provider 默认使用 `generic-design-md`，递归发现文件名
+为 `DESIGN.md` 的资料。两者的 Adapter 上限都允许创建 Direction 和 Theme；Provider
+仍可进一步收窄。
+
+模型输出继续受治理 taxonomy 和精确索引引用约束。真正的新来源格式应该新增一个经过
+审查的 Adapter，而不是放宽通用解析器或把任意上游内容直接传给消费 Catalog。
+
+### `daisyui-theme-css`
+
+该 Adapter 刻意只匹配：
+
+```text
+packages/daisyui/src/themes/*.css
+```
+
+它提取受治理的 Theme token、确定性转换 OKLCH，并输出同时用于内容哈希和受限模型输入
+的规范 JSON；仓库内其他 CSS 不会被当作 style source。
+
+契约精确接受 29 个声明：1 个 `color-scheme`、20 个颜色 token 和 8 个几何 token。
+未知、缺失、重复或格式非法的声明都会 fail closed。daisyUI `--color-primary` 映射为
+Catalog 唯一的品牌/行动 `accent`；daisyUI `--color-accent` 继续保留在完整规范来源映射
+中，作为辅助强调色。
+
+该 Adapter 上限为仅 Theme，`daisyui-themes` 也显式声明了同样限制。因此，它只能在
+可信程序选中符合资格的既有 Direction 后新增或关联 Theme，永远不能创建 Direction。
+历史来源会保留 alias 还原出的 Direction；全新来源必须从受限候选上下文匹配既有
+Direction，否则结果为 `invalid`。
+
+若上游改变 Token Schema，必须通过普通人工审查代码 PR 更新白名单并提升
+`normalizerVersion`。
+
+## 新增 Provider
+
+| 步骤 | 必需变更 | 审查问题 |
+| --- | --- | --- |
+| 1 | 在 `catalog/providers.json` 添加仓库元数据 | 角色和许可证是否明确？ |
+| 2 | 选择已有 Adapter，或实现严格的新 Adapter | 输入格式是否规范、受限？ |
+| 3 | Provider 需要更窄政策时声明 capability | 来源可以增加结构、Theme，还是两者都不能？ |
+| 4 | 刷新生成索引 | 发现路径和哈希是否稳定？ |
+| 5 | 运行 `npm run check` | 契约、溯源和迁移是否仍成立？ |
+| 6 | 合并来源索引 PR | 策展 Workflow 随后按每批 5 条处理全部 pending 来源 |
+
+Provider、source、Direction 和 Theme 数量都没有固定上限。5 只是单个策展批次最多处理的
+来源数；`--drain` 会循环到所有 pending 来源均已处理。
+
+## 溯源与 revision 语义
+
+每条索引来源以精确 `providerId + path` 寻址，以规范内容哈希区分版本。Provider
+inventory 固定一个 40 字符 Git revision。新规范 Theme 的 `source-pinned` 引用包含
+Provider、路径、仓库、revision、内容哈希和来源 URL。
+
+该溯源是历史证据。后续 refresh 可以推进 Provider inventory，但不能把既有 Theme 的
+固定 revision 改写成当前上游 HEAD。若受治理来源内容或处理政策变化，稳定来源身份会
+再次进入 pending，新不可变事件记录自己的快照。
+
+旧版 Awesome slug 引用仍可展开为 getdesign.md overview 和 Light/Dark 链接；通用引用
+使用精确 Provider 路径及固定到事件 revision 的 GitHub 页面。旧版
+`style-visuals.json` 只是兼容投影，不是新增策展的写入目标。
+
+State、去重、record、Action 白名单和 Draft PR 细节见
 [AI 辅助风格策展自动化](AUTOMATED_CURATION.zh-CN.md)。
-
-已策展层从 12 个 family、每组 4 个方向的审查基线开始，并可通过受保护 PR 增长。新增
-方向必须补齐 profile 和 visual、使用恰好 3 条已索引且不重复的参考、生成中性
-SVG，并通过 `npm run catalog:curated:validate`；provider 路径数量本身不构成
-晋升依据。
-
-这些链接刻意与 `catalog/previews/` 分离：本地 SVG 卡片是项目自有的中性线框草图，托管预览始终属于外部参考资料，不会 vendoring 到仓库。
 
 ## 来源归因与品牌安全
 
-Provider 仓库是灵感来源和实现材料，不代表可以克隆某个品牌。生成网站时应该使用：
+Provider 仓库是灵感来源和实现材料，不代表可以克隆品牌。生成网站时应使用项目自有或
+具备适当许可的资产，遵守开源许可证，并保留必要归因/声明。
 
-- 项目自有资产；
-- 具备适当使用权的生成资产；
-- 遵守许可证的开源组件代码；
-- 必要的来源归因和声明。
-
-不要复制上游 logo、截图、受保护品牌名、专有文案或精确页面布局。集成组件代码前，应检查对应 provider 的许可证。仓库声明见 `THIRD_PARTY_NOTICES.md`。
+不要复制上游 Logo、截图、受保护品牌名、专有文案或精确页面布局。集成代码前应检查
+每个 Provider 的许可证；仓库声明见 `THIRD_PARTY_NOTICES.md`。

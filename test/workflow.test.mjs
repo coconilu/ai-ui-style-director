@@ -12,11 +12,36 @@ const curationWorkflow = readFileSync(
 const ciWorkflow = readFileSync(join(rootDir, ".github", "workflows", "ci.yml"), "utf8");
 
 const curationAllowlist =
-  "^(catalog/style-profiles\\.json|catalog/style-visuals\\.json|catalog/curation/source-state\\.json|catalog/curation/records/[0-9a-f]{64}\\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\\.svg)$";
+  "^(catalog/style-(directions|themes|direction-themes|preview-specs)\\.json|catalog/curation/source-state\\.json|catalog/curation/records/[0-9a-f]{64}\\.json)$";
+
+test("curation allowlist accepts canonical v2 artifacts and rejects legacy catalog mutations", () => {
+  const allowed = new RegExp(curationAllowlist, "u");
+  for (const path of [
+    "catalog/style-directions.json",
+    "catalog/style-themes.json",
+    "catalog/style-direction-themes.json",
+    "catalog/style-preview-specs.json",
+    "catalog/curation/source-state.json",
+    `catalog/curation/records/${"a".repeat(64)}.json`
+  ]) {
+    assert.match(path, allowed);
+  }
+  for (const path of [
+    "catalog/style-profiles.json",
+    "catalog/style-visuals.json",
+    "catalog/style-aliases.json",
+    "catalog/previews/legacy-style.svg"
+  ]) {
+    assert.doesNotMatch(path, allowed);
+  }
+});
 
 test("curation workflow uses trusted main-only triggers and bounded execution", () => {
   assert.match(curationWorkflow, /schedule:\s*\n\s+- cron: "30 19 \* \* \*"/u);
   assert.match(curationWorkflow, /push:\s*\n\s+branches: \[main\]/u);
+  assert.match(curationWorkflow, /paths:\s*\n\s+- catalog\/providers\.json/u);
+  assert.match(curationWorkflow, /- src\/curation\.mjs/u);
+  assert.match(curationWorkflow, /- src\/provider-adapters\.mjs/u);
   assert.match(curationWorkflow, /workflow_dispatch:/u);
   assert.match(curationWorkflow, /curator_provider:\s*\n\s+description: Model provider for this run/u);
   assert.doesNotMatch(curationWorkflow, /^\s{2}pull_request:/mu);
@@ -98,6 +123,11 @@ test("write-capable GitHub App token is unavailable to the model and only create
 test("curation automation leaves an allowlisted, append-only draft PR for maintainer review", () => {
   const workflowAllowlists = [...curationWorkflow.matchAll(/allowed='([^']+)'/gu)].map((match) => match[1]);
   assert.deepEqual(workflowAllowlists, [curationAllowlist, curationAllowlist]);
+  assert.match(curationWorkflow, /catalog\/style-directions\.json/u);
+  assert.match(curationWorkflow, /catalog\/style-themes\.json/u);
+  assert.match(curationWorkflow, /catalog\/style-direction-themes\.json/u);
+  assert.match(curationWorkflow, /catalog\/style-preview-specs\.json/u);
+  assert.doesNotMatch(curationAllowlist, /style-profiles|style-visuals|style-aliases|catalog\/previews/u);
   assert.match(curationWorkflow, /catalog\/curation\/records/u);
   assert.match(curationWorkflow, /Pinned provider revision and source content hash: passed/u);
   assert.match(curationWorkflow, /Input tokens:/u);
@@ -106,7 +136,18 @@ test("curation automation leaves an allowlisted, append-only draft PR for mainta
   assert.match(curationWorkflow, /Pending at start:/u);
   assert.match(curationWorkflow, /records\.length > 50/u);
   assert.match(curationWorkflow, /`skipped=\$\{count\("skipped"\)\}`/u);
+  assert.match(curationWorkflow, /created_direction_and_theme=\$\{actionCount\("created-direction-and-theme"\)\}/u);
+  assert.match(curationWorkflow, /created_direction_with_existing_theme=\$\{actionCount\("created-direction-with-existing-theme"\)\}/u);
+  assert.match(curationWorkflow, /added_theme_to_direction=\$\{actionCount\("added-theme-to-direction"\)\}/u);
+  assert.match(curationWorkflow, /linked_existing_theme=\$\{actionCount\("linked-existing-theme"\)\}/u);
+  assert.match(curationWorkflow, /duplicate_theme=\$\{actionCount\("duplicate-theme"\)\}/u);
   assert.match(curationWorkflow, /SKIPPED: \$\{\{ steps\.result\.outputs\.skipped \}\}/u);
+  assert.match(curationWorkflow, /Direction: \$\{directionId\} \| Theme: \$\{themeId\}/u);
+  assert.match(curationWorkflow, /Created Direction \+ Theme:/u);
+  assert.match(curationWorkflow, /Created Direction with existing Theme:/u);
+  assert.match(curationWorkflow, /Added Theme to Direction:/u);
+  assert.match(curationWorkflow, /Linked existing Theme:/u);
+  assert.match(curationWorkflow, /Duplicate Theme:/u);
   assert.doesNotMatch(curationWorkflow, / — /u);
   assert.match(curationWorkflow, /gh pr create/u);
   assert.match(curationWorkflow, /--head "\$branch" \\\s*\n\s+--draft\)"/u);
