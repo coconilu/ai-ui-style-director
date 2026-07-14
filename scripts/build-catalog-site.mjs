@@ -89,6 +89,9 @@ export function writeCatalogSite({
   return {
     outputDir: resolvedOutputDir,
     catalogRevision: catalog.catalogRevision,
+    directionCount: catalog.directionCount,
+    themeCount: catalog.themeCount,
+    linkCount: catalog.linkCount,
     styleCount: catalog.styleCount,
     sourceCount: catalog.sourceCount,
     fileCount: assets.size,
@@ -106,7 +109,8 @@ function main() {
     else {
       process.stdout.write(
         `Built catalog site: ${result.outputDir} ` +
-        `(${result.styleCount} styles, ${result.fileCount} files, revision ${result.catalogRevision})\n`
+        `(${result.directionCount} directions, ${result.themeCount} themes, ` +
+        `${result.fileCount} files, revision ${result.catalogRevision})\n`
       );
     }
   } catch (error) {

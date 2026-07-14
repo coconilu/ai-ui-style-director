@@ -1,20 +1,18 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import {
-  loadStyleProfiles,
-  loadStyleVisuals,
-  readCatalog,
-  repoRoot
-} from "./core.mjs";
+import { readCatalog, repoRoot } from "./core.mjs";
+import { loadCatalogV2 } from "./catalog-v2.mjs";
 import { startLoopbackServer } from "./loopback-server.mjs";
-import { expandVisualReferences } from "./preview.mjs";
+import { expandVisualReferences, renderDirectionPreviewSvg } from "./preview.mjs";
 
 const FACET_GROUPS = ["family", "pageTypes", "density", "tones", "componentKits"];
 const DENSITY_ORDER = ["low", "low-medium", "medium", "medium-high", "high"];
 export const CATALOG_PAGE_SIZE = 24;
 export const DEFAULT_HOSTED_CATALOG_URL = "https://coconilu.github.io/ai-ui-style-director/";
-const STYLE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CATALOG_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const THEME_COLOR_PATTERN = /^#[0-9a-f]{6}$/iu;
+const THEME_TOKEN_NAMES = ["canvas", "surface", "surfaceAlt", "text", "muted", "accent", "border"];
 const CATALOG_SHARED_CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'";
 // GitHub Pages can enforce the shared policy only through HTML meta. The local
 // development server adds frame-ancestors, which browsers ignore in meta CSP.
@@ -61,23 +59,27 @@ function normalizeSearchText(value) {
     .trim();
 }
 
-function assertSafeStyleId(styleId) {
-  if (!STYLE_ID_PATTERN.test(styleId)) {
-    throw new Error(`Invalid style id for preview route: ${styleId}`);
+function assertSafeCatalogId(id) {
+  if (!CATALOG_ID_PATTERN.test(id)) {
+    throw new Error(`Invalid catalog id for preview route: ${id}`);
   }
-  return styleId;
+  return id;
 }
 
-function previewPath(styleId) {
-  return join(repoRoot(), "catalog", "previews", `${assertSafeStyleId(styleId)}.svg`);
+function legacyPreviewPath(legacyStyleId) {
+  return join(repoRoot(), "catalog", "previews", `${assertSafeCatalogId(legacyStyleId)}.svg`);
 }
 
-function previewAssetPath(styleId) {
-  return `previews/${assertSafeStyleId(styleId)}.svg`;
+function legacyPreviewAssetPath(legacyStyleId) {
+  return `previews/${assertSafeCatalogId(legacyStyleId)}.svg`;
 }
 
-function previewUrl(styleId, catalogRevision) {
-  return `${previewAssetPath(styleId)}?v=${encodeURIComponent(catalogRevision)}`;
+function directionPreviewAssetPath(directionId, themeId) {
+  return `previews/v2/${assertSafeCatalogId(directionId)}/${assertSafeCatalogId(themeId)}.svg`;
+}
+
+function directionPreviewUrl(directionId, themeId, catalogRevision) {
+  return `${directionPreviewAssetPath(directionId, themeId)}?v=${encodeURIComponent(catalogRevision)}`;
 }
 
 function aliasesFor(values) {
@@ -112,71 +114,140 @@ function buildSearchIndex(entries) {
   return Object.fromEntries([...postings.entries()].sort(([left], [right]) => left.localeCompare(right)));
 }
 
-export function computeCatalogRevision({ profiles, visuals }) {
-  if (!Array.isArray(profiles) || !Array.isArray(visuals)) {
-    throw new Error("Catalog revision requires profile and visual arrays.");
+export function computeCatalogRevision({
+  directions,
+  themes,
+  links,
+  previewSpecs,
+  aliases,
+  profiles,
+  visuals
+} = {}) {
+  const isV2Catalog = [directions, themes, links, previewSpecs, aliases].every(Array.isArray);
+  const isLegacyCatalog = Array.isArray(profiles) && Array.isArray(visuals);
+  if (!isV2Catalog && !isLegacyCatalog) {
+    throw new Error(
+      "Catalog revision requires canonical direction/theme arrays or legacy profile/visual arrays."
+    );
   }
+  const value = isV2Catalog
+    ? { schemaVersion: 2, directions, themes, links, previewSpecs, aliases }
+    : { profiles, visuals };
   return createHash("sha256")
-    .update(JSON.stringify({ profiles, visuals }))
+    .update(JSON.stringify(value))
     .digest("hex")
     .slice(0, 16);
 }
 
 export function buildStyleCatalog() {
-  const profiles = loadStyleProfiles();
-  const visuals = loadStyleVisuals();
-  const catalogRevision = computeCatalogRevision({ profiles, visuals });
-  const visualMap = new Map(visuals.map((visual) => [visual.styleId, visual]));
+  const canonical = loadCatalogV2();
+  const { directions, themes, links, previewSpecs, aliases } = canonical;
+  const catalogRevision = computeCatalogRevision({ directions, themes, links, previewSpecs, aliases });
   const sourceIndex = readCatalog("generated/style-sources.json");
+  const aliasesByDirectionId = new Map();
+  for (const alias of aliases) {
+    const directionAliases = aliasesByDirectionId.get(alias.directionId) || [];
+    directionAliases.push(alias.legacyStyleId);
+    aliasesByDirectionId.set(alias.directionId, directionAliases);
+  }
 
-  const entries = profiles.map((profile) => {
-    const visual = visualMap.get(profile.id);
-    if (!visual) throw new Error(`Missing visual configuration for style: ${profile.id}`);
-
+  const entries = directions.map((direction) => {
+    const directionLinks = canonical.linksByDirectionId.get(direction.id) || [];
+    const defaultLink = directionLinks.find((link) => link.isDefault);
+    const previewSpec = canonical.previewSpecByDirectionId.get(direction.id);
+    const entryThemes = directionLinks.map((link) => {
+      const theme = canonical.themeById.get(link.themeId);
+      const sources = (theme.sources || []).map((source) => {
+        const expanded = expandVisualReferences([{
+          ...source,
+          label: [source.provider, source.slug || source.path].filter(Boolean).join(" · "),
+          role: "theme source"
+        }])[0];
+        return {
+          ...source,
+          label: expanded.label,
+          sourceUrl: source.sourceUrl || expanded.sourceUrl || expanded.pageUrl || null
+        };
+      });
+      return {
+        id: theme.id,
+        name: theme.name,
+        appearance: theme.appearance,
+        tones: [...theme.tones],
+        tokens: { ...theme.tokens },
+        palette: [...theme.palette],
+        sources,
+        isDefault: link.isDefault,
+        previewUrl: directionPreviewUrl(direction.id, theme.id, catalogRevision)
+      };
+    });
     const tags = {
-      family: [profile.family],
-      pageTypes: [...profile.pageTypes],
-      density: [profile.density],
-      tones: [...profile.tones],
-      componentKits: [...profile.componentKits]
+      family: [direction.family],
+      pageTypes: [...direction.pageTypes],
+      density: [direction.density],
+      tones: [...direction.tones],
+      componentKits: [...direction.componentKits]
     };
+    const legacyStyleIds = [...new Set([
+      ...(Array.isArray(direction.legacyStyleIds) ? direction.legacyStyleIds : []),
+      ...(aliasesByDirectionId.get(direction.id) || [])
+    ])].sort((left, right) => left.localeCompare(right));
     const searchableValues = [
-      profile.id,
-      profile.name,
-      profile.family,
-      ...profile.pageTypes,
-      ...profile.audiences,
-      ...profile.goals,
-      profile.density,
-      ...profile.tones,
-      ...profile.keywords,
-      ...profile.bestFor,
-      profile.firstViewport,
-      ...profile.layoutRules,
-      ...profile.componentKits
+      direction.id,
+      direction.name,
+      ...legacyStyleIds,
+      direction.family,
+      ...direction.pageTypes,
+      ...direction.audiences,
+      ...direction.goals,
+      direction.density,
+      ...direction.tones,
+      ...direction.keywords,
+      ...direction.bestFor,
+      direction.firstViewport,
+      ...direction.layoutRules,
+      ...direction.componentKits,
+      previewSpec.layoutArchetype,
+      previewSpec.contentPattern,
+      ...previewSpec.contentBlocks,
+      ...entryThemes.flatMap((theme) => [
+        theme.id,
+        theme.name,
+        theme.appearance,
+        ...theme.tones,
+        ...theme.palette,
+        ...theme.sources.flatMap((source) => [source.provider, source.slug, source.path, source.label])
+      ])
     ];
 
     return {
-      id: profile.id,
-      name: profile.name,
-      family: profile.family,
-      pageTypes: [...profile.pageTypes],
-      audiences: [...profile.audiences],
-      goals: [...profile.goals],
-      density: profile.density,
-      tones: [...profile.tones],
-      bestFor: [...profile.bestFor],
-      avoidFor: [...profile.avoidFor],
-      firstViewport: profile.firstViewport,
-      componentKits: [...profile.componentKits],
-      risks: [...profile.risks],
+      id: direction.id,
+      name: direction.name,
+      legacyStyleIds,
+      family: direction.family,
+      pageTypes: [...direction.pageTypes],
+      audiences: [...direction.audiences],
+      goals: [...direction.goals],
+      density: direction.density,
+      tones: [...direction.tones],
+      bestFor: [...direction.bestFor],
+      avoidFor: [...direction.avoidFor],
+      firstViewport: direction.firstViewport,
+      layoutRules: [...direction.layoutRules],
+      typography: direction.typography,
+      componentKits: [...direction.componentKits],
+      risks: [...direction.risks],
       tags,
       searchText: normalizeSearchText([
         ...searchableValues,
         ...aliasesFor(searchableValues)
       ].join(" ")),
-      previewUrl: previewUrl(profile.id, catalogRevision),
-      references: expandVisualReferences(visual.references)
+      previewSpec: structuredClone(previewSpec),
+      themeCount: entryThemes.length,
+      themes: entryThemes,
+      defaultThemeId: defaultLink.themeId,
+      previewUrl: directionPreviewUrl(direction.id, defaultLink.themeId, catalogRevision),
+      references: expandVisualReferences(direction.legacyReferences)
     };
   });
 
@@ -188,11 +259,16 @@ export function buildStyleCatalog() {
   const searchIndex = buildSearchIndex(entries);
 
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     catalogRevision,
+    directionCount: entries.length,
+    themeCount: themes.length,
+    linkCount: links.length,
     styleCount: entries.length,
     sourceCount: Array.isArray(sourceIndex.sources) ? sourceIndex.sources.length : 0,
     pageSize: CATALOG_PAGE_SIZE,
+    links: links.map((link) => ({ ...link })),
+    aliases: aliases.map((alias) => ({ ...alias })),
     facets,
     entryIndex: Object.fromEntries(entries.map((entry, index) => [entry.id, index])),
     searchIndex,
@@ -226,6 +302,9 @@ export function hostedCatalogInfo({
     catalogUrl: catalogUrl.href,
     hosted: true,
     catalogRevision: catalog.catalogRevision,
+    directionCount: catalog.directionCount,
+    themeCount: catalog.themeCount,
+    linkCount: catalog.linkCount,
     styleCount: catalog.styleCount,
     sourceCount: catalog.sourceCount
   };
@@ -306,12 +385,12 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
       <div class="hero-copy">
         <p class="eyebrow">WEB STYLE DIRECTOR · CATALOG</p>
         <h1 id="page-title">浏览 UI 风格目录</h1>
-        <p id="page-subtitle" class="subtitle">搜索 ${escapeHtml(catalog.styleCount)} 个已策展方向，并按页面类型、密度、调性和组件库过滤。</p>
+        <p id="page-subtitle" class="subtitle">搜索 ${escapeHtml(catalog.directionCount)} 个已策展方向和 ${escapeHtml(catalog.themeCount)} 个主题，并按页面类型、密度、调性和组件库过滤。</p>
       </div>
       <div class="catalog-stat" aria-label="Catalog coverage">
-        <strong>${escapeHtml(catalog.styleCount)}</strong>
-        <span id="curated-label">个已策展风格</span>
-        <small>${escapeHtml(catalog.sourceCount)} source records</small>
+        <strong>${escapeHtml(catalog.directionCount)}</strong>
+        <span id="curated-label">个已策展方向</span>
+        <small>${escapeHtml(catalog.themeCount)} themes · ${escapeHtml(catalog.sourceCount)} source records</small>
       </div>
     </header>
 
@@ -440,6 +519,24 @@ h1 { margin: 0; font-size: clamp(36px, 5vw, 64px); line-height: .98; letter-spac
 .card-title-row code { flex: none; color: var(--faint); font-size: 9px; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 13px 0 16px; }
 .style-tag { padding: 5px 7px; border: 1px solid var(--line-soft); border-radius: 7px; color: var(--muted); background: var(--tag); font-size: 9px; }
+.theme-selector { margin: 0 0 16px; padding: 0; border: 0; }
+.theme-selector legend { width: 100%; margin-bottom: 8px; color: var(--faint); font-size: 9px; font-weight: 780; letter-spacing: .06em; text-transform: uppercase; }
+.theme-options { display: flex; flex-wrap: wrap; gap: 7px; }
+.theme-option { position: relative; min-width: 74px; cursor: pointer; }
+.theme-radio { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.theme-choice { min-height: 42px; display: grid; gap: 5px; padding: 6px 7px; border: 1px solid var(--line-soft); border-radius: 8px; color: var(--muted); background: var(--tag); }
+.theme-radio:checked + .theme-choice { border-color: #7f9e7d; color: var(--tag-active-ink); background: var(--tag-active); box-shadow: 0 0 0 1px rgba(90,117,90,.12); }
+.theme-radio:focus-visible + .theme-choice { outline: 3px solid rgba(90,117,90,.2); outline-offset: 2px; }
+.theme-palette { height: 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: hidden; border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); border-radius: 5px; }
+.theme-swatch-canvas { background: var(--theme-canvas); }
+.theme-swatch-surface { background: var(--theme-surface); }
+.theme-swatch-accent { background: var(--theme-accent); }
+.theme-swatch-text { background: var(--theme-text); }
+.theme-option-name { max-width: 116px; overflow: hidden; font-size: 8px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.theme-status { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin: -7px 0 15px; color: var(--faint); font-size: 9px; }
+.theme-status strong { color: var(--muted); font-size: 10px; }
+.theme-source-list { display: inline-flex; flex-wrap: wrap; gap: 5px; }
+.theme-source-list a, .theme-source-list span { padding: 3px 5px; border: 1px solid var(--line-soft); border-radius: 5px; color: var(--muted); background: var(--tag); text-decoration: none; }
 .card-details { display: grid; gap: 11px; margin: 0; }
 .card-details div { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 11px; }
 .card-details dt { color: var(--faint); font-size: 9px; font-weight: 780; letter-spacing: .06em; text-transform: uppercase; }
@@ -502,19 +599,39 @@ noscript { display: block; padding: 20px; text-align: center; }
 }
 `;
 
+function buildThemePaletteCss(catalog) {
+  const themes = new Map();
+  for (const entry of catalog.entries || []) {
+    for (const theme of entry.themes || []) themes.set(theme.id, theme);
+  }
+  return [...themes.values()].map((theme) => {
+    const themeId = assertSafeCatalogId(theme.id);
+    for (const tokenName of THEME_TOKEN_NAMES) {
+      if (!THEME_COLOR_PATTERN.test(theme.tokens?.[tokenName])) {
+        throw new Error(`Theme ${themeId} has an invalid ${tokenName} color token.`);
+      }
+    }
+    return `.theme-palette-${themeId}{--theme-canvas:${theme.tokens.canvas};--theme-surface:${theme.tokens.surface};--theme-accent:${theme.tokens.accent};--theme-text:${theme.tokens.text}}`;
+  }).join("\n");
+}
+
 const CATALOG_APP_JS = String.raw`
 (function () {
   "use strict";
 
   var FACET_ORDER = ["family", "pageTypes", "density", "tones", "componentKits"];
   var DEFAULT_PAGE_SIZE = ${CATALOG_PAGE_SIZE};
+  var THEME_STORAGE_PREFIX = "web-style-director:themes:";
   var COPY = {
     zh: {
-      result: "个匹配风格",
+      result: "个匹配方向",
       bestFor: "适用场景",
       viewport: "首屏结构",
       components: "组件建议",
       references: "视觉参考",
+      themes: "可选主题",
+      selectedTheme: "当前主题",
+      themeSource: "主题来源",
       source: "来源",
       light: "浅色",
       dark: "深色",
@@ -527,11 +644,14 @@ const CATALOG_APP_JS = String.raw`
       loadError: "目录载入失败，请刷新页面或检查 Pages 部署状态。"
     },
     en: {
-      result: "matching styles",
+      result: "matching directions",
       bestFor: "Best for",
       viewport: "First viewport",
       components: "Component kits",
       references: "Visual references",
+      themes: "Available themes",
+      selectedTheme: "Selected theme",
+      themeSource: "Theme source",
       source: "Source",
       light: "Light",
       dark: "Dark",
@@ -546,7 +666,13 @@ const CATALOG_APP_JS = String.raw`
   };
   var locale = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
   var copy = COPY[locale];
-  var state = { catalog: null, query: "", filters: {}, visibleCount: DEFAULT_PAGE_SIZE };
+  var state = {
+    catalog: null,
+    query: "",
+    filters: {},
+    visibleCount: DEFAULT_PAGE_SIZE,
+    selectedThemeIds: {}
+  };
   var search = document.getElementById("catalog-search");
   var clearButton = document.getElementById("clear-filters");
   var facetGroups = document.getElementById("facet-groups");
@@ -586,6 +712,34 @@ const CATALOG_APP_JS = String.raw`
     return Object.keys(values).reduce(function (result, key) {
       return result.replaceAll("{" + key + "}", values[key]);
     }, template);
+  }
+
+  function themeStorageKey() {
+    return THEME_STORAGE_PREFIX + (state.catalog && state.catalog.catalogRevision || "unknown");
+  }
+
+  function readThemeSelections() {
+    try {
+      var stored = JSON.parse(sessionStorage.getItem(themeStorageKey()) || "{}");
+      return stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function writeThemeSelections() {
+    try {
+      sessionStorage.setItem(themeStorageKey(), JSON.stringify(state.selectedThemeIds));
+    } catch (_) {
+      // Theme switching still works in memory when storage is unavailable.
+    }
+  }
+
+  function selectedTheme(entry) {
+    var selectedId = state.selectedThemeIds[entry.id] || entry.defaultThemeId;
+    return entry.themes.find(function (theme) { return theme.id === selectedId; })
+      || entry.themes.find(function (theme) { return theme.id === entry.defaultThemeId; })
+      || entry.themes[0];
   }
 
   function renderRevisionWarning(catalog) {
@@ -676,11 +830,12 @@ const CATALOG_APP_JS = String.raw`
 
   function createCard(entry) {
     var article = element("article", "style-card");
-    article.dataset.styleId = entry.id;
+    article.dataset.directionId = entry.id;
     var preview = element("div", "preview");
     var image = document.createElement("img");
-    image.src = entry.previewUrl;
-    image.alt = entry.name + " style preview";
+    var activeTheme = selectedTheme(entry);
+    image.src = activeTheme.previewUrl;
+    image.alt = entry.name + " · " + activeTheme.name + " preview";
     image.loading = "lazy";
     preview.append(image, element("span", "preview-family", entry.family));
 
@@ -692,6 +847,67 @@ const CATALOG_APP_JS = String.raw`
     [entry.density].concat(entry.pageTypes.slice(0, 3), entry.tones.slice(0, 2)).forEach(function (value) {
       tags.append(element("span", "style-tag", value));
     });
+
+    var themeSelector = document.createElement("fieldset");
+    themeSelector.className = "theme-selector";
+    themeSelector.append(element("legend", "", copy.themes + " · " + entry.themeCount));
+    var themeOptions = element("div", "theme-options");
+    var themeStatus = element("div", "theme-status");
+    themeStatus.setAttribute("role", "status");
+    themeStatus.setAttribute("aria-live", "polite");
+
+    function renderThemeStatus(theme) {
+      themeStatus.replaceChildren();
+      themeStatus.append(
+        element("span", "", copy.selectedTheme + ":"),
+        element("strong", "", theme.name + (theme.appearance ? " · " + theme.appearance : "")),
+        element("span", "", copy.themeSource + ":")
+      );
+      var sourceList = element("span", "theme-source-list");
+      theme.sources.forEach(function (source) {
+        var label = source.label || source.provider || copy.source;
+        if (source.sourceUrl) {
+          var link = element("a", "", label);
+          link.href = source.sourceUrl;
+          link.target = "_blank";
+          link.rel = "noreferrer noopener";
+          sourceList.append(link);
+        } else {
+          sourceList.append(element("span", "", label));
+        }
+      });
+      themeStatus.append(sourceList);
+    }
+
+    entry.themes.forEach(function (theme) {
+      var label = element("label", "theme-option");
+      var radio = document.createElement("input");
+      radio.className = "theme-radio";
+      radio.type = "radio";
+      radio.name = "theme-" + entry.id;
+      radio.value = theme.id;
+      radio.checked = theme.id === activeTheme.id;
+      var choice = element("span", "theme-choice");
+      var palette = element("span", "theme-palette theme-palette-" + theme.id);
+      palette.setAttribute("aria-hidden", "true");
+      ["canvas", "surface", "accent", "text"].forEach(function (tokenName) {
+        palette.append(element("span", "theme-swatch-" + tokenName));
+      });
+      choice.append(palette, element("span", "theme-option-name", theme.name));
+      radio.addEventListener("change", function () {
+        if (!radio.checked) return;
+        activeTheme = theme;
+        state.selectedThemeIds[entry.id] = theme.id;
+        writeThemeSelections();
+        image.src = theme.previewUrl;
+        image.alt = entry.name + " · " + theme.name + " preview";
+        renderThemeStatus(theme);
+      });
+      label.append(radio, choice);
+      themeOptions.append(label);
+    });
+    themeSelector.append(themeOptions);
+    renderThemeStatus(activeTheme);
 
     var details = element("dl", "card-details");
     details.append(
@@ -720,7 +936,7 @@ const CATALOG_APP_JS = String.raw`
       referenceList.append(row);
     });
     references.append(referenceList);
-    body.append(titleRow, tags, details, references);
+    body.append(titleRow, tags, themeSelector, themeStatus, details, references);
     article.append(preview, body);
     return article;
   }
@@ -815,6 +1031,7 @@ const CATALOG_APP_JS = String.raw`
     })
     .then(function (catalog) {
       state.catalog = catalog;
+      state.selectedThemeIds = readThemeSelections();
       renderRevisionWarning(catalog);
       resetPagination();
       render();
@@ -836,19 +1053,45 @@ export function buildStyleCatalogStaticAssets({ catalog = buildStyleCatalog() } 
     ["index.html", { body: renderCatalogBrowserPage(catalog), contentType: "text/html; charset=utf-8" }],
     ["catalog.json", { body: `${JSON.stringify(catalog)}\n`, contentType: "application/json; charset=utf-8" }],
     ["app.js", { body: CATALOG_APP_JS, contentType: "text/javascript; charset=utf-8" }],
-    ["styles.css", { body: CATALOG_STYLES_CSS, contentType: "text/css; charset=utf-8" }],
+    ["styles.css", {
+      body: `${CATALOG_STYLES_CSS}\n${buildThemePaletteCss(catalog)}\n`,
+      contentType: "text/css; charset=utf-8"
+    }],
     ["favicon.svg", { body: CATALOG_FAVICON_SVG, contentType: "image/svg+xml; charset=utf-8" }],
     [".nojekyll", { body: "", contentType: "application/octet-stream" }]
   ]);
 
   for (const entry of catalog.entries) {
-    const assetPath = previewAssetPath(entry.id);
-    const expectedUrl = previewUrl(entry.id, catalog.catalogRevision);
-    if (entry.previewUrl !== expectedUrl) {
-      throw new Error(`Unexpected preview URL for style ${entry.id}: ${entry.previewUrl}`);
+    assertSafeCatalogId(entry.id);
+    const defaultTheme = entry.themes.find((theme) => theme.id === entry.defaultThemeId);
+    if (!defaultTheme) {
+      throw new Error(`Direction ${entry.id} is missing its default theme: ${entry.defaultThemeId}`);
     }
+    if (entry.previewUrl !== defaultTheme.previewUrl) {
+      throw new Error(`Unexpected default preview URL for direction ${entry.id}: ${entry.previewUrl}`);
+    }
+    for (const theme of entry.themes) {
+      const assetPath = directionPreviewAssetPath(entry.id, theme.id);
+      const expectedUrl = directionPreviewUrl(entry.id, theme.id, catalog.catalogRevision);
+      if (theme.previewUrl !== expectedUrl) {
+        throw new Error(`Unexpected preview URL for direction/theme ${entry.id} + ${theme.id}: ${theme.previewUrl}`);
+      }
+      assets.set(assetPath, {
+        body: renderDirectionPreviewSvg({
+          direction: entry,
+          theme,
+          previewSpec: entry.previewSpec
+        }),
+        contentType: "image/svg+xml; charset=utf-8",
+        headers: { "Cross-Origin-Resource-Policy": "same-origin" }
+      });
+    }
+  }
+
+  for (const alias of catalog.aliases || []) {
+    const assetPath = legacyPreviewAssetPath(alias.legacyStyleId);
     assets.set(assetPath, {
-      body: readFileSync(previewPath(entry.id), "utf8"),
+      body: readFileSync(legacyPreviewPath(alias.legacyStyleId), "utf8"),
       contentType: "image/svg+xml; charset=utf-8",
       headers: { "Cross-Origin-Resource-Policy": "same-origin" }
     });
@@ -896,6 +1139,9 @@ export async function startStyleCatalogServer({
     catalogUrl,
     basePath: normalizedBasePath,
     catalogRevision: catalog.catalogRevision,
+    directionCount: catalog.directionCount,
+    themeCount: catalog.themeCount,
+    linkCount: catalog.linkCount,
     styleCount: catalog.styleCount,
     sourceCount: catalog.sourceCount
   };

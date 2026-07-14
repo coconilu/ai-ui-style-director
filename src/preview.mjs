@@ -1,5 +1,16 @@
 import { expandProviderReference } from "./provider-adapters.mjs";
 
+const DIRECTION_THEME_TOKEN_NAMES = Object.freeze([
+  "canvas",
+  "surface",
+  "surfaceAlt",
+  "text",
+  "muted",
+  "accent",
+  "border"
+]);
+const DIRECTION_THEME_COLOR_PATTERN = /^#[0-9a-f]{6}$/iu;
+
 function escapeXml(value = "") {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -241,6 +252,425 @@ function renderLearning(theme) {
   ].flat().join("");
 }
 
+function readableBlockName(value, fallback) {
+  const normalized = String(value || fallback || "content")
+    .trim()
+    .replaceAll(/[-_]+/gu, " ");
+  return normalized.toUpperCase();
+}
+
+function blockForRole(previewSpec, role, index, fallback) {
+  const contentBlocks = Array.isArray(previewSpec?.contentBlocks)
+    ? previewSpec.contentBlocks.filter((block) => typeof block === "string" && block.trim())
+    : [];
+  const hierarchy = previewSpec?.hierarchy && typeof previewSpec.hierarchy === "object"
+    ? previewSpec.hierarchy
+    : {};
+  const roleValue = role === "primary"
+    ? hierarchy.primary
+    : Array.isArray(hierarchy[role])
+      ? hierarchy[role][index]
+      : undefined;
+
+  if (typeof roleValue === "string" && contentBlocks.includes(roleValue)) return roleValue;
+  const fallbackIndex = role === "primary" ? 0 : role === "secondary" ? index + 1 : contentBlocks.length - 1;
+  return contentBlocks[fallbackIndex] || fallback;
+}
+
+function blockGroup(block, content, extra = "") {
+  return `<g data-block="${escapeXml(block)}" ${extra}>${content}</g>`;
+}
+
+const SEMANTIC_LAYOUT_PROFILES = Object.freeze({
+  "app-shell": { family: "rail", modeOffset: 0 },
+  "catalog-grid": { family: "mosaic", modeOffset: 0 },
+  "centered-hero": { family: "hero", modeOffset: 0 },
+  "dashboard-grid": { family: "mosaic", modeOffset: 1 },
+  "developer-workbench": { family: "split", modeOffset: 0 },
+  "editorial-stack": { family: "rail", modeOffset: 1 },
+  "evidence-grid": { family: "split", modeOffset: 2 },
+  "finance-dashboard": { family: "mosaic", modeOffset: 2 },
+  "learning-workspace": { family: "rail", modeOffset: 2 },
+  "narrative-landing": { family: "hero", modeOffset: 1 },
+  "portfolio-grid": { family: "mosaic", modeOffset: 2 },
+  "research-workbench": { family: "split", modeOffset: 1 }
+});
+
+const SEMANTIC_SLOT_TEMPLATES = Object.freeze({
+  hero: Object.freeze([
+    {
+      primary: [[24, 24, 650, 180]],
+      secondary: [[24, 224, 310, 248], [354, 224, 320, 248]],
+      supporting: [[694, 24, 402, 448]]
+    },
+    {
+      primary: [[24, 24, 1072, 180]],
+      secondary: [[24, 224, 430, 248], [474, 224, 300, 248]],
+      supporting: [[794, 224, 302, 248]]
+    },
+    {
+      primary: [[24, 24, 450, 448]],
+      secondary: [[494, 24, 602, 190], [494, 234, 286, 238]],
+      supporting: [[800, 234, 296, 238]]
+    }
+  ]),
+  rail: Object.freeze([
+    {
+      primary: [[250, 24, 846, 250]],
+      secondary: [[24, 24, 206, 448], [250, 294, 520, 178]],
+      supporting: [[790, 294, 306, 178]]
+    },
+    {
+      primary: [[24, 24, 760, 260]],
+      secondary: [[804, 24, 292, 448], [24, 304, 360, 168]],
+      supporting: [[404, 304, 380, 168]]
+    },
+    {
+      primary: [[270, 24, 826, 280]],
+      secondary: [[24, 24, 226, 210], [24, 254, 226, 218]],
+      supporting: [[270, 324, 826, 148]]
+    }
+  ]),
+  mosaic: Object.freeze([
+    {
+      primary: [[24, 24, 640, 300]],
+      secondary: [[684, 24, 412, 140], [684, 184, 412, 140]],
+      supporting: [[24, 344, 1072, 128]]
+    },
+    {
+      primary: [[24, 172, 680, 300]],
+      secondary: [[24, 24, 330, 128], [374, 24, 330, 128]],
+      supporting: [[724, 24, 372, 448]]
+    },
+    {
+      primary: [[372, 24, 724, 300]],
+      secondary: [[24, 24, 328, 214], [24, 258, 328, 214]],
+      supporting: [[372, 344, 724, 128]]
+    }
+  ]),
+  split: Object.freeze([
+    {
+      primary: [[24, 24, 652, 448]],
+      secondary: [[696, 24, 400, 160], [696, 204, 400, 160]],
+      supporting: [[696, 384, 400, 88]]
+    },
+    {
+      primary: [[424, 24, 672, 448]],
+      secondary: [[24, 24, 380, 190], [24, 234, 380, 150]],
+      supporting: [[24, 404, 380, 68]]
+    },
+    {
+      primary: [[24, 24, 1072, 228]],
+      secondary: [[24, 272, 330, 200], [374, 272, 330, 200]],
+      supporting: [[724, 272, 372, 200]]
+    }
+  ])
+});
+
+const SEMANTIC_MODULE_RULES = Object.freeze([
+  ["action", /(?:action|signup|contact|purchase|continue|next-step|reminder|sales|primary-action|membership)/u],
+  ["navigation", /(?:navigation|tree|menu|path)/u],
+  ["metric", /(?:metric|progress|benchmark|risk|countdown|milestone|account-summary|result|coverage)/u],
+  ["code", /(?:code|technical|methodology|api|experiment)/u],
+  ["media", /(?:story|human|creator|selected-work|case-study|product-discovery|product-detail|lesson-content)/u],
+  ["evidence", /(?:evidence|governance|trust|proof|capability)/u],
+  ["data", /(?:data|grid|queue|status|workflow|financial|practice|research)/u]
+]);
+
+function stablePatternNumber(value) {
+  let hash = 2166136261;
+  for (const character of String(value || "default-pattern")) {
+    hash ^= character.codePointAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function semanticModuleKind(block, contentPattern) {
+  const blockText = String(block || "").toLowerCase();
+  const blockMatch = SEMANTIC_MODULE_RULES.find(([, pattern]) => pattern.test(blockText));
+  if (blockMatch) return blockMatch[0];
+  const patternText = String(contentPattern || "").toLowerCase();
+  return SEMANTIC_MODULE_RULES.find(([, pattern]) => pattern.test(patternText))?.[0] || "text";
+}
+
+function semanticHierarchy(previewSpec) {
+  const contentBlocks = Array.isArray(previewSpec?.contentBlocks)
+    ? previewSpec.contentBlocks.filter((block) => typeof block === "string" && block.trim())
+    : [];
+  const contentBlockSet = new Set(contentBlocks);
+  const hierarchy = previewSpec?.hierarchy && typeof previewSpec.hierarchy === "object"
+    ? previewSpec.hierarchy
+    : {};
+  const used = new Set();
+  const take = (value) => {
+    if (!contentBlockSet.has(value) || used.has(value)) return undefined;
+    used.add(value);
+    return value;
+  };
+
+  const primary = take(hierarchy.primary) || take(contentBlocks[0]);
+  const secondary = (Array.isArray(hierarchy.secondary) ? hierarchy.secondary : [])
+    .map(take)
+    .filter(Boolean);
+  const supporting = (Array.isArray(hierarchy.supporting) ? hierarchy.supporting : [])
+    .map(take)
+    .filter(Boolean);
+  for (const block of contentBlocks) {
+    const remaining = take(block);
+    if (remaining) supporting.push(remaining);
+  }
+  return { primary: primary ? [primary] : [], secondary, supporting };
+}
+
+function expandSemanticSlots(slots, count) {
+  if (count <= slots.length) return slots.slice(0, count);
+  if (slots.length === 0) return [];
+  const stableSlots = slots.slice(0, -1);
+  const [x, y, width, height] = slots.at(-1);
+  const splitCount = count - stableSlots.length;
+  const gap = 12;
+  const splitHorizontally = width >= height;
+  const splitSize = splitHorizontally
+    ? (width - gap * (splitCount - 1)) / splitCount
+    : (height - gap * (splitCount - 1)) / splitCount;
+  const splitSlots = Array.from({ length: splitCount }, (_, index) => (
+    splitHorizontally
+      ? [x + index * (splitSize + gap), y, splitSize, height]
+      : [x, y + index * (splitSize + gap), width, splitSize]
+  ));
+  return [...stableSlots, ...splitSlots];
+}
+
+function semanticModuleVisual(kind, width, height, theme, variant) {
+  const compact = height < 118 || width < 220;
+  const left = 18;
+  const top = compact ? 42 : 56;
+  const innerWidth = Math.max(44, width - 36);
+  const innerHeight = Math.max(24, height - top - 18);
+
+  if (kind === "action") {
+    const buttonWidth = Math.min(innerWidth, compact ? 150 : 210);
+    const buttonY = top + Math.max(0, (innerHeight - 44) / 2);
+    return [
+      rect(left, buttonY, buttonWidth, 44, theme.accent, theme.accent, 22, 'opacity="0.86"'),
+      label(left + buttonWidth / 2, buttonY + 28, "CONTINUE", theme.surface, 10, 750, "middle"),
+      line(left + buttonWidth + 14, buttonY + 22, Math.min(width - 18, left + buttonWidth + 52), buttonY + 22, theme.accent, 3, 'stroke-linecap="round"')
+    ].join("");
+  }
+  if (kind === "navigation") {
+    const rowCount = compact ? 2 : Math.min(5, Math.max(3, Math.floor(innerHeight / 34)));
+    return Array.from({ length: rowCount }, (_, index) => {
+      const rowY = top + index * Math.min(34, innerHeight / rowCount);
+      return `<circle cx="${left + 7}" cy="${rowY}" r="5" fill="${index === variant % rowCount ? theme.accent : theme.border}"/>${line(left + 24, rowY, left + Math.min(innerWidth, 120 + index * 18), rowY, theme.muted, 6, 'stroke-linecap="round" opacity="0.58"')}`;
+    }).join("");
+  }
+  if (kind === "metric") {
+    const centerX = width / 2;
+    const centerY = top + innerHeight / 2;
+    const radius = Math.max(16, Math.min(48, innerHeight / 2 - 4, innerWidth / 5));
+    return [
+      `<circle cx="${centerX}" cy="${centerY}" r="${radius}" fill="none" stroke="${theme.border}" stroke-width="${compact ? 8 : 13}"/>`,
+      `<path d="M${centerX} ${centerY - radius} A${radius} ${radius} 0 1 1 ${centerX - radius * 0.7} ${centerY + radius * 0.7}" fill="none" stroke="${theme.accent}" stroke-width="${compact ? 8 : 13}" stroke-linecap="round"/>`,
+      label(centerX, centerY + 5, `${64 + variant * 8}%`, theme.text, compact ? 12 : 18, 760, "middle")
+    ].join("");
+  }
+  if (kind === "code") {
+    const panelHeight = Math.max(28, innerHeight);
+    return [
+      rect(left, top, innerWidth, panelHeight, "#0B0D10", theme.border, 10),
+      ...Array.from({ length: compact ? 2 : 4 }, (_, index) => line(
+        left + 16,
+        top + 18 + index * Math.max(14, (panelHeight - 28) / (compact ? 2 : 4)),
+        left + Math.min(innerWidth - 12, 98 + index * 24 + variant * 12),
+        top + 18 + index * Math.max(14, (panelHeight - 28) / (compact ? 2 : 4)),
+        index === variant % (compact ? 2 : 4) ? theme.accent : theme.muted,
+        5,
+        'stroke-linecap="round" opacity="0.72"'
+      ))
+    ].flat().join("");
+  }
+  if (kind === "media") {
+    const imageWidth = compact ? innerWidth * 0.42 : innerWidth * 0.58;
+    return [
+      rect(left, top, imageWidth, innerHeight, theme.surfaceAlt, theme.border, 12),
+      `<circle cx="${left + imageWidth * (0.38 + variant * 0.08)}" cy="${top + innerHeight * 0.42}" r="${Math.max(12, Math.min(36, innerHeight * 0.22))}" fill="${theme.accent}" opacity="0.42"/>`,
+      `<path d="M${left} ${top + innerHeight * 0.82} Q${left + imageWidth * 0.45} ${top + innerHeight * 0.48} ${left + imageWidth} ${top + innerHeight * 0.76} L${left + imageWidth} ${top + innerHeight} L${left} ${top + innerHeight} Z" fill="${theme.accent}" opacity="0.56"/>`,
+      ...[0, 1, 2].map((index) => line(
+        left + imageWidth + 16,
+        top + 18 + index * 24,
+        Math.min(width - 16, left + imageWidth + 82 + index * 18),
+        top + 18 + index * 24,
+        index === 0 ? theme.text : theme.muted,
+        index === 0 ? 7 : 5,
+        'stroke-linecap="round" opacity="0.58"'
+      ))
+    ].flat().join("");
+  }
+  if (kind === "evidence") {
+    const rowCount = compact ? 2 : 3;
+    return Array.from({ length: rowCount }, (_, index) => {
+      const rowY = top + index * Math.max(28, innerHeight / rowCount);
+      return `${rect(left, rowY - 10, 20, 20, index === variant % rowCount ? theme.accent : theme.surfaceAlt, theme.border, 6)}${label(left + 10, rowY + 4, "✓", index === variant % rowCount ? theme.surface : theme.muted, 11, 750, "middle")}${line(left + 34, rowY, Math.min(width - 18, left + innerWidth * (0.7 + index * 0.08)), rowY, theme.muted, 6, 'stroke-linecap="round" opacity="0.52"')}`;
+    }).join("");
+  }
+  if (kind === "data") {
+    const barCount = compact ? 4 : 7;
+    const barGap = 8;
+    const barWidth = Math.max(8, (innerWidth - barGap * (barCount - 1)) / barCount);
+    return Array.from({ length: barCount }, (_, index) => {
+      const barHeight = Math.max(12, innerHeight * (0.28 + ((index + variant) % 5) * 0.13));
+      return rect(
+        left + index * (barWidth + barGap),
+        top + innerHeight - barHeight,
+        barWidth,
+        barHeight,
+        index === (variant + barCount - 1) % barCount ? theme.accent : theme.border,
+        "none",
+        5
+      );
+    }).join("");
+  }
+
+  const rowCount = compact ? 2 : Math.min(5, Math.max(3, Math.floor(innerHeight / 28)));
+  return Array.from({ length: rowCount }, (_, index) => line(
+    left,
+    top + index * Math.max(20, innerHeight / rowCount),
+    left + innerWidth * (0.58 + ((index + variant) % 3) * 0.13),
+    top + index * Math.max(20, innerHeight / rowCount),
+    index === 0 ? theme.text : theme.muted,
+    index === 0 ? 8 : 6,
+    'stroke-linecap="round" opacity="0.48"'
+  )).join("");
+}
+
+function renderSemanticModule({ block, role, box, theme, contentPattern, variant }) {
+  const [x, y, width, height] = box;
+  const moduleKind = semanticModuleKind(block, contentPattern);
+  const fill = role === "primary" ? theme.surfaceAlt : theme.surface;
+  const motif = variant % 3 === 0
+    ? `<circle cx="${width - 22}" cy="22" r="7" fill="${theme.accent}" opacity="0.72"/>`
+    : variant % 3 === 1
+      ? `<path d="M${width - 42} 28 L${width - 30} 12 L${width - 18} 28 Z" fill="${theme.accent}" opacity="0.72"/>`
+      : `${line(width - 48, 15, width - 18, 15, theme.accent, 4, 'stroke-linecap="round"')}${line(width - 40, 27, width - 18, 27, theme.accent, 4, 'stroke-linecap="round"')}`;
+
+  return `<g data-block="${escapeXml(block)}" data-role="${role}" data-module-kind="${moduleKind}" transform="translate(${x} ${y})">${rect(0, 0, width, height, fill, theme.border, role === "primary" ? 22 : 16)}${label(18, 28, readableBlockName(block), role === "primary" ? theme.text : theme.muted, 10, 720)}${motif}${semanticModuleVisual(moduleKind, width, height, theme, variant)}</g>`;
+}
+
+function renderSemanticDirection(theme, previewSpec) {
+  const profile = SEMANTIC_LAYOUT_PROFILES[previewSpec.layoutArchetype];
+  if (!profile) throw new Error(`Unknown semantic layout archetype: ${previewSpec.layoutArchetype}`);
+  const patternNumber = stablePatternNumber(previewSpec.contentPattern);
+  const patternVariant = patternNumber % 3;
+  const layoutMode = (patternVariant + profile.modeOffset) % 3;
+  const template = SEMANTIC_SLOT_TEMPLATES[profile.family][layoutMode];
+  const hierarchy = semanticHierarchy(previewSpec);
+  const assignments = [];
+
+  for (const role of ["primary", "secondary", "supporting"]) {
+    const blocks = hierarchy[role];
+    const slots = expandSemanticSlots(template[role], blocks.length);
+    blocks.forEach((block, index) => assignments.push({
+      block,
+      role,
+      box: slots[index],
+      variant: (patternVariant + index + (role === "primary" ? 0 : role === "secondary" ? 1 : 2)) % 3
+    }));
+  }
+
+  return `<g data-layout-signature="semantic-${escapeXml(previewSpec.layoutArchetype)}" data-pattern-variant="${patternVariant}">${assignments.map((assignment) => renderSemanticModule({
+    ...assignment,
+    theme,
+    contentPattern: previewSpec.contentPattern
+  })).join("")}</g>`;
+}
+
+function renderCommunityCountdown(theme, previewSpec) {
+  const primary = blockForRole(previewSpec, "primary", 0, "campaign-message");
+  const countdown = blockForRole(previewSpec, "secondary", 0, "countdown");
+  const proof = blockForRole(previewSpec, "secondary", 1, "community-proof");
+  const action = blockForRole(previewSpec, "supporting", 0, "reminder-action");
+
+  return [
+    `<g data-layout-signature="countdown-rail">`,
+    blockGroup(primary, [
+      pill(34, 30, 152, "LIVE CAMPAIGN", theme),
+      label(34, 98, "The next chapter", theme.text, 34, 780),
+      label(34, 138, "starts together.", theme.accent, 34, 780),
+      label(34, 178, readableBlockName(primary), theme.muted, 11, 700)
+    ].join(""), 'data-role="primary"'),
+    blockGroup(countdown, [
+      rect(34, 220, 682, 244, theme.surfaceAlt, theme.border, 20),
+      label(62, 258, readableBlockName(countdown), theme.muted, 11, 700),
+      label(375, 360, "08 : 24 : 16", theme.text, 54, 780, "middle"),
+      label(375, 398, "HOURS        MINUTES        SECONDS", theme.muted, 10, 650, "middle"),
+      line(62, 430, 688, 430, theme.accent, 6, 'stroke-linecap="round" opacity="0.72"')
+    ].join(""), 'data-role="secondary"'),
+    blockGroup(proof, [
+      rect(744, 30, 342, 286, theme.surface, theme.border, 20),
+      label(772, 70, readableBlockName(proof), theme.muted, 11, 700),
+      ...[0, 1, 2, 3, 4].map((i) => `<circle cx="${794 + i * 42}" cy="130" r="22" fill="${i === 4 ? theme.accent : theme.surfaceAlt}" stroke="${theme.border}"/>`),
+      label(772, 194, "12,480 people are waiting", theme.text, 18, 700),
+      label(772, 226, "Milestones unlock as the community grows.", theme.muted, 12, 450),
+      ...[0, 1, 2].map((i) => `${line(772, 264 + i * 22, 1018, 264 + i * 22, theme.border, 8, 'stroke-linecap="round"')}`)
+    ].flat().join(""), 'data-role="secondary"'),
+    blockGroup(action, [
+      rect(744, 340, 342, 124, theme.accent, theme.accent, 20, 'opacity="0.9"'),
+      label(772, 378, readableBlockName(action), theme.surface, 10, 750),
+      label(772, 418, "REMIND ME + SHARE", theme.surface, 17, 760),
+      `<path d="M1008 404 L1044 404 M1030 390 L1044 404 L1030 418" fill="none" stroke="${theme.surface}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`
+    ].join(""), 'data-role="supporting"'),
+    `</g>`
+  ].flat().join("");
+}
+
+function renderWellnessDailyRitual(theme, previewSpec) {
+  const primary = blockForRole(previewSpec, "primary", 0, "daily-ritual");
+  const humanMoment = blockForRole(previewSpec, "secondary", 0, "human-moment");
+  const progress = blockForRole(previewSpec, "secondary", 1, "progress");
+  const action = blockForRole(previewSpec, "supporting", 0, "membership-action");
+
+  return [
+    `<g data-layout-signature="ritual-journal">`,
+    blockGroup(primary, [
+      rect(28, 28, 1064, 126, theme.surfaceAlt, theme.border, 28),
+      `<circle cx="82" cy="90" r="28" fill="${theme.accent}" opacity="0.24"/>`,
+      `<path d="M70 90 C76 77 88 77 94 90 C88 103 76 103 70 90 Z" fill="${theme.accent}"/>`,
+      label(126, 72, "Your gentle daily ritual", theme.text, 24, 740),
+      label(126, 104, readableBlockName(primary), theme.muted, 11, 700),
+      label(1048, 88, "DAY 06", theme.accent, 13, 750, "end")
+    ].join(""), 'data-role="primary"'),
+    blockGroup(humanMoment, [
+      rect(28, 182, 500, 282, theme.surface, theme.border, 28),
+      `<circle cx="126" cy="274" r="54" fill="${theme.accent}" opacity="0.24"/>`,
+      `<circle cx="126" cy="256" r="17" fill="${theme.accent}" opacity="0.76"/><path d="M82 326 Q126 282 170 326" fill="${theme.accent}" opacity="0.58"/>`,
+      label(206, 230, readableBlockName(humanMoment), theme.muted, 11, 700),
+      label(206, 272, "A quiet pause", theme.text, 23, 740),
+      label(206, 306, "made space for what matters.", theme.text, 18, 600),
+      line(206, 352, 450, 352, theme.border, 7, 'stroke-linecap="round"'),
+      line(206, 382, 408, 382, theme.border, 7, 'stroke-linecap="round"')
+    ].join(""), 'data-role="secondary"'),
+    blockGroup(progress, [
+      rect(558, 182, 258, 282, theme.surfaceAlt, theme.border, 28),
+      label(586, 222, readableBlockName(progress), theme.muted, 11, 700),
+      `<circle cx="687" cy="324" r="68" fill="none" stroke="${theme.border}" stroke-width="16"/>`,
+      `<path d="M687 256 A68 68 0 1 1 625 352" fill="none" stroke="${theme.accent}" stroke-width="16" stroke-linecap="round"/>`,
+      label(687, 334, "72%", theme.text, 26, 760, "middle"),
+      label(687, 422, "THIS WEEK", theme.muted, 10, 700, "middle")
+    ].join(""), 'data-role="secondary"'),
+    blockGroup(action, [
+      rect(846, 182, 246, 282, theme.surface, theme.border, 28),
+      label(874, 222, readableBlockName(action), theme.muted, 10, 700),
+      label(874, 274, "Continue at", theme.text, 22, 730),
+      label(874, 306, "your own pace.", theme.text, 22, 730),
+      label(874, 350, "No streak pressure.", theme.muted, 12, 500),
+      rect(874, 386, 186, 48, theme.accent, theme.accent, 24, 'opacity="0.86"'),
+      label(967, 416, "CONTINUE", theme.surface, 11, 750, "middle")
+    ].join(""), 'data-role="supporting"'),
+    `</g>`
+  ].flat().join("");
+}
+
 const VARIANT_RENDERERS = {
   developer: renderDeveloper,
   "app-shell": renderAppShell,
@@ -255,6 +685,57 @@ const VARIANT_RENDERERS = {
   fintech: renderFintech,
   learning: renderLearning
 };
+
+const CONTENT_PATTERN_RENDERERS = {
+  "community-countdown-campaign": renderCommunityCountdown,
+  "wellness-daily-ritual": renderWellnessDailyRitual
+};
+
+const LAYOUT_ARCHETYPE_RENDERERS = Object.freeze(Object.fromEntries(
+  Object.keys(SEMANTIC_LAYOUT_PROFILES).map((layoutArchetype) => [
+    layoutArchetype,
+    renderSemanticDirection
+  ])
+));
+
+function resolveDirectionRenderer(previewSpec) {
+  const ownRenderer = (registry, key) => (
+    typeof key === "string" && Object.hasOwn(registry, key)
+      ? registry[key]
+      : undefined
+  );
+  return ownRenderer(CONTENT_PATTERN_RENDERERS, previewSpec.contentPattern)
+    || ownRenderer(LAYOUT_ARCHETYPE_RENDERERS, previewSpec.layoutArchetype)
+    || ownRenderer(VARIANT_RENDERERS, previewSpec.legacyVariant);
+}
+
+function validateDirectionThemeTokens(theme) {
+  const tokens = theme?.tokens;
+  if (!tokens || typeof tokens !== "object" || Array.isArray(tokens)) {
+    throw new Error(`Theme ${theme?.id || "(unknown)"} must provide tokens.`);
+  }
+
+  const tokenNames = Object.keys(tokens).sort();
+  const expectedTokenNames = [...DIRECTION_THEME_TOKEN_NAMES].sort();
+  if (
+    tokenNames.length !== expectedTokenNames.length
+    || tokenNames.some((name, index) => name !== expectedTokenNames[index])
+  ) {
+    throw new Error(
+      `Theme ${theme?.id || "(unknown)"} must provide exactly these tokens: `
+      + `${DIRECTION_THEME_TOKEN_NAMES.join(", ")}.`
+    );
+  }
+
+  for (const tokenName of DIRECTION_THEME_TOKEN_NAMES) {
+    if (!DIRECTION_THEME_COLOR_PATTERN.test(tokens[tokenName])) {
+      throw new Error(
+        `Theme ${theme?.id || "(unknown)"} has an invalid ${tokenName} color token.`
+      );
+    }
+  }
+  return tokens;
+}
 
 export function expandVisualReferences(references = [], options = {}) {
   return references.map((reference) => expandProviderReference(reference, options));
@@ -285,6 +766,50 @@ export function renderStylePreviewSvg({ style, visual, title, subtitle } = {}) {
   ${label(42, 124, displaySubtitle, theme.muted, 13, 450)}
   <g transform="translate(40 160)">
     ${rect(0, 0, 1120, 520, theme.surface, theme.border, 20)}
+    ${content}
+  </g>
+</svg>\n`;
+}
+
+export function renderDirectionPreviewSvg({ direction, theme, previewSpec, title, subtitle } = {}) {
+  if (!direction || !theme || !previewSpec) {
+    throw new Error("Direction, theme, and preview specification are required.");
+  }
+  if (previewSpec.directionId && previewSpec.directionId !== direction.id) {
+    throw new Error(
+      `Preview specification ${previewSpec.directionId} does not match direction ${direction.id}.`
+    );
+  }
+
+  const tokens = validateDirectionThemeTokens(theme);
+  const renderer = resolveDirectionRenderer(previewSpec);
+  if (!renderer) {
+    throw new Error(
+      `Unknown direction preview renderer: contentPattern=${previewSpec.contentPattern || "(none)"}, `
+      + `layoutArchetype=${previewSpec.layoutArchetype || "(none)"}, `
+      + `legacyVariant=${previewSpec.legacyVariant || "(none)"}.`
+    );
+  }
+
+  const displayTitle = truncate(title || direction.name, 54);
+  const displaySubtitle = truncate(subtitle || direction.firstViewport, 112);
+  const content = renderer(tokens, previewSpec, direction);
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title description" data-direction-id="${escapeXml(direction.id)}" data-theme-id="${escapeXml(theme.id)}" data-content-pattern="${escapeXml(previewSpec.contentPattern || "")}" data-layout-archetype="${escapeXml(previewSpec.layoutArchetype || "")}">
+  <title id="title">${escapeXml(displayTitle)} draft direction preview</title>
+  <desc id="description">${escapeXml(displaySubtitle)}</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${tokens.accent}"/></marker>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="${tokens.border}" stroke-width="1" opacity="0.18"/></pattern>
+  </defs>
+  <rect width="1200" height="720" fill="${tokens.canvas}"/>
+  <rect width="1200" height="720" fill="url(#grid)"/>
+  ${label(42, 45, "AI UI STYLE DIRECTION", tokens.muted, 11, 750)}
+  ${label(1158, 45, "DRAFT / WIREFRAME", tokens.accent, 11, 750, "end")}
+  ${label(42, 92, displayTitle, tokens.text, 30, 780)}
+  ${label(42, 124, displaySubtitle, tokens.muted, 13, 450)}
+  <g transform="translate(40 160)">
+    ${rect(0, 0, 1120, 520, tokens.surface, tokens.border, 20)}
     ${content}
   </g>
 </svg>\n`;
