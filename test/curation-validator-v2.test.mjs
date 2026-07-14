@@ -167,7 +167,10 @@ function createMixedFixture({ mutateRecord } = {}) {
     candidate: {
       decision: "promote",
       rationale: "Near-identical Theme for deterministic duplicate validation.",
-      profile: { family: selectedDirection.family },
+      profile: {
+        family: selectedDirection.family,
+        experienceType: selectedDirection.experienceType
+      },
       visual: { theme: candidateTheme }
     },
     checks: {
@@ -602,6 +605,7 @@ test("a created Direction must use the deterministic ID derived from its candida
       }));
       record.candidate.profile = {
         family: "consumer",
+        experienceType: "consumer-app",
         pageTypes: ["landing"],
         audiences: ["consumers"],
         goals: ["conversion"],
@@ -660,6 +664,28 @@ test("v2 source snapshots reject unsafe or ill-typed immutable provenance fields
     const fixture = createMixedFixture({ mutateRecord });
     assert.throws(() => validateCurationArtifacts(fixture.options), pattern);
   }
+});
+
+test("prompt-v2 records require a governed candidate experienceType", () => {
+  const fixture = createMixedFixture({
+    mutateRecord(record) {
+      record.candidate.profile.experienceType = "desktop-game";
+    }
+  });
+  assert.throws(
+    () => validateCurationArtifacts(fixture.options),
+    /candidate\.profile\.experienceType must be a governed experience type/u
+  );
+});
+
+test("historical prompt-v1 records remain valid without experienceType", () => {
+  const fixture = createMixedFixture({
+    mutateRecord(record) {
+      record.agent.promptVersion = "direction-theme-curation-v1";
+      delete record.candidate.profile.experienceType;
+    }
+  });
+  assert.doesNotThrow(() => validateCurationArtifacts(fixture.options));
 });
 
 test("real v2 skipped and invalid records retain an explicit unexecuted Theme-check state", () => {

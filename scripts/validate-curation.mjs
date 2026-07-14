@@ -15,6 +15,7 @@ import {
   deterministicDirectionId,
   themeTokenDistance
 } from "../src/curation-catalog-v2.mjs";
+import { isExperienceType } from "../src/experience-types.mjs";
 import {
   isSafeRelativePath,
   resolveProviderAdapter,
@@ -29,6 +30,11 @@ const SAFE_TOKEN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/u;
 const THEME_FIELDS = Object.freeze(["canvas", "surface", "surfaceAlt", "text", "muted", "accent", "border"]);
 const SENSITIVE_KEYS = /^(api[-_]?key|authorization|private[-_]?key|secret|token)$/iu;
 const RECORD_SCHEMA_VERSIONS = new Set([1, CURATION_RECORD_SCHEMA_VERSION]);
+const AUDITED_PROMPT_VERSIONS = new Set([
+  "style-curation-v4",
+  "direction-theme-curation-v1",
+  "direction-theme-curation-v2"
+]);
 const V2_ACTION_DECISIONS = new Map([
   ["created-direction-and-theme", "promoted"],
   ["created-direction-with-existing-theme", "promoted"],
@@ -260,6 +266,15 @@ function validateRecordV2({ file, record, errors, canonical }) {
   if (["created-direction-and-theme", "created-direction-with-existing-theme", "added-theme-to-direction", "linked-existing-theme", "duplicate-theme"].includes(result?.action)) {
     expect(typeof result.directionId === "string" && typeof result.themeId === "string", "resolved result requires Direction and Theme IDs");
   }
+  if (
+    record?.agent?.promptVersion === "direction-theme-curation-v2"
+    && ["created-direction-and-theme", "created-direction-with-existing-theme", "added-theme-to-direction", "linked-existing-theme", "duplicate-theme"].includes(result?.action)
+  ) {
+    expect(
+      isExperienceType(record?.candidate?.profile?.experienceType),
+      "direction-theme-curation-v2 candidate.profile.experienceType must be a governed experience type"
+    );
+  }
   if (result?.directionId !== null && canonical) {
     expect(canonical.directionById.has(result.directionId), `result references missing Direction ${result.directionId}`);
     expect(canonical.previewSpecByDirectionId.has(result.directionId), `result Direction ${result.directionId} has no PreviewSpec`);
@@ -299,6 +314,12 @@ function validateRecordV2({ file, record, errors, canonical }) {
       );
     } catch (error) {
       expect(false, `${result.action} candidate.profile cannot derive a deterministic Direction ID: ${error.message}`);
+    }
+    if (record?.agent?.promptVersion === "direction-theme-curation-v2" && canonical) {
+      expect(
+        canonical.directionById.get(result.directionId)?.experienceType === record?.candidate?.profile?.experienceType,
+        `${result.action} canonical Direction must retain candidate.profile.experienceType`
+      );
     }
   }
   if (["added-theme-to-direction", "linked-existing-theme", "duplicate-theme"].includes(result?.action)) {
@@ -464,7 +485,7 @@ export function validateCurationArtifacts({
     if (record?.agent?.responseId !== null && typeof record?.agent?.responseId !== "string") {
       errors.push(`${file}: agent.responseId must be null or a string`);
     }
-    if (["style-curation-v4", "direction-theme-curation-v1"].includes(record?.agent?.promptVersion)) {
+    if (AUDITED_PROMPT_VERSIONS.has(record?.agent?.promptVersion)) {
       const attempts = record.agent.attempts;
       if (
         !Number.isInteger(record.agent.attemptCount) ||

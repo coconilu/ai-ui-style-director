@@ -13,14 +13,29 @@ import {
   resolveLegacyStyleId,
   validateCatalogV2
 } from "../src/catalog-v2.mjs";
+import {
+  EXPERIENCE_TYPE_DEFINITIONS,
+  EXPERIENCE_TYPE_IDS,
+  EXPERIENCE_TYPE_ORDER,
+  countExperienceTypes,
+  isExperienceType
+} from "../src/experience-types.mjs";
 
 function documents() {
   return {
     directions: {
       schemaVersion: 2,
       directions: [
-        { id: "direction-dashboard", name: "Operational dashboard" },
-        { id: "direction-story", name: "Narrative story" }
+        {
+          id: "direction-dashboard",
+          name: "Operational dashboard",
+          experienceType: "admin-console"
+        },
+        {
+          id: "direction-story",
+          name: "Narrative story",
+          experienceType: "marketing-site"
+        }
       ]
     },
     themes: {
@@ -73,6 +88,58 @@ function writeDocuments(dir, value = documents()) {
     writeFileSync(join(dir, fileName), `${JSON.stringify(value[key], null, 2)}\n`, "utf8");
   }
 }
+
+test("experience type taxonomy exposes one frozen stable ordering and bilingual aliases", () => {
+  assert.deepEqual(EXPERIENCE_TYPE_IDS, [
+    "consumer-app",
+    "marketing-site",
+    "commerce",
+    "content-docs",
+    "business-app",
+    "admin-console"
+  ]);
+  assert.deepEqual(EXPERIENCE_TYPE_ORDER, {
+    "consumer-app": 0,
+    "marketing-site": 1,
+    commerce: 2,
+    "content-docs": 3,
+    "business-app": 4,
+    "admin-console": 5
+  });
+  assert.ok(Object.isFrozen(EXPERIENCE_TYPE_DEFINITIONS));
+  assert.ok(Object.isFrozen(EXPERIENCE_TYPE_IDS));
+  assert.ok(Object.isFrozen(EXPERIENCE_TYPE_ORDER));
+  assert.equal(EXPERIENCE_TYPE_DEFINITIONS.length, EXPERIENCE_TYPE_IDS.length);
+  for (const [index, definition] of EXPERIENCE_TYPE_DEFINITIONS.entries()) {
+    assert.deepEqual(Object.keys(definition), ["id", "label", "labelZh", "aliases"]);
+    assert.equal(definition.id, EXPERIENCE_TYPE_IDS[index]);
+    assert.ok(Object.isFrozen(definition));
+    assert.ok(Object.isFrozen(definition.aliases));
+    assert.ok(definition.label.length > 0);
+    assert.ok(definition.labelZh.length > 0);
+    assert.ok(definition.aliases.some((alias) => /^[\x00-\x7F]+$/u.test(alias)));
+    assert.ok(definition.aliases.some((alias) => /[^\x00-\x7F]/u.test(alias)));
+    assert.equal(new Set(definition.aliases).size, definition.aliases.length);
+    assert.equal(isExperienceType(definition.id), true);
+  }
+  assert.equal(isExperienceType("developer-tool"), false);
+  assert.deepEqual(
+    countExperienceTypes([
+      { experienceType: "marketing-site" },
+      "consumer-app",
+      { experienceType: "marketing-site" },
+      { experienceType: "not-controlled" }
+    ]),
+    {
+      "consumer-app": 1,
+      "marketing-site": 2,
+      commerce: 0,
+      "content-docs": 0,
+      "business-app": 0,
+      "admin-console": 0
+    }
+  );
+});
 
 test("validates and resolves a legacy style id without changing the source entities", () => {
   const raw = documents();
@@ -131,7 +198,11 @@ test("reports invalid JSON with the source file name", () => {
 
 test("rejects duplicate ids, dangling references, and incomplete defaults", () => {
   const raw = documents();
-  raw.directions.directions.push({ id: "direction-dashboard", name: "Duplicate" });
+  raw.directions.directions.push({
+    id: "direction-dashboard",
+    name: "Duplicate",
+    experienceType: "admin-console"
+  });
   raw.directionThemes.links[0].isDefault = false;
   raw.directionThemes.links.push({
     directionId: "direction-missing",
@@ -149,6 +220,22 @@ test("rejects duplicate ids, dangling references, and incomplete defaults", () =
       assert.match(error.message, /unknown theme: theme-missing/u);
       return true;
     }
+  );
+});
+
+test("requires every Direction to declare a controlled experienceType", () => {
+  const missing = documents();
+  delete missing.directions.directions[0].experienceType;
+  assert.throws(
+    () => validateCatalogV2(missing),
+    /directions\[0\]\.experienceType must be one of: consumer-app, marketing-site, commerce, content-docs, business-app, admin-console/u
+  );
+
+  const invalid = documents();
+  invalid.directions.directions[1].experienceType = "developer-tool";
+  assert.throws(
+    () => validateCatalogV2(invalid),
+    /directions\[1\]\.experienceType must be one of/u
   );
 });
 

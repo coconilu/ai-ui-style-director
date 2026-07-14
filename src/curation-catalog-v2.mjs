@@ -43,6 +43,9 @@ const STRUCTURE_FIELDS = Object.freeze([
   ["composition", 6],
   ["emphasis", 4],
   ["family", 3],
+  // Experience type influences ranking and requires another structural signal
+  // before it can outweigh the primary layout/emphasis identity by itself.
+  ["experienceType", 2],
   ["pageTypes", 1.5],
   ["goals", 1.5],
   ["audiences", 1],
@@ -75,6 +78,9 @@ function fieldTokens(profile, field) {
   const raw = field === "composition"
     ? (profile?.composition ?? profile?.layoutArchetype)
     : profile?.[field];
+  if (field === "experienceType") {
+    return new Set(raw ? [String(raw).toLowerCase()] : []);
+  }
   const values = Array.isArray(raw) ? raw : [raw];
   return new Set(values.flatMap(normalizedWords));
 }
@@ -150,6 +156,9 @@ export function deterministicThemeId(tokens) {
 }
 
 export function deterministicDirectionId(profile) {
+  // Deliberately exclude experienceType. IDs created under the v1 prompt must
+  // remain reproducible after the taxonomy is introduced; matching still uses
+  // experienceType as a weighted structural signal.
   const signature = JSON.stringify({
     family: profile.family,
     pageTypes: [...profile.pageTypes].sort(),
@@ -249,6 +258,7 @@ function canonicalDirection(candidate, directionId) {
     name: `${titleToken(profile.family)} ${titleToken(profile.composition)} ${titleToken(profile.emphasis)}`,
     legacyStyleIds: [],
     family: profile.family,
+    experienceType: profile.experienceType,
     pageTypes: profile.pageTypes,
     audiences: profile.audiences,
     goals: profile.goals,

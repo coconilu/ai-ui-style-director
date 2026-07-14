@@ -87,7 +87,7 @@ test("migration check treats the legacy projection as a strict canonical subset"
   }
 
   const canonicalDirections = canonicalByKey.directions;
-  canonicalDirections.directions[0].experienceType = "developer-tool";
+  canonicalDirections.directions[0].experienceType = "content-docs";
   assert.doesNotThrow(() => assertLegacyProjectionSubset(
     "directions",
     projection.directions,
@@ -147,13 +147,13 @@ test("migration write preserves canonical growth while restoring the legacy subs
   assert.doesNotThrow(() => assertLegacyProjectionSubset("themes", projection.themes, mergedThemes));
 
   const enrichedDirections = structuredClone(projection.directions);
-  enrichedDirections.directions[0].experienceType = "developer-tool";
+  enrichedDirections.directions[0].experienceType = "content-docs";
   const mergedDirections = mergeLegacyProjectionIntoCanonical(
     "directions",
     projection.directions,
     enrichedDirections
   );
-  assert.equal(mergedDirections.directions[0].experienceType, "developer-tool");
+  assert.equal(mergedDirections.directions[0].experienceType, "content-docs");
   assert.doesNotThrow(() => assertLegacyProjectionSubset("directions", projection.directions, mergedDirections));
 
   const aliasesWithExtra = structuredClone(projection.aliases);

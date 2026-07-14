@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  deterministicDirectionId,
   deterministicThemeId,
   directionStructureSimilarity,
   planCatalogV2Promotion
@@ -12,6 +13,7 @@ const REVISION = "b".repeat(40);
 function profile(overrides = {}) {
   return {
     family: "developer",
+    experienceType: "admin-console",
     pageTypes: ["dashboard", "internal-tool"],
     audiences: ["developers", "operators"],
     goals: ["daily-operation", "monitoring"],
@@ -59,6 +61,7 @@ function direction(id = "developer-operations-shell") {
     id,
     name: "Developer Operations Shell",
     family: "developer",
+    experienceType: "admin-console",
     pageTypes: ["dashboard", "internal-tool"],
     audiences: ["developers", "operators"],
     goals: ["daily-operation", "monitoring"],
@@ -118,15 +121,31 @@ test("Direction structural similarity ignores palette/tones and gives layout plu
     composition: "centered-hero",
     emphasis: "story"
   };
+  const differentExperienceType = {
+    ...sameStructure,
+    experienceType: "consumer-app"
+  };
   assert.equal(directionStructureSimilarity(left, sameStructure), 1);
+  assert.equal(directionStructureSimilarity(left, differentExperienceType) < 1, true);
+  assert.equal(directionStructureSimilarity(left, differentExperienceType) >= 0.85, true);
   assert.equal(directionStructureSimilarity(left, differentLayout) < 0.85, true);
+});
+
+test("Direction IDs exclude experienceType to preserve prompt-v1 temporal compatibility", () => {
+  assert.equal(
+    deterministicDirectionId(profile({ experienceType: "admin-console" })),
+    deterministicDirectionId(profile({ experienceType: "consumer-app" }))
+  );
 });
 
 test("Theme-only source adds a new Theme to an allowed existing Direction", () => {
   const base = context();
   const plan = planCatalogV2Promotion({
     ...base,
-    candidate: candidate({ theme: tokens({ accent: "#F97316" }) }),
+    candidate: candidate({
+      candidateProfile: profile({ experienceType: "consumer-app" }),
+      theme: tokens({ accent: "#F97316" })
+    }),
     capabilities: { createDirection: false, createTheme: true },
     allowedDirectionIds: ["developer-operations-shell"]
   });
@@ -138,6 +157,7 @@ test("Theme-only source adds a new Theme to an allowed existing Direction", () =
   assert.equal(plan.additions.directions.length, 0);
   assert.equal(plan.additions.themes.length, 1);
   assert.equal(plan.additions.links.length, 1);
+  assert.equal(base.catalog.directions[0].experienceType, "admin-console");
 });
 
 test("Theme duplicate detection is scoped to the selected Direction", () => {
@@ -202,6 +222,7 @@ test("generic source creates deterministic canonical Direction, Theme, link, and
     { directions: 1, themes: 1, links: 1, previewSpecs: 1 }
   );
   assert.deepEqual(first.additions.directions[0].legacyReferences, []);
+  assert.equal(first.additions.directions[0].experienceType, "admin-console");
   assert.deepEqual(first.additions.themes[0].legacyReferences, []);
   assert.equal("legacyVariant" in first.additions.previewSpecs[0], false);
   assert.deepEqual(first.additions.themes[0].sources[0], {
@@ -241,6 +262,24 @@ test("generic repeat Direction adds only a Theme; historical state keeps its Dir
   });
   assert.equal(changed.result.directionId, "developer-operations-shell");
   assert.equal(changed.checks.direction.basis, "state-alias");
+});
+
+test("matching an existing Direction never overwrites its experienceType", () => {
+  const existing = direction();
+  const base = context({ directions: [existing] });
+  const plan = planCatalogV2Promotion({
+    ...base,
+    candidate: candidate({
+      candidateProfile: profile({ experienceType: "consumer-app" }),
+      theme: tokens({ accent: "#F97316" })
+    }),
+    capabilities: { createDirection: true, createTheme: true },
+    allowedDirectionIds: [existing.id]
+  });
+  assert.equal(plan.result.action, "added-theme-to-direction");
+  assert.equal(plan.result.directionId, existing.id);
+  assert.deepEqual(plan.additions.directions, []);
+  assert.equal(existing.experienceType, "admin-console");
 });
 
 test("new Direction reusing a global Theme has an explicit auditable action", () => {

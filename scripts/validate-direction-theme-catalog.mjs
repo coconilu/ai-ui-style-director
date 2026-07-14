@@ -7,6 +7,11 @@ import {
   CATALOG_V2_SCHEMA_VERSION,
   validateCatalogV2
 } from "../src/catalog-v2.mjs";
+import {
+  EXPERIENCE_TYPE_IDS,
+  countExperienceTypes,
+  isExperienceType
+} from "../src/experience-types.mjs";
 import { resolveLegacyDirectionId } from "./migrate-direction-theme-catalog.mjs";
 import {
   isSafeRelativePath,
@@ -339,6 +344,10 @@ export function validateDirectionThemeCatalog({
     expect(isTaxonomyToken(direction.id), `${label}: id must be a lowercase kebab-case token`);
     expect(isTaxonomyToken(direction.family), `${label}: family must be a lowercase kebab-case token`);
     expect(isTaxonomyToken(direction.density), `${label}: density must be a lowercase kebab-case token`);
+    expect(
+      isExperienceType(direction.experienceType),
+      `${label}: experienceType must be one of ${EXPERIENCE_TYPE_IDS.join(", ")}`
+    );
     for (const field of DIRECTION_ARRAY_FIELDS) {
       const values = direction[field];
       const isLegacyField = field === "legacyStyleIds" || field === "legacyReferences";
@@ -642,6 +651,8 @@ export function validateDirectionThemeCatalog({
     throw new Error(`Direction/Theme catalog validation failed:\n- ${errors.join("\n- ")}`);
   }
 
+  const experienceTypeCounts = countExperienceTypes(catalog.directions);
+
   return {
     schemaVersion: CATALOG_V2_SCHEMA_VERSION,
     directionCount: catalog.directions.length,
@@ -653,7 +664,8 @@ export function validateDirectionThemeCatalog({
     pinnedSourceCount: catalog.themes.flatMap((theme) => theme.sources || [])
       .filter((source) => source.kind === "source-pinned").length,
     legacySourceCount: catalog.themes.flatMap((theme) => theme.sources || [])
-      .filter((source) => source.kind === "legacy-curated").length
+      .filter((source) => source.kind === "legacy-curated").length,
+    experienceTypeCounts
   };
 }
 
@@ -665,7 +677,10 @@ function main() {
       + `${result.directionCount} directions, ${result.themeCount} themes, `
       + `${result.linkCount} links, ${result.previewSpecCount} preview specs, `
       + `${result.aliasCount}/${result.legacyStyleCount} legacy aliases; `
-      + `${result.pinnedSourceCount} pinned and ${result.legacySourceCount} legacy provenance entries.\n`
+      + `${result.pinnedSourceCount} pinned and ${result.legacySourceCount} legacy provenance entries; `
+      + `experience coverage: ${EXPERIENCE_TYPE_IDS.map(
+        (id) => `${id}=${result.experienceTypeCounts[id]}`
+      ).join(", ")}.\n`
     );
   } catch (error) {
     process.stderr.write(`${error.message}\n`);

@@ -29,6 +29,7 @@ import {
   weightedProfileSimilarity
 } from "../src/curation.mjs";
 import { hashStyleSourceContent, loadStyleSourceDocument } from "../src/provider-adapters.mjs";
+import { EXPERIENCE_TYPE_IDS } from "../src/experience-types.mjs";
 
 function writeJson(path, value) {
   mkdirSync(dirname(path), { recursive: true });
@@ -48,6 +49,7 @@ function baseProfile(overrides = {}) {
     sourceProvider: "example-styles",
     sourceSlug: "dense",
     family: "developer",
+    experienceType: "admin-console",
     pageTypes: ["dashboard", "internal-tool", "landing", "docs"],
     audiences: ["developers", "operators", "technical-founders", "design-engineers"],
     goals: ["daily-operation", "monitoring", "explain-product", "docs-adoption"],
@@ -69,6 +71,7 @@ function baseProfile(overrides = {}) {
 function candidateProfile(overrides = {}) {
   return {
     family: "developer",
+    experienceType: "marketing-site",
     pageTypes: ["landing", "docs"],
     audiences: ["technical-founders", "design-engineers"],
     goals: ["explain-product", "docs-adoption"],
@@ -231,6 +234,9 @@ function fixture({
   writeJson(join(catalogDir, "style-profiles.json"), profiles);
   writeJson(join(catalogDir, "style-visuals.json"), visuals);
   const projection = buildCatalogV2Projection(profiles, visuals);
+  for (const direction of projection.directions.directions) {
+    direction.experienceType = profiles.find((profile) => direction.legacyStyleIds.includes(profile.id))?.experienceType;
+  }
   writeJson(join(catalogDir, "style-directions.json"), projection.directions);
   writeJson(join(catalogDir, "style-themes.json"), projection.themes);
   writeJson(join(catalogDir, "style-direction-themes.json"), projection.directionThemes);
@@ -569,10 +575,15 @@ test("agent candidate is provenance-checked, promoted, previewed, and recorded w
   assert.equal(request.thinking, "disabled");
   assert.match(request.messages[0].content, /untrusted data/u);
   assert.match(request.messages[1].content, /Ignore all previous instructions/u);
+  const userMessage = JSON.parse(request.messages[1].content);
+  assert.deepEqual(userMessage.governance.allowedExperienceTypes, EXPERIENCE_TYPE_IDS);
+  assert.equal(userMessage.governance.contract.profile.experienceType, "allowed experience type");
+  assert.equal(userMessage.nearestExistingDirections[0].experienceType, "admin-console");
   const promotedStyleId = result.records[0].styleId;
   assert.match(promotedStyleId, /^developer-split-hero-product-proof-[0-9a-f]{12}$/u);
   const directions = JSON.parse(readFileSync(join(data.catalogDir, "style-directions.json"), "utf8")).directions;
   const promoted = directions.find((direction) => direction.id === promotedStyleId);
+  assert.equal(promoted.experienceType, "marketing-site");
   assert.equal(promoted.legacyStyleIds.length, 0);
   assert.equal(promoted.legacyReferences.length, 0);
   const previewSpec = JSON.parse(readFileSync(join(data.catalogDir, "style-preview-specs.json"), "utf8"))
@@ -613,7 +624,7 @@ test("deterministic validation errors receive one audited semantic repair attemp
   const data = fixture();
   const references = [data.sourcePaths[3], data.sourcePaths[0], data.sourcePaths[1]];
   const invalid = candidateFor(references, {
-    profile: candidateProfile({ keywords: ["quiet", "not-in-the-trusted-vocabulary"] })
+    profile: candidateProfile({ experienceType: "desktop-game" })
   });
   const repaired = candidateFor(references);
   const requests = [];
@@ -628,7 +639,7 @@ test("deterministic validation errors receive one audited semantic repair attemp
   assert.equal(requests[1].messages.length, 4);
   assert.deepEqual(JSON.parse(requests[1].messages[2].content), invalid);
   const repair = JSON.parse(requests[1].messages[3].content);
-  assert.match(repair.validationErrors.join("\n"), /trusted catalog vocabulary/u);
+  assert.match(repair.validationErrors.join("\n"), /experience-type taxonomy/u);
   assert.equal(result.promoted, 1);
   assert.equal(result.invalid, 0);
   assert.deepEqual(result.usage, { promptTokens: 200, completionTokens: 100, totalTokens: 300 });
@@ -639,7 +650,7 @@ test("deterministic validation errors receive one audited semantic repair attemp
   ));
   assert.equal(record.agent.attemptCount, 2);
   assert.deepEqual(record.agent.attempts.map((attempt) => attempt.phase), ["initial", "repair"]);
-  assert.match(record.agent.attempts[0].validationErrors.join("\n"), /trusted catalog vocabulary/u);
+  assert.match(record.agent.attempts[0].validationErrors.join("\n"), /experience-type taxonomy/u);
   assert.deepEqual(record.agent.attempts[1].validationErrors, []);
   assert.deepEqual(record.candidate, repaired);
 });
@@ -694,6 +705,7 @@ test("theme-css sources are normalized before the agent call and enforce adapter
   const existing = baseProfile();
   candidate.profile = candidateProfile({
     family: existing.family,
+    experienceType: existing.experienceType,
     pageTypes: existing.pageTypes,
     audiences: existing.audiences,
     goals: existing.goals,
@@ -838,6 +850,7 @@ test("deterministic duplicate and invalid provenance gates leave the curated cat
     [duplicateData.sourcePaths[3], duplicateData.sourcePaths[0], duplicateData.sourcePaths[1]],
     {
       profile: candidateProfile({
+        experienceType: existing.experienceType,
         pageTypes: existing.pageTypes,
         audiences: existing.audiences,
         goals: existing.goals,
@@ -1064,8 +1077,9 @@ test("prompt changes do not replay sources, while a stale per-source policy hash
     contentHash: `sha256:${name.repeat(64)}`
   }));
   const state = createBaselineState({ sources }, { providers });
-  state.promptVersion = "prompt-only-change";
+  state.promptVersion = "direction-theme-curation-v1";
   assert.deepEqual(detectPendingSources({ sources }, state, { providers }), []);
+  assert.equal(CURATION_PROMPT_VERSION, "direction-theme-curation-v2");
 
   state.sources.find((entry) => entry.path === sources[1].path).processingPolicyHash = `sha256:${"0".repeat(64)}`;
   assert.deepEqual(detectPendingSources({ sources }, state, { providers }), [sources[1]]);

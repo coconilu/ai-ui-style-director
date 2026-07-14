@@ -41,6 +41,7 @@ test("curation workflow uses trusted main-only triggers and bounded execution", 
   assert.match(curationWorkflow, /push:\s*\n\s+branches: \[main\]/u);
   assert.match(curationWorkflow, /paths:\s*\n\s+- catalog\/providers\.json/u);
   assert.match(curationWorkflow, /- src\/curation\.mjs/u);
+  assert.match(curationWorkflow, /- src\/experience-types\.mjs/u);
   assert.match(curationWorkflow, /- src\/provider-adapters\.mjs/u);
   assert.match(curationWorkflow, /workflow_dispatch:/u);
   assert.match(curationWorkflow, /curator_provider:\s*\n\s+description: Model provider for this run/u);
