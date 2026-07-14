@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "bb8ba0daceb717eefc3a6ecb3457f28ca770d138",
+      "revision": "bc0705384b51252af26dcc65425b216bf5eb063c",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -694,6 +694,7 @@
         "apps/v4/content/docs/changelog/2026-06-chat-components.mdx",
         "apps/v4/content/docs/changelog/2026-06-github-registries.mdx",
         "apps/v4/content/docs/changelog/2026-07-base-ui-default.mdx",
+        "apps/v4/content/docs/changelog/2026-07-helpers.mdx",
         "apps/v4/content/docs/changelog/2026-07-typeset.mdx",
         "apps/v4/content/docs/changelog/index.mdx",
         "apps/v4/content/docs/components/base/accordion.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/base/hover-card.mdx",
         "apps/v4/content/docs/components/base/input-group.mdx",
         "apps/v4/content/docs/components/base/input-otp.mdx",
-        "apps/v4/content/docs/components/base/input.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
