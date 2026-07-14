@@ -33,8 +33,8 @@ canonical v2 projection:
   35 daisyUI theme CSS sources begin as pending work.
 - `catalog/curation/records/`: immutable per-source model and gate audit records
   created only after the baseline.
-- `catalog/recommendation-benchmarks.json`: 12 representative briefs used to
-  protect intent coverage and deterministic ranking.
+- `catalog/recommendation-benchmarks.json`: 12 schema-v2 briefs used to protect
+  family/experience intent, relevance guards, and deterministic ranking.
 
 The current canonical snapshot contains 57 Directions and 77 linked Theme
 selections. These values describe checked-in data, not configured limits.
@@ -150,6 +150,7 @@ one generated recommendation batch on `127.0.0.1`.
 
 `src/core.mjs` scores Directions against the user's brief using:
 
+- an explicitly requested governed experience type
 - page type
 - audience
 - product goal
@@ -165,13 +166,21 @@ second stage does not change Direction scores or order. The Agent gathers
 context, presents results, and enforces the selection gate; it does not replace
 the ranking algorithm with an ad hoc judgment.
 
+The shared experience-type aliases recognize English and Chinese intent such as
+`consumer app`/`C 端`, `B2B`/`B 端`, and `admin console`/`管理台`. Top 1 always
+remains the highest-scoring Direction. Inside the relevant candidate set,
+unseen experience types and families are soft preferences only: a promoted
+candidate must be at least 80% of the current best remaining score and at least
+50% of the original Top-1 score. There is no hard experience-type quota.
+
 `scripts/validate-curated-catalog.mjs` retains the legacy Profile/Visual/preview
 curation gate. `scripts/migrate-direction-theme-catalog.mjs --check` verifies
 that the canonical projection is deterministic, while
 `scripts/validate-direction-theme-catalog.mjs` checks Direction, Theme, link,
-PreviewSpec, alias, provenance, and token integrity. The 12-case recommendation
-benchmark verifies expected family coverage and identical Direction rankings
-across repeated runs.
+PreviewSpec, alias, provenance, and token integrity. The schema-v2 12-case
+recommendation benchmark verifies family and experience-type intent, protects
+Top 1 and omitted stronger candidates, and requires identical Direction
+rankings across repeated runs.
 
 Session schema v2 tracks `shownDirectionIds`; `--again` excludes Directions,
 while legacy `shownStyleIds` remain readable through aliases. Recommendations

@@ -20,10 +20,13 @@ import {
   recommendStyles,
   renderRecommendationGalleryHtml,
   renderRecommendations,
+  scoreDirectionCandidates,
   scoreProfile,
   startRecommendationPreviewServer,
   updateCatalog
 } from "../src/core.mjs";
+import { loadCatalogV2 } from "../src/catalog-v2.mjs";
+import { EXPERIENCE_TYPE_IDS } from "../src/experience-types.mjs";
 import { visualReferenceSource } from "../src/provider-adapters.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
@@ -35,6 +38,7 @@ const wrapperPath = fileURLToPath(
 const recommendationBenchmarks = JSON.parse(
   readFileSync(join(rootDir, "catalog", "recommendation-benchmarks.json"), "utf8")
 );
+const recommendationCatalog = loadCatalogV2();
 const DAISYUI_RETRO_THEME = `color-scheme: light;
 --color-base-100: oklch(91.637% 0.034 90.515);
 --color-base-200: oklch(88.272% 0.049 91.774);
@@ -197,7 +201,7 @@ test("diversification promotes only near-score alternatives from a new family", 
   );
 });
 
-test("catalog growth cannot let one family crowd relevant alternatives out of the Top 5", () => {
+test("family balancing never replaces clearly stronger relevant candidates", () => {
   const scored = [
     { profile: { id: "developer-one", name: "Developer One", family: "developer" }, score: 100 },
     { profile: { id: "developer-two", name: "Developer Two", family: "developer" }, score: 95 },
@@ -209,10 +213,81 @@ test("catalog growth cannot let one family crowd relevant alternatives out of th
   ];
 
   const selected = diversifyScoredProfiles(scored, 5);
+  assert.deepEqual(
+    selected.map((item) => item.profile.id),
+    ["developer-one", "developer-two", "developer-three", "developer-four", "developer-five"]
+  );
+});
+
+test("family balancing remains a soft preference inside the near-score window", () => {
+  const scored = [
+    { profile: { id: "developer-one", name: "Developer One", family: "developer" }, score: 100 },
+    { profile: { id: "developer-two", name: "Developer Two", family: "developer" }, score: 95 },
+    { profile: { id: "developer-three", name: "Developer Three", family: "developer" }, score: 90 },
+    { profile: { id: "developer-four", name: "Developer Four", family: "developer" }, score: 85 },
+    { profile: { id: "developer-five", name: "Developer Five", family: "developer" }, score: 80 },
+    { profile: { id: "docs-one", name: "Docs One", family: "docs" }, score: 84 },
+    { profile: { id: "research-one", name: "Research One", family: "research" }, score: 82 }
+  ];
+
+  const selected = diversifyScoredProfiles(scored, 5);
   const families = selected.map((item) => item.profile.family);
   assert.equal(families.filter((family) => family === "developer").length, 3);
   assert.equal(families.includes("docs"), true);
   assert.equal(families.includes("research"), true);
+});
+
+test("experience-type diversity promotes only globally relevant near-score candidates", () => {
+  const sameType = Array.from({ length: 5 }, (_, index) => ({
+    profile: {
+      id: `admin-${index + 1}`,
+      name: `Admin ${index + 1}`,
+      family: "shared",
+      experienceType: "admin-console"
+    },
+    score: 100
+  }));
+  const boundary = {
+    profile: {
+      id: "consumer-boundary",
+      name: "Consumer Boundary",
+      family: "shared",
+      experienceType: "consumer-app"
+    },
+    score: 80
+  };
+  const weak = {
+    profile: { ...boundary.profile, id: "consumer-weak", name: "Consumer Weak" },
+    score: 79
+  };
+
+  const promoted = diversifyScoredProfiles([...sameType, boundary], 5);
+  assert.equal(promoted[0].profile.id, "admin-1");
+  assert.equal(promoted.some((item) => item.profile.id === boundary.profile.id), true);
+  assert.deepEqual(
+    promoted.map((item) => [item.profile.id, item.score]),
+    diversifyScoredProfiles([boundary, ...sameType].toReversed(), 5)
+      .map((item) => [item.profile.id, item.score])
+  );
+  assert.equal(
+    diversifyScoredProfiles([...sameType, weak], 5)
+      .some((item) => item.profile.id === weak.profile.id),
+    false
+  );
+
+  const globallyWeak = [
+    { profile: { id: "admin-top", name: "Admin Top", family: "admin", experienceType: "admin-console" }, score: 100 },
+    { profile: { id: "admin-two", name: "Admin Two", family: "admin", experienceType: "admin-console" }, score: 75 },
+    { profile: { id: "admin-three", name: "Admin Three", family: "admin", experienceType: "admin-console" }, score: 60 },
+    { profile: { id: "admin-four", name: "Admin Four", family: "admin", experienceType: "admin-console" }, score: 40 },
+    { profile: { id: "admin-five", name: "Admin Five", family: "admin", experienceType: "admin-console" }, score: 21 },
+    { profile: { id: "consumer-tail", name: "Consumer Tail", family: "consumer", experienceType: "consumer-app" }, score: 17 }
+  ];
+  assert.equal(
+    diversifyScoredProfiles(globallyWeak, 5)
+      .some((item) => item.profile.id === "consumer-tail"),
+    false
+  );
 });
 
 test("docs family and documentation briefs share one canonical matching term", () => {
@@ -220,9 +295,17 @@ test("docs family and documentation briefs share one canonical matching term", (
 });
 
 test("recommendation benchmarks preserve intent coverage and deterministic ranking", () => {
-  assert.equal(recommendationBenchmarks.schemaVersion, 1);
+  assert.equal(recommendationBenchmarks.schemaVersion, 2);
   assert.equal(Array.isArray(recommendationBenchmarks.cases), true);
   assert.equal(recommendationBenchmarks.cases.length > 0, true);
+  const singletonExperienceCoverage = new Set(recommendationBenchmarks.cases
+    .filter((benchmark) => benchmark.expectedTopExperienceTypes.length === 1)
+    .map((benchmark) => benchmark.expectedTopExperienceTypes[0]));
+  assert.deepEqual(
+    [...singletonExperienceCoverage].sort(),
+    [...EXPERIENCE_TYPE_IDS].sort(),
+    "each experience type needs a singleton Top 1 benchmark"
+  );
 
   for (const benchmark of recommendationBenchmarks.cases) {
     const dir = mkdtempSync(join(tmpdir(), `style-director-benchmark-${benchmark.id}-`));
@@ -237,6 +320,12 @@ test("recommendation benchmarks preserve intent coverage and deterministic ranki
       sessionPath: join(dir, "second-session.json")
     });
     const topFamilies = first.recommendations.map((item) => item.family);
+    const topExperienceTypes = first.recommendations.map((item) => item.experienceType);
+    for (const field of ["expectedTopExperienceTypes", "requiredExperienceTypesInTop5"]) {
+      assert.equal(Array.isArray(benchmark[field]) && benchmark[field].length > 0, true);
+      assert.equal(new Set(benchmark[field]).size, benchmark[field].length);
+      assert.equal(benchmark[field].every((value) => EXPERIENCE_TYPE_IDS.includes(value)), true);
+    }
 
     assert.equal(first.needsContext, false, `${benchmark.id}: brief unexpectedly needs context`);
     assert.equal(
@@ -251,20 +340,123 @@ test("recommendation benchmarks preserve intent coverage and deterministic ranki
         `${benchmark.id}: missing required Top 5 family ${family}; got ${topFamilies.join(", ")}`
       );
     }
-    for (let index = 1; index < first.recommendations.length; index += 1) {
-      const previous = first.recommendations[index - 1];
-      const current = first.recommendations[index];
+    assert.equal(
+      benchmark.expectedTopExperienceTypes.includes(topExperienceTypes[0]),
+      true,
+      `${benchmark.id}: unexpected top experience type ${topExperienceTypes[0]}`
+    );
+    for (const experienceType of benchmark.requiredExperienceTypesInTop5) {
       assert.equal(
-        previous.score >= current.score * 0.8,
+        topExperienceTypes.includes(experienceType),
         true,
-        `${benchmark.id}: diversity promoted ${previous.id} too far above ${current.id}`
+        `${benchmark.id}: missing Top 5 experience type ${experienceType}; got ${topExperienceTypes.join(", ")}`
       );
     }
+    assert.equal(
+      first.recommendations.every((item) => item.experienceType === item.direction.experienceType),
+      true,
+      `${benchmark.id}: output experience type does not match its Direction`
+    );
+
+    const raw = scoreDirectionCandidates(
+      recommendationCatalog.directions,
+      benchmark.brief,
+      recommendationCatalog.themes
+    ).filter((item) => item.score > 0);
+    const relevanceFloor = Math.max(1, Math.ceil(raw[0].score * 0.15));
+    const eligible = raw.filter((item) => item.score >= relevanceFloor);
+    const selectedIds = new Set(first.recommendations.map((item) => item.id));
+    const omitted = eligible.filter((item) => !selectedIds.has(item.profile.id));
+    assert.equal(first.recommendations[0].id, raw[0].profile.id, `${benchmark.id}: Top 1 changed`);
+    for (const selected of first.recommendations) {
+      assert.equal(selected.score >= relevanceFloor, true, `${benchmark.id}: selected below relevance floor`);
+      for (const candidate of omitted) {
+        if (candidate.score <= selected.score) continue;
+        assert.equal(
+          selected.score >= candidate.score * 0.8,
+          true,
+          `${benchmark.id}: ${selected.id} displaced much stronger ${candidate.profile.id}`
+        );
+      }
+    }
     assert.deepEqual(
-      first.recommendations.map((item) => [item.id, item.score]),
-      second.recommendations.map((item) => [item.id, item.score]),
+      first.recommendations.map((item) => [item.id, item.experienceType, item.score]),
+      second.recommendations.map((item) => [item.id, item.experienceType, item.score]),
       `${benchmark.id}: ranking is not deterministic`
     );
+  }
+});
+
+test("Chinese and English experience-type briefs enter the same recommendation categories", () => {
+  const cases = [
+    {
+      experienceType: "consumer-app",
+      english: "Consumer mobile wellness habit companion app for families with daily routines and progress",
+      chinese: "C 端健康习惯应用，面向家庭用户提供每日打卡、进度和会员服务"
+    },
+    {
+      experienceType: "marketing-site",
+      english: "Energetic product launch marketing landing page with motion reveal and waitlist",
+      chinese: "AI 产品营销前台，突出产品发布、社会证明和候补名单"
+    },
+    {
+      experienceType: "business-app",
+      english: "B2B SaaS customer-success workspace with shared inbox approvals and daily workflows",
+      chinese: "B 端客户成功工作台，包含共享收件箱、审批、任务和每日流程"
+    },
+    {
+      experienceType: "admin-console",
+      english: "High-density internal admin console for incident monitoring operator KPIs and alerts",
+      chinese: "内部管理台，用于事故监控、运营指标和告警响应"
+    }
+  ];
+
+  for (const entry of cases) {
+    for (const [language, brief] of [["en", entry.english], ["zh", entry.chinese]]) {
+      const dir = mkdtempSync(join(tmpdir(), `style-director-${entry.experienceType}-${language}-`));
+      const result = recommendStyles({ brief, sessionPath: join(dir, "session.json") });
+      assert.equal(result.needsContext, false, `${entry.experienceType}/${language}: needs context`);
+      assert.equal(
+        result.recommendations[0].experienceType,
+        entry.experienceType,
+        `${entry.experienceType}/${language}: wrong Top 1 experience type`
+      );
+    }
+  }
+
+  const brandDir = mkdtempSync(join(tmpdir(), "style-director-consumer-brand-"));
+  const brandResult = recommendStyles({
+    brief: "Warm consumer community brand website focused on storytelling social proof and signup",
+    sessionPath: join(brandDir, "session.json")
+  });
+  assert.equal(brandResult.recommendations[0].experienceType, "marketing-site");
+});
+
+test("topic and audience words cannot override an explicit experience surface", () => {
+  const cases = [
+    {
+      experienceType: "business-app",
+      brief: "企业内容管理系统，供编辑团队管理发布流程、权限和每日协作"
+    },
+    {
+      experienceType: "consumer-app",
+      brief: "C端内容社区应用，提供个性化信息流、关注、互动和每日使用"
+    },
+    {
+      experienceType: "marketing-site",
+      brief: "Business marketing website for a B2B product with launch story trust and signup"
+    },
+    {
+      experienceType: "consumer-app",
+      brief: "Consumer finance dashboard for personal budgeting goals and daily spending"
+    }
+  ];
+
+  for (const entry of cases) {
+    const dir = mkdtempSync(join(tmpdir(), `style-director-intent-${entry.experienceType}-`));
+    const result = recommendStyles({ brief: entry.brief, sessionPath: join(dir, "session.json") });
+    assert.equal(result.needsContext, false);
+    assert.equal(result.recommendations[0].experienceType, entry.experienceType, entry.brief);
   }
 });
 

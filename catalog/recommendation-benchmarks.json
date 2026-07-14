@@ -1,77 +1,101 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "cases": [
     {
       "id": "developer-sdk",
       "brief": "AI SDK and API platform for developers with code examples and documentation",
       "expectedTopFamilies": ["developer"],
-      "requiredFamiliesInTop5": ["developer", "docs"]
+      "requiredFamiliesInTop5": ["developer", "docs"],
+      "expectedTopExperienceTypes": ["marketing-site", "content-docs"],
+      "requiredExperienceTypesInTop5": ["marketing-site", "content-docs"]
     },
     {
       "id": "saas-operations",
       "brief": "B2B SaaS operations workspace for teams with tasks approvals and daily workflows",
       "expectedTopFamilies": ["saas"],
-      "requiredFamiliesInTop5": ["saas"]
+      "requiredFamiliesInTop5": ["saas"],
+      "expectedTopExperienceTypes": ["business-app"],
+      "requiredExperienceTypesInTop5": ["business-app"]
     },
     {
       "id": "enterprise-security",
       "brief": "Enterprise security and compliance platform for CISOs with governance audit and sales demo",
       "expectedTopFamilies": ["enterprise"],
-      "requiredFamiliesInTop5": ["enterprise"]
+      "requiredFamiliesInTop5": ["enterprise"],
+      "expectedTopExperienceTypes": ["marketing-site", "content-docs"],
+      "requiredExperienceTypesInTop5": ["marketing-site", "content-docs"]
     },
     {
       "id": "analytics-command-center",
       "brief": "High density analytics dashboard and monitoring command center for operators",
       "expectedTopFamilies": ["dashboard"],
-      "requiredFamiliesInTop5": ["dashboard"]
+      "requiredFamiliesInTop5": ["dashboard"],
+      "expectedTopExperienceTypes": ["admin-console"],
+      "requiredExperienceTypesInTop5": ["admin-console"]
     },
     {
       "id": "technical-documentation",
       "brief": "Open source technical documentation website with API reference architecture and guides",
       "expectedTopFamilies": ["docs", "developer"],
-      "requiredFamiliesInTop5": ["docs", "developer"]
+      "requiredFamiliesInTop5": ["docs", "developer"],
+      "expectedTopExperienceTypes": ["content-docs"],
+      "requiredExperienceTypesInTop5": ["content-docs"]
     },
     {
       "id": "product-launch",
       "brief": "Energetic product launch landing page with motion product reveal and waitlist conversion",
       "expectedTopFamilies": ["launch"],
-      "requiredFamiliesInTop5": ["launch"]
+      "requiredFamiliesInTop5": ["launch"],
+      "expectedTopExperienceTypes": ["marketing-site"],
+      "requiredExperienceTypesInTop5": ["marketing-site"]
     },
     {
       "id": "consumer-community",
       "brief": "Warm consumer community brand website focused on storytelling social proof and signup",
       "expectedTopFamilies": ["consumer"],
-      "requiredFamiliesInTop5": ["consumer"]
+      "requiredFamiliesInTop5": ["consumer"],
+      "expectedTopExperienceTypes": ["marketing-site"],
+      "requiredExperienceTypesInTop5": ["marketing-site"]
     },
     {
       "id": "creative-portfolio",
       "brief": "Creative studio portfolio and agency website showing selected work and case studies",
       "expectedTopFamilies": ["portfolio"],
-      "requiredFamiliesInTop5": ["portfolio"]
+      "requiredFamiliesInTop5": ["portfolio"],
+      "expectedTopExperienceTypes": ["marketing-site"],
+      "requiredExperienceTypesInTop5": ["marketing-site"]
     },
     {
       "id": "premium-commerce",
       "brief": "Premium ecommerce fashion catalog with product discovery editorial imagery and purchase",
       "expectedTopFamilies": ["commerce"],
-      "requiredFamiliesInTop5": ["commerce"]
+      "requiredFamiliesInTop5": ["commerce"],
+      "expectedTopExperienceTypes": ["commerce"],
+      "requiredExperienceTypesInTop5": ["commerce"]
     },
     {
       "id": "research-lab",
       "brief": "AI research lab site for papers model benchmarks experiments and technical findings",
       "expectedTopFamilies": ["research"],
-      "requiredFamiliesInTop5": ["research", "docs"]
+      "requiredFamiliesInTop5": ["research"],
+      "expectedTopExperienceTypes": ["content-docs", "business-app"],
+      "requiredExperienceTypesInTop5": ["content-docs", "business-app"]
     },
     {
       "id": "financial-analytics",
       "brief": "Financial market analytics and trading risk dashboard for analysts and finance teams",
       "expectedTopFamilies": ["finance", "dashboard"],
-      "requiredFamiliesInTop5": ["finance", "dashboard"]
+      "requiredFamiliesInTop5": ["finance", "dashboard"],
+      "expectedTopExperienceTypes": ["admin-console", "business-app"],
+      "requiredExperienceTypesInTop5": ["admin-console", "business-app"]
     },
     {
       "id": "learning-platform",
       "brief": "Friendly education learning platform for students teachers courses and progress tracking",
       "expectedTopFamilies": ["education"],
-      "requiredFamiliesInTop5": ["education"]
+      "requiredFamiliesInTop5": ["education"],
+      "expectedTopExperienceTypes": ["consumer-app"],
+      "requiredExperienceTypesInTop5": ["consumer-app"]
     }
   ]
 }

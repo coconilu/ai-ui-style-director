@@ -106,8 +106,9 @@ version whenever a contract or cached asset behavior changes.
 
 `catalog/recommendation-benchmarks.json` contains 12 representative briefs.
 When taxonomy or scoring changes, update or extend those cases deliberately;
-the recommendation test verifies expected Top-1/Top-5 family coverage and
-identical IDs and scores across repeated runs.
+the schema-v2 recommendation test verifies Top-1/Top-5 family and experience
+coverage, the relevance promotion guards, and identical IDs, experience types,
+and scores across repeated runs.
 
 Validate the skill separately with the Codex `skill-creator` validator when it
 is available:
