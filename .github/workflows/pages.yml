@@ -36,9 +36,15 @@ jobs:
           test -f dist/pages/app.js
           test -f dist/pages/styles.css
           test -f dist/pages/.nojekyll
-          expected="$(node -p "require('./dist/pages/catalog.json').styleCount")"
-          actual="$(find dist/pages/previews -type f -name '*.svg' | wc -l)"
-          test "$actual" -eq "$expected"
+          direction_count="$(node -p "require('./dist/pages/catalog.json').directionCount")"
+          style_count="$(node -p "require('./dist/pages/catalog.json').styleCount")"
+          expected_v2="$(node -p "require('./dist/pages/catalog.json').linkCount")"
+          expected_legacy="$(node -p "require('./dist/pages/catalog.json').aliases.length")"
+          actual_v2="$(find dist/pages/previews/v2 -type f -name '*.svg' | wc -l)"
+          actual_legacy="$(find dist/pages/previews -maxdepth 1 -type f -name '*.svg' | wc -l)"
+          test "$style_count" -eq "$direction_count"
+          test "$actual_v2" -eq "$expected_v2"
+          test "$actual_legacy" -eq "$expected_legacy"
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5

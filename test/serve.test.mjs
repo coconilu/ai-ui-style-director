@@ -17,7 +17,7 @@ import {
   searchCatalogEntries,
   startStyleCatalogServer
 } from "../src/catalog-browser.mjs";
-import { loadStyleProfiles, loadStyleVisuals } from "../src/core.mjs";
+import { loadCatalogV2 } from "../src/catalog-v2.mjs";
 import { writeCatalogSite } from "../scripts/build-catalog-site.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
@@ -59,17 +59,23 @@ function assertCatalogResponseHeaders(response, expectedContentType) {
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
 }
 
-test("buildStyleCatalog exposes every curated style with preview URLs and a serializable search index", () => {
+test("buildStyleCatalog exposes one card per direction with searchable theme choices", () => {
   const catalog = buildStyleCatalog();
-  const profileCount = loadStyleProfiles().length;
+  const canonical = loadCatalogV2();
+  const directionCount = canonical.directions.length;
 
-  assert.equal(catalog.schemaVersion, 3);
+  assert.equal(catalog.schemaVersion, 4);
   assert.match(catalog.catalogRevision, /^[a-f0-9]{16}$/);
-  assert.equal(catalog.styleCount, profileCount);
-  assert.equal(catalog.entries.length, profileCount);
-  assert.equal(new Set(catalog.entries.map((entry) => entry.id)).size, profileCount);
+  assert.equal(catalog.directionCount, directionCount);
+  assert.equal(catalog.themeCount, canonical.themes.length);
+  assert.equal(catalog.linkCount, canonical.links.length);
+  assert.equal(catalog.styleCount, directionCount);
+  assert.equal(catalog.entries.length, directionCount);
+  assert.equal(new Set(catalog.entries.map((entry) => entry.id)).size, directionCount);
+  assert.equal(catalog.links.length, canonical.links.length);
+  assert.equal(catalog.aliases.length, canonical.aliases.length);
   assert.equal(Number.isInteger(catalog.sourceCount), true);
-  assert.equal(catalog.sourceCount >= catalog.styleCount, true);
+  assert.equal(catalog.sourceCount >= catalog.directionCount, true);
   assert.equal(catalog.pageSize, CATALOG_PAGE_SIZE);
 
   for (const entry of catalog.entries) {
@@ -82,7 +88,32 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
     assert.equal(entry.searchText, entry.searchText.toLowerCase());
 
     assert.equal(Object.hasOwn(entry, "previewDataUri"), false);
-    assert.equal(entry.previewUrl, `previews/${entry.id}.svg?v=${catalog.catalogRevision}`);
+    assert.equal(entry.themeCount, entry.themes.length);
+    assert.equal(entry.themeCount > 0, true);
+    assert.equal(entry.previewSpec.directionId, entry.id);
+    assert.equal(typeof entry.previewSpec.contentPattern, "string");
+    const defaultTheme = entry.themes.find((theme) => theme.id === entry.defaultThemeId);
+    assert.ok(defaultTheme, `${entry.id} must expose its default theme`);
+    assert.equal(defaultTheme.isDefault, true);
+    assert.equal(entry.previewUrl, defaultTheme.previewUrl);
+
+    const canonicalLinks = canonical.links.filter((link) => link.directionId === entry.id);
+    assert.equal(entry.themes.length, canonicalLinks.length);
+    for (const theme of entry.themes) {
+      assert.equal(
+        theme.previewUrl,
+        `previews/v2/${entry.id}/${theme.id}.svg?v=${catalog.catalogRevision}`
+      );
+      assert.equal(typeof theme.name, "string");
+      assert.equal(typeof theme.tokens, "object");
+      assert.equal(Array.isArray(theme.sources), true);
+      assert.equal(theme.sources.length > 0, true);
+      assert.equal(theme.sources.every((source) => (
+        typeof source.label === "string"
+        && (source.sourceUrl === null || /^https:\/\//u.test(source.sourceUrl))
+      )), true, `${theme.id} must expose a visible theme source`);
+      assert.equal(searchCatalogEntries(catalog, theme.id).some((candidate) => candidate.id === entry.id), true);
+    }
 
     assert.equal(typeof entry.tags, "object");
     for (const group of ["family", "pageTypes", "density", "tones", "componentKits"]) {
@@ -92,10 +123,15 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
     }
 
     assert.equal(Array.isArray(entry.references), true);
-    assert.equal(entry.references.length, 3);
+    assert.equal(entry.references.length >= 3, true);
     for (const reference of entry.references) {
       assert.equal(typeof reference.label, "string");
-      const referenceUrls = [reference.lightPreviewUrl, reference.darkPreviewUrl, reference.pageUrl]
+      const referenceUrls = [
+        reference.lightPreviewUrl,
+        reference.darkPreviewUrl,
+        reference.pageUrl,
+        reference.sourceUrl
+      ]
         .filter(Boolean);
       assert.equal(referenceUrls.length > 0, true, `${entry.id} references must expose a consumer URL`);
       assert.equal(referenceUrls.every((url) => /^https:\/\//u.test(url)), true);
@@ -112,7 +148,7 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
     assert.equal([...entryValues].every((value) => catalog.facets[group].includes(value)), true);
   }
 
-  assert.equal(catalog.searchIndexMeta.documentCount, profileCount);
+  assert.equal(catalog.searchIndexMeta.documentCount, directionCount);
   assert.equal(catalog.searchIndexMeta.tokenCount, Object.keys(catalog.searchIndex).length);
   assert.equal(catalog.searchIndexMeta.strategy, "exact-token-postings-with-substring-fallback");
   assert.equal(catalog.searchIndexMeta.postingValue, "entry-index");
@@ -125,7 +161,7 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
   for (const indexes of Object.values(catalog.searchIndex)) {
     assert.equal(Array.isArray(indexes), true);
     assert.equal(new Set(indexes).size, indexes.length);
-    assert.equal(indexes.every((index) => Number.isInteger(index) && index >= 0 && index < profileCount), true);
+    assert.equal(indexes.every((index) => Number.isInteger(index) && index >= 0 && index < directionCount), true);
   }
 
   const serialized = JSON.stringify(catalog);
@@ -134,15 +170,21 @@ test("buildStyleCatalog exposes every curated style with preview URLs and a seri
 });
 
 test("catalog revision and hosted URL are deterministic and detect catalog changes", () => {
-  const profiles = loadStyleProfiles();
-  const visuals = loadStyleVisuals();
-  const revision = computeCatalogRevision({ profiles, visuals });
-  const repeated = computeCatalogRevision({ profiles: structuredClone(profiles), visuals: structuredClone(visuals) });
-  const changedProfiles = structuredClone(profiles);
-  changedProfiles[0].name = `${changedProfiles[0].name} changed`;
+  const canonical = loadCatalogV2();
+  const revisionInput = {
+    directions: canonical.directions,
+    themes: canonical.themes,
+    links: canonical.links,
+    previewSpecs: canonical.previewSpecs,
+    aliases: canonical.aliases
+  };
+  const revision = computeCatalogRevision(revisionInput);
+  const repeated = computeCatalogRevision(structuredClone(revisionInput));
+  const changed = structuredClone(revisionInput);
+  changed.directions[0].name = `${changed.directions[0].name} changed`;
 
   assert.equal(repeated, revision);
-  assert.notEqual(computeCatalogRevision({ profiles: changedProfiles, visuals }), revision);
+  assert.notEqual(computeCatalogRevision(changed), revision);
 
   const catalog = buildStyleCatalog();
   const info = hostedCatalogInfo({ catalog, baseUrl: "https://example.test/catalog/" });
@@ -151,6 +193,9 @@ test("catalog revision and hosted URL are deterministic and detect catalog chang
   assert.equal(url.pathname, "/catalog/");
   assert.equal(url.searchParams.get("expectedRevision"), catalog.catalogRevision);
   assert.equal(info.hosted, true);
+  assert.equal(info.directionCount, catalog.directionCount);
+  assert.equal(info.themeCount, catalog.themeCount);
+  assert.equal(info.linkCount, catalog.linkCount);
   assert.equal(info.styleCount, catalog.styleCount);
   const normalizedUrl = new URL(hostedCatalogInfo({
     catalog,
@@ -170,28 +215,46 @@ test("static catalog assets are project-subpath safe and complete", () => {
   const { assets } = buildStyleCatalogStaticAssets({ catalog });
   const html = String(assets.get("index.html").body);
   const appScript = String(assets.get("app.js").body);
+  const styles = String(assets.get("styles.css").body);
   const payload = JSON.parse(String(assets.get("catalog.json").body));
+  const v2PreviewPaths = new Set(catalog.entries.flatMap((entry) => (
+    entry.themes.map((theme) => theme.previewUrl.split("?", 1)[0])
+  )));
+  const legacyPreviewPaths = new Set(catalog.aliases.map((alias) => `previews/${alias.legacyStyleId}.svg`));
 
-  assert.equal(assets.size, catalog.entries.length + 6);
+  assert.equal(assets.size, v2PreviewPaths.size + legacyPreviewPaths.size + 6);
   for (const assetPath of ["index.html", "catalog.json", "app.js", "styles.css", "favicon.svg", ".nojekyll"]) {
     assert.equal(assets.has(assetPath), true, `Missing static asset: ${assetPath}`);
   }
   for (const entry of catalog.entries) {
     assert.equal(entry.previewUrl.startsWith("/"), false);
-    assert.equal(assets.has(entry.previewUrl.split("?", 1)[0]), true, `Missing preview asset: ${entry.id}`);
+    for (const theme of entry.themes) {
+      assert.equal(
+        assets.has(theme.previewUrl.split("?", 1)[0]),
+        true,
+        `Missing preview asset: ${entry.id} + ${theme.id}`
+      );
+    }
+  }
+  for (const assetPath of legacyPreviewPaths) {
+    assert.equal(assets.has(assetPath), true, `Missing legacy preview asset: ${assetPath}`);
   }
 
   assert.doesNotMatch(html, /\b(?:href|src)="\//i);
+  assert.doesNotMatch(html, /\bstyle=/i);
   assert.doesNotMatch(appScript, /fetch\("\//);
+  assert.doesNotMatch(appScript, /\.style\s*=/u);
   assert.match(html, new RegExp(`catalog-revision" content="${catalog.catalogRevision}`));
   assert.match(html, new RegExp(`styles\\.css\\?v=${catalog.catalogRevision}`));
   assert.match(appScript, /expectedRevision/);
   assert.match(appScript, /catalog\.json/);
+  assert.match(styles, new RegExp(`\\.theme-palette-${catalog.entries[0].themes[0].id}\\{`));
   assert.equal(payload.catalogRevision, catalog.catalogRevision);
 });
 
 test("static catalog build writes a deterministic Pages artifact", () => {
-  const profileCount = loadStyleProfiles().length;
+  const canonical = loadCatalogV2();
+  const expectedPreviewCount = canonical.links.length + canonical.aliases.length;
   const tempDir = mkdtempSync(join(tmpdir(), "style-director-pages-"));
   const outputDir = join(tempDir, "site");
   assert.throws(
@@ -203,14 +266,17 @@ test("static catalog build writes a deterministic Pages artifact", () => {
   const second = writeCatalogSite({ outputDir, allowExternalOutput: true });
   const secondSnapshot = readDirectorySnapshot(outputDir);
 
-  assert.equal(first.fileCount, profileCount + 6);
-  assert.equal(first.styleCount, profileCount);
+  assert.equal(first.fileCount, expectedPreviewCount + 6);
+  assert.equal(first.directionCount, canonical.directions.length);
+  assert.equal(first.themeCount, canonical.themes.length);
+  assert.equal(first.linkCount, canonical.links.length);
+  assert.equal(first.styleCount, canonical.directions.length);
   assert.equal(first.catalogRevision, second.catalogRevision);
   assert.deepEqual(secondSnapshot, firstSnapshot);
   assert.equal(firstSnapshot[".nojekyll"], "");
   assert.equal(
     Object.keys(firstSnapshot).filter((path) => path.startsWith("previews/")).length,
-    profileCount
+    expectedPreviewCount
   );
 });
 
@@ -234,6 +300,29 @@ test("filterCatalogEntries supports English queries, Chinese aliases, and case f
   assert.equal(dashboard.some((entry) => entry.id === "data-dashboard-command-center"), true);
   assert.equal(chineseAlias.some((entry) => entry.id === "data-dashboard-command-center"), true);
   assert.equal(chineseAlias.some((entry) => entry.id === "operational-saas-console"), true);
+});
+
+test("legacy style ids search their canonical Direction without adding cards", () => {
+  const catalog = buildStyleCatalog();
+  const aggregatedAlias = catalog.aliases.find((alias) => alias.legacyStyleId !== alias.directionId);
+  const unaggregatedAlias = catalog.aliases.find((alias) => alias.legacyStyleId === alias.directionId);
+
+  assert.ok(aggregatedAlias, "The live catalog must expose at least one aggregated legacy alias");
+  assert.ok(unaggregatedAlias, "The live catalog must expose at least one unaggregated legacy alias");
+
+  for (const alias of [aggregatedAlias, unaggregatedAlias]) {
+    const matches = searchCatalogEntries(catalog, alias.legacyStyleId);
+    assert.equal(
+      matches.some((entry) => entry.id === alias.directionId),
+      true,
+      `${alias.legacyStyleId} must search its canonical Direction ${alias.directionId}`
+    );
+    const direction = catalog.entries[catalog.entryIndex[alias.directionId]];
+    assert.equal(direction.legacyStyleIds.includes(alias.legacyStyleId), true);
+  }
+
+  assert.equal(Object.hasOwn(catalog.entryIndex, aggregatedAlias.legacyStyleId), false);
+  assert.equal(catalog.entries.length, catalog.directionCount);
 });
 
 test("filterCatalogEntries uses OR within a facet group and AND between groups", () => {
@@ -291,7 +380,7 @@ test("renderCatalogBrowserPage exposes accessible search and batched-result cont
 });
 
 test("catalog development server mirrors the Pages project subpath securely", { timeout: 10_000 }, async () => {
-  const profileCount = loadStyleProfiles().length;
+  const canonical = loadCatalogV2();
   const served = await startStyleCatalogServer({ port: 0, basePath: "/ai-ui-style-director/" });
 
   try {
@@ -301,7 +390,10 @@ test("catalog development server mirrors the Pages project subpath securely", { 
     assert.equal(served.catalogUrl, `${served.url}ai-ui-style-director/`);
     assert.equal(served.basePath, "/ai-ui-style-director/");
     assert.equal(served.server.address().address, "127.0.0.1");
-    assert.equal(served.styleCount, profileCount);
+    assert.equal(served.directionCount, canonical.directions.length);
+    assert.equal(served.themeCount, canonical.themes.length);
+    assert.equal(served.linkCount, canonical.links.length);
+    assert.equal(served.styleCount, canonical.directions.length);
     assert.equal(served.sourceCount >= served.styleCount, true);
     assert.match(served.catalogRevision, /^[a-f0-9]{16}$/);
 
@@ -327,8 +419,11 @@ test("catalog development server mirrors the Pages project subpath securely", { 
     const catalogText = await catalogResponse.text();
     assert.doesNotMatch(catalogText, /data:image\/svg\+xml/i);
     const payload = JSON.parse(catalogText);
-    assert.equal(payload.styleCount, profileCount);
-    assert.equal(payload.entries.length, profileCount);
+    assert.equal(payload.schemaVersion, 4);
+    assert.equal(payload.directionCount, canonical.directions.length);
+    assert.equal(payload.themeCount, canonical.themes.length);
+    assert.equal(payload.linkCount, canonical.links.length);
+    assert.equal(payload.entries.length, canonical.directions.length);
     assert.equal(payload.pageSize, CATALOG_PAGE_SIZE);
     assert.equal(payload.catalogRevision, served.catalogRevision);
 
@@ -343,13 +438,18 @@ test("catalog development server mirrors the Pages project subpath securely", { 
     assertCatalogResponseHeaders(previewHead, /^image\/svg\+xml\b/);
     assert.equal(await previewHead.text(), "");
 
-    const allPreviewHeads = await Promise.all(payload.entries.map((entry) => (
-      fetch(new URL(entry.previewUrl, served.catalogUrl), { method: "HEAD" })
+    const allPreviewHeads = await Promise.all(payload.entries.flatMap((entry) => (
+      entry.themes.map((theme) => fetch(new URL(theme.previewUrl, served.catalogUrl), { method: "HEAD" }))
     )));
     for (const response of allPreviewHeads) {
       assertCatalogResponseHeaders(response, /^image\/svg\+xml\b/);
       assert.equal(response.headers.get("cross-origin-resource-policy"), "same-origin");
     }
+
+    const legacyPreviewUrl = `previews/${payload.aliases[0].legacyStyleId}.svg`;
+    const legacyPreview = await fetch(new URL(legacyPreviewUrl, served.catalogUrl));
+    assertCatalogResponseHeaders(legacyPreview, /^image\/svg\+xml\b/);
+    assert.match(await legacyPreview.text(), /<svg\b/);
 
     const appResponse = await fetch(new URL("app.js", served.catalogUrl));
     const appScript = await appResponse.text();
@@ -358,9 +458,18 @@ test("catalog development server mirrors the Pages project subpath securely", { 
     assert.match(appScript, /loadMore\.addEventListener\("click"/);
     assert.match(appScript, /status\.textContent = entries\.length/);
     assert.match(appScript, /renderRevisionWarning/);
+    assert.match(appScript, /radio\.type = "radio"/);
+    assert.match(appScript, /sessionStorage\.setItem/);
+    assert.match(appScript, /state\.selectedThemeIds\[entry\.id\] = theme\.id/);
+    assert.match(appScript, /image\.src = theme\.previewUrl/);
 
     const uncuratedPreview = await fetch(new URL("previews/not-a-curated-style.svg", served.catalogUrl));
     assert.equal(uncuratedPreview.status, 404);
+    const uncuratedV2Preview = await fetch(new URL(
+      "previews/v2/not-a-direction/not-a-theme.svg",
+      served.catalogUrl
+    ));
+    assert.equal(uncuratedV2Preview.status, 404);
 
     const missing = await fetch(new URL("missing", served.catalogUrl));
     assert.equal(missing.status, 404);
@@ -395,13 +504,22 @@ test("style catalog server rejects unsafe project base paths", async () => {
 
 test("style catalog server rejects preview ids that could escape the curated preview directory", async () => {
   const catalog = buildStyleCatalog();
-  const unsafeCatalog = structuredClone(catalog);
-  unsafeCatalog.entries[0].id = "../package";
-  unsafeCatalog.entries[0].previewUrl = "previews/../package.svg";
+  const unsafeDirectionCatalog = structuredClone(catalog);
+  unsafeDirectionCatalog.entries[0].id = "../package";
+  unsafeDirectionCatalog.entries[0].previewUrl = "previews/../package.svg";
 
   await assert.rejects(
-    async () => startStyleCatalogServer({ catalog: unsafeCatalog }),
-    /Invalid style id for preview route/
+    async () => startStyleCatalogServer({ catalog: unsafeDirectionCatalog }),
+    /Invalid catalog id for preview route/
+  );
+
+  const unsafeThemeCatalog = structuredClone(catalog);
+  unsafeThemeCatalog.entries[0].themes[0].id = "../package";
+  unsafeThemeCatalog.entries[0].themes[0].previewUrl = "previews/v2/safe/../package.svg";
+
+  await assert.rejects(
+    async () => startStyleCatalogServer({ catalog: unsafeThemeCatalog }),
+    /Invalid catalog id for preview route/
   );
 });
 
@@ -419,9 +537,13 @@ test("browse opens the hosted catalog contract and serve remains a non-blocking 
   assert.equal(browse.status, 0, browse.stderr);
   assert.equal(browse.stderr, "");
   const browseOutput = JSON.parse(browse.stdout);
+  const canonical = loadCatalogV2();
   assert.equal(browseOutput.hosted, true);
   assert.equal(browseOutput.opened, false);
-  assert.equal(browseOutput.styleCount, loadStyleProfiles().length);
+  assert.equal(browseOutput.directionCount, canonical.directions.length);
+  assert.equal(browseOutput.themeCount, canonical.themes.length);
+  assert.equal(browseOutput.linkCount, canonical.links.length);
+  assert.equal(browseOutput.styleCount, canonical.directions.length);
   assert.equal(new URL(browseOutput.catalogUrl).pathname, "/catalog/");
   assert.equal(
     new URL(browseOutput.catalogUrl).searchParams.get("expectedRevision"),
@@ -432,6 +554,11 @@ test("browse opens the hosted catalog contract and serve remains a non-blocking 
   assert.equal(serve.status, 0, serve.stderr);
   assert.match(serve.stderr, /compatibility alias for browse/);
   assert.deepEqual(JSON.parse(serve.stdout), browseOutput);
+
+  const textBrowse = spawnSync(process.execPath, [binPath, "browse"], { encoding: "utf8", env });
+  assert.equal(textBrowse.status, 0, textBrowse.stderr);
+  assert.match(textBrowse.stdout, new RegExp(`Curated directions: ${canonical.directions.length}`));
+  assert.match(textBrowse.stdout, new RegExp(`themes: ${canonical.themes.length}`));
 
   for (const command of ["browse", "serve"]) {
     const invalid = spawnSync(process.execPath, [binPath, command, "--port", "4173"], {

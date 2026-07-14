@@ -149,7 +149,10 @@ async function main() {
         printJson(output);
       } else {
         process.stdout.write(`Style catalog: ${output.catalogUrl}\n`);
-        process.stdout.write(`Curated styles: ${output.styleCount} (${output.sourceCount} indexed source records)\n`);
+        process.stdout.write(
+          `Curated directions: ${output.directionCount}; themes: ${output.themeCount} ` +
+          `(${output.sourceCount} indexed source records)\n`
+        );
         process.stdout.write(`${output.opened ? "Opened in the default browser." : "Pass --open to open it in the default browser."}\n`);
       }
       return;
