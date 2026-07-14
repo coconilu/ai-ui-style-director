@@ -78,8 +78,10 @@ longer starts a local complete-catalog server.
 The current checked-in catalog contains 57 Directions and 77 linked Theme
 selections. These are snapshot counts, not limits. The page shows one card per
 Direction, lets the user switch its linked Themes, and supports text search
-plus family, page type, density, tone, and component-kit filters. It loads a
-lightweight schema-v4 catalog, fetches canonical previews from
+plus experience-type, family, page-type, density, tone, and component-kit
+filters. Its unfiltered first batch uses a deterministic six-type round robin;
+search and filtered views keep canonical order. It loads a lightweight
+schema-v5 catalog, fetches canonical previews from
 `previews/v2/<direction-id>/<theme-id>.svg`, and progressively renders 24
 Direction cards at a time. Historical preview URLs remain available at
 `previews/<legacy-style-id>.svg`. A deterministic catalog revision lets the

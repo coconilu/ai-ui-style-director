@@ -79,8 +79,10 @@ live links remain usable.
 The GitHub Pages catalog uses generated canonical SVG cards in a different
 browsing surface. Instead of showing one default five-Direction recommendation
 batch, it lists one card per curated Direction, switches its linked Themes, and
-supports text search and family, page type, density, tone, and component-kit
-filters:
+supports text search and experience-type, family, page-type, density, tone, and
+component-kit filters. Its unfiltered first batch uses a deterministic
+experience-type round robin, while active search and filters retain canonical
+order:
 
 ```bash
 node bin/ai-ui-style-director.mjs browse --open
@@ -97,7 +99,7 @@ provenance context; the component-source index contains 600 paths. The original
 paths do not have the reviewed metadata required for complete cards, so they
 remain a count rather than additional styles.
 
-The browser's schema-v4 JSON keeps each Direction card lightweight by returning
+The browser's schema-v5 JSON keeps each Direction card lightweight by returning
 linked Theme choices with relative `previewUrl` values, not embedded SVG.
 Canonical previews load from same-origin
 `previews/v2/<direction-id>/<theme-id>.svg`; historical URLs remain available at

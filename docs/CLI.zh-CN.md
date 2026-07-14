@@ -69,9 +69,10 @@ JSON 对象包含 `catalogUrl`、`hosted`、`catalogRevision`、`directionCount`
 页面按 Direction 展示一张卡片，并可在其关联 Theme 之间切换。当前已提交快照
 包含 57 个 Direction 和 77 个 Direction/Theme 关联；这只是当前数据量，不是
 产品限制或未来上限。卡片继续展示已审查元数据、组件库建议和上游参考，并支持
-文本搜索以及现有标签过滤；搜索还识别“后台”等常见中文别名。
+文本搜索以及体验类型等现有标签过滤；搜索还识别“C端应用”“后台”等常见中文
+别名。URL 使用 `tag=experienceType:consumer-app` 这类规范 ID 保存状态。
 
-托管页面的 `catalog.json` 使用轻量 schema v4。它返回 Direction、关联 Theme
+托管页面的 `catalog.json` 使用轻量 schema v5。它返回 Direction、关联 Theme
 选择和 `previewUrl`，不会把 SVG 编码进 JSON；规范预览由相对同源路径
 `previews/v2/<direction-id>/<theme-id>.svg` 提供，历史链接继续由
 `previews/<legacy-style-id>.svg` 提供，因此两类地址都能运行在 GitHub 项目
@@ -81,6 +82,7 @@ JSON 对象包含 `catalogUrl`、`hosted`、`catalogRevision`、`directionCount`
 求交集，未知词或前缀词则回退到标准化 `searchText` 子串匹配。客户端先渲染
 24 张卡片，用户继续浏览时再按 24 张一批追加，搜索或切换标签会重置批次，
 而匹配总数始终反映全部结果。
+无筛选首批按六种体验类型轮转；搜索和 Facet 视图保持规范/搜索索引顺序。
 
 schema 还包含确定性的 `catalogRevision`。CLI 会把本地预期 revision 附在托管
 URL 上，页面再与已部署 HTML 和 JSON 的 revision 比较。若 Pages 尚未更新，
@@ -193,7 +195,7 @@ node bin/ai-ui-style-director.mjs refresh-catalog --clone
 ```
 
 `daisyui-theme-css` 只发现 35 个主题 CSS 文件，在确定性转换 OKLCH 后输出规范
-JSON。这个生成索引 schema 与托管浏览器使用的 schema-v4 `catalog.json`
+JSON。这个生成索引 schema 与托管浏览器使用的 schema-v5 `catalog.json`
 彼此独立。
 
 参数：

@@ -90,7 +90,7 @@ deviations during verification.
 - Each legacy Visual keeps three reviewed references. A canonical Direction may
   aggregate and deduplicate references from several legacy entries, so it is
   not presented as an exact clone of one brand.
-- Catalog Browser schema v4 currently exposes 57 Direction cards and 77 linked
+- Catalog Browser schema v5 currently exposes 57 Direction cards and 77 linked
   Theme previews; these are snapshot counts, not limits. Canonical previews use
   `previews/v2/<direction-id>/<theme-id>.svg`, while legacy preview URLs remain
   at `previews/<legacy-style-id>.svg`.
