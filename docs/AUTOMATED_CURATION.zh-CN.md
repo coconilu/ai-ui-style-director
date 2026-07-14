@@ -1,139 +1,190 @@
 # AI 辅助风格策展自动化
 
-这条流水线把新收录的上游 `DESIGN.md` 与经过规范化的主题 CSS 转换为受治理的
-Catalog 提案。模型负责理解和组合资料，但不能直接批准文件、伪造来源，也不能绕过
-仓库门禁。
+这条流水线把新增或变化的上游风格来源转换为需要人工审查的 Direction/Theme Catalog
+变更。模型负责理解来源，可信 Node.js 程序决定允许写入什么；模型和 GitHub App 都不能
+自行批准或合并提案。
 
 ## 完整流程
 
-1. `refresh-providers.yml` 扫描已配置 Provider 并更新生成索引。每条风格来源以
-   `providerId + path` 作为稳定身份，以规范化内容的 SHA-256 作为版本身份。
-2. `curate-style-sources.yml` 找出当前内容哈希尚未出现在
-   `catalog/curation/source-state.json` 中的新来源或变更来源。
-3. Workflow 按 `provider-inventory.json` 记录的精确 revision 检出 Provider，调用
-   对应 Adapter 规范化来源，并在调用模型前核对规范化内容哈希。
-4. OpenAI-compatible 客户端向当前配置的策展模型发送受预算约束的请求，明确把来源标记为
-   不可信数据；上下文只包含当前来源、少量相关 Profile、有限参考池和允许使用的 taxonomy。
-5. 模型只能返回 `skip`，或受控 taxonomy/设计原语、主题颜色和精确来源选择，
-   不能编写消费端说明文本。
-6. 程序校验字段、可信词表、组件库、精确来源路径、恰好三条不重复参考、
-   主来源是否包含、主题颜色、风格 ID 唯一性；对于由 Adapter 绑定主题的来源，
-   重复门禁会同时比较确定性的语义分数和主题色板距离。
-7. 通过门禁后，名称、首屏说明、布局规则、字体、风险和参考标签都由程序模板生成，
-   同时生成确定性的中性 SVG。
-   重复、跳过或非法候选只留痕，不会进入用户可选目录。
-8. 每个处理过的来源都会在 `catalog/curation/records/` 下写入一条不可变记录，
-   同时更新 source state；之后由 `npm run check` 校验完整仓库。
-9. 只有上述门禁全部通过，Workflow 才创建现有
-   `ai-ui-style-director-refresh` GitHub App 的写 Token。App 提交白名单内的文件、
-   创建 Draft PR。维护者必须审查 diff、将 PR 标记为 Ready，再手动合并；
-   Workflow 绝不开启 auto-merge。
+```mermaid
+flowchart TD
+  A["刷新 Provider 索引"] --> B["检测内容或处理政策变化"]
+  B --> C["Adapter 规范化并固定来源"]
+  C --> D["模型提出受控设计原语"]
+  D --> E["阶段一：按结构匹配或创建 Direction"]
+  E --> F["阶段二：在选中 Direction 内对 Theme 去重"]
+  F --> G["追加规范文件、状态和不可变记录"]
+  G --> H["校验仓库和变更文件白名单"]
+  H --> I["GitHub App 创建 Draft PR"]
+  I --> J["维护者审查并手动合并"]
+```
 
-GitHub App 是可审计的仓库操作身份，不是推理引擎。当前配置的模型生成候选，Node.js
-程序执行政策；GitHub 分支保护和必需检查是纵深防御，但 CI 通过不代表
-App 可以跳过维护者直接合并。
+1. `refresh-providers.yml` 扫描配置的 Provider。来源以 `providerId + path` 作为
+   稳定身份，以规范化内容的 SHA-256 作为内容版本。
+2. `curate-style-sources.yml` 对照 `catalog/curation/source-state.json`；当前内容
+   哈希或有效处理政策哈希变化时，来源进入 pending。
+3. Workflow 按 `catalog/generated/provider-inventory.json` 中的精确 revision 检出
+   Provider。对应 Adapter 规范化来源，程序在模型调用前核对索引哈希。
+4. OpenAI-compatible 客户端只发送受限的来源内容、治理 taxonomy、有限参考池和
+   附近的既有 Direction，并明确把来源视为不可信数据。
+5. 模型返回 `skip` 或符合 Schema 的候选。程序校验词表、组件库、精确来源引用、
+   Theme token 和 Adapter 推导约束。
+6. 可信程序执行下述两阶段匹配，产出一个显式 action。
+7. 通过的批次只能追加规范 Direction/Theme 文件、来源状态和不可变记录，随后由
+   `npm run check` 校验完整仓库。
+8. 只有全部校验通过后，Workflow 才为现有 `ai-ui-style-director-refresh`
+   GitHub App 创建写 Token。App 提交白名单文件并创建 Draft PR；永不自动合并。
 
-这是针对不可信上游文本的纵深防御：模型自由文本只保留为审计理由；后续会被消费端
-Agent 读取的内容全部来自可信 taxonomy 和程序模板。`DESIGN.md` 也会明确声明：
-Catalog 元数据绝不授权凭证访问、网络请求、Shell/工具执行或指令变更。
+GitHub App 是可审计的仓库操作身份，不是推理引擎。Catalog 元数据绝不授权凭证访问、
+网络请求、Shell/工具执行或指令变更。
 
-模型不能创建新的 family、taxonomy 值、组件库或说明模板。扩展这些治理词表必须走
-普通的人工审查代码/政策 PR；自动策展只能重新组合已批准的原语。
+## 规范写入模型
+
+自动策展直接写入 Direction/Theme Catalog：
+
+| 文件 | 作用 |
+| --- | --- |
+| `catalog/style-directions.json` | 可复用的结构与信息层级 Direction |
+| `catalog/style-themes.json` | 带固定溯源的可复用颜色 Token Theme |
+| `catalog/style-direction-themes.json` | 允许的 Direction/Theme 组合及每个 Direction 的默认 Theme |
+| `catalog/style-preview-specs.json` | 程序所有的 Direction 结构预览规格 |
+
+它**不会**创建或修改旧版 `style-profiles.json`、`style-visuals.json`、
+`style-aliases.json` 或仓库内 SVG 预览。旧文件和 alias 只作为旧 ID 的兼容输入，
+不是自动扩展目标。
+
+`npm run catalog:v2:migrate:check` 校验旧版投影仍是规范 Catalog 的子集；
+`npm run catalog:v2:migrate` 刷新旧版投影时，会保留只存在于规范层的 Direction、
+Theme、link 和 PreviewSpec。因此后续兼容迁移不会删除规范新增条目。
+
+### 两阶段确定性匹配
+
+| 阶段 | 比较内容 | 范围 | 结果 |
+| --- | --- | --- | --- |
+| Direction | composition、emphasis、family、页面类型、目标、受众、密度和关键词 | 所有符合资格的 Direction | 分数 `>= 0.85` 时选择既有 Direction；只有 capability 允许时才可创建 |
+| Theme | 7 个规范颜色 Token | 已与选中 Direction 关联的 Theme | 距离 `<= 0.04` 时为 `duplicate-theme`，否则新增或关联 Theme |
+
+色板和 tone 不参与 Direction 结构分数；Theme 去重则只在 Direction 已确定后进行。
+因此，相同颜色不会把两个不同布局折叠成一个 Direction。
+
+v2 可能产生以下 action：
+
+| Action | 规范层效果 |
+| --- | --- |
+| `created-direction-and-theme` | 新增 Direction、Theme、link 和 PreviewSpec |
+| `created-direction-with-existing-theme` | 新增 Direction、link 和 PreviewSpec |
+| `added-theme-to-direction` | 新增 Theme 并关联到既有 Direction |
+| `linked-existing-theme` | 只新增 Direction/Theme link |
+| `duplicate-theme` | 保留选中的既有 Direction/Theme 组合，不改 Catalog |
+| `skipped` / `invalid` | 只留审计记录，不改 Catalog |
+
+Direction ID 由受治理的结构原语确定性生成，Theme ID 由规范 Theme token 确定性生成。
+新 Theme 的溯源固定到本次事件处理的 Provider 仓库、revision、路径和内容哈希。
+
+## Capability 边界
+
+每个 Adapter 都有不可突破的 capability 上限。Provider 可以用 `capabilities` 显式
+收窄该上限，但不能扩大：
+
+```text
+effective.createDirection = adapter.createDirection AND provider.createDirection
+effective.createTheme     = adapter.createTheme     AND provider.createTheme
+```
+
+| Adapter | Adapter 上限 | 当前用途 |
+| --- | --- | --- |
+| `awesome-design-md` | Direction + Theme | 受治理的 `DESIGN.md` 语料 |
+| `generic-design-md` | Direction + Theme | 未来通用 `DESIGN.md` Provider |
+| `daisyui-theme-css` | 仅 Theme | `daisyui-themes` |
+
+仅 Theme 来源绝不能创建 Direction。对于已有历史状态的变化来源，程序优先把保留的
+`styleIds` 通过不可变 alias 还原到原 Direction；对于全新来源，只能从受限候选上下文
+中选择结构足够相似的既有 Direction。没有符合条件的 Direction 时，结果为 `invalid`；
+模型不能虚构或任意指定目标 Direction。
+
+有效 capability 快照同时进入处理政策哈希和每条新的 v2 审计记录。
 
 ## 状态与审计契约
 
-`catalog/curation/source-state.json` 是处理游标，每条记录保存：
+`catalog/curation/source-state.json` schema v2 是紧凑的处理游标。每条 entry 包含：
 
-- Provider 与精确路径组成的稳定来源身份；
-- 最近一次处理的内容哈希；
-- `baseline`、`promoted`、`duplicate`、`skipped` 或 `invalid` 状态；
-- 对应的不可变 record ID；
-- 已晋升的 style ID（如有）。
+| 字段 | 含义 |
+| --- | --- |
+| `providerId`、`path` | 稳定来源身份 |
+| `processedHash` | 最近一次处理的规范内容哈希 |
+| `processingPolicyHash` | 处理政策版本、Adapter、Normalizer 和有效 capability 的 SHA-256 |
+| `status`、`recordId` | 处理结果和不可变事件记录 |
+| `styleIds` | 为兼容保留的旧版 ID |
+| `directionIds`、`themeIds` | 保留的规范选择 |
 
-record ID 是一次不可变处理事件的 SHA-256，输入包含 Provider、路径、来源类型、
-Adapter/Normalizer 版本、当前与上一版内容哈希、Prompt 版本、响应身份/hash、时间戳和
-碰撞序号。这样即使来源发生 A→B→A 回退，也只会追加新记录，不会覆盖旧决策。
-审计记录还包含来源 revision、标准化身份、Token 用量、规范化候选、Adapter 推导的
-主题绑定、程序门禁结果、晋升文件以及 GitHub Actions run；不会保存 API Key、
-Authorization Header 或原始请求。
+仓库内迁移覆盖全部 109 条索引来源：74 条原始 baseline 和 35 条已处理的 daisyUI
+来源。旧版 `styleIds` 通过 `style-aliases.json` 映射到保留的 Direction/Theme ID；
+状态 Schema 升级不会重放已有来源历史。
 
-当前仓库的不可变 record 文件数量为 0；74 条 baseline state 也没有 record ID。
-因此 `style-curation-v3` 扩展 record ID 哈希输入后，无需重新生成仓库内记录。若外部
-部署已经存在 v2 record，则必须原样保留这些文件和 ID：启用 v3 事件前，先增加显式
-的版本感知迁移与校验，让旧记录继续有效，再在旁边追加新的 v3 record。重新哈希或
-覆盖旧的不可变记录会破坏审计属性，不属于有效升级方式。
+处理政策使用显式版本（`processingPolicyVersion=1`）。内容哈希变化或逐来源政策哈希
+变化时，该来源才重新进入 pending。根级 `promptVersion` 是审计元数据，不是队列键：
+只提升 Prompt 不会自动消耗 Token 重新策展所有历史来源。显式政策、Adapter、
+Normalizer 或 capability 变化，可以只让受影响来源重新进入队列。
 
-原有 74 条 `DESIGN.md` 来源已经作为 `baseline` 提交，不会被追溯发送给模型。
-接入 daisyUI 后，7 个 Provider 的生成索引共有 109 条 style source，其中新增的
-35 条 `theme-css` 来源不会写入 baseline，而是作为 pending 在同一次 Workflow 中按
-受限模型批次处理完毕。
+若维护者有意让所有适用来源按新的确定性政策重新处理，应递增 `src/curation.mjs` 中的
+`CURATION_PROCESSING_POLICY_VERSION`。Adapter Normalizer 或 capability 变化会自动只
+改变受影响 Provider 的哈希；仅修改 `CURATION_PROMPT_VERSION` 不会安排历史重放。
 
-支持 Adapter 的请求契约版本为 `style-curation-v4`。把 state 根级 prompt version
-更新到该版本用于记录新的规范输入语义，不会让原有 74 条 baseline 被追溯重处理。
+不可变 record schema v1 继续按原样兼容；已有 v1 文件永不重新哈希、改写或删除。
+新事件使用 record schema v2，并增加：
+
+- 完整来源快照：revision、内容哈希、Adapter、Normalizer、有效 capability、政策版本/
+  哈希、截断状态和实际消费字符数；
+- Adapter 上限、Provider 声明和最终有效 capability 门禁；
+- 独立的 Direction 与 Theme 检查；
+- 带解析后 Direction/Theme ID 的强类型 `result.action`；
+- 精确的规范 promotion 文件和 Workflow 溯源。
+
+record ID 绑定来源身份/类型/内容哈希、Adapter/Normalizer、Prompt/响应身份、政策和
+capability 快照、转换前后哈希、时间戳与碰撞 nonce；其他来源快照字段保存在 record 中
+用于审计。API Key、Authorization Header 和原始请求永不落盘。
+
+历史 Theme 来源始终固定到创建它时的 revision。后续 Provider 刷新不会把历史溯源
+改写成当前上游 revision；新事件会记录自己的当前来源快照。
 
 ## Provider Adapter
 
-来源数量没有写死。向 `catalog/providers.json` 增加 Provider 即可；非 Awesome
-来源默认使用 `generic-design-md` Adapter，递归发现文件名为 `DESIGN.md` 的资料。
-现有语料显式使用 `awesome-design-md`，以继续保留原来的 overview 和 Light/Dark
-预览链接。
+Provider 扫描没有固定的来源数量或用户选择数量。向 `catalog/providers.json` 增加
+Provider 即可；非 Awesome Provider 默认使用 `generic-design-md`，递归发现文件名为
+`DESIGN.md` 的资料。
 
-`daisyui-themes` Provider 显式使用 `daisyui-theme-css` Adapter。它只发现
-`packages/daisyui/src/themes/*.css`，把来源标记为 `sourceType=theme-css`，解析受治理
-的颜色、圆角、边框、深度和噪点声明，确定性转换 OKLCH 颜色，再序列化为规范 JSON。
-这份规范 JSON 同时作为内容哈希与策展模型输入；任意 CSS、import、注释或指令不会被
-直接透传成消费端文案。
-通用来源契约对应的 Provider/style/component 生成索引使用 schema v4；独立构建的
-托管浏览器 `catalog.json` 也使用 schema v4，承载 Direction/Theme 视图模型。
+`daisyui-theme-css` 只发现 `packages/daisyui/src/themes/*.css`，标记
+`sourceType=theme-css`，解析受治理的颜色/几何声明，确定性转换 OKLCH，再序列化为规范
+JSON。这份 JSON 同时作为内容哈希输入和受限模型资料；任意 CSS、import、注释和指令
+都不会透传为 Catalog 文案。
 
-这个 Adapter 只接受精确 29 个声明：1 个 `color-scheme`、20 个受治理颜色属性和
-8 个几何属性。未知、缺失、重复或格式非法的声明都会 fail closed。支持上游新增或
-修改的 token，必须通过普通人工审查代码 PR 更新契约并提升 Normalizer 版本；无人值守
-刷新不能自行放宽 Schema。`canonicalTheme.accent` 刻意使用 daisyUI
-`--color-primary` 作为 Catalog 唯一的主导品牌色/行动色；独立的
-`--color-accent` 仍保留在完整规范 token 表中，作为辅助强调色。
+该 Adapter 精确要求 29 个声明：1 个 `color-scheme`、20 个受治理颜色属性和 8 个
+几何属性。未知、缺失、重复或格式非法的声明都会 fail closed。支持上游 Schema 变化
+必须通过人工审查代码 PR 并提升 Normalizer 版本。
 
-通用来源的 Visual Reference 使用精确 `{ provider, path }` 溯源；页面链接由仓库、
-固定 revision 和编码后的路径生成。未来接入其他文件格式时，应新增一个输出相同
-标准来源记录的 Adapter，而不是修改策展核心和消费端契约。
-
-扫描会索引所有匹配的 `DESIGN.md` 和明确限定的 35 个 daisyUI 主题文件，不存在
-写死的来源数量或用户选择数量。当前生成索引为 7 个 Provider、109 条 style source
-和 600 条 component source；下文的每批 5 条只是模型批次大小，不是单次运行或
-Catalog 总量上限。
-
-每次刷新上游时，任一受治理值变化都会改变规范 JSON 及其内容哈希。策展身份仍是
-`providerId + path`，但新哈希不再等于 state 中该来源上次处理的哈希，因此来源会
-重新进入 pending，并产生一条新的追加式处理事件。
+接入细节见 [Provider 与来源边界](PROVIDERS.zh-CN.md)。
 
 ## GitHub 配置
 
-继续复用现有 App 配置：
+继续复用现有 GitHub App：
 
-- Repository Variable：`REFRESH_APP_CLIENT_ID`；
-- Repository Secret：`REFRESH_APP_PRIVATE_KEY`。
+| 类型 | 名称 |
+| --- | --- |
+| Repository variable | `REFRESH_APP_CLIENT_ID` |
+| Repository secret | `REFRESH_APP_PRIVATE_KEY` |
+| 模型选择 | 可选变量 `CURATOR_PROVIDER`，默认 `deepseek` |
+| DeepSeek secret | `DEEPSEEK_API_KEY` |
+| Kimi secret | `KIMI_CODE_API_KEY` |
 
-当前默认使用 DeepSeek。先新增它的凭证，同时保留已有 Kimi 凭证，方便之后回切：
+| Provider | Base URL | Model | Temperature | Thinking |
+| --- | --- | --- | ---: | --- |
+| `deepseek`（默认） | `https://api.deepseek.com` | `deepseek-v4-flash` | `0` | disabled |
+| `kimi` | `https://api.kimi.com/coding/v1` | `kimi-for-coding` | `1` | 不发送 |
 
-```text
-DEEPSEEK_API_KEY
-KIMI_CODE_API_KEY
-```
+Workflow 只把当前选择的 Provider secret 映射为 `CURATOR_API_KEY`；手动触发也提供同样
+的 Provider 选择。
 
-Workflow 只会在所选 Provider 的模型步骤中，把对应 Secret 映射为通用的
-`CURATOR_API_KEY`。Repository Variable `CURATOR_PROVIDER` 可不设置，默认值为
-`deepseek`；以后将它改为 `kimi` 即可回切，不需要改代码。手动触发时也可以直接选择。
-
-| Provider | Base URL | 模型 | Temperature | 思考模式 | Secret |
-| --- | --- | --- | ---: | --- | --- |
-| `deepseek`（默认） | `https://api.deepseek.com` | `deepseek-v4-flash` | `0` | `disabled` | `DEEPSEEK_API_KEY` |
-| `kimi` | `https://api.kimi.com/coding/v1` | `kimi-for-coding` | `1` | 不发送 | `KIMI_CODE_API_KEY` |
-
-DeepSeek Profile 遵循官方的[模型与价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)、
-[对话补全](https://api-docs.deepseek.com/zh-cn/api/create-chat-completion)和
-[JSON Output](https://api-docs.deepseek.com/zh-cn/guides/json_mode)契约。
-
-两者共用的批处理参数是：
+共享的受限执行默认值为：
 
 ```text
 CURATOR_BATCH_SIZE=5
@@ -143,40 +194,43 @@ CURATOR_MAX_RETRIES=1
 CURATOR_REQUEST_TIMEOUT_MS=120000
 ```
 
-DeepSeek JSON Output 支持当前 Curator 已在使用的
-`response_format={"type":"json_object"}`。`deepseek-v4-flash` 默认开启思考模式，
-所以该 Profile 显式发送 `thinking.type=disabled`，避免推理 token 挤占受限的 JSON
-输出预算。Kimi Profile 保留 `CURATOR_TEMPERATURE=1`，也不会收到 DeepSeek 专属参数。
+5 是单次模型调用的批量大小，不是单次运行或 Catalog 总量上限。Workflow 使用
+`--drain` 循环，直到 pending 队列清空，再发布一个受保护的 Draft PR。remaining 必须
+严格递减，任务总超时为 120 分钟，避免卡住的循环发布部分提案。若已有策展 PR 未关闭，
+任务会在付费模型调用前跳过。
 
-Workflow 设置 `CURATOR_BATCH_SIZE: "5"`，并重复调用可信的单批 Curator，直到
-pending 清空。模型每次仍最多处理 5 条，但一次 Workflow 会汇总全部初始待办，
-完成统一校验后只创建一个受保护的 Draft PR。
+Action 与 CI 强制执行以下变更文件白名单：
 
-主题色板重复阈值为 `0.04`：每个语义色先计算 RGB 欧氏距离并除以
-`sqrt(3) * 255`，再对 7 个字段取平均。该阈值依据当前固定的 35 个 daisyUI 主题快照
-校准：595 个两两组合中，只有 `pastel/wireframe` 低于阈值（`0.023854`）；第二近的
-`cmyk/cupcake` 为 `0.052662`，中位数为 `0.375298`。候选还必须同时超过独立的
-语义 Profile 阈值才会判重，因此 taxonomy 相似但色板差异明显的主题不会被折叠。
+```text
+catalog/style-directions.json
+catalog/style-themes.json
+catalog/style-direction-themes.json
+catalog/style-preview-specs.json
+catalog/curation/source-state.json
+catalog/curation/records/<sha256>.json   # 只允许新增
+```
 
-只有可信的 `main` push、每日定时任务和手动触发能运行该 Workflow；PR 上下文不会
-获得模型 Secret。模型步骤也拿不到 GitHub App Token，因为写 Token 只在确定性
-校验通过后创建。
+删除文件、修改旧 record、改动旧版 profile/visual/alias、改动 SVG 或加入未声明文件都会
+被拒绝。Draft PR 摘要按 Direction/Theme action 展示结果，完整规范决策保留在不可变
+record 中。
 
 ## 本地操作
 
-校验 state 和不可变审计记录：
+校验状态、不可变记录和规范溯源：
 
 ```bash
 npm run catalog:curation:validate
+npm run catalog:v2:migrate:check
+npm run catalog:v2:validate
 ```
 
-只在全新部署且尚无 state 时创建基线：
+只在全新部署且没有既有状态时创建 baseline：
 
 ```bash
 npm run catalog:curate:baseline
 ```
 
-GitHub Actions 是主要执行入口。如需诊断，可在本地用 DeepSeek 运行：
+GitHub Actions 是主要执行路径。使用 DeepSeek 做本地诊断时：
 
 ```bash
 CURATOR_PROVIDER=deepseek \
@@ -188,21 +242,12 @@ CURATOR_API_KEY=... \
 npm run catalog:curate -- --drain --clone --batch-size 5
 ```
 
-没有待办时命令会干净退出，因此针对已提交的基线不需要 API Key。网络、认证等基础
-设施错误不会推进 state；模型候选未通过确定性校验时，程序会把具体错误反馈给模型，
-进行一次有上限的语义修复。两次尝试都会计入 token 汇总和审计元数据；第二次仍失败
-才记录为终态 `invalid`，避免同一来源哈希形成无限付费重试。
+没有 pending 时命令会直接 no-op，不要求 API Key。基础设施或鉴权错误不会推进状态。
+模型结果不符合 Schema 时，程序会进行一次受限修复；第二次仍非法才会记录为同一内容
+和处理政策下的终态 `invalid`，避免无限付费重试。
 
-## 规模与成本控制
+## 规模边界
 
-Workflow 将模型工作拆成每批最多 5 个来源，并在发布一个 Draft PR 前排空全部
-pending。单个上游文档最多送入 80,000 字符；模型最多看到 60 条参考候选和 40 个
-相近 Profile；请求最多重试一次；Job 超时为 120 分钟。批次衔接和 remaining 严格
-递减校验会阻止无进展循环发布部分结果。
-每次运行在模型调用前都会用只读 Workflow Token 检查是否已有未合并的策展 PR；
-若存在则成功跳过，避免对同一 pending 队列重复付费处理。
-
-重复判断只扫描结构化的已策展 Profile；对 `theme-css` 还会比较程序推导的色板距离，
-不会扫描原始 Provider 仓库，几十到几百个风格时足够稳定。消费端目录已经使用数值倒排索引、Facet 过滤、独立 SVG 路由和每批 24
-张卡片的渐进渲染。如果未来已策展 Catalog 达到数千条，可以在不改变来源身份和审计
-历史的前提下增加持久化搜索索引或 Embedding。
+重复比较只扫描受治理的规范元数据，不扫描 Provider 原始仓库，足以支撑当前数十到数百
+条目的规模。若未来增长到数千条，可以引入持久化结构签名或搜索/Embedding 索引，
+而无需改变来源身份、状态、record 不可变性或 Direction/Theme 契约。

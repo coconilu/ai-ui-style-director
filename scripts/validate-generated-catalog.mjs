@@ -1,7 +1,11 @@
 import { readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isSafeRelativePath, resolveProviderAdapter } from "../src/provider-adapters.mjs";
+import {
+  isSafeRelativePath,
+  resolveProviderAdapter,
+  resolveProviderCapabilities
+} from "../src/provider-adapters.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCHEMA_VERSION = 4;
@@ -79,6 +83,21 @@ export function validateGeneratedCatalog({
     const styleSources = provider.styleSources;
     expect(Array.isArray(styleSources), `${provider.id}: styleSources must be an array`);
     if (Array.isArray(styleSources)) {
+      if (styleSources.length > 0) {
+        expect(
+          configured.capabilities !== undefined,
+          `${configured.id}: providers with styleSources must explicitly declare curation capabilities`
+        );
+        try {
+          const capabilities = resolveProviderCapabilities(configured);
+          expect(
+            typeof capabilities.createDirection === "boolean" && typeof capabilities.createTheme === "boolean",
+            `${configured.id}: effective curation capabilities must be boolean`
+          );
+        } catch (error) {
+          errors.push(`${configured.id}: invalid curation capabilities: ${error.message}`);
+        }
+      }
       const paths = [];
       for (const [sourceIndex, source] of styleSources.entries()) {
         const label = `${provider.id}: styleSources[${sourceIndex}]`;

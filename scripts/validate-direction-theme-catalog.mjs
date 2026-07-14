@@ -180,10 +180,6 @@ function expectedAppearance(tokens) {
   return "mixed";
 }
 
-function sourceKey(providerId, path) {
-  return `${providerId}\u0000${path}`;
-}
-
 function sortedObject(value) {
   if (Array.isArray(value)) return value.map(sortedObject);
   if (!isObject(value)) return value;
@@ -231,7 +227,7 @@ function referenceIsPreserved(references, reference) {
   return references.some((candidate) => stableSignature(candidate) === signature);
 }
 
-function validateReference(expect, reference, label, availableSources) {
+function validateReference(expect, reference, label) {
   expect(isObject(reference), `${label} must be an object`);
   if (!isObject(reference)) return;
   for (const field of ["provider", "label", "role"]) {
@@ -253,12 +249,6 @@ function validateReference(expect, reference, label, availableSources) {
   }
   const source = visualReferenceSource(reference);
   expect(source !== null, `${label} must resolve to an indexed provider source`);
-  if (source) {
-    expect(
-      availableSources.has(sourceKey(source.providerId, source.path)),
-      `${label} is missing from style-sources.json`
-    );
-  }
 }
 
 export function validateDirectionThemeCatalog({
@@ -298,12 +288,6 @@ export function validateDirectionThemeCatalog({
   const legacyProfileIds = legacyProfiles.map((profile) => profile?.id).filter(isNonEmptyString);
   const legacyVisualIds = legacyVisuals.map((visual) => visual?.styleId).filter(isNonEmptyString);
   const legacyIdSet = new Set(legacyProfileIds);
-  const availableSources = new Map(
-    (Array.isArray(styleSourcesDocument?.sources) ? styleSourcesDocument.sources : [])
-      .filter((source) => isNonEmptyString(source?.providerId) && isSafeRelativePath(source?.path))
-      .map((source) => [sourceKey(source.providerId, source.path), source])
-  );
-
   for (const id of duplicates(legacyProfileIds)) errors.push(`duplicate legacy profile id: ${id}`);
   for (const id of duplicates(legacyVisualIds)) errors.push(`duplicate legacy visual styleId: ${id}`);
   for (const id of legacyIdSet) {
@@ -347,6 +331,8 @@ export function validateDirectionThemeCatalog({
     const label = isNonEmptyString(direction?.id) ? direction.id : `directions[${index}]`;
     expect(isObject(direction), `${label}: direction must be an object`);
     if (!isObject(direction)) continue;
+    const directionAliases = aliasesByDirection.get(direction.id) || [];
+    const hasLegacyDirection = directionAliases.length > 0;
     for (const field of DIRECTION_STRING_FIELDS) {
       expect(isNonEmptyString(direction[field]), `${label}: ${field} must be a non-empty string`);
     }
@@ -355,10 +341,12 @@ export function validateDirectionThemeCatalog({
     expect(isTaxonomyToken(direction.density), `${label}: density must be a lowercase kebab-case token`);
     for (const field of DIRECTION_ARRAY_FIELDS) {
       const values = direction[field];
-      const mayBeEmpty = field === "legacyStyleIds";
+      const isLegacyField = field === "legacyStyleIds" || field === "legacyReferences";
       expect(
-        Array.isArray(values) && (mayBeEmpty || values.length > 0),
-        `${label}: ${field} must be ${mayBeEmpty ? "an" : "a non-empty"} array`
+        isLegacyField
+          ? (hasLegacyDirection ? Array.isArray(values) && values.length > 0 : values === undefined || (Array.isArray(values) && values.length === 0))
+          : Array.isArray(values) && values.length > 0,
+        `${label}: ${field} must ${isLegacyField && !hasLegacyDirection ? "be absent or an empty array for a canonical-only Direction" : "be a non-empty array"}`
       );
       if (!Array.isArray(values)) continue;
       if (field !== "legacyReferences") {
@@ -376,7 +364,6 @@ export function validateDirectionThemeCatalog({
       expect(!(field in direction), `${label}: Direction must not contain Theme/source field ${field}`);
     }
 
-    const directionAliases = aliasesByDirection.get(direction.id) || [];
     const aliasedLegacyIds = directionAliases.map((alias) => alias.legacyStyleId).sort();
     const declaredLegacyIds = Array.isArray(direction.legacyStyleIds)
       ? [...direction.legacyStyleIds].sort()
@@ -420,7 +407,7 @@ export function validateDirectionThemeCatalog({
     }
     const references = Array.isArray(direction.legacyReferences) ? direction.legacyReferences : [];
     references.forEach((reference, referenceIndex) => {
-      validateReference(expect, reference, `${label}: legacyReferences[${referenceIndex}]`, availableSources);
+      validateReference(expect, reference, `${label}: legacyReferences[${referenceIndex}]`);
     });
     for (const legacyStyleId of aliasedLegacyIds) {
       const visual = legacyVisualsById.get(legacyStyleId);
@@ -438,9 +425,16 @@ export function validateDirectionThemeCatalog({
     const label = isNonEmptyString(theme?.id) ? theme.id : `themes[${index}]`;
     expect(isObject(theme), `${label}: theme must be an object`);
     if (!isObject(theme)) continue;
+    const themeAliases = aliasesByTheme.get(theme.id) || [];
+    const hasLegacyTheme = themeAliases.length > 0;
     expect(/^theme-[0-9a-f]{12}$/u.test(theme.id || ""), `${label}: id must match theme-<12hex>`);
     expect(isNonEmptyString(theme.name), `${label}: name must be a non-empty string`);
-    expect(Array.isArray(theme.legacyStyleIds), `${label}: legacyStyleIds must be an array`);
+    expect(
+      hasLegacyTheme
+        ? Array.isArray(theme.legacyStyleIds) && theme.legacyStyleIds.length > 0
+        : theme.legacyStyleIds === undefined || (Array.isArray(theme.legacyStyleIds) && theme.legacyStyleIds.length === 0),
+      `${label}: legacyStyleIds must ${hasLegacyTheme ? "be a non-empty array" : "be absent or an empty array for a canonical-only Theme"}`
+    );
     if (Array.isArray(theme.legacyStyleIds)) {
       expect(theme.legacyStyleIds.every(isTaxonomyToken), `${label}: legacyStyleIds must contain style tokens`);
       expect(new Set(theme.legacyStyleIds).size === theme.legacyStyleIds.length, `${label}: legacyStyleIds must not contain duplicates`);
@@ -487,20 +481,15 @@ export function validateDirectionThemeCatalog({
           expect(/^[0-9a-f]{40}$/u.test(source.revision || ""), `${sourceLabel}.revision must be a 40-character Git SHA`);
           expect(isContentHash(source.contentHash), `${sourceLabel}.contentHash must be SHA-256`);
           expect(source.sourceUrl === pinnedProviderSourceUrl(source), `${sourceLabel}.sourceUrl must be revision-pinned`);
-          const indexedSource = availableSources.get(sourceKey(source.provider, source.path));
-          expect(Boolean(indexedSource), `${sourceLabel} is missing from style-sources.json`);
-          if (indexedSource) {
-            expect(indexedSource.contentHash === source.contentHash, `${sourceLabel}.contentHash must match style-sources.json`);
-          }
         } else if (source.kind === "legacy-curated") {
           expect(exactKeys(source, LEGACY_SOURCE_FIELDS), `${sourceLabel} must contain only real legacy-curated fields`);
+          expect(hasLegacyTheme, `${sourceLabel}: canonical-only Theme provenance must be source-pinned`);
         } else {
           expect(false, `${sourceLabel}.kind must be source-pinned or legacy-curated`);
         }
       }
     }
 
-    const themeAliases = aliasesByTheme.get(theme.id) || [];
     const aliasedLegacyIds = themeAliases.map((alias) => alias.legacyStyleId).sort();
     const declaredLegacyIds = Array.isArray(theme.legacyStyleIds)
       ? [...theme.legacyStyleIds].sort()
@@ -528,10 +517,15 @@ export function validateDirectionThemeCatalog({
       expect(sameStringSet(theme.tones || [], expectedTones), `${label}: tones must preserve the exact legacy union`);
     }
     const references = Array.isArray(theme.legacyReferences) ? theme.legacyReferences : [];
-    expect(Array.isArray(theme.legacyReferences) && references.length > 0, `${label}: legacyReferences must be a non-empty array`);
+    expect(
+      hasLegacyTheme
+        ? Array.isArray(theme.legacyReferences) && references.length > 0
+        : theme.legacyReferences === undefined || (Array.isArray(theme.legacyReferences) && references.length === 0),
+      `${label}: legacyReferences must ${hasLegacyTheme ? "be a non-empty array" : "be absent or an empty array for a canonical-only Theme"}`
+    );
     expect(new Set(references.map(stableSignature)).size === references.length, `${label}: legacyReferences must not contain duplicates`);
     references.forEach((reference, referenceIndex) => {
-      validateReference(expect, reference, `${label}: legacyReferences[${referenceIndex}]`, availableSources);
+      validateReference(expect, reference, `${label}: legacyReferences[${referenceIndex}]`);
     });
     for (const visual of visualsForTheme) {
       for (const reference of Array.isArray(visual?.references) ? visual.references : []) {
@@ -546,7 +540,15 @@ export function validateDirectionThemeCatalog({
   for (const [index, previewSpec] of catalog.previewSpecs.entries()) {
     const label = `previewSpecs[${index}]`;
     expect(isTaxonomyToken(previewSpec.directionId), `${label}.directionId must be a lowercase kebab-case token`);
-    expect(ALLOWED_LEGACY_VARIANTS.has(previewSpec.legacyVariant), `${label}.legacyVariant is not supported`);
+    const aliases = aliasesByDirection.get(previewSpec.directionId) || [];
+    if (aliases.length > 0) {
+      expect(ALLOWED_LEGACY_VARIANTS.has(previewSpec.legacyVariant), `${label}.legacyVariant is not supported`);
+    } else {
+      expect(
+        previewSpec.legacyVariant === undefined || previewSpec.legacyVariant === null || previewSpec.legacyVariant === "",
+        `${label}.legacyVariant must be absent or empty for a canonical-only Direction`
+      );
+    }
     for (const field of ["layoutArchetype", "contentPattern", "emphasis"]) {
       expect(isTaxonomyToken(previewSpec[field]), `${label}.${field} must be a lowercase kebab-case token`);
     }
@@ -597,7 +599,6 @@ export function validateDirectionThemeCatalog({
         && sameStringSet(hierarchyBlocks, previewSpec.contentBlocks),
       `${label}.hierarchy must be a complete partition of contentBlocks`
     );
-    const aliases = aliasesByDirection.get(previewSpec.directionId) || [];
     const legacyVariants = new Set(
       aliases.map((alias) => legacyVisualsById.get(alias.legacyStyleId)?.variant).filter(Boolean)
     );

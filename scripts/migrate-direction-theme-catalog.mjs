@@ -21,6 +21,14 @@ const OUTPUT_PATHS = Object.freeze({
   previewSpecs: join(CATALOG_DIR, "style-preview-specs.json")
 });
 
+const DOCUMENT_COLLECTIONS = Object.freeze({
+  directions: "directions",
+  themes: "themes",
+  directionThemes: "links",
+  aliases: "aliases",
+  previewSpecs: "previewSpecs"
+});
+
 const SCHEMA_VERSION = 2;
 const THEME_TOKEN_FIELDS = Object.freeze([
   "canvas",
@@ -618,14 +626,88 @@ function serialized(document) {
   return `${JSON.stringify(document, null, 2)}\n`;
 }
 
-function writeOrCheck(path, document) {
-  const expected = serialized(document);
+function entityKey(documentKey, entity) {
+  if (documentKey === "directions" || documentKey === "themes") return entity?.id;
+  if (documentKey === "directionThemes") return `${entity?.directionId}\u0000${entity?.themeId}`;
+  if (documentKey === "aliases") return entity?.legacyStyleId;
+  if (documentKey === "previewSpecs") return entity?.directionId;
+  fail(`Unknown catalog v2 document: ${documentKey}`);
+}
+
+function documentEntries(documentKey, document) {
+  const collection = DOCUMENT_COLLECTIONS[documentKey];
+  assert(collection, `Unknown catalog v2 document: ${documentKey}`);
+  assert(document?.schemaVersion === SCHEMA_VERSION, `${documentKey} schemaVersion must be ${SCHEMA_VERSION}`);
+  assert(Array.isArray(document?.[collection]), `${documentKey}.${collection} must be an array`);
+  return document[collection];
+}
+
+function entriesByKey(documentKey, document, label) {
+  const entries = new Map();
+  for (const entity of documentEntries(documentKey, document)) {
+    const key = entityKey(documentKey, entity);
+    assert(typeof key === "string" && key.length > 0, `${label} ${documentKey} contains an entity without a stable key`);
+    assert(!entries.has(key), `${label} ${documentKey} contains duplicate entity ${key.replace("\u0000", " / ")}`);
+    entries.set(key, entity);
+  }
+  return entries;
+}
+
+export function assertLegacyProjectionSubset(documentKey, projectedDocument, canonicalDocument) {
+  const projected = entriesByKey(documentKey, projectedDocument, "Legacy projection");
+  const canonical = entriesByKey(documentKey, canonicalDocument, "Canonical catalog");
+
+  if (documentKey === "aliases") {
+    assert(
+      serialized(canonicalDocument) === serialized(projectedDocument),
+      "style-aliases.json must remain the exact immutable legacy compatibility projection"
+    );
+    return canonicalDocument;
+  }
+
+  for (const [key, projectedEntity] of projected) {
+    const canonicalEntity = canonical.get(key);
+    assert(canonicalEntity, `Canonical ${documentKey} is missing legacy projection entity ${key.replace("\u0000", " / ")}`);
+    for (const [field, projectedValue] of Object.entries(projectedEntity)) {
+      assert(
+        JSON.stringify(canonicalEntity[field]) === JSON.stringify(projectedValue),
+        `Canonical ${documentKey} legacy projection field has drifted: ${key.replace("\u0000", " / ")}.${field}`
+      );
+    }
+  }
+  return canonicalDocument;
+}
+
+export function mergeLegacyProjectionIntoCanonical(documentKey, projectedDocument, canonicalDocument = null) {
+  if (!canonicalDocument || documentKey === "aliases") return structuredClone(projectedDocument);
+
+  const collection = DOCUMENT_COLLECTIONS[documentKey];
+  const projected = entriesByKey(documentKey, projectedDocument, "Legacy projection");
+  const canonical = entriesByKey(documentKey, canonicalDocument, "Canonical catalog");
+  for (const [key, entity] of projected) {
+    canonical.set(key, { ...(canonical.get(key) || {}), ...entity });
+  }
+
+  return {
+    ...structuredClone(canonicalDocument),
+    schemaVersion: SCHEMA_VERSION,
+    [collection]: [...canonical.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([, entity]) => entity)
+  };
+}
+
+function writeOrCheck(path, documentKey, projectedDocument) {
   if (CHECK_ONLY) {
     assert(existsSync(path), `Missing generated catalog projection: ${path}`);
-    assert(readFileSync(path, "utf8").replace(/\r\n?/gu, "\n") === expected, `Stale generated catalog projection: ${path}`);
+    const canonicalDocument = readJson(path);
+    assertLegacyProjectionSubset(documentKey, projectedDocument, canonicalDocument);
     return "verified";
   }
 
+  const canonicalDocument = existsSync(path) ? readJson(path) : null;
+  const mergedDocument = mergeLegacyProjectionIntoCanonical(documentKey, projectedDocument, canonicalDocument);
+  const expected = serialized(mergedDocument);
   const current = existsSync(path) ? readFileSync(path, "utf8").replace(/\r\n?/gu, "\n") : null;
   if (current === expected) return "unchanged";
   writeFileSync(path, expected, "utf8");
@@ -639,7 +721,7 @@ function main() {
   const results = [];
 
   for (const [key, path] of Object.entries(OUTPUT_PATHS)) {
-    results.push(`${writeOrCheck(path, projection[key])}: ${path}`);
+    results.push(`${writeOrCheck(path, key, projection[key])}: ${path}`);
   }
 
   const counts = {

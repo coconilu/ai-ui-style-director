@@ -37,7 +37,7 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          allowed='^(catalog/style-profiles\.json|catalog/style-visuals\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json|catalog/previews/[a-z0-9]+(-[a-z0-9]+)*\.svg)$'
+          allowed='^(catalog/style-(directions|themes|direction-themes|preview-specs)\.json|catalog/curation/source-state\.json|catalog/curation/records/[0-9a-f]{64}\.json)$'
           changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
           unexpected="$(printf '%s\n' "$changed_files" | grep -Ev "$allowed" || true)"
           deleted="$(git diff --diff-filter=D --name-only "$BASE_SHA" "$HEAD_SHA")"

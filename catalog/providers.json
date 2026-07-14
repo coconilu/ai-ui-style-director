@@ -2,6 +2,10 @@
   {
     "id": "awesome-design-md",
     "adapter": "awesome-design-md",
+    "capabilities": {
+      "createDirection": true,
+      "createTheme": true
+    },
     "type": "design-md-corpus",
     "repo": "VoltAgent/awesome-design-md",
     "url": "https://github.com/VoltAgent/awesome-design-md",
@@ -51,6 +55,10 @@
   {
     "id": "daisyui-themes",
     "adapter": "daisyui-theme-css",
+    "capabilities": {
+      "createDirection": false,
+      "createTheme": true
+    },
     "type": "theme-token-corpus",
     "repo": "saadeghi/daisyui",
     "url": "https://github.com/saadeghi/daisyui",
