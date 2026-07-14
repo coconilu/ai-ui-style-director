@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "aliases": [
+    {
+      "legacyStyleId": "ai-lab-research-notebook",
+      "directionId": "ai-lab-research-notebook",
+      "themeId": "theme-c6ecb10c1aa8"
+    },
+    {
+      "legacyStyleId": "commerce-direct-response-product-detail",
+      "directionId": "commerce-direct-response-product-detail",
+      "themeId": "theme-a5edca440d2d"
+    },
+    {
+      "legacyStyleId": "commerce-marketplace-discovery-grid",
+      "directionId": "commerce-marketplace-discovery-grid",
+      "themeId": "theme-44192bf6ca6c"
+    },
+    {
+      "legacyStyleId": "commerce-premium-catalog",
+      "directionId": "commerce-premium-catalog",
+      "themeId": "theme-5927316054fe"
+    },
+    {
+      "legacyStyleId": "commerce-wholesale-order-workbench",
+      "directionId": "commerce-wholesale-order-workbench",
+      "themeId": "theme-1f6f1e46e542"
+    },
+    {
+      "legacyStyleId": "consumer-brand-story",
+      "directionId": "consumer-brand-story",
+      "themeId": "theme-8ff2d894f824"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-community-4ab63e7f",
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-df58ffd8899d"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-community-4c776093",
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-b5cc7d74e8d4"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-community-72832e30",
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-401e59c219b7"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-community-a251fa4c",
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-9a9439a350dc"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-story-2f0b340c",
+      "directionId": "consumer-centered-hero-story",
+      "themeId": "theme-f2bfde2d0b14"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-trust-1884cccb",
+      "directionId": "consumer-centered-hero-trust",
+      "themeId": "theme-2cce89f3d0fc"
+    },
+    {
+      "legacyStyleId": "consumer-centered-hero-trust-bdad6a9a",
+      "directionId": "consumer-centered-hero-trust",
+      "themeId": "theme-1133e563fbf2"
+    },
+    {
+      "legacyStyleId": "consumer-local-service-concierge",
+      "directionId": "consumer-local-service-concierge",
+      "themeId": "theme-1f5901baacce"
+    },
+    {
+      "legacyStyleId": "consumer-media-discovery-playground",
+      "directionId": "consumer-media-discovery-playground",
+      "themeId": "theme-ecbd72a17f2e"
+    },
+    {
+      "legacyStyleId": "consumer-wellness-companion-soft",
+      "directionId": "consumer-wellness-companion-soft",
+      "themeId": "theme-80e9256a32cb"
+    },
+    {
+      "legacyStyleId": "dashboard-executive-kpi-briefing",
+      "directionId": "dashboard-executive-kpi-briefing",
+      "themeId": "theme-f9db2dc6b038"
+    },
+    {
+      "legacyStyleId": "dashboard-field-operations-mapboard",
+      "directionId": "dashboard-field-operations-mapboard",
+      "themeId": "theme-bfae41989da8"
+    },
+    {
+      "legacyStyleId": "dashboard-incident-response-wallboard",
+      "directionId": "dashboard-incident-response-wallboard",
+      "themeId": "theme-9e86370293f7"
+    },
+    {
+      "legacyStyleId": "data-dashboard-command-center",
+      "directionId": "data-dashboard-command-center",
+      "themeId": "theme-cf938d4f35ab"
+    },
+    {
+      "legacyStyleId": "developer-api-observability-lab",
+      "directionId": "developer-api-observability-lab",
+      "themeId": "theme-f3406a2d20c8"
+    },
+    {
+      "legacyStyleId": "developer-cli-workbench",
+      "directionId": "developer-cli-workbench",
+      "themeId": "theme-f4c5eeff40af"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-184a9fda",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-98228386c2b3"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-29261d80",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-235e671ea1d5"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-41fb4cb8",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-d7f1bc905e59"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-6be14a36",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-1969093218d8"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-6ced1427",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-36dceee6401c"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-8137dc5b",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-d1e5f8a20f1b"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-98d119d6",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-4586a4ba8fae"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-a98dce44",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-0b1fdbecc2ab"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-b0deb9dd",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-81d6969c7137"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-ccf39d86",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-fce0c935717a"
+    },
+    {
+      "legacyStyleId": "developer-dashboard-grid-data-fa0a21e2",
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-629928757ab3"
+    },
+    {
+      "legacyStyleId": "developer-editorial-stack-content-0b8eb8d8",
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-55891195a179"
+    },
+    {
+      "legacyStyleId": "developer-editorial-stack-content-0beed9d3",
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-a310bb4e9034"
+    },
+    {
+      "legacyStyleId": "developer-editorial-stack-content-30765d74",
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-18cd56012587"
+    },
+    {
+      "legacyStyleId": "developer-editorial-stack-content-3862b164",
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-296d591c420f"
+    },
+    {
+      "legacyStyleId": "developer-editorial-stack-content-4ab099d9",
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-f96c3826c864"
+    },
+    {
+      "legacyStyleId": "developer-editorial-stack-content-7a607af2",
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-b6e7a0e0269b"
+    },
+    {
+      "legacyStyleId": "developer-open-source-community-hub",
+      "directionId": "developer-open-source-community-hub",
+      "themeId": "theme-16469d43856c"
+    },
+    {
+      "legacyStyleId": "developer-product-minimal",
+      "directionId": "developer-product-minimal",
+      "themeId": "theme-5237355d6812"
+    },
+    {
+      "legacyStyleId": "docs-api-reference-workbench",
+      "directionId": "docs-api-reference-workbench",
+      "themeId": "theme-0f92fb373bd9"
+    },
+    {
+      "legacyStyleId": "docs-knowledge-base-help-center",
+      "directionId": "docs-knowledge-base-help-center",
+      "themeId": "theme-843b6b9f11bd"
+    },
+    {
+      "legacyStyleId": "docs-product-guides-library",
+      "directionId": "docs-product-guides-library",
+      "themeId": "theme-6166d5cb9560"
+    },
+    {
+      "legacyStyleId": "editorial-technical-docs",
+      "directionId": "editorial-technical-docs",
+      "themeId": "theme-80a4c13ae697"
+    },
+    {
+      "legacyStyleId": "education-certification-study-console",
+      "directionId": "education-certification-study-console",
+      "themeId": "theme-1f63595d2d7d"
+    },
+    {
+      "legacyStyleId": "education-cohort-learning-workspace",
+      "directionId": "education-cohort-learning-workspace",
+      "themeId": "theme-06c07351d90e"
+    },
+    {
+      "legacyStyleId": "education-kids-exploration-path",
+      "directionId": "education-kids-exploration-path",
+      "themeId": "theme-fc800a541136"
+    },
+    {
+      "legacyStyleId": "enterprise-dashboard-grid-data-7e324226",
+      "directionId": "enterprise-dashboard-grid-data",
+      "themeId": "theme-03117493c7de"
+    },
+    {
+      "legacyStyleId": "enterprise-dashboard-grid-data-817068c8",
+      "directionId": "enterprise-dashboard-grid-data",
+      "themeId": "theme-d8badd78ceaf"
+    },
+    {
+      "legacyStyleId": "enterprise-executive-transformation-brief",
+      "directionId": "enterprise-executive-transformation-brief",
+      "themeId": "theme-730b2a5eb6e1"
+    },
+    {
+      "legacyStyleId": "enterprise-governance-evidence-room",
+      "directionId": "enterprise-governance-evidence-room",
+      "themeId": "theme-3a344cca2b9a"
+    },
+    {
+      "legacyStyleId": "enterprise-infrastructure-blueprint",
+      "directionId": "enterprise-infrastructure-blueprint",
+      "themeId": "theme-ae2f6c352cb9"
+    },
+    {
+      "legacyStyleId": "enterprise-trust-solution",
+      "directionId": "enterprise-trust-solution",
+      "themeId": "theme-e826c49c6ce2"
+    },
+    {
+      "legacyStyleId": "finance-consumer-money-companion",
+      "directionId": "finance-consumer-money-companion",
+      "themeId": "theme-69614d996d0a"
+    },
+    {
+      "legacyStyleId": "finance-investment-research-terminal",
+      "directionId": "finance-investment-research-terminal",
+      "themeId": "theme-cab66fc46ee1"
+    },
+    {
+      "legacyStyleId": "finance-treasury-operations-console",
+      "directionId": "finance-treasury-operations-console",
+      "themeId": "theme-f6ed658055b3"
+    },
+    {
+      "legacyStyleId": "fintech-precision-trust",
+      "directionId": "fintech-precision-trust",
+      "themeId": "theme-196bcfbe3a15"
+    },
+    {
+      "legacyStyleId": "launch-centered-hero-story-cff58e59",
+      "directionId": "launch-centered-hero-story",
+      "themeId": "theme-ca63703dc9b7"
+    },
+    {
+      "legacyStyleId": "launch-centered-hero-trust-dc16f9c6",
+      "directionId": "launch-centered-hero-trust",
+      "themeId": "theme-c11d951bdef0"
+    },
+    {
+      "legacyStyleId": "launch-cinematic-product-reveal",
+      "directionId": "launch-cinematic-product-reveal",
+      "themeId": "theme-8a142f43cabc"
+    },
+    {
+      "legacyStyleId": "launch-community-countdown-campaign",
+      "directionId": "launch-community-countdown-campaign",
+      "themeId": "theme-f63a6de17ac0"
+    },
+    {
+      "legacyStyleId": "launch-proof-led-early-access",
+      "directionId": "launch-proof-led-early-access",
+      "themeId": "theme-de536faaa594"
+    },
+    {
+      "legacyStyleId": "learning-platform-friendly",
+      "directionId": "learning-platform-friendly",
+      "themeId": "theme-57e58bcb9fa4"
+    },
+    {
+      "legacyStyleId": "motion-rich-launch",
+      "directionId": "motion-rich-launch",
+      "themeId": "theme-3326b807fbb2"
+    },
+    {
+      "legacyStyleId": "operational-saas-console",
+      "directionId": "operational-saas-console",
+      "themeId": "theme-a1ba3ddb542f"
+    },
+    {
+      "legacyStyleId": "portfolio-case-study-narrative",
+      "directionId": "portfolio-case-study-narrative",
+      "themeId": "theme-5e2da808289e"
+    },
+    {
+      "legacyStyleId": "portfolio-centered-hero-story-d5726f45",
+      "directionId": "portfolio-centered-hero-story",
+      "themeId": "theme-eb95bcba4dd6"
+    },
+    {
+      "legacyStyleId": "portfolio-experimental-creative-canvas",
+      "directionId": "portfolio-experimental-creative-canvas",
+      "themeId": "theme-39a73ea5a1ba"
+    },
+    {
+      "legacyStyleId": "portfolio-studio-grid",
+      "directionId": "portfolio-studio-grid",
+      "themeId": "theme-d6b49b325bcc"
+    },
+    {
+      "legacyStyleId": "portfolio-technical-builder-showcase",
+      "directionId": "portfolio-technical-builder-showcase",
+      "themeId": "theme-5daf646c47ed"
+    },
+    {
+      "legacyStyleId": "research-benchmark-evaluation-board",
+      "directionId": "research-benchmark-evaluation-board",
+      "themeId": "theme-e340f2e828e6"
+    },
+    {
+      "legacyStyleId": "research-experiment-control-workbench",
+      "directionId": "research-experiment-control-workbench",
+      "themeId": "theme-ab14867f7dd9"
+    },
+    {
+      "legacyStyleId": "research-scientific-publication-archive",
+      "directionId": "research-scientific-publication-archive",
+      "themeId": "theme-b0248fe53722"
+    },
+    {
+      "legacyStyleId": "saas-automation-flow-builder",
+      "directionId": "saas-automation-flow-builder",
+      "themeId": "theme-5d7afc0eb0f1"
+    },
+    {
+      "legacyStyleId": "saas-collaborative-workspace-canvas",
+      "directionId": "saas-collaborative-workspace-canvas",
+      "themeId": "theme-a54719974d52"
+    },
+    {
+      "legacyStyleId": "saas-customer-success-inbox",
+      "directionId": "saas-customer-success-inbox",
+      "themeId": "theme-1cfdd1285ac4"
+    }
+  ]
+}

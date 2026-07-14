@@ -1,0 +1,5039 @@
+{
+  "schemaVersion": 2,
+  "themes": [
+    {
+      "id": "theme-03117493c7de",
+      "name": "Business Theme",
+      "legacyStyleIds": [
+        "enterprise-dashboard-grid-data-7e324226"
+      ],
+      "tokens": {
+        "canvas": "#202020",
+        "surface": "#1C1C1C",
+        "surfaceAlt": "#181818",
+        "text": "#CDCDCD",
+        "muted": "#888888",
+        "accent": "#1C4E80",
+        "border": "#181818"
+      },
+      "palette": [
+        "canvas #202020",
+        "surface #1C1C1C",
+        "surfaceAlt #181818",
+        "text #CDCDCD",
+        "muted #888888",
+        "accent #1C4E80",
+        "border #181818"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "analytical",
+        "controlled",
+        "focused",
+        "reliable"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "business",
+          "path": "packages/daisyui/src/themes/business.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/business.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/business.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/business.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-06c07351d90e",
+      "name": "Cohort Learning Workspace Theme",
+      "legacyStyleIds": [
+        "education-cohort-learning-workspace"
+      ],
+      "tokens": {
+        "canvas": "#F6F8FC",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E8EDF6",
+        "text": "#1E2A44",
+        "muted": "#6D7890",
+        "accent": "#3B6FD8",
+        "border": "#D1D9E8"
+      },
+      "palette": [
+        "canvas #F6F8FC",
+        "surface #FFFFFF",
+        "surfaceAlt #E8EDF6",
+        "text #1E2A44",
+        "muted #6D7890",
+        "accent #3B6FD8",
+        "border #D1D9E8"
+      ],
+      "appearance": "light",
+      "tones": [
+        "adult",
+        "collaborative",
+        "motivating",
+        "structured"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "notion"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "participatory exercises and collaborative practice"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "shared learning workspace and modular content"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "slack",
+          "label": "Slack",
+          "role": "cohort conversation and peer momentum"
+        }
+      ]
+    },
+    {
+      "id": "theme-0b1fdbecc2ab",
+      "name": "Halloween Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-a98dce44"
+      ],
+      "tokens": {
+        "canvas": "#1B1816",
+        "surface": "#0B0908",
+        "surfaceAlt": "#000000",
+        "text": "#CDCDCD",
+        "muted": "#868584",
+        "accent": "#FF9A33",
+        "border": "#000000"
+      },
+      "palette": [
+        "canvas #1B1816",
+        "surface #0B0908",
+        "surfaceAlt #000000",
+        "text #CDCDCD",
+        "muted #868584",
+        "accent #FF9A33",
+        "border #000000"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "halloween",
+          "path": "packages/daisyui/src/themes/halloween.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/halloween.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/halloween.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/halloween.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-0f92fb373bd9",
+      "name": "API Reference Workbench Theme",
+      "legacyStyleIds": [
+        "docs-api-reference-workbench"
+      ],
+      "tokens": {
+        "canvas": "#F8FAFC",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EAF0F5",
+        "text": "#111827",
+        "muted": "#667085",
+        "accent": "#0D9488",
+        "border": "#CFD8E3"
+      },
+      "palette": [
+        "canvas #F8FAFC",
+        "surface #FFFFFF",
+        "surfaceAlt #EAF0F5",
+        "text #111827",
+        "muted #667085",
+        "accent #0D9488",
+        "border #CFD8E3"
+      ],
+      "appearance": "light",
+      "tones": [
+        "navigable",
+        "practical",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "mintlify"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mintlify",
+          "label": "Mintlify",
+          "role": "navigable API documentation and readable reference"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "resend",
+          "label": "Resend",
+          "role": "clear request examples and developer-focused polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "supabase",
+          "label": "Supabase",
+          "role": "complete integration pathways and code proof"
+        }
+      ]
+    },
+    {
+      "id": "theme-1133e563fbf2",
+      "name": "Garden Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-trust-bdad6a9a"
+      ],
+      "tokens": {
+        "canvas": "#E9E7E7",
+        "surface": "#D4D2D2",
+        "surfaceAlt": "#BEBDBD",
+        "text": "#100F0F",
+        "muted": "#676565",
+        "accent": "#F50076",
+        "border": "#BEBDBD"
+      },
+      "palette": [
+        "canvas #E9E7E7",
+        "surface #D4D2D2",
+        "surfaceAlt #BEBDBD",
+        "text #100F0F",
+        "muted #676565",
+        "accent #F50076",
+        "border #BEBDBD"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "curated",
+        "trustworthy",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "garden",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-16469d43856c",
+      "name": "Open Source Community Hub Theme",
+      "legacyStyleIds": [
+        "developer-open-source-community-hub"
+      ],
+      "tokens": {
+        "canvas": "#0B0F0D",
+        "surface": "#121815",
+        "surfaceAlt": "#1B2821",
+        "text": "#F0FFF6",
+        "muted": "#91A99B",
+        "accent": "#34D399",
+        "border": "#294337"
+      },
+      "palette": [
+        "canvas #0B0F0D",
+        "surface #121815",
+        "surfaceAlt #1B2821",
+        "text #F0FFF6",
+        "muted #91A99B",
+        "accent #34D399",
+        "border #294337"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "energetic",
+        "open",
+        "technical",
+        "welcoming"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "supabase"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "expo",
+          "label": "Expo",
+          "role": "friendly framework community and project pathways"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "supabase",
+          "label": "Supabase",
+          "role": "open-source ecosystem energy and technical credibility"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "voltagent",
+          "label": "VoltAgent",
+          "role": "agent ecosystem organization and contributor focus"
+        }
+      ]
+    },
+    {
+      "id": "theme-18cd56012587",
+      "name": "Winter Theme",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-30765d74"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#F2F7FE",
+        "surfaceAlt": "#E3E9F4",
+        "text": "#394E6A",
+        "muted": "#8895A6",
+        "accent": "#0070ED",
+        "border": "#E3E9F4"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #F2F7FE",
+        "surfaceAlt #E3E9F4",
+        "text #394E6A",
+        "muted #8895A6",
+        "accent #0070ED",
+        "border #E3E9F4"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "winter",
+          "path": "packages/daisyui/src/themes/winter.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/winter.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/winter.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/winter.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-1969093218d8",
+      "name": "Night Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-6be14a36"
+      ],
+      "tokens": {
+        "canvas": "#0F172A",
+        "surface": "#0C1425",
+        "surfaceAlt": "#0A1120",
+        "text": "#C9CBD0",
+        "muted": "#7F838E",
+        "accent": "#3ABDF7",
+        "border": "#0A1120"
+      },
+      "palette": [
+        "canvas #0F172A",
+        "surface #0C1425",
+        "surfaceAlt #0A1120",
+        "text #C9CBD0",
+        "muted #7F838E",
+        "accent #3ABDF7",
+        "border #0A1120"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "modern",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "night",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-196bcfbe3a15",
+      "name": "Fintech Precision Trust Theme",
+      "legacyStyleIds": [
+        "fintech-precision-trust"
+      ],
+      "tokens": {
+        "canvas": "#090B14",
+        "surface": "#111626",
+        "surfaceAlt": "#1A2238",
+        "text": "#F8FAFC",
+        "muted": "#94A3B8",
+        "accent": "#8B5CF6",
+        "border": "#2A3550"
+      },
+      "palette": [
+        "canvas #090B14",
+        "surface #111626",
+        "surfaceAlt #1A2238",
+        "text #F8FAFC",
+        "muted #94A3B8",
+        "accent #8B5CF6",
+        "border #2A3550"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "calm",
+        "precise",
+        "premium",
+        "trustworthy"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "fintech-trust"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "revolut",
+          "label": "Revolut",
+          "role": "dark financial product polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "stripe",
+          "label": "Stripe",
+          "role": "premium fintech gradients and precision"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wise",
+          "label": "Wise",
+          "role": "clear financial outcomes and accessibility"
+        }
+      ]
+    },
+    {
+      "id": "theme-1cfdd1285ac4",
+      "name": "Customer Success Inbox Theme",
+      "legacyStyleIds": [
+        "saas-customer-success-inbox"
+      ],
+      "tokens": {
+        "canvas": "#FBF9FF",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#F1EDFA",
+        "text": "#292336",
+        "muted": "#7B7288",
+        "accent": "#7452D6",
+        "border": "#DED7E8"
+      },
+      "palette": [
+        "canvas #FBF9FF",
+        "surface #FFFFFF",
+        "surfaceAlt #F1EDFA",
+        "text #292336",
+        "muted #7B7288",
+        "accent #7452D6",
+        "border #DED7E8"
+      ],
+      "appearance": "light",
+      "tones": [
+        "calm",
+        "human",
+        "operational",
+        "responsive"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "intercom"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "human support operations and conversation context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "slack",
+          "label": "Slack",
+          "role": "friendly team communication hierarchy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "superhuman",
+          "label": "Superhuman",
+          "role": "fast inbox workflow and keyboard efficiency"
+        }
+      ]
+    },
+    {
+      "id": "theme-1f5901baacce",
+      "name": "Local Service Concierge Theme",
+      "legacyStyleIds": [
+        "consumer-local-service-concierge"
+      ],
+      "tokens": {
+        "canvas": "#F6FAFC",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E6F0F4",
+        "text": "#182C35",
+        "muted": "#667A82",
+        "accent": "#0EA5A4",
+        "border": "#CEDDE2"
+      },
+      "palette": [
+        "canvas #F6FAFC",
+        "surface #FFFFFF",
+        "surfaceAlt #E6F0F4",
+        "text #182C35",
+        "muted #667A82",
+        "accent #0EA5A4",
+        "border #CEDDE2"
+      ],
+      "appearance": "light",
+      "tones": [
+        "convenient",
+        "friendly",
+        "local",
+        "trustworthy"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "uber"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airbnb",
+          "label": "Airbnb",
+          "role": "local discovery and trustworthy provider context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "concierge-like service communication"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "uber",
+          "label": "Uber",
+          "role": "location-aware service selection and immediate action"
+        }
+      ]
+    },
+    {
+      "id": "theme-1f63595d2d7d",
+      "name": "Certification Study Console Theme",
+      "legacyStyleIds": [
+        "education-certification-study-console"
+      ],
+      "tokens": {
+        "canvas": "#F4F7FA",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E6EDF3",
+        "text": "#16273A",
+        "muted": "#66788B",
+        "accent": "#0D9488",
+        "border": "#CCD8E2"
+      },
+      "palette": [
+        "canvas #F4F7FA",
+        "surface #FFFFFF",
+        "surfaceAlt #E6EDF3",
+        "text #16273A",
+        "muted #66788B",
+        "accent #0D9488",
+        "border #CCD8E2"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clear",
+        "disciplined",
+        "professional",
+        "progressive"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "ibm"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "progress tracking and competency organization"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "professional skills and structured learning authority"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mintlify",
+          "label": "Mintlify",
+          "role": "clear study navigation and reference content"
+        }
+      ]
+    },
+    {
+      "id": "theme-1f6f1e46e542",
+      "name": "Wholesale Order Workbench Theme",
+      "legacyStyleIds": [
+        "commerce-wholesale-order-workbench"
+      ],
+      "tokens": {
+        "canvas": "#F2F5F7",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E4E9ED",
+        "text": "#17212B",
+        "muted": "#687580",
+        "accent": "#1769AA",
+        "border": "#CCD5DB"
+      },
+      "palette": [
+        "canvas #F2F5F7",
+        "surface #FFFFFF",
+        "surfaceAlt #E4E9ED",
+        "text #17212B",
+        "muted #687580",
+        "accent #1769AA",
+        "border #CCD5DB"
+      ],
+      "appearance": "light",
+      "tones": [
+        "commercial",
+        "efficient",
+        "operational",
+        "reliable"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "airtable"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "dense table operations and configurable views"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "enterprise procurement information density"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "shopify",
+          "label": "Shopify",
+          "role": "reliable commerce and order semantics"
+        }
+      ]
+    },
+    {
+      "id": "theme-235e671ea1d5",
+      "name": "Dim Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-29261d80"
+      ],
+      "tokens": {
+        "canvas": "#2A303C",
+        "surface": "#242933",
+        "surfaceAlt": "#20252E",
+        "text": "#B2CCD6",
+        "muted": "#7C8E98",
+        "accent": "#9FE88D",
+        "border": "#20252E"
+      },
+      "palette": [
+        "canvas #2A303C",
+        "surface #242933",
+        "surfaceAlt #20252E",
+        "text #B2CCD6",
+        "muted #7C8E98",
+        "accent #9FE88D",
+        "border #20252E"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "dim",
+          "path": "packages/daisyui/src/themes/dim.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dim.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dim.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dim.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-296d591c420f",
+      "name": "Cmyk Theme",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-3862b164"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#DEDEDE",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#45AEEE",
+        "border": "#DEDEDE"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #EEEEEE",
+        "surfaceAlt #DEDEDE",
+        "text #161616",
+        "muted #737373",
+        "accent #45AEEE",
+        "border #DEDEDE"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "cmyk",
+          "path": "packages/daisyui/src/themes/cmyk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cmyk.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/hashicorp/DESIGN.md",
+          "slug": "hashicorp",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:d2df9be72d867e48d318fd18db04e60a78357c27e392ab921fc2ba7f46951442",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/hashicorp/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cmyk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cmyk.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-2cce89f3d0fc",
+      "name": "Caramellatte Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-trust-1884cccb"
+      ],
+      "tokens": {
+        "canvas": "#FFF7ED",
+        "surface": "#FEECD3",
+        "surfaceAlt": "#FFD6A7",
+        "text": "#7C2808",
+        "muted": "#B07B64",
+        "accent": "#000000",
+        "border": "#FFD6A7"
+      },
+      "palette": [
+        "canvas #FFF7ED",
+        "surface #FEECD3",
+        "surfaceAlt #FFD6A7",
+        "text #7C2808",
+        "muted #B07B64",
+        "accent #000000",
+        "border #FFD6A7"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "human",
+        "trustworthy",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "caramellatte",
+          "path": "packages/daisyui/src/themes/caramellatte.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/caramellatte.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/caramellatte.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/caramellatte.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/retro.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/retro.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-3326b807fbb2",
+      "name": "Motion Rich Launch Theme",
+      "legacyStyleIds": [
+        "motion-rich-launch"
+      ],
+      "tokens": {
+        "canvas": "#0B0714",
+        "surface": "#160F25",
+        "surfaceAlt": "#24163B",
+        "text": "#FFF7FF",
+        "muted": "#B9A8C9",
+        "accent": "#F43F5E",
+        "border": "#3B2852"
+      },
+      "palette": [
+        "canvas #0B0714",
+        "surface #160F25",
+        "surfaceAlt #24163B",
+        "text #FFF7FF",
+        "muted #B9A8C9",
+        "accent #F43F5E",
+        "border #3B2852"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "energetic",
+        "expressive",
+        "modern"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "magic-ui",
+          "slug": "animated-marketing"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "framer",
+          "label": "Framer",
+          "role": "motion-first product launch"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "raycast",
+          "label": "Raycast",
+          "role": "polished gradients and energetic UI"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "runwayml",
+          "label": "Runway",
+          "role": "cinematic product reveal"
+        }
+      ]
+    },
+    {
+      "id": "theme-36dceee6401c",
+      "name": "Abyss Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-6ced1427"
+      ],
+      "tokens": {
+        "canvas": "#001A1E",
+        "surface": "#000E11",
+        "surfaceAlt": "#000405",
+        "text": "#FFD6A7",
+        "muted": "#998B70",
+        "accent": "#C2FD00",
+        "border": "#000405"
+      },
+      "palette": [
+        "canvas #001A1E",
+        "surface #000E11",
+        "surfaceAlt #000405",
+        "text #FFD6A7",
+        "muted #998B70",
+        "accent #C2FD00",
+        "border #000405"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "abyss",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/black.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/black.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "information-density reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-39a73ea5a1ba",
+      "name": "Experimental Creative Canvas Theme",
+      "legacyStyleIds": [
+        "portfolio-experimental-creative-canvas"
+      ],
+      "tokens": {
+        "canvas": "#F3F0FF",
+        "surface": "#FCFAFF",
+        "surfaceAlt": "#DED5FA",
+        "text": "#201637",
+        "muted": "#73658A",
+        "accent": "#7C3AED",
+        "border": "#CEC3EA"
+      },
+      "palette": [
+        "canvas #F3F0FF",
+        "surface #FCFAFF",
+        "surfaceAlt #DED5FA",
+        "text #201637",
+        "muted #73658A",
+        "accent #7C3AED",
+        "border #CEC3EA"
+      ],
+      "appearance": "light",
+      "tones": [
+        "art-directed",
+        "bold",
+        "experimental",
+        "playful"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "figma"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "figma",
+          "label": "Figma",
+          "role": "playful creative systems and multiplayer energy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "framer",
+          "label": "Framer",
+          "role": "interactive project presentation and motion"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "runwayml",
+          "label": "Runway",
+          "role": "experimental media and cinematic artifacts"
+        }
+      ]
+    },
+    {
+      "id": "theme-3a344cca2b9a",
+      "name": "Governance Evidence Room Theme",
+      "legacyStyleIds": [
+        "enterprise-governance-evidence-room"
+      ],
+      "tokens": {
+        "canvas": "#F7F9FC",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EDF2F8",
+        "text": "#13243A",
+        "muted": "#627187",
+        "accent": "#246BCE",
+        "border": "#CFD9E6"
+      },
+      "palette": [
+        "canvas #F7F9FC",
+        "surface #FFFFFF",
+        "surfaceAlt #EDF2F8",
+        "text #13243A",
+        "muted #627187",
+        "accent #246BCE",
+        "border #CFD9E6"
+      ],
+      "appearance": "light",
+      "tones": [
+        "authoritative",
+        "measured",
+        "secure",
+        "transparent"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "ibm"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "dell-1996",
+          "label": "Dell 1996",
+          "role": "dense document retrieval and explicit navigation cues"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "formal information architecture and enterprise authority"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "measured assurance and institutional trust"
+        }
+      ]
+    },
+    {
+      "id": "theme-401e59c219b7",
+      "name": "Cupcake Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-community-72832e30"
+      ],
+      "tokens": {
+        "canvas": "#FAF7F5",
+        "surface": "#EFEAE6",
+        "surfaceAlt": "#E7E2DF",
+        "text": "#291334",
+        "muted": "#7D6E81",
+        "accent": "#44EBD3",
+        "border": "#E7E2DF"
+      },
+      "palette": [
+        "canvas #FAF7F5",
+        "surface #EFEAE6",
+        "surfaceAlt #E7E2DF",
+        "text #291334",
+        "muted #7D6E81",
+        "accent #44EBD3",
+        "border #E7E2DF"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "friendly",
+        "playful",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "cupcake",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-44192bf6ca6c",
+      "name": "Marketplace Discovery Grid Theme",
+      "legacyStyleIds": [
+        "commerce-marketplace-discovery-grid"
+      ],
+      "tokens": {
+        "canvas": "#FAF9FC",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EEEAF4",
+        "text": "#241D2C",
+        "muted": "#766C7D",
+        "accent": "#7C3AED",
+        "border": "#DED8E5"
+      },
+      "palette": [
+        "canvas #FAF9FC",
+        "surface #FFFFFF",
+        "surfaceAlt #EEEAF4",
+        "text #241D2C",
+        "muted #766C7D",
+        "accent #7C3AED",
+        "border #DED8E5"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clear",
+        "commercial",
+        "discoverable",
+        "varied"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "shopify"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "nike",
+          "label": "Nike",
+          "role": "strong category rhythm and product imagery"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "visual discovery and collection browsing"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "shopify",
+          "label": "Shopify",
+          "role": "scalable catalog and trustworthy transaction patterns"
+        }
+      ]
+    },
+    {
+      "id": "theme-4586a4ba8fae",
+      "name": "Sunset Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-98d119d6"
+      ],
+      "tokens": {
+        "canvas": "#121C22",
+        "surface": "#0E171E",
+        "surfaceAlt": "#091319",
+        "text": "#9FB9D0",
+        "muted": "#677A8A",
+        "accent": "#FF865B",
+        "border": "#091319"
+      },
+      "palette": [
+        "canvas #121C22",
+        "surface #0E171E",
+        "surfaceAlt #091319",
+        "text #9FB9D0",
+        "muted #677A8A",
+        "accent #FF865B",
+        "border #091319"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "modern",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "sunset",
+          "path": "packages/daisyui/src/themes/sunset.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/sunset.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/sunset.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/sunset.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-5237355d6812",
+      "name": "Developer Product Minimal Theme",
+      "legacyStyleIds": [
+        "developer-product-minimal"
+      ],
+      "tokens": {
+        "canvas": "#09090B",
+        "surface": "#111114",
+        "surfaceAlt": "#1B1B20",
+        "text": "#FAFAFA",
+        "muted": "#A1A1AA",
+        "accent": "#E4E4E7",
+        "border": "#2A2A30"
+      },
+      "palette": [
+        "canvas #09090B",
+        "surface #111114",
+        "surfaceAlt #1B1B20",
+        "text #FAFAFA",
+        "muted #A1A1AA",
+        "accent #E4E4E7",
+        "border #2A2A30"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "vercel-like"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cursor",
+          "label": "Cursor",
+          "role": "AI developer-tool presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "resend",
+          "label": "Resend",
+          "role": "developer-focused dark UI and monospace detail"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vercel",
+          "label": "Vercel",
+          "role": "monochrome precision and product proof"
+        }
+      ]
+    },
+    {
+      "id": "theme-55891195a179",
+      "name": "Silk Theme",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-0b8eb8d8"
+      ],
+      "tokens": {
+        "canvas": "#F7F5F3",
+        "surface": "#F3EDE9",
+        "surfaceAlt": "#E2DDD9",
+        "text": "#4B4743",
+        "muted": "#908D89",
+        "accent": "#1C1C29",
+        "border": "#E2DDD9"
+      },
+      "palette": [
+        "canvas #F7F5F3",
+        "surface #F3EDE9",
+        "surfaceAlt #E2DDD9",
+        "text #4B4743",
+        "muted #908D89",
+        "accent #1C1C29",
+        "border #E2DDD9"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "silk",
+          "path": "packages/daisyui/src/themes/silk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:0b8eb8d807eeb506e086c95a46793f92ec2c18463825df9e618fdca269d7f30c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/silk.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/hashicorp/DESIGN.md",
+          "slug": "hashicorp",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:d2df9be72d867e48d318fd18db04e60a78357c27e392ab921fc2ba7f46951442",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/hashicorp/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/silk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:0b8eb8d807eeb506e086c95a46793f92ec2c18463825df9e618fdca269d7f30c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/silk.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-57e58bcb9fa4",
+      "name": "Learning Platform Friendly Theme",
+      "legacyStyleIds": [
+        "learning-platform-friendly"
+      ],
+      "tokens": {
+        "canvas": "#F5F7FF",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E8ECFF",
+        "text": "#20233A",
+        "muted": "#6B7280",
+        "accent": "#4F46E5",
+        "border": "#D7DCF2"
+      },
+      "palette": [
+        "canvas #F5F7FF",
+        "surface #FFFFFF",
+        "surfaceAlt #E8ECFF",
+        "text #20233A",
+        "muted #6B7280",
+        "accent #4F46E5",
+        "border #D7DCF2"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "clear",
+        "organized",
+        "supportive"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "education-platform"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured but friendly progress views"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "approachable collaborative color"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "friendly knowledge organization"
+        }
+      ]
+    },
+    {
+      "id": "theme-5927316054fe",
+      "name": "Commerce Premium Catalog Theme",
+      "legacyStyleIds": [
+        "commerce-premium-catalog"
+      ],
+      "tokens": {
+        "canvas": "#F5F2EC",
+        "surface": "#FFFDF9",
+        "surfaceAlt": "#E8E1D7",
+        "text": "#171512",
+        "muted": "#756E64",
+        "accent": "#7C3AED",
+        "border": "#D7D0C5"
+      },
+      "palette": [
+        "canvas #F5F2EC",
+        "surface #FFFDF9",
+        "surfaceAlt #E8E1D7",
+        "text #171512",
+        "muted #756E64",
+        "accent #7C3AED",
+        "border #D7D0C5"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clear",
+        "confident",
+        "premium",
+        "tactile"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "premium-commerce"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "apple",
+          "label": "Apple",
+          "role": "premium spacing and product focus"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nike",
+          "label": "Nike",
+          "role": "product-first catalog hierarchy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "shopify",
+          "label": "Shopify",
+          "role": "polished commerce storytelling"
+        }
+      ]
+    },
+    {
+      "id": "theme-5d7afc0eb0f1",
+      "name": "Automation Flow Builder Theme",
+      "legacyStyleIds": [
+        "saas-automation-flow-builder"
+      ],
+      "tokens": {
+        "canvas": "#F7F8FC",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EEF0F8",
+        "text": "#171A2B",
+        "muted": "#6F7489",
+        "accent": "#6D4AFF",
+        "border": "#D9DDEA"
+      },
+      "palette": [
+        "canvas #F7F8FC",
+        "surface #FFFFFF",
+        "surfaceAlt #EEF0F8",
+        "text #171A2B",
+        "muted #6F7489",
+        "accent #6D4AFF",
+        "border #D9DDEA"
+      ],
+      "appearance": "light",
+      "tones": [
+        "capable",
+        "clear",
+        "systematic",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "composio"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured operational configuration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "composio",
+          "label": "Composio",
+          "role": "integration-led automation and technical connectors"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "zapier",
+          "label": "Zapier",
+          "role": "clear trigger-action workflow language"
+        }
+      ]
+    },
+    {
+      "id": "theme-5daf646c47ed",
+      "name": "Technical Builder Showcase Theme",
+      "legacyStyleIds": [
+        "portfolio-technical-builder-showcase"
+      ],
+      "tokens": {
+        "canvas": "#08090B",
+        "surface": "#101216",
+        "surfaceAlt": "#181C22",
+        "text": "#F5F7FA",
+        "muted": "#929AA7",
+        "accent": "#38BDF8",
+        "border": "#29303A"
+      },
+      "palette": [
+        "canvas #08090B",
+        "surface #101216",
+        "surfaceAlt #181C22",
+        "text #F5F7FA",
+        "muted #929AA7",
+        "accent #38BDF8",
+        "border #29303A"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "credible",
+        "direct",
+        "independent",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "vercel"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cursor",
+          "label": "Cursor",
+          "role": "builder identity and product craft"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "expo",
+          "label": "Expo",
+          "role": "open projects and accessible developer storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vercel",
+          "label": "Vercel",
+          "role": "precise technical project proof"
+        }
+      ]
+    },
+    {
+      "id": "theme-5e2da808289e",
+      "name": "Case Study Narrative Theme",
+      "legacyStyleIds": [
+        "portfolio-case-study-narrative"
+      ],
+      "tokens": {
+        "canvas": "#F7F4EE",
+        "surface": "#FFFCF7",
+        "surfaceAlt": "#EDE7DD",
+        "text": "#201E1A",
+        "muted": "#716C64",
+        "accent": "#B45309",
+        "border": "#D9D1C5"
+      },
+      "palette": [
+        "canvas #F7F4EE",
+        "surface #FFFCF7",
+        "surfaceAlt #EDE7DD",
+        "text #201E1A",
+        "muted #716C64",
+        "accent #B45309",
+        "border #D9D1C5"
+      ],
+      "appearance": "light",
+      "tones": [
+        "crafted",
+        "credible",
+        "editorial",
+        "reflective"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "clay"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clay",
+          "label": "Clay",
+          "role": "art-directed case-study composition"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "webflow",
+          "label": "Webflow",
+          "role": "visual process explanation and project outcomes"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wired",
+          "label": "WIRED",
+          "role": "editorial narrative and evidence hierarchy"
+        }
+      ]
+    },
+    {
+      "id": "theme-6166d5cb9560",
+      "name": "Product Guides Library Theme",
+      "legacyStyleIds": [
+        "docs-product-guides-library"
+      ],
+      "tokens": {
+        "canvas": "#F8F7F3",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EFEEE8",
+        "text": "#25241F",
+        "muted": "#706F68",
+        "accent": "#2F855A",
+        "border": "#D9D7CF"
+      },
+      "palette": [
+        "canvas #F8F7F3",
+        "surface #FFFFFF",
+        "surfaceAlt #EFEEE8",
+        "text #25241F",
+        "muted #706F68",
+        "accent #2F855A",
+        "border #D9D7CF"
+      ],
+      "appearance": "light",
+      "tones": [
+        "calm",
+        "friendly",
+        "helpful",
+        "structured"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "notion"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "calm document hierarchy and task-oriented knowledge"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sanity",
+          "label": "Sanity",
+          "role": "structured content guidance and editorial organization"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "webflow",
+          "label": "Webflow",
+          "role": "product education and visual how-to paths"
+        }
+      ]
+    },
+    {
+      "id": "theme-629928757ab3",
+      "name": "Emerald Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-fa0a21e2"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#333C4D",
+        "muted": "#858A94",
+        "accent": "#66CC8A",
+        "border": "#D1D1D1"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #E8E8E8",
+        "surfaceAlt #D1D1D1",
+        "text #333C4D",
+        "muted #858A94",
+        "accent #66CC8A",
+        "border #D1D1D1"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "focused",
+        "professional",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "emerald",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "layout-structure reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-69614d996d0a",
+      "name": "Consumer Money Companion Theme",
+      "legacyStyleIds": [
+        "finance-consumer-money-companion"
+      ],
+      "tokens": {
+        "canvas": "#F4F9F3",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E1EEDD",
+        "text": "#1D3021",
+        "muted": "#667B69",
+        "accent": "#67A840",
+        "border": "#CCDCC8"
+      },
+      "palette": [
+        "canvas #F4F9F3",
+        "surface #FFFFFF",
+        "surfaceAlt #E1EEDD",
+        "text #1D3021",
+        "muted #667B69",
+        "accent #67A840",
+        "border #CCDCC8"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clear",
+        "empowering",
+        "friendly",
+        "reassuring"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "wise"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "trusted everyday payment context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "revolut",
+          "label": "Revolut",
+          "role": "consumer money overview and mobile polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wise",
+          "label": "Wise",
+          "role": "plain-language financial outcomes and accessible action"
+        }
+      ]
+    },
+    {
+      "id": "theme-730b2a5eb6e1",
+      "name": "Executive Transformation Brief Theme",
+      "legacyStyleIds": [
+        "enterprise-executive-transformation-brief"
+      ],
+      "tokens": {
+        "canvas": "#F5F1EA",
+        "surface": "#FFFCF7",
+        "surfaceAlt": "#E6DED2",
+        "text": "#20233A",
+        "muted": "#706B76",
+        "accent": "#2F62C9",
+        "border": "#D3CABE"
+      },
+      "palette": [
+        "canvas #F5F1EA",
+        "surface #FFFCF7",
+        "surfaceAlt #E6DED2",
+        "text #20233A",
+        "muted #706B76",
+        "accent #2F62C9",
+        "border #D3CABE"
+      ],
+      "appearance": "light",
+      "tones": [
+        "confident",
+        "measured",
+        "polished",
+        "strategic"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "hp"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "hp",
+          "label": "HP",
+          "role": "broad enterprise transformation storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "meta",
+          "label": "Meta",
+          "role": "portfolio-level platform narrative"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vodafone",
+          "label": "Vodafone",
+          "role": "large-scale customer and service outcomes"
+        }
+      ]
+    },
+    {
+      "id": "theme-80a4c13ae697",
+      "name": "Editorial Technical Docs Theme",
+      "legacyStyleIds": [
+        "editorial-technical-docs"
+      ],
+      "tokens": {
+        "canvas": "#F7F7F5",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EFEFEB",
+        "text": "#18181B",
+        "muted": "#71717A",
+        "accent": "#16A34A",
+        "border": "#D8D8D2"
+      },
+      "palette": [
+        "canvas #F7F7F5",
+        "surface #FFFFFF",
+        "surfaceAlt #EFEFEB",
+        "text #18181B",
+        "muted #71717A",
+        "accent #16A34A",
+        "border #D8D8D2"
+      ],
+      "appearance": "light",
+      "tones": [
+        "authoritative",
+        "clear",
+        "editorial",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "docs-editorial"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mintlify",
+          "label": "Mintlify",
+          "role": "reading-optimized documentation shell"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "quiet typography and document rhythm"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wired",
+          "label": "WIRED",
+          "role": "editorial hierarchy and dense prose"
+        }
+      ]
+    },
+    {
+      "id": "theme-80e9256a32cb",
+      "name": "Wellness Companion Soft Theme",
+      "legacyStyleIds": [
+        "consumer-wellness-companion-soft"
+      ],
+      "tokens": {
+        "canvas": "#FFF8EF",
+        "surface": "#FFFCF7",
+        "surfaceAlt": "#E9F0DF",
+        "text": "#2D3328",
+        "muted": "#747B6E",
+        "accent": "#7EAA75",
+        "border": "#DADFCF"
+      },
+      "palette": [
+        "canvas #FFF8EF",
+        "surface #FFFCF7",
+        "surfaceAlt #E9F0DF",
+        "text #2D3328",
+        "muted #747B6E",
+        "accent #7EAA75",
+        "border #DADFCF"
+      ],
+      "appearance": "light",
+      "tones": [
+        "gentle",
+        "human",
+        "optimistic",
+        "reassuring"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "airbnb"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airbnb",
+          "label": "Airbnb",
+          "role": "warm human moments and reassuring service tone"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "soft visual discovery and personal aspiration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "starbucks",
+          "label": "Starbucks",
+          "role": "daily ritual and familiar personal warmth"
+        }
+      ]
+    },
+    {
+      "id": "theme-81d6969c7137",
+      "name": "Dracula Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-b0deb9dd"
+      ],
+      "tokens": {
+        "canvas": "#282A36",
+        "surface": "#232530",
+        "surfaceAlt": "#1F202A",
+        "text": "#F8F8F3",
+        "muted": "#A5A6A7",
+        "accent": "#FF79C6",
+        "border": "#1F202A"
+      },
+      "palette": [
+        "canvas #282A36",
+        "surface #232530",
+        "surfaceAlt #1F202A",
+        "text #F8F8F3",
+        "muted #A5A6A7",
+        "accent #FF79C6",
+        "border #1F202A"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "modern",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "dracula",
+          "path": "packages/daisyui/src/themes/dracula.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dracula.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dracula.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dracula.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-843b6b9f11bd",
+      "name": "Knowledge Base Help Center Theme",
+      "legacyStyleIds": [
+        "docs-knowledge-base-help-center"
+      ],
+      "tokens": {
+        "canvas": "#F8F7FF",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#EDEBFA",
+        "text": "#26233A",
+        "muted": "#716E84",
+        "accent": "#5B5BD6",
+        "border": "#DAD6EC"
+      },
+      "palette": [
+        "canvas #F8F7FF",
+        "surface #FFFFFF",
+        "surfaceAlt #EDEBFA",
+        "text #26233A",
+        "muted #716E84",
+        "accent #5B5BD6",
+        "border #DAD6EC"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "clear",
+        "reassuring",
+        "supportive"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "intercom"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured self-service categories"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "customer-language help paths and guided support"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "slack",
+          "label": "Slack",
+          "role": "friendly troubleshooting and approachable guidance"
+        }
+      ]
+    },
+    {
+      "id": "theme-8a142f43cabc",
+      "name": "Cinematic Product Reveal Theme",
+      "legacyStyleIds": [
+        "launch-cinematic-product-reveal"
+      ],
+      "tokens": {
+        "canvas": "#08040D",
+        "surface": "#120A1B",
+        "surfaceAlt": "#20102E",
+        "text": "#FFF8FF",
+        "muted": "#B9A8C2",
+        "accent": "#E840B8",
+        "border": "#382145"
+      },
+      "palette": [
+        "canvas #08040D",
+        "surface #120A1B",
+        "surfaceAlt #20102E",
+        "text #FFF8FF",
+        "muted #B9A8C2",
+        "accent #E840B8",
+        "border #382145"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "cinematic",
+        "dramatic",
+        "immersive",
+        "premium"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "runwayml"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "elevenlabs",
+          "label": "ElevenLabs",
+          "role": "immersive media product storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "playstation",
+          "label": "PlayStation",
+          "role": "dramatic entertainment launch pacing"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "runwayml",
+          "label": "Runway",
+          "role": "cinematic creative-tool reveal"
+        }
+      ]
+    },
+    {
+      "id": "theme-8ff2d894f824",
+      "name": "Consumer Brand Story Theme",
+      "legacyStyleIds": [
+        "consumer-brand-story"
+      ],
+      "tokens": {
+        "canvas": "#FFF8F0",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#F4E4D3",
+        "text": "#2B2118",
+        "muted": "#806D5C",
+        "accent": "#F97316",
+        "border": "#E8D2BC"
+      },
+      "palette": [
+        "canvas #FFF8F0",
+        "surface #FFFFFF",
+        "surfaceAlt #F4E4D3",
+        "text #2B2118",
+        "muted #806D5C",
+        "accent #F97316",
+        "border #E8D2BC"
+      ],
+      "appearance": "light",
+      "tones": [
+        "human",
+        "memorable",
+        "visual",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "brand-editorial"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airbnb",
+          "label": "Airbnb",
+          "role": "warm image-led storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nike",
+          "label": "Nike",
+          "role": "confident campaign rhythm"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "spotify",
+          "label": "Spotify",
+          "role": "bold consumer color and media"
+        }
+      ]
+    },
+    {
+      "id": "theme-98228386c2b3",
+      "name": "Forest Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-184a9fda"
+      ],
+      "tokens": {
+        "canvas": "#1B1717",
+        "surface": "#161212",
+        "surfaceAlt": "#110D0D",
+        "text": "#CAC9C9",
+        "muted": "#848282",
+        "accent": "#1FB854",
+        "border": "#110D0D"
+      },
+      "palette": [
+        "canvas #1B1717",
+        "surface #161212",
+        "surfaceAlt #110D0D",
+        "text #CAC9C9",
+        "muted #848282",
+        "accent #1FB854",
+        "border #110D0D"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "forest",
+          "path": "packages/daisyui/src/themes/forest.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/forest.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/forest.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/forest.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-9a9439a350dc",
+      "name": "Pastel Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-community-a251fa4c"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#F9FAFB",
+        "surfaceAlt": "#E5E6E7",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#E8D4FF",
+        "border": "#E5E6E7"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #F9FAFB",
+        "surfaceAlt #E5E6E7",
+        "text #161616",
+        "muted #737373",
+        "accent #E8D4FF",
+        "border #E5E6E7"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "gentle",
+        "playful",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "pastel",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-9e86370293f7",
+      "name": "Incident Response Wallboard Theme",
+      "legacyStyleIds": [
+        "dashboard-incident-response-wallboard"
+      ],
+      "tokens": {
+        "canvas": "#070C12",
+        "surface": "#0D141D",
+        "surfaceAlt": "#14202B",
+        "text": "#EDF5FA",
+        "muted": "#8193A0",
+        "accent": "#F43F5E",
+        "border": "#263541"
+      },
+      "palette": [
+        "canvas #070C12",
+        "surface #0D141D",
+        "surfaceAlt #14202B",
+        "text #EDF5FA",
+        "muted #8193A0",
+        "accent #F43F5E",
+        "border #263541"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "resilient",
+        "technical",
+        "urgent"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "sentry"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "high-volume service analytics"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "posthog",
+          "label": "PostHog",
+          "role": "event timelines and operational exploration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sentry",
+          "label": "Sentry",
+          "role": "incident groups, severity, and ownership"
+        }
+      ]
+    },
+    {
+      "id": "theme-a1ba3ddb542f",
+      "name": "Operational SaaS Console Theme",
+      "legacyStyleIds": [
+        "operational-saas-console"
+      ],
+      "tokens": {
+        "canvas": "#0E1015",
+        "surface": "#151821",
+        "surfaceAlt": "#202431",
+        "text": "#F4F4F5",
+        "muted": "#9CA3AF",
+        "accent": "#8B5CF6",
+        "border": "#303545"
+      },
+      "palette": [
+        "canvas #0E1015",
+        "surface #151821",
+        "surfaceAlt #202431",
+        "text #F4F4F5",
+        "muted #9CA3AF",
+        "accent #8B5CF6",
+        "border #303545"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "calm",
+        "focused",
+        "operational",
+        "precise"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "linear-like"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "friendly operational product surfaces"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "linear.app",
+          "label": "Linear",
+          "role": "compact app shell, rows, and selected states"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "calm workspace hierarchy"
+        }
+      ]
+    },
+    {
+      "id": "theme-a310bb4e9034",
+      "name": "Wireframe Theme",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-0beed9d3"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#EBEBEB",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#D4D4D4",
+        "border": "#EBEBEB"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #F5F5F5",
+        "surfaceAlt #EBEBEB",
+        "text #161616",
+        "muted #737373",
+        "accent #D4D4D4",
+        "border #EBEBEB"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "wireframe",
+          "path": "packages/daisyui/src/themes/wireframe.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/wireframe.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lofi.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/wireframe.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/wireframe.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-a54719974d52",
+      "name": "Collaborative Workspace Canvas Theme",
+      "legacyStyleIds": [
+        "saas-collaborative-workspace-canvas"
+      ],
+      "tokens": {
+        "canvas": "#F5F4FF",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#ECEAFB",
+        "text": "#25223B",
+        "muted": "#77728D",
+        "accent": "#7C3AED",
+        "border": "#D7D3EB"
+      },
+      "palette": [
+        "canvas #F5F4FF",
+        "surface #FFFFFF",
+        "surfaceAlt #ECEAFB",
+        "text #25223B",
+        "muted #77728D",
+        "accent #7C3AED",
+        "border #D7D3EB"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "collaborative",
+        "flexible",
+        "organized"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "miro"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "figma",
+          "label": "Figma",
+          "role": "multiplayer context and flexible creative controls"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "collaborative canvas, presence, and approachable tools"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "calm shared workspace hierarchy"
+        }
+      ]
+    },
+    {
+      "id": "theme-a5edca440d2d",
+      "name": "Direct Response Product Detail Theme",
+      "legacyStyleIds": [
+        "commerce-direct-response-product-detail"
+      ],
+      "tokens": {
+        "canvas": "#F4F3F0",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E2E0DA",
+        "text": "#151515",
+        "muted": "#6D6C68",
+        "accent": "#2563EB",
+        "border": "#CECCC6"
+      },
+      "palette": [
+        "canvas #F4F3F0",
+        "surface #FFFFFF",
+        "surfaceAlt #E2E0DA",
+        "text #151515",
+        "muted #6D6C68",
+        "accent #2563EB",
+        "border #CECCC6"
+      ],
+      "appearance": "light",
+      "tones": [
+        "confident",
+        "focused",
+        "persuasive",
+        "tactile"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "apple"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "apple",
+          "label": "Apple",
+          "role": "focused product story and purchasing clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "bugatti",
+          "label": "Bugatti",
+          "role": "premium material presence and dramatic detail"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "tesla",
+          "label": "Tesla",
+          "role": "direct-response product configuration"
+        }
+      ]
+    },
+    {
+      "id": "theme-ab14867f7dd9",
+      "name": "Experiment Control Workbench Theme",
+      "legacyStyleIds": [
+        "research-experiment-control-workbench"
+      ],
+      "tokens": {
+        "canvas": "#F3F7F8",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E4ECEE",
+        "text": "#142328",
+        "muted": "#63767C",
+        "accent": "#0F9B8E",
+        "border": "#C9D7DA"
+      },
+      "palette": [
+        "canvas #F3F7F8",
+        "surface #FFFFFF",
+        "surfaceAlt #E4ECEE",
+        "text #142328",
+        "muted #63767C",
+        "accent #0F9B8E",
+        "border #C9D7DA"
+      ],
+      "appearance": "light",
+      "tones": [
+        "controlled",
+        "experimental",
+        "methodical",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "replicate"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "high-volume run analytics and traceability"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ollama",
+          "label": "Ollama",
+          "role": "local experiment control and technical simplicity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "replicate",
+          "label": "Replicate",
+          "role": "runnable model experiments and artifact output"
+        }
+      ]
+    },
+    {
+      "id": "theme-ae2f6c352cb9",
+      "name": "Enterprise Infrastructure Blueprint Theme",
+      "legacyStyleIds": [
+        "enterprise-infrastructure-blueprint"
+      ],
+      "tokens": {
+        "canvas": "#F3F5F8",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E9ECF3",
+        "text": "#1B2030",
+        "muted": "#657083",
+        "accent": "#6246B8",
+        "border": "#CCD2DD"
+      },
+      "palette": [
+        "canvas #F3F5F8",
+        "surface #FFFFFF",
+        "surfaceAlt #E9ECF3",
+        "text #1B2030",
+        "muted #657083",
+        "accent #6246B8",
+        "border #CCD2DD"
+      ],
+      "appearance": "light",
+      "tones": [
+        "architectural",
+        "controlled",
+        "credible",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "hashicorp"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "hashicorp",
+          "label": "HashiCorp",
+          "role": "infrastructure architecture and governed platform clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mongodb",
+          "label": "MongoDB",
+          "role": "developer-facing data platform structure"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nvidia",
+          "label": "NVIDIA",
+          "role": "technical system proof at enterprise scale"
+        }
+      ]
+    },
+    {
+      "id": "theme-b0248fe53722",
+      "name": "Scientific Publication Archive Theme",
+      "legacyStyleIds": [
+        "research-scientific-publication-archive"
+      ],
+      "tokens": {
+        "canvas": "#F8F5EE",
+        "surface": "#FFFCF7",
+        "surfaceAlt": "#ECE7DD",
+        "text": "#26231D",
+        "muted": "#746F66",
+        "accent": "#1D6FA5",
+        "border": "#D8D1C5"
+      },
+      "palette": [
+        "canvas #F8F5EE",
+        "surface #FFFCF7",
+        "surfaceAlt #ECE7DD",
+        "text #26231D",
+        "muted #746F66",
+        "accent #1D6FA5",
+        "border #D8D1C5"
+      ],
+      "appearance": "light",
+      "tones": [
+        "accessible",
+        "authoritative",
+        "editorial",
+        "scholarly"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "wired"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "nvidia",
+          "label": "NVIDIA",
+          "role": "technical publication and figure polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wired",
+          "label": "WIRED",
+          "role": "accessible science editorial hierarchy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "x.ai",
+          "label": "xAI",
+          "role": "stark research statement and lab identity"
+        }
+      ]
+    },
+    {
+      "id": "theme-b5cc7d74e8d4",
+      "name": "Valentine Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-community-4c776093"
+      ],
+      "tokens": {
+        "canvas": "#FCF2F8",
+        "surface": "#F9E4F0",
+        "surfaceAlt": "#F9CBE5",
+        "text": "#C0005B",
+        "muted": "#D8619A",
+        "accent": "#F43098",
+        "border": "#F9CBE5"
+      },
+      "palette": [
+        "canvas #FCF2F8",
+        "surface #F9E4F0",
+        "surfaceAlt #F9CBE5",
+        "text #C0005B",
+        "muted #D8619A",
+        "accent #F43098",
+        "border #F9CBE5"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "gentle",
+        "playful",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "valentine",
+          "path": "packages/daisyui/src/themes/valentine.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/valentine.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/valentine.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/valentine.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-b6e7a0e0269b",
+      "name": "Lofi Theme",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-7a607af2"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#EBEBEB",
+        "text": "#000000",
+        "muted": "#666666",
+        "accent": "#0D0D0D",
+        "border": "#EBEBEB"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #F5F5F5",
+        "surfaceAlt #EBEBEB",
+        "text #000000",
+        "muted #666666",
+        "accent #0D0D0D",
+        "border #EBEBEB"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "lofi",
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lofi.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/hashicorp/DESIGN.md",
+          "slug": "hashicorp",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:d2df9be72d867e48d318fd18db04e60a78357c27e392ab921fc2ba7f46951442",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/hashicorp/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lofi.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-bfae41989da8",
+      "name": "Field Operations Mapboard Theme",
+      "legacyStyleIds": [
+        "dashboard-field-operations-mapboard"
+      ],
+      "tokens": {
+        "canvas": "#EEF3F4",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#DDE7E8",
+        "text": "#17282C",
+        "muted": "#62767A",
+        "accent": "#0284C7",
+        "border": "#C4D2D4"
+      },
+      "palette": [
+        "canvas #EEF3F4",
+        "surface #FFFFFF",
+        "surfaceAlt #DDE7E8",
+        "text #17282C",
+        "muted #62767A",
+        "accent #0284C7",
+        "border #C4D2D4"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clear",
+        "operational",
+        "responsive",
+        "spatial"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "uber"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured assignment and resource views"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "uber",
+          "label": "Uber",
+          "role": "location-aware dispatch and operational immediacy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vodafone",
+          "label": "Vodafone",
+          "role": "regional service operations and status"
+        }
+      ]
+    },
+    {
+      "id": "theme-c11d951bdef0",
+      "name": "Bumblebee Theme",
+      "legacyStyleIds": [
+        "launch-centered-hero-trust-dc16f9c6"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#F5F5F5",
+        "surfaceAlt": "#E4E4E4",
+        "text": "#161616",
+        "muted": "#737373",
+        "accent": "#F7C800",
+        "border": "#E4E4E4"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #F5F5F5",
+        "surfaceAlt #E4E4E4",
+        "text #161616",
+        "muted #737373",
+        "accent #F7C800",
+        "border #E4E4E4"
+      ],
+      "appearance": "light",
+      "tones": [
+        "energetic",
+        "modern",
+        "trustworthy",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "bumblebee",
+          "path": "packages/daisyui/src/themes/bumblebee.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/bumblebee.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/framer/DESIGN.md",
+          "slug": "framer",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:a5d47dddacf5a04577cec0be6fe0fc53b7402254c7686874af3e59bcc7588cb4",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/framer/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "interaction-pattern reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/bumblebee.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/bumblebee.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-c6ecb10c1aa8",
+      "name": "AI Lab Research Notebook Theme",
+      "legacyStyleIds": [
+        "ai-lab-research-notebook"
+      ],
+      "tokens": {
+        "canvas": "#F1F5F9",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E2E8F0",
+        "text": "#0F172A",
+        "muted": "#64748B",
+        "accent": "#0891B2",
+        "border": "#CBD5E1"
+      },
+      "palette": [
+        "canvas #F1F5F9",
+        "surface #FFFFFF",
+        "surfaceAlt #E2E8F0",
+        "text #0F172A",
+        "muted #64748B",
+        "accent #0891B2",
+        "border #CBD5E1"
+      ],
+      "appearance": "light",
+      "tones": [
+        "analytical",
+        "credible",
+        "experimental",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "research-lab"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mistral.ai",
+          "label": "Mistral AI",
+          "role": "engineered model and benchmark storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "together.ai",
+          "label": "Together AI",
+          "role": "technical blueprint and infrastructure proof"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "x.ai",
+          "label": "xAI",
+          "role": "stark research-lab presentation"
+        }
+      ]
+    },
+    {
+      "id": "theme-ca63703dc9b7",
+      "name": "Acid Theme",
+      "legacyStyleIds": [
+        "launch-centered-hero-story-cff58e59"
+      ],
+      "tokens": {
+        "canvas": "#F8F8F8",
+        "surface": "#EEEEEE",
+        "surfaceAlt": "#E1E1E1",
+        "text": "#000000",
+        "muted": "#636363",
+        "accent": "#FF42F4",
+        "border": "#E1E1E1"
+      },
+      "palette": [
+        "canvas #F8F8F8",
+        "surface #EEEEEE",
+        "surfaceAlt #E1E1E1",
+        "text #000000",
+        "muted #636363",
+        "accent #FF42F4",
+        "border #E1E1E1"
+      ],
+      "appearance": "light",
+      "tones": [
+        "energetic",
+        "expressive",
+        "modern",
+        "playful"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "acid",
+          "path": "packages/daisyui/src/themes/acid.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/acid.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/acid.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/acid.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cyberpunk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cyberpunk.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-cab66fc46ee1",
+      "name": "Investment Research Terminal Theme",
+      "legacyStyleIds": [
+        "finance-investment-research-terminal"
+      ],
+      "tokens": {
+        "canvas": "#07090D",
+        "surface": "#0E1219",
+        "surfaceAlt": "#171E29",
+        "text": "#F5F3E8",
+        "muted": "#96978F",
+        "accent": "#EAB308",
+        "border": "#2C3440"
+      },
+      "palette": [
+        "canvas #07090D",
+        "surface #0E1219",
+        "surfaceAlt #171E29",
+        "text #F5F3E8",
+        "muted #96978F",
+        "accent #EAB308",
+        "border #2C3440"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "analytical",
+        "disciplined",
+        "fast",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "binance"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "binance",
+          "label": "Binance",
+          "role": "fast market data and asset comparison"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "analytical query and chart density"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "institutional market research presentation"
+        }
+      ]
+    },
+    {
+      "id": "theme-cf938d4f35ab",
+      "name": "Data Dashboard Command Center Theme",
+      "legacyStyleIds": [
+        "data-dashboard-command-center"
+      ],
+      "tokens": {
+        "canvas": "#081018",
+        "surface": "#0E1925",
+        "surfaceAlt": "#152536",
+        "text": "#E6F1FF",
+        "muted": "#7F95AA",
+        "accent": "#22C55E",
+        "border": "#233A4D"
+      },
+      "palette": [
+        "canvas #081018",
+        "surface #0E1925",
+        "surfaceAlt #152536",
+        "text #E6F1FF",
+        "muted #7F95AA",
+        "accent #22C55E",
+        "border #233A4D"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "analytical",
+        "focused",
+        "reliable"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "tremor",
+          "slug": "dashboard-patterns"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "technical analytics presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "institutional data clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sentry",
+          "label": "Sentry",
+          "role": "monitoring density and incident states"
+        }
+      ]
+    },
+    {
+      "id": "theme-d1e5f8a20f1b",
+      "name": "Fantasy Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-8137dc5b"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#1F2937",
+        "muted": "#797F87",
+        "accent": "#6B0072",
+        "border": "#D1D1D1"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #E8E8E8",
+        "surfaceAlt #D1D1D1",
+        "text #1F2937",
+        "muted #797F87",
+        "accent #6B0072",
+        "border #D1D1D1"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "focused",
+        "professional",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "fantasy",
+          "path": "packages/daisyui/src/themes/fantasy.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/fantasy.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "layout-structure reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/fantasy.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/fantasy.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-d6b49b325bcc",
+      "name": "Portfolio Studio Grid Theme",
+      "legacyStyleIds": [
+        "portfolio-studio-grid"
+      ],
+      "tokens": {
+        "canvas": "#F2F0EB",
+        "surface": "#FBFAF7",
+        "surfaceAlt": "#DED9CF",
+        "text": "#161616",
+        "muted": "#6B675F",
+        "accent": "#2563EB",
+        "border": "#CFC8BC"
+      },
+      "palette": [
+        "canvas #F2F0EB",
+        "surface #FBFAF7",
+        "surfaceAlt #DED9CF",
+        "text #161616",
+        "muted #6B675F",
+        "accent #2563EB",
+        "border #CFC8BC"
+      ],
+      "appearance": "light",
+      "tones": [
+        "confident",
+        "curated",
+        "editorial",
+        "visual"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "studio-portfolio"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clay",
+          "label": "Clay",
+          "role": "art-directed studio composition"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "figma",
+          "label": "Figma",
+          "role": "creative color and professional structure"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "framer",
+          "label": "Framer",
+          "role": "design-forward project presentation"
+        }
+      ]
+    },
+    {
+      "id": "theme-d7f1bc905e59",
+      "name": "Luxury Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-41fb4cb8"
+      ],
+      "tokens": {
+        "canvas": "#09090B",
+        "surface": "#171618",
+        "surfaceAlt": "#1E1D1F",
+        "text": "#DCA54D",
+        "muted": "#886733",
+        "accent": "#FFFFFF",
+        "border": "#1E1D1F"
+      },
+      "palette": [
+        "canvas #09090B",
+        "surface #171618",
+        "surfaceAlt #1E1D1F",
+        "text #DCA54D",
+        "muted #886733",
+        "accent #FFFFFF",
+        "border #1E1D1F"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "confident",
+        "precise",
+        "premium",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "luxury",
+          "path": "packages/daisyui/src/themes/luxury.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/luxury.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/luxury.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/luxury.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-d8badd78ceaf",
+      "name": "Corporate Theme",
+      "legacyStyleIds": [
+        "enterprise-dashboard-grid-data-817068c8"
+      ],
+      "tokens": {
+        "canvas": "#FFFFFF",
+        "surface": "#E8E8E8",
+        "surfaceAlt": "#D1D1D1",
+        "text": "#181A2A",
+        "muted": "#74767F",
+        "accent": "#0082C4",
+        "border": "#D1D1D1"
+      },
+      "palette": [
+        "canvas #FFFFFF",
+        "surface #E8E8E8",
+        "surfaceAlt #D1D1D1",
+        "text #181A2A",
+        "muted #74767F",
+        "accent #0082C4",
+        "border #D1D1D1"
+      ],
+      "appearance": "light",
+      "tones": [
+        "analytical",
+        "focused",
+        "professional",
+        "reliable"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "corporate",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-de536faaa594",
+      "name": "Proof Led Early Access Theme",
+      "legacyStyleIds": [
+        "launch-proof-led-early-access"
+      ],
+      "tokens": {
+        "canvas": "#F7FAFF",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E8F0FF",
+        "text": "#111827",
+        "muted": "#64748B",
+        "accent": "#2563EB",
+        "border": "#CFDAEA"
+      },
+      "palette": [
+        "canvas #F7FAFF",
+        "surface #FFFFFF",
+        "surfaceAlt #E8F0FF",
+        "text #111827",
+        "muted #64748B",
+        "accent #2563EB",
+        "border #CFDAEA"
+      ],
+      "appearance": "light",
+      "tones": [
+        "credible",
+        "direct",
+        "energetic",
+        "product-led"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "lovable"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "lovable",
+          "label": "Lovable",
+          "role": "immediate builder proof and early product momentum"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "replicate",
+          "label": "Replicate",
+          "role": "working technical demo and accessible experimentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vercel",
+          "label": "Vercel",
+          "role": "direct product contract and confident action"
+        }
+      ]
+    },
+    {
+      "id": "theme-df58ffd8899d",
+      "name": "Lemonade Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-community-4ab63e7f"
+      ],
+      "tokens": {
+        "canvas": "#F8FDEF",
+        "surface": "#E1E6D9",
+        "surfaceAlt": "#CBCFC3",
+        "text": "#151614",
+        "muted": "#70726C",
+        "accent": "#4C9100",
+        "border": "#CBCFC3"
+      },
+      "palette": [
+        "canvas #F8FDEF",
+        "surface #E1E6D9",
+        "surfaceAlt #CBCFC3",
+        "text #151614",
+        "muted #70726C",
+        "accent #4C9100",
+        "border #CBCFC3"
+      ],
+      "appearance": "light",
+      "tones": [
+        "approachable",
+        "gentle",
+        "optimistic",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "lemonade",
+          "path": "packages/daisyui/src/themes/lemonade.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lemonade.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lemonade.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lemonade.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-e340f2e828e6",
+      "name": "Benchmark Evaluation Board Theme",
+      "legacyStyleIds": [
+        "research-benchmark-evaluation-board"
+      ],
+      "tokens": {
+        "canvas": "#F2F6F8",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E3ECEF",
+        "text": "#10212A",
+        "muted": "#637780",
+        "accent": "#0891B2",
+        "border": "#C9D8DD"
+      },
+      "palette": [
+        "canvas #F2F6F8",
+        "surface #FFFFFF",
+        "surfaceAlt #E3ECEF",
+        "text #10212A",
+        "muted #637780",
+        "accent #0891B2",
+        "border #C9D8DD"
+      ],
+      "appearance": "light",
+      "tones": [
+        "analytical",
+        "competitive",
+        "rigorous",
+        "transparent"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "together.ai"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cohere",
+          "label": "Cohere",
+          "role": "clear enterprise model evaluation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mistral.ai",
+          "label": "Mistral AI",
+          "role": "technical benchmark storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "together.ai",
+          "label": "Together AI",
+          "role": "model comparison and infrastructure evidence"
+        }
+      ]
+    },
+    {
+      "id": "theme-e826c49c6ce2",
+      "name": "Enterprise Trust Solution Theme",
+      "legacyStyleIds": [
+        "enterprise-trust-solution"
+      ],
+      "tokens": {
+        "canvas": "#F3F6FA",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E8EEF6",
+        "text": "#10233E",
+        "muted": "#64748B",
+        "accent": "#2563EB",
+        "border": "#CBD5E1"
+      },
+      "palette": [
+        "canvas #F3F6FA",
+        "surface #FFFFFF",
+        "surfaceAlt #E8EEF6",
+        "text #10233E",
+        "muted #64748B",
+        "accent #2563EB",
+        "border #CBD5E1"
+      ],
+      "appearance": "light",
+      "tones": [
+        "measured",
+        "professional",
+        "stable",
+        "trustworthy"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "enterprise-saas"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "hashicorp",
+          "label": "HashiCorp",
+          "role": "infrastructure credibility and product clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "structured enterprise information design"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "measured trust and premium warmth"
+        }
+      ]
+    },
+    {
+      "id": "theme-eb95bcba4dd6",
+      "name": "Synthwave Theme",
+      "legacyStyleIds": [
+        "portfolio-centered-hero-story-d5726f45"
+      ],
+      "tokens": {
+        "canvas": "#09002F",
+        "surface": "#120B3D",
+        "surfaceAlt": "#1C184B",
+        "text": "#A2B2FF",
+        "muted": "#656BAC",
+        "accent": "#F861B4",
+        "border": "#1C184B"
+      },
+      "palette": [
+        "canvas #09002F",
+        "surface #120B3D",
+        "surfaceAlt #1C184B",
+        "text #A2B2FF",
+        "muted #656BAC",
+        "accent #F861B4",
+        "border #1C184B"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "bold",
+        "dramatic",
+        "energetic",
+        "experimental"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "synthwave",
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-ecbd72a17f2e",
+      "name": "Media Discovery Playground Theme",
+      "legacyStyleIds": [
+        "consumer-media-discovery-playground"
+      ],
+      "tokens": {
+        "canvas": "#0D0712",
+        "surface": "#17101E",
+        "surfaceAlt": "#281734",
+        "text": "#FFF7FF",
+        "muted": "#B39DBB",
+        "accent": "#A3E635",
+        "border": "#3C2946"
+      },
+      "palette": [
+        "canvas #0D0712",
+        "surface #17101E",
+        "surfaceAlt #281734",
+        "text #FFF7FF",
+        "muted #B39DBB",
+        "accent #A3E635",
+        "border #3C2946"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "energetic",
+        "expressive",
+        "immersive",
+        "personal"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "spotify"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "visual collection browsing and taste signals"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "playstation",
+          "label": "PlayStation",
+          "role": "immersive entertainment presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "spotify",
+          "label": "Spotify",
+          "role": "personalized media discovery and cultural energy"
+        }
+      ]
+    },
+    {
+      "id": "theme-f2bfde2d0b14",
+      "name": "Autumn Theme",
+      "legacyStyleIds": [
+        "consumer-centered-hero-story-2f0b340c"
+      ],
+      "tokens": {
+        "canvas": "#F1F1F1",
+        "surface": "#DBDBDB",
+        "surfaceAlt": "#C5C5C5",
+        "text": "#141414",
+        "muted": "#6C6C6C",
+        "accent": "#8C0327",
+        "border": "#C5C5C5"
+      },
+      "palette": [
+        "canvas #F1F1F1",
+        "surface #DBDBDB",
+        "surfaceAlt #C5C5C5",
+        "text #141414",
+        "muted #6C6C6C",
+        "accent #8C0327",
+        "border #C5C5C5"
+      ],
+      "appearance": "light",
+      "tones": [
+        "curated",
+        "human",
+        "memorable",
+        "warm"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "autumn",
+          "path": "packages/daisyui/src/themes/autumn.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/autumn.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/autumn.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/autumn.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "layout-structure reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "content-hierarchy reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-f3406a2d20c8",
+      "name": "Developer API Observability Lab Theme",
+      "legacyStyleIds": [
+        "developer-api-observability-lab"
+      ],
+      "tokens": {
+        "canvas": "#07111A",
+        "surface": "#0D1A26",
+        "surfaceAlt": "#122535",
+        "text": "#EAF7FF",
+        "muted": "#7FA3B8",
+        "accent": "#22D3EE",
+        "border": "#224156"
+      },
+      "palette": [
+        "canvas #07111A",
+        "surface #0D1A26",
+        "surfaceAlt #122535",
+        "text #EAF7FF",
+        "muted #7FA3B8",
+        "accent #22D3EE",
+        "border #224156"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "analytical",
+        "diagnostic",
+        "technical",
+        "urgent"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "sentry"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "high-density technical data presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "posthog",
+          "label": "PostHog",
+          "role": "developer analytics and event exploration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sentry",
+          "label": "Sentry",
+          "role": "actionable error groups and incident severity"
+        }
+      ]
+    },
+    {
+      "id": "theme-f4c5eeff40af",
+      "name": "Developer CLI Workbench Theme",
+      "legacyStyleIds": [
+        "developer-cli-workbench"
+      ],
+      "tokens": {
+        "canvas": "#070A0D",
+        "surface": "#0D1318",
+        "surfaceAlt": "#141D22",
+        "text": "#F4F7F5",
+        "muted": "#8FA39A",
+        "accent": "#4ADE80",
+        "border": "#26352E"
+      },
+      "palette": [
+        "canvas #070A0D",
+        "surface #0D1318",
+        "surfaceAlt #141D22",
+        "text #F4F7F5",
+        "muted #8FA39A",
+        "accent #4ADE80",
+        "border #26352E"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "fast",
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "warp"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cursor",
+          "label": "Cursor",
+          "role": "focused technical product presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "opencode.ai",
+          "label": "OpenCode",
+          "role": "open developer-tool positioning and code-native detail"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "warp",
+          "label": "Warp",
+          "role": "terminal workflow clarity and command-first interaction"
+        }
+      ]
+    },
+    {
+      "id": "theme-f63a6de17ac0",
+      "name": "Community Countdown Campaign Theme",
+      "legacyStyleIds": [
+        "launch-community-countdown-campaign"
+      ],
+      "tokens": {
+        "canvas": "#071A3A",
+        "surface": "#0D2A57",
+        "surfaceAlt": "#12396F",
+        "text": "#FFF9E8",
+        "muted": "#B9CAE6",
+        "accent": "#FFCE3A",
+        "border": "#28528B"
+      },
+      "palette": [
+        "canvas #071A3A",
+        "surface #0D2A57",
+        "surfaceAlt #12396F",
+        "text #FFF9E8",
+        "muted #B9CAE6",
+        "accent #FFCE3A",
+        "border #28528B"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "anticipatory",
+        "bold",
+        "playful",
+        "social"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "nintendo-2001"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "nintendo-2001",
+          "label": "Nintendo 2001",
+          "role": "playful campaign energy and fan anticipation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "collectible inspiration and shareable discovery"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "spotify",
+          "label": "Spotify",
+          "role": "community culture and bold media color"
+        }
+      ]
+    },
+    {
+      "id": "theme-f6ed658055b3",
+      "name": "Treasury Operations Console Theme",
+      "legacyStyleIds": [
+        "finance-treasury-operations-console"
+      ],
+      "tokens": {
+        "canvas": "#080D18",
+        "surface": "#101827",
+        "surfaceAlt": "#18243A",
+        "text": "#F1F5FB",
+        "muted": "#8C9BB2",
+        "accent": "#8B5CF6",
+        "border": "#293A55"
+      },
+      "palette": [
+        "canvas #080D18",
+        "surface #101827",
+        "surfaceAlt #18243A",
+        "text #F1F5FB",
+        "muted #8C9BB2",
+        "accent #8B5CF6",
+        "border #293A55"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "controlled",
+        "institutional",
+        "operational",
+        "precise"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "stripe"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "institutional balances and transaction clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "kraken",
+          "label": "Kraken",
+          "role": "dense financial operations and risk context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "stripe",
+          "label": "Stripe",
+          "role": "payment operations precision and platform polish"
+        }
+      ]
+    },
+    {
+      "id": "theme-f96c3826c864",
+      "name": "Nord Theme",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-4ab099d9"
+      ],
+      "tokens": {
+        "canvas": "#ECEFF4",
+        "surface": "#E5E9F0",
+        "surfaceAlt": "#D8DEE9",
+        "text": "#2E3440",
+        "muted": "#7A7F88",
+        "accent": "#5E81AC",
+        "border": "#D8DEE9"
+      },
+      "palette": [
+        "canvas #ECEFF4",
+        "surface #E5E9F0",
+        "surfaceAlt #D8DEE9",
+        "text #2E3440",
+        "muted #7A7F88",
+        "accent #5E81AC",
+        "border #D8DEE9"
+      ],
+      "appearance": "light",
+      "tones": [
+        "clean",
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "nord",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/hashicorp/DESIGN.md",
+          "slug": "hashicorp",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:d2df9be72d867e48d318fd18db04e60a78357c27e392ab921fc2ba7f46951442",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/hashicorp/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "theme-f9db2dc6b038",
+      "name": "Executive KPI Briefing Theme",
+      "legacyStyleIds": [
+        "dashboard-executive-kpi-briefing"
+      ],
+      "tokens": {
+        "canvas": "#F4F3EF",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#E8E8E2",
+        "text": "#15233A",
+        "muted": "#687180",
+        "accent": "#2563A8",
+        "border": "#D1D4D6"
+      },
+      "palette": [
+        "canvas #F4F3EF",
+        "surface #FFFFFF",
+        "surfaceAlt #E8E8E2",
+        "text #15233A",
+        "muted #687180",
+        "accent #2563A8",
+        "border #D1D4D6"
+      ],
+      "appearance": "light",
+      "tones": [
+        "analytical",
+        "authoritative",
+        "calm",
+        "strategic"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "ibm"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "high-value metric clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "executive information hierarchy and analytical restraint"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "board-ready trust and polished measurement"
+        }
+      ]
+    },
+    {
+      "id": "theme-fc800a541136",
+      "name": "Kids Exploration Path Theme",
+      "legacyStyleIds": [
+        "education-kids-exploration-path"
+      ],
+      "tokens": {
+        "canvas": "#FFF9E8",
+        "surface": "#FFFFFF",
+        "surfaceAlt": "#DFF1FF",
+        "text": "#25335A",
+        "muted": "#6F7893",
+        "accent": "#FF5D5D",
+        "border": "#D7E1EB"
+      },
+      "palette": [
+        "canvas #FFF9E8",
+        "surface #FFFFFF",
+        "surfaceAlt #DFF1FF",
+        "text #25335A",
+        "muted #6F7893",
+        "accent #FF5D5D",
+        "border #D7E1EB"
+      ],
+      "appearance": "light",
+      "tones": [
+        "curious",
+        "encouraging",
+        "playful",
+        "safe"
+      ],
+      "sources": [
+        {
+          "kind": "legacy-curated",
+          "provider": "awesome-design-md",
+          "slug": "nintendo-2001"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "approachable color and hands-on activity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nintendo-2001",
+          "label": "Nintendo 2001",
+          "role": "age-friendly exploration and playful missions"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "visual curiosity and collection discovery"
+        }
+      ]
+    },
+    {
+      "id": "theme-fce0c935717a",
+      "name": "Aqua Theme",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-ccf39d86"
+      ],
+      "tokens": {
+        "canvas": "#1A368B",
+        "surface": "#162455",
+        "surfaceAlt": "#091444",
+        "text": "#B8E6FE",
+        "muted": "#79A0D0",
+        "accent": "#13ECF3",
+        "border": "#091444"
+      },
+      "palette": [
+        "canvas #1A368B",
+        "surface #162455",
+        "surfaceAlt #091444",
+        "text #B8E6FE",
+        "muted #79A0D0",
+        "accent #13ECF3",
+        "border #091444"
+      ],
+      "appearance": "dark",
+      "tones": [
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "sources": [
+        {
+          "kind": "source-pinned",
+          "provider": "daisyui-themes",
+          "slug": "aqua",
+          "path": "packages/daisyui/src/themes/aqua.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/aqua.css"
+        }
+      ],
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/aqua.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/aqua.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "interaction-pattern reference"
+        }
+      ]
+    }
+  ]
+}

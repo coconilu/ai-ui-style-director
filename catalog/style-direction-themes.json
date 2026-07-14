@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "links": [
+    {
+      "directionId": "ai-lab-research-notebook",
+      "themeId": "theme-c6ecb10c1aa8",
+      "isDefault": true
+    },
+    {
+      "directionId": "commerce-direct-response-product-detail",
+      "themeId": "theme-a5edca440d2d",
+      "isDefault": true
+    },
+    {
+      "directionId": "commerce-marketplace-discovery-grid",
+      "themeId": "theme-44192bf6ca6c",
+      "isDefault": true
+    },
+    {
+      "directionId": "commerce-premium-catalog",
+      "themeId": "theme-5927316054fe",
+      "isDefault": true
+    },
+    {
+      "directionId": "commerce-wholesale-order-workbench",
+      "themeId": "theme-1f6f1e46e542",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-brand-story",
+      "themeId": "theme-8ff2d894f824",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-401e59c219b7",
+      "isDefault": false
+    },
+    {
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-9a9439a350dc",
+      "isDefault": false
+    },
+    {
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-b5cc7d74e8d4",
+      "isDefault": false
+    },
+    {
+      "directionId": "consumer-centered-hero-community",
+      "themeId": "theme-df58ffd8899d",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-centered-hero-story",
+      "themeId": "theme-f2bfde2d0b14",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-centered-hero-trust",
+      "themeId": "theme-1133e563fbf2",
+      "isDefault": false
+    },
+    {
+      "directionId": "consumer-centered-hero-trust",
+      "themeId": "theme-2cce89f3d0fc",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-local-service-concierge",
+      "themeId": "theme-1f5901baacce",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-media-discovery-playground",
+      "themeId": "theme-ecbd72a17f2e",
+      "isDefault": true
+    },
+    {
+      "directionId": "consumer-wellness-companion-soft",
+      "themeId": "theme-80e9256a32cb",
+      "isDefault": true
+    },
+    {
+      "directionId": "dashboard-executive-kpi-briefing",
+      "themeId": "theme-f9db2dc6b038",
+      "isDefault": true
+    },
+    {
+      "directionId": "dashboard-field-operations-mapboard",
+      "themeId": "theme-bfae41989da8",
+      "isDefault": true
+    },
+    {
+      "directionId": "dashboard-incident-response-wallboard",
+      "themeId": "theme-9e86370293f7",
+      "isDefault": true
+    },
+    {
+      "directionId": "data-dashboard-command-center",
+      "themeId": "theme-cf938d4f35ab",
+      "isDefault": true
+    },
+    {
+      "directionId": "developer-api-observability-lab",
+      "themeId": "theme-f3406a2d20c8",
+      "isDefault": true
+    },
+    {
+      "directionId": "developer-cli-workbench",
+      "themeId": "theme-f4c5eeff40af",
+      "isDefault": true
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-0b1fdbecc2ab",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-1969093218d8",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-235e671ea1d5",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-36dceee6401c",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-4586a4ba8fae",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-629928757ab3",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-81d6969c7137",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-98228386c2b3",
+      "isDefault": true
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-d1e5f8a20f1b",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-d7f1bc905e59",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "themeId": "theme-fce0c935717a",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-18cd56012587",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-296d591c420f",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-55891195a179",
+      "isDefault": true
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-a310bb4e9034",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-b6e7a0e0269b",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "themeId": "theme-f96c3826c864",
+      "isDefault": false
+    },
+    {
+      "directionId": "developer-open-source-community-hub",
+      "themeId": "theme-16469d43856c",
+      "isDefault": true
+    },
+    {
+      "directionId": "developer-product-minimal",
+      "themeId": "theme-5237355d6812",
+      "isDefault": true
+    },
+    {
+      "directionId": "docs-api-reference-workbench",
+      "themeId": "theme-0f92fb373bd9",
+      "isDefault": true
+    },
+    {
+      "directionId": "docs-knowledge-base-help-center",
+      "themeId": "theme-843b6b9f11bd",
+      "isDefault": true
+    },
+    {
+      "directionId": "docs-product-guides-library",
+      "themeId": "theme-6166d5cb9560",
+      "isDefault": true
+    },
+    {
+      "directionId": "editorial-technical-docs",
+      "themeId": "theme-80a4c13ae697",
+      "isDefault": true
+    },
+    {
+      "directionId": "education-certification-study-console",
+      "themeId": "theme-1f63595d2d7d",
+      "isDefault": true
+    },
+    {
+      "directionId": "education-cohort-learning-workspace",
+      "themeId": "theme-06c07351d90e",
+      "isDefault": true
+    },
+    {
+      "directionId": "education-kids-exploration-path",
+      "themeId": "theme-fc800a541136",
+      "isDefault": true
+    },
+    {
+      "directionId": "enterprise-dashboard-grid-data",
+      "themeId": "theme-03117493c7de",
+      "isDefault": true
+    },
+    {
+      "directionId": "enterprise-dashboard-grid-data",
+      "themeId": "theme-d8badd78ceaf",
+      "isDefault": false
+    },
+    {
+      "directionId": "enterprise-executive-transformation-brief",
+      "themeId": "theme-730b2a5eb6e1",
+      "isDefault": true
+    },
+    {
+      "directionId": "enterprise-governance-evidence-room",
+      "themeId": "theme-3a344cca2b9a",
+      "isDefault": true
+    },
+    {
+      "directionId": "enterprise-infrastructure-blueprint",
+      "themeId": "theme-ae2f6c352cb9",
+      "isDefault": true
+    },
+    {
+      "directionId": "enterprise-trust-solution",
+      "themeId": "theme-e826c49c6ce2",
+      "isDefault": true
+    },
+    {
+      "directionId": "finance-consumer-money-companion",
+      "themeId": "theme-69614d996d0a",
+      "isDefault": true
+    },
+    {
+      "directionId": "finance-investment-research-terminal",
+      "themeId": "theme-cab66fc46ee1",
+      "isDefault": true
+    },
+    {
+      "directionId": "finance-treasury-operations-console",
+      "themeId": "theme-f6ed658055b3",
+      "isDefault": true
+    },
+    {
+      "directionId": "fintech-precision-trust",
+      "themeId": "theme-196bcfbe3a15",
+      "isDefault": true
+    },
+    {
+      "directionId": "launch-centered-hero-story",
+      "themeId": "theme-ca63703dc9b7",
+      "isDefault": true
+    },
+    {
+      "directionId": "launch-centered-hero-trust",
+      "themeId": "theme-c11d951bdef0",
+      "isDefault": true
+    },
+    {
+      "directionId": "launch-cinematic-product-reveal",
+      "themeId": "theme-8a142f43cabc",
+      "isDefault": true
+    },
+    {
+      "directionId": "launch-community-countdown-campaign",
+      "themeId": "theme-f63a6de17ac0",
+      "isDefault": true
+    },
+    {
+      "directionId": "launch-proof-led-early-access",
+      "themeId": "theme-de536faaa594",
+      "isDefault": true
+    },
+    {
+      "directionId": "learning-platform-friendly",
+      "themeId": "theme-57e58bcb9fa4",
+      "isDefault": true
+    },
+    {
+      "directionId": "motion-rich-launch",
+      "themeId": "theme-3326b807fbb2",
+      "isDefault": true
+    },
+    {
+      "directionId": "operational-saas-console",
+      "themeId": "theme-a1ba3ddb542f",
+      "isDefault": true
+    },
+    {
+      "directionId": "portfolio-case-study-narrative",
+      "themeId": "theme-5e2da808289e",
+      "isDefault": true
+    },
+    {
+      "directionId": "portfolio-centered-hero-story",
+      "themeId": "theme-eb95bcba4dd6",
+      "isDefault": true
+    },
+    {
+      "directionId": "portfolio-experimental-creative-canvas",
+      "themeId": "theme-39a73ea5a1ba",
+      "isDefault": true
+    },
+    {
+      "directionId": "portfolio-studio-grid",
+      "themeId": "theme-d6b49b325bcc",
+      "isDefault": true
+    },
+    {
+      "directionId": "portfolio-technical-builder-showcase",
+      "themeId": "theme-5daf646c47ed",
+      "isDefault": true
+    },
+    {
+      "directionId": "research-benchmark-evaluation-board",
+      "themeId": "theme-e340f2e828e6",
+      "isDefault": true
+    },
+    {
+      "directionId": "research-experiment-control-workbench",
+      "themeId": "theme-ab14867f7dd9",
+      "isDefault": true
+    },
+    {
+      "directionId": "research-scientific-publication-archive",
+      "themeId": "theme-b0248fe53722",
+      "isDefault": true
+    },
+    {
+      "directionId": "saas-automation-flow-builder",
+      "themeId": "theme-5d7afc0eb0f1",
+      "isDefault": true
+    },
+    {
+      "directionId": "saas-collaborative-workspace-canvas",
+      "themeId": "theme-a54719974d52",
+      "isDefault": true
+    },
+    {
+      "directionId": "saas-customer-success-inbox",
+      "themeId": "theme-1cfdd1285ac4",
+      "isDefault": true
+    }
+  ]
+}
