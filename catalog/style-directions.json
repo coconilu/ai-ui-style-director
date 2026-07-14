@@ -1,0 +1,5346 @@
+{
+  "schemaVersion": 2,
+  "directions": [
+    {
+      "id": "ai-lab-research-notebook",
+      "name": "AI Lab Research Notebook",
+      "legacyStyleIds": [
+        "ai-lab-research-notebook"
+      ],
+      "family": "research",
+      "pageTypes": [
+        "docs",
+        "landing",
+        "research-site",
+        "technical-blog"
+      ],
+      "audiences": [
+        "developers",
+        "researchers",
+        "technical-founders"
+      ],
+      "goals": [
+        "docs-adoption",
+        "explain-product",
+        "show-expertise"
+      ],
+      "tones": [
+        "analytical",
+        "credible",
+        "experimental",
+        "technical"
+      ],
+      "keywords": [
+        "agent",
+        "ai",
+        "benchmark",
+        "experiment",
+        "lab",
+        "model",
+        "paper",
+        "research"
+      ],
+      "bestFor": [
+        "AI research tools",
+        "benchmark sites",
+        "model pages",
+        "technical demos"
+      ],
+      "avoidFor": [
+        "Consumer shopping and simple local business sites"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Can feel academic if product action is not visible."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Research statement, benchmark or diagram, model/product artifact, direct technical CTA.",
+      "layoutRules": [
+        "Use figures, tables, code, and benchmark blocks.",
+        "Keep experimental visuals readable and grounded."
+      ],
+      "typography": "Research-paper clarity with modern product polish.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mistral.ai",
+          "label": "Mistral AI",
+          "role": "engineered model and benchmark storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "together.ai",
+          "label": "Together AI",
+          "role": "technical blueprint and infrastructure proof"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "x.ai",
+          "label": "xAI",
+          "role": "stark research-lab presentation"
+        }
+      ]
+    },
+    {
+      "id": "commerce-direct-response-product-detail",
+      "name": "Direct Response Product Detail",
+      "legacyStyleIds": [
+        "commerce-direct-response-product-detail"
+      ],
+      "family": "commerce",
+      "pageTypes": [
+        "campaign",
+        "ecommerce",
+        "product-detail",
+        "sales-page"
+      ],
+      "audiences": [
+        "buyers",
+        "comparison-shoppers",
+        "enthusiasts"
+      ],
+      "goals": [
+        "purchase",
+        "reduce-doubt",
+        "upsell"
+      ],
+      "tones": [
+        "confident",
+        "focused",
+        "persuasive",
+        "tactile"
+      ],
+      "keywords": [
+        "bundle",
+        "buy",
+        "comparison",
+        "conversion",
+        "features",
+        "product detail",
+        "reviews",
+        "shipping"
+      ],
+      "bestFor": [
+        "direct-to-consumer goods",
+        "Flagship product pages",
+        "hardware",
+        "premium subscriptions"
+      ],
+      "avoidFor": [
+        "internal analytics",
+        "Large marketplace search"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "A dramatic product story can push essential buying information too far down the page."
+      ],
+      "density": "medium",
+      "firstViewport": "Large product moment with price, variant selection, benefit proof, fulfillment promise, and persistent purchase action.",
+      "layoutRules": [
+        "Keep selection, price, delivery, and purchase action adjacent.",
+        "Sequence proof from tangible benefit to specification and reassurance."
+      ],
+      "typography": "Confident product display type with crisp transactional labels and specifications.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "apple",
+          "label": "Apple",
+          "role": "focused product story and purchasing clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "bugatti",
+          "label": "Bugatti",
+          "role": "premium material presence and dramatic detail"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "tesla",
+          "label": "Tesla",
+          "role": "direct-response product configuration"
+        }
+      ]
+    },
+    {
+      "id": "commerce-marketplace-discovery-grid",
+      "name": "Marketplace Discovery Grid",
+      "legacyStyleIds": [
+        "commerce-marketplace-discovery-grid"
+      ],
+      "family": "commerce",
+      "pageTypes": [
+        "catalog",
+        "ecommerce",
+        "marketplace",
+        "search-results"
+      ],
+      "audiences": [
+        "collectors",
+        "marketplace-buyers",
+        "sellers",
+        "shoppers"
+      ],
+      "goals": [
+        "browse",
+        "compare",
+        "purchase"
+      ],
+      "tones": [
+        "clear",
+        "commercial",
+        "discoverable",
+        "varied"
+      ],
+      "keywords": [
+        "catalog",
+        "collection",
+        "compare",
+        "discovery",
+        "filters",
+        "marketplace",
+        "search",
+        "seller"
+      ],
+      "bestFor": [
+        "category discovery",
+        "collectible platforms",
+        "large catalogs",
+        "Multi-seller marketplaces"
+      ],
+      "avoidFor": [
+        "Single-offer landing pages",
+        "technical documentation"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Inconsistent imagery and metadata can make a marketplace feel untrustworthy."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Search-and-filter catalog with varied product cards, seller context, collection shortcuts, and visible sort state.",
+      "layoutRules": [
+        "Make filtering reversible and preserve discovery context.",
+        "Keep product, price, seller, and delivery signals comparable."
+      ],
+      "typography": "Retail UI typography optimized for scanning names, prices, and seller metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "nike",
+          "label": "Nike",
+          "role": "strong category rhythm and product imagery"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "visual discovery and collection browsing"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "shopify",
+          "label": "Shopify",
+          "role": "scalable catalog and trustworthy transaction patterns"
+        }
+      ]
+    },
+    {
+      "id": "commerce-premium-catalog",
+      "name": "Commerce Premium Catalog",
+      "legacyStyleIds": [
+        "commerce-premium-catalog"
+      ],
+      "family": "commerce",
+      "pageTypes": [
+        "catalog",
+        "ecommerce",
+        "product-site"
+      ],
+      "audiences": [
+        "buyers",
+        "consumers",
+        "fans"
+      ],
+      "goals": [
+        "browse",
+        "launch",
+        "purchase"
+      ],
+      "tones": [
+        "clear",
+        "confident",
+        "premium",
+        "tactile"
+      ],
+      "keywords": [
+        "catalog",
+        "ecommerce",
+        "premium",
+        "pricing",
+        "product",
+        "purchase",
+        "retail",
+        "shop"
+      ],
+      "bestFor": [
+        "direct sales",
+        "merch launches",
+        "premium goods",
+        "Product catalogs"
+      ],
+      "avoidFor": [
+        "Abstract software without product visuals"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Needs product assets; placeholders will break the premium feel."
+      ],
+      "density": "medium",
+      "firstViewport": "Product-first hero, price or collection signal, clear purchase or browse path.",
+      "layoutRules": [
+        "Use real product imagery and stable product grids.",
+        "Do not hide purchase affordances behind decorative layouts."
+      ],
+      "typography": "Retail-readable hierarchy with crisp product metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "apple",
+          "label": "Apple",
+          "role": "premium spacing and product focus"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nike",
+          "label": "Nike",
+          "role": "product-first catalog hierarchy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "shopify",
+          "label": "Shopify",
+          "role": "polished commerce storytelling"
+        }
+      ]
+    },
+    {
+      "id": "commerce-wholesale-order-workbench",
+      "name": "Wholesale Order Workbench",
+      "legacyStyleIds": [
+        "commerce-wholesale-order-workbench"
+      ],
+      "family": "commerce",
+      "pageTypes": [
+        "b2b-commerce",
+        "catalog",
+        "internal-tool",
+        "order-entry"
+      ],
+      "audiences": [
+        "account-managers",
+        "procurement-teams",
+        "sales-operations",
+        "wholesale-buyers"
+      ],
+      "goals": [
+        "account-management",
+        "bulk-order",
+        "reorder"
+      ],
+      "tones": [
+        "commercial",
+        "efficient",
+        "operational",
+        "reliable"
+      ],
+      "keywords": [
+        "account pricing",
+        "bulk order",
+        "inventory",
+        "procurement",
+        "reorder",
+        "sku",
+        "table",
+        "wholesale"
+      ],
+      "bestFor": [
+        "B2B ordering",
+        "procurement catalogs",
+        "sales-assisted commerce",
+        "Wholesale portals"
+      ],
+      "avoidFor": [
+        "Luxury storytelling",
+        "single-item impulse purchases"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Consumer-style product cards slow down high-volume ordering workflows."
+      ],
+      "density": "high",
+      "firstViewport": "Account-aware order table with SKU search, contract pricing, availability, quantity editing, and a persistent order summary.",
+      "layoutRules": [
+        "Optimize for keyboard entry and repeated purchasing.",
+        "Keep account terms, stock, and order impact visible while editing."
+      ],
+      "typography": "Dense tabular typography with strong SKU, price, and quantity alignment.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "dense table operations and configurable views"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "enterprise procurement information density"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "shopify",
+          "label": "Shopify",
+          "role": "reliable commerce and order semantics"
+        }
+      ]
+    },
+    {
+      "id": "consumer-brand-story",
+      "name": "Consumer Brand Story",
+      "legacyStyleIds": [
+        "consumer-brand-story"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "communities",
+        "consumers",
+        "creators"
+      ],
+      "goals": [
+        "brand-awareness",
+        "purchase",
+        "signup"
+      ],
+      "tones": [
+        "human",
+        "memorable",
+        "visual",
+        "warm"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "consumer",
+        "creator",
+        "lifestyle",
+        "mobile app",
+        "story"
+      ],
+      "bestFor": [
+        "brand launches",
+        "community products",
+        "Consumer apps"
+      ],
+      "avoidFor": [
+        "Dense admin tools and technical documentation"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "Needs strong imagery; otherwise it feels like a generic landing page."
+      ],
+      "density": "low-medium",
+      "firstViewport": "Brand name, emotional promise, image-led product or lifestyle signal, simple CTA.",
+      "layoutRules": [
+        "Use real or generated visual assets.",
+        "Avoid dashboard chrome unless the product is software-led."
+      ],
+      "typography": "Expressive heading paired with clear body and CTA text.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airbnb",
+          "label": "Airbnb",
+          "role": "warm image-led storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nike",
+          "label": "Nike",
+          "role": "confident campaign rhythm"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "spotify",
+          "label": "Spotify",
+          "role": "bold consumer color and media"
+        }
+      ]
+    },
+    {
+      "id": "consumer-centered-hero-community",
+      "name": "Consumer Centered Hero Community",
+      "legacyStyleIds": [
+        "consumer-centered-hero-community-4ab63e7f",
+        "consumer-centered-hero-community-4c776093",
+        "consumer-centered-hero-community-72832e30",
+        "consumer-centered-hero-community-a251fa4c"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "community-site",
+        "landing",
+        "portfolio",
+        "product-site"
+      ],
+      "audiences": [
+        "communities",
+        "consumers",
+        "families",
+        "fans",
+        "wellness-seekers"
+      ],
+      "goals": [
+        "brand-awareness",
+        "build-trust",
+        "engagement",
+        "express-identity",
+        "habit-adoption",
+        "signup"
+      ],
+      "tones": [
+        "approachable",
+        "friendly",
+        "gentle",
+        "optimistic",
+        "playful",
+        "warm"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "health",
+        "lifestyle",
+        "story",
+        "trust",
+        "wellness"
+      ],
+      "bestFor": [
+        "Brand Site interfaces",
+        "Community Site interfaces",
+        "Landing interfaces",
+        "Portfolio interfaces",
+        "Product Site interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence.",
+        "Expressive motion can distract from product evidence when overused.",
+        "Spacious composition can hide important comparison context when content grows."
+      ],
+      "density": "low-medium",
+      "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep participation, shared activity, and belonging visually dominant.",
+      "layoutRules": [
+        "Use a centered opening statement followed by one concrete proof surface.",
+        "Keep participation, shared activity, and belonging visually dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lemonade.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab63e7f1398bec97d18e26ec437be700fa93cccdada0ca867fef52dd1027d05",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lemonade.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/pastel.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a251fa4c52bbc9773aa70b7ef09734e46eb2736ad37e77bf44100df28708830d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/pastel.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/valentine.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4c77609360a62514a11ff8fbab5301f72a5c784210a0c169719bb4b14ace12f1",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/valentine.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "consumer-centered-hero-story",
+      "name": "Consumer Centered Hero Story",
+      "legacyStyleIds": [
+        "consumer-centered-hero-story-2f0b340c"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "communities",
+        "consumers",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "purchase",
+        "signup"
+      ],
+      "tones": [
+        "curated",
+        "human",
+        "memorable",
+        "warm"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "consumer",
+        "lifestyle",
+        "story"
+      ],
+      "bestFor": [
+        "Brand Site interfaces",
+        "Landing interfaces",
+        "Product Site interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence."
+      ],
+      "density": "medium",
+      "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorable visual moments dominant.",
+      "layoutRules": [
+        "Use a centered opening statement followed by one concrete proof surface.",
+        "Keep narrative progression and memorable visual moments dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/autumn.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:2f0b340cd08fe92f99f9f028e6e4dbe317c5114b913cc095529b25cfa82c9a06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/autumn.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "layout-structure reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "content-hierarchy reference"
+        }
+      ]
+    },
+    {
+      "id": "consumer-centered-hero-trust",
+      "name": "Consumer Centered Hero Trust",
+      "legacyStyleIds": [
+        "consumer-centered-hero-trust-1884cccb",
+        "consumer-centered-hero-trust-bdad6a9a"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "brand-site",
+        "landing",
+        "portfolio",
+        "product-site"
+      ],
+      "audiences": [
+        "communities",
+        "consumers",
+        "fans"
+      ],
+      "goals": [
+        "brand-awareness",
+        "build-trust",
+        "express-identity",
+        "purchase",
+        "signup"
+      ],
+      "tones": [
+        "approachable",
+        "curated",
+        "human",
+        "trustworthy",
+        "warm"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "lifestyle",
+        "story",
+        "trust"
+      ],
+      "bestFor": [
+        "Brand Site interfaces",
+        "Landing interfaces",
+        "Portfolio interfaces",
+        "Product Site interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence."
+      ],
+      "density": "medium",
+      "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep evidence, governance, and credibility signals visually dominant.",
+      "layoutRules": [
+        "Use a centered opening statement followed by one concrete proof surface.",
+        "Keep evidence, governance, and credibility signals visually dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/caramellatte.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:1884cccbf01da94a02b87996e239e3f550cc712d3e476b7cbd789bded52d2576",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/caramellatte.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cupcake.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:72832e30020332c0a3caa332faabea57f90307dd53e080f1af6b3645ce45ea28",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cupcake.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/garden.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:bdad6a9a107b51ddb3f50d2fc1834c51e33720d621e8549f331a2e5b31cca49b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/garden.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/retro.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:3df3c0698659c53891c55b4e03bd7bea2ed146af05d80862a2905b1cb6355234",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/retro.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "consumer-local-service-concierge",
+      "name": "Local Service Concierge",
+      "legacyStyleIds": [
+        "consumer-local-service-concierge"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "booking",
+        "marketplace",
+        "mobile-app-site",
+        "service-catalog"
+      ],
+      "audiences": [
+        "families",
+        "local-customers",
+        "service-providers",
+        "travelers"
+      ],
+      "goals": [
+        "booking",
+        "discovery",
+        "repeat-use"
+      ],
+      "tones": [
+        "convenient",
+        "friendly",
+        "local",
+        "trustworthy"
+      ],
+      "keywords": [
+        "booking",
+        "concierge",
+        "local service",
+        "marketplace",
+        "mobile",
+        "nearby",
+        "provider",
+        "schedule"
+      ],
+      "bestFor": [
+        "appointment apps",
+        "home services",
+        "Local service marketplaces",
+        "travel assistance"
+      ],
+      "avoidFor": [
+        "developer infrastructure",
+        "Research publications"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Insufficient provider and availability detail undermines booking confidence."
+      ],
+      "density": "medium",
+      "firstViewport": "Location-aware service selection with nearby availability, trust signals, clear pricing, and a direct booking path.",
+      "layoutRules": [
+        "Prioritize availability, distance, price, and trust.",
+        "Keep the browse-to-book path short and reversible."
+      ],
+      "typography": "Friendly transactional typography with prominent time, distance, and price metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airbnb",
+          "label": "Airbnb",
+          "role": "local discovery and trustworthy provider context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "concierge-like service communication"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "uber",
+          "label": "Uber",
+          "role": "location-aware service selection and immediate action"
+        }
+      ]
+    },
+    {
+      "id": "consumer-media-discovery-playground",
+      "name": "Media Discovery Playground",
+      "legacyStyleIds": [
+        "consumer-media-discovery-playground"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "community-site",
+        "discovery",
+        "media-app",
+        "product-site"
+      ],
+      "audiences": [
+        "creators",
+        "fans",
+        "listeners",
+        "viewers"
+      ],
+      "goals": [
+        "content-discovery",
+        "engagement",
+        "signup"
+      ],
+      "tones": [
+        "energetic",
+        "expressive",
+        "immersive",
+        "personal"
+      ],
+      "keywords": [
+        "creator",
+        "culture",
+        "discovery",
+        "media",
+        "music",
+        "personalized",
+        "playlist",
+        "video"
+      ],
+      "bestFor": [
+        "creator catalogs",
+        "fan communities",
+        "media discovery",
+        "Streaming products"
+      ],
+      "avoidFor": [
+        "Formal B2B procurement",
+        "policy documentation"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "A dense wall of artwork can make hierarchy and accessibility inconsistent."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Art-led discovery grid with a personalized collection, active media moment, taste signals, and an immediate play action.",
+      "layoutRules": [
+        "Let cover art and collections define the information architecture.",
+        "Preserve readable controls over expressive media color."
+      ],
+      "typography": "Bold cultural headings with compact, familiar media controls.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "visual collection browsing and taste signals"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "playstation",
+          "label": "PlayStation",
+          "role": "immersive entertainment presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "spotify",
+          "label": "Spotify",
+          "role": "personalized media discovery and cultural energy"
+        }
+      ]
+    },
+    {
+      "id": "consumer-wellness-companion-soft",
+      "name": "Wellness Companion Soft",
+      "legacyStyleIds": [
+        "consumer-wellness-companion-soft"
+      ],
+      "family": "consumer",
+      "pageTypes": [
+        "landing",
+        "membership",
+        "mobile-app-site",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "families",
+        "wellness-seekers"
+      ],
+      "goals": [
+        "build-trust",
+        "habit-adoption",
+        "signup"
+      ],
+      "tones": [
+        "gentle",
+        "human",
+        "optimistic",
+        "reassuring"
+      ],
+      "keywords": [
+        "companion",
+        "habit",
+        "health",
+        "mindfulness",
+        "mobile app",
+        "progress",
+        "routine",
+        "wellness"
+      ],
+      "bestFor": [
+        "family services",
+        "habit products",
+        "personal care memberships",
+        "Wellness apps"
+      ],
+      "avoidFor": [
+        "incident response consoles",
+        "Trading terminals"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Overly soft language may weaken credibility for evidence-based health products."
+      ],
+      "density": "low-medium",
+      "firstViewport": "Soft daily ritual story with a reassuring promise, human moment, simple progress cue, and low-pressure signup.",
+      "layoutRules": [
+        "Use calm pacing and concrete daily benefits.",
+        "Keep sensitive progress data supportive rather than competitive."
+      ],
+      "typography": "Rounded, warm headings with highly readable supportive copy.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airbnb",
+          "label": "Airbnb",
+          "role": "warm human moments and reassuring service tone"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "soft visual discovery and personal aspiration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "starbucks",
+          "label": "Starbucks",
+          "role": "daily ritual and familiar personal warmth"
+        }
+      ]
+    },
+    {
+      "id": "dashboard-executive-kpi-briefing",
+      "name": "Executive KPI Briefing",
+      "legacyStyleIds": [
+        "dashboard-executive-kpi-briefing"
+      ],
+      "family": "dashboard",
+      "pageTypes": [
+        "analytics",
+        "board-portal",
+        "executive-dashboard",
+        "report"
+      ],
+      "audiences": [
+        "analysts",
+        "business-leaders",
+        "executives",
+        "finance-teams"
+      ],
+      "goals": [
+        "alignment",
+        "business-review",
+        "decision-support"
+      ],
+      "tones": [
+        "analytical",
+        "authoritative",
+        "calm",
+        "strategic"
+      ],
+      "keywords": [
+        "board",
+        "business review",
+        "executive",
+        "forecast",
+        "kpi",
+        "metrics",
+        "performance",
+        "targets"
+      ],
+      "bestFor": [
+        "board reporting",
+        "Executive scorecards",
+        "portfolio oversight",
+        "quarterly reviews"
+      ],
+      "avoidFor": [
+        "consumer onboarding",
+        "Real-time engineering triage"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Oversimplified KPIs can conceal operational causes and uncertainty."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Briefing-style dashboard with outcome headline, target variance, three strategic pillars, and a concise decision queue.",
+      "layoutRules": [
+        "Limit the first view to decision-grade measures.",
+        "Pair each variance with context, owner, and recommended action."
+      ],
+      "typography": "Executive-readable headings with prominent numerals and concise analytical notes.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "high-value metric clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "executive information hierarchy and analytical restraint"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "board-ready trust and polished measurement"
+        }
+      ]
+    },
+    {
+      "id": "dashboard-field-operations-mapboard",
+      "name": "Field Operations Mapboard",
+      "legacyStyleIds": [
+        "dashboard-field-operations-mapboard"
+      ],
+      "family": "dashboard",
+      "pageTypes": [
+        "dashboard",
+        "dispatch",
+        "internal-tool",
+        "operations-map"
+      ],
+      "audiences": [
+        "dispatchers",
+        "field-managers",
+        "logistics-teams",
+        "operators"
+      ],
+      "goals": [
+        "dispatch",
+        "monitoring",
+        "resource-allocation"
+      ],
+      "tones": [
+        "clear",
+        "operational",
+        "responsive",
+        "spatial"
+      ],
+      "keywords": [
+        "capacity",
+        "dispatch",
+        "field",
+        "fleet",
+        "location",
+        "map",
+        "operations",
+        "route"
+      ],
+      "bestFor": [
+        "delivery dispatch",
+        "field service",
+        "Fleet operations",
+        "regional resource management"
+      ],
+      "avoidFor": [
+        "minimal brand sites",
+        "Static annual reports"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Dense overlays can make geographic relationships unreadable."
+      ],
+      "density": "high",
+      "firstViewport": "Map-dominant operations shell with regional status, live assignments, route exceptions, and a compact dispatch queue.",
+      "layoutRules": [
+        "Keep spatial state primary and lists synchronized to map selection.",
+        "Make exceptions actionable without covering the map."
+      ],
+      "typography": "Compact field-operations UI with readable location codes and timestamps.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured assignment and resource views"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "uber",
+          "label": "Uber",
+          "role": "location-aware dispatch and operational immediacy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vodafone",
+          "label": "Vodafone",
+          "role": "regional service operations and status"
+        }
+      ]
+    },
+    {
+      "id": "dashboard-incident-response-wallboard",
+      "name": "Incident Response Wallboard",
+      "legacyStyleIds": [
+        "dashboard-incident-response-wallboard"
+      ],
+      "family": "dashboard",
+      "pageTypes": [
+        "dashboard",
+        "incident-center",
+        "internal-tool",
+        "monitoring"
+      ],
+      "audiences": [
+        "incident-commanders",
+        "operations-teams",
+        "site-reliability-engineers"
+      ],
+      "goals": [
+        "incident-response",
+        "monitoring",
+        "service-recovery"
+      ],
+      "tones": [
+        "focused",
+        "resilient",
+        "technical",
+        "urgent"
+      ],
+      "keywords": [
+        "alerts",
+        "incident",
+        "latency",
+        "on-call",
+        "recovery",
+        "severity",
+        "status",
+        "uptime"
+      ],
+      "bestFor": [
+        "Incident command centers",
+        "NOC wallboards",
+        "on-call operations",
+        "service health dashboards"
+      ],
+      "avoidFor": [
+        "long-form editorial reading",
+        "Marketing homepages"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Excessive alarm color creates fatigue and weakens severity distinctions."
+      ],
+      "density": "high",
+      "firstViewport": "Dark operational wallboard with active incidents, affected services, response timeline, severity filters, and ownership.",
+      "layoutRules": [
+        "Reserve the strongest contrast for active customer impact.",
+        "Keep time, owner, and next action visible in every incident row."
+      ],
+      "typography": "High-contrast operational type with tabular time and terse incident labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "high-volume service analytics"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "posthog",
+          "label": "PostHog",
+          "role": "event timelines and operational exploration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sentry",
+          "label": "Sentry",
+          "role": "incident groups, severity, and ownership"
+        }
+      ]
+    },
+    {
+      "id": "data-dashboard-command-center",
+      "name": "Data Dashboard Command Center",
+      "legacyStyleIds": [
+        "data-dashboard-command-center"
+      ],
+      "family": "dashboard",
+      "pageTypes": [
+        "analytics",
+        "dashboard",
+        "internal-tool",
+        "monitoring"
+      ],
+      "audiences": [
+        "analysts",
+        "executives",
+        "growth-teams",
+        "operators"
+      ],
+      "goals": [
+        "daily-operation",
+        "decision-support",
+        "monitoring"
+      ],
+      "tones": [
+        "analytical",
+        "focused",
+        "reliable"
+      ],
+      "keywords": [
+        "analytics",
+        "chart",
+        "dashboard",
+        "finance",
+        "kpi",
+        "metrics",
+        "monitor",
+        "report",
+        "table"
+      ],
+      "bestFor": [
+        "Analytics dashboards",
+        "finance views",
+        "monitoring tools",
+        "operations command centers"
+      ],
+      "avoidFor": [
+        "Simple one-page brand sites"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Easy to overfill with fake metrics; seed data must feel domain-specific."
+      ],
+      "density": "high",
+      "firstViewport": "Dense but ordered shell with metric summary, chart, table, filters, and selected state.",
+      "layoutRules": [
+        "Use tables and charts where the workflow needs them.",
+        "Make density scannable, not decorative."
+      ],
+      "typography": "Compact UI typography with strong numeric emphasis.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "technical analytics presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "institutional data clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sentry",
+          "label": "Sentry",
+          "role": "monitoring density and incident states"
+        }
+      ]
+    },
+    {
+      "id": "developer-api-observability-lab",
+      "name": "Developer API Observability Lab",
+      "legacyStyleIds": [
+        "developer-api-observability-lab"
+      ],
+      "family": "developer",
+      "pageTypes": [
+        "api-platform",
+        "dashboard",
+        "developer-portal",
+        "monitoring"
+      ],
+      "audiences": [
+        "developers",
+        "platform-teams",
+        "site-reliability-engineers"
+      ],
+      "goals": [
+        "debugging",
+        "decision-support",
+        "monitoring"
+      ],
+      "tones": [
+        "analytical",
+        "diagnostic",
+        "technical",
+        "urgent"
+      ],
+      "keywords": [
+        "api",
+        "debugging",
+        "errors",
+        "latency",
+        "logs",
+        "monitoring",
+        "observability",
+        "traces"
+      ],
+      "bestFor": [
+        "API observability",
+        "developer analytics",
+        "error tracking",
+        "runtime diagnostics"
+      ],
+      "avoidFor": [
+        "emotion-first consumer storytelling",
+        "Simple brochure sites"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Too many equal-weight metrics can hide the incident that needs attention."
+      ],
+      "density": "high",
+      "firstViewport": "Operational dashboard with service health, latency trend, error groups, trace filters, and a selected incident.",
+      "layoutRules": [
+        "Anchor the hierarchy on actionable anomalies and time ranges.",
+        "Use semantic color only for status and severity."
+      ],
+      "typography": "Dense product typography with tabular numerals and monospace identifiers.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "high-density technical data presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "posthog",
+          "label": "PostHog",
+          "role": "developer analytics and event exploration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sentry",
+          "label": "Sentry",
+          "role": "actionable error groups and incident severity"
+        }
+      ]
+    },
+    {
+      "id": "developer-cli-workbench",
+      "name": "Developer CLI Workbench",
+      "legacyStyleIds": [
+        "developer-cli-workbench"
+      ],
+      "family": "developer",
+      "pageTypes": [
+        "developer-portal",
+        "docs",
+        "open-source-site",
+        "product-site"
+      ],
+      "audiences": [
+        "developers",
+        "open-source-maintainers",
+        "platform-engineers"
+      ],
+      "goals": [
+        "docs-adoption",
+        "installation",
+        "show-capability"
+      ],
+      "tones": [
+        "fast",
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "keywords": [
+        "automation",
+        "cli",
+        "command line",
+        "developer",
+        "installation",
+        "shell",
+        "terminal",
+        "workflow"
+      ],
+      "bestFor": [
+        "CLI products",
+        "developer automation",
+        "local-first tools",
+        "terminal extensions"
+      ],
+      "avoidFor": [
+        "Image-led consumer campaigns",
+        "luxury retail catalogs"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Dense terminal surfaces can intimidate newcomers without progressive disclosure."
+      ],
+      "density": "high",
+      "firstViewport": "Documentation shell with a decisive install command, workflow steps, keyboard hints, and a visible terminal result.",
+      "layoutRules": [
+        "Treat commands and output as primary content, not decoration.",
+        "Keep navigation compact and make copy actions unmistakable."
+      ],
+      "typography": "Compact sans-serif UI paired with a highly legible monospace command layer.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cursor",
+          "label": "Cursor",
+          "role": "focused technical product presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "opencode.ai",
+          "label": "OpenCode",
+          "role": "open developer-tool positioning and code-native detail"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "warp",
+          "label": "Warp",
+          "role": "terminal workflow clarity and command-first interaction"
+        }
+      ]
+    },
+    {
+      "id": "developer-dashboard-grid-data",
+      "name": "Developer Dashboard Grid Data",
+      "legacyStyleIds": [
+        "developer-dashboard-grid-data-184a9fda",
+        "developer-dashboard-grid-data-29261d80",
+        "developer-dashboard-grid-data-41fb4cb8",
+        "developer-dashboard-grid-data-6be14a36",
+        "developer-dashboard-grid-data-6ced1427",
+        "developer-dashboard-grid-data-8137dc5b",
+        "developer-dashboard-grid-data-98d119d6",
+        "developer-dashboard-grid-data-a98dce44",
+        "developer-dashboard-grid-data-b0deb9dd",
+        "developer-dashboard-grid-data-ccf39d86",
+        "developer-dashboard-grid-data-fa0a21e2"
+      ],
+      "family": "developer",
+      "pageTypes": [
+        "api-platform",
+        "api-reference",
+        "dashboard",
+        "developer-portal",
+        "docs",
+        "monitoring"
+      ],
+      "audiences": [
+        "analysts",
+        "developers",
+        "operators",
+        "platform-engineers",
+        "technical-integrators"
+      ],
+      "goals": [
+        "decision-support",
+        "docs-adoption",
+        "first-success",
+        "monitoring",
+        "show-capability"
+      ],
+      "tones": [
+        "clean",
+        "confident",
+        "focused",
+        "modern",
+        "precise",
+        "premium",
+        "professional",
+        "technical"
+      ],
+      "keywords": [
+        "analytics",
+        "api",
+        "cli",
+        "code",
+        "dashboard",
+        "developer",
+        "docs",
+        "monitoring",
+        "premium",
+        "terminal"
+      ],
+      "bestFor": [
+        "Api Platform interfaces",
+        "Api Reference interfaces",
+        "Dashboard interfaces",
+        "Developer Portal interfaces",
+        "Docs interfaces",
+        "Monitoring interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence.",
+        "Compact spacing can reduce clarity when too many secondary states are shown."
+      ],
+      "density": "medium",
+      "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+      "layoutRules": [
+        "Use an ordered metric and workflow grid with visible operational state.",
+        "Keep metrics, trends, and decision signals visually dominant.",
+        "Use compact spacing while preserving scan paths and target separation.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/aqua.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ccf39d867f651a9ed9679c813a4438c89e5a63843ed3a50448b58f2b2e6ed073",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/aqua.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/black.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fd45f446a18df7317a105bab2379f95cb4d4055c27a25ccc3c7480a6d1b228d7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/black.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "information-density reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "layout-structure reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "interaction-pattern reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dim.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:29261d80efd091b3470cf86852784093c742f449150f25ef7d459861d8509096",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dim.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dracula.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:b0deb9dde082d4d5a8e4c6d3d9db53ec475d0e37633de7d8d3309eccc99793b7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dracula.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/emerald.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:fa0a21e26ca0db2dfe972d872be47740ddf1b5f76b2659bdaed661c3701dda06",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/emerald.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/fantasy.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:8137dc5bfff317d85ca1c790dbb8ed0eedb4ce89a094eebee61da55d8cea4209",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/fantasy.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/forest.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:184a9fda406ccf70da0f86def9ba44384ed8812eedb6fe145f3a73eae271ab38",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/forest.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/halloween.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:a98dce4455d8c93fbc066cbd5b3fa6c9b69b0dd728dda3740f562d1665e4ff6e",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/halloween.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/luxury.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:41fb4cb8073cb2cbeb82cf61cb8492862e751d919f7279afeb1d90a0cb66d522",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/luxury.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/sunset.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:98d119d6bc1e66f74e02341844641df5258aa2e2106e324b9055743c22a06f80",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/sunset.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "developer-editorial-stack-content",
+      "name": "Developer Editorial Stack Content",
+      "legacyStyleIds": [
+        "developer-editorial-stack-content-0b8eb8d8",
+        "developer-editorial-stack-content-0beed9d3",
+        "developer-editorial-stack-content-30765d74",
+        "developer-editorial-stack-content-3862b164",
+        "developer-editorial-stack-content-4ab099d9",
+        "developer-editorial-stack-content-7a607af2"
+      ],
+      "family": "developer",
+      "pageTypes": [
+        "api-reference",
+        "developer-portal",
+        "docs"
+      ],
+      "audiences": [
+        "developers",
+        "platform-engineers",
+        "solution-engineers",
+        "technical-integrators"
+      ],
+      "goals": [
+        "docs-adoption",
+        "first-success",
+        "integration",
+        "show-capability"
+      ],
+      "tones": [
+        "clean",
+        "credible",
+        "focused",
+        "precise",
+        "technical"
+      ],
+      "keywords": [
+        "api",
+        "api reference",
+        "code",
+        "developer",
+        "docs",
+        "documentation",
+        "endpoint",
+        "integration",
+        "sdk"
+      ],
+      "bestFor": [
+        "Api Reference interfaces",
+        "Developer Portal interfaces",
+        "Docs interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence."
+      ],
+      "density": "medium",
+      "firstViewport": "Use a reading-first vertical sequence with deliberate typographic rhythm. Keep reading hierarchy and information findability visually dominant.",
+      "layoutRules": [
+        "Use a reading-first vertical sequence with deliberate typographic rhythm.",
+        "Keep reading hierarchy and information findability visually dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/hashicorp/DESIGN.md",
+          "slug": "hashicorp",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:d2df9be72d867e48d318fd18db04e60a78357c27e392ab921fc2ba7f46951442",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/hashicorp/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cmyk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:3862b1644354816dac23e33e340d15220ef7f81b9a648ce231f28b94f67ad59d",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cmyk.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lofi.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/lofi.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7a607af200f5ef31fd63e5a36b3f6266029806c4d716ec3cd1f77639291907e0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/lofi.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/silk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:0b8eb8d807eeb506e086c95a46793f92ec2c18463825df9e618fdca269d7f30c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/silk.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/winter.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:30765d74bfa2c18bd437e5c8a7bdaa7522fc1a9b791ae022fc3eba05d2ba9b85",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/winter.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/wireframe.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:0beed9d3b1cf0756f94856e03094517849845a22ce0e592d33ba47f2a19ab9bb",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/wireframe.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "developer-open-source-community-hub",
+      "name": "Open Source Community Hub",
+      "legacyStyleIds": [
+        "developer-open-source-community-hub"
+      ],
+      "family": "developer",
+      "pageTypes": [
+        "community-site",
+        "docs",
+        "landing",
+        "open-source-site"
+      ],
+      "audiences": [
+        "contributors",
+        "developers",
+        "maintainers",
+        "technical-founders"
+      ],
+      "goals": [
+        "community-growth",
+        "contribution",
+        "docs-adoption"
+      ],
+      "tones": [
+        "energetic",
+        "open",
+        "technical",
+        "welcoming"
+      ],
+      "keywords": [
+        "community",
+        "contributors",
+        "docs",
+        "ecosystem",
+        "extensions",
+        "github",
+        "open source",
+        "repository"
+      ],
+      "bestFor": [
+        "developer communities",
+        "framework launches",
+        "Open-source projects",
+        "plugin ecosystems"
+      ],
+      "avoidFor": [
+        "Closed enterprise procurement flows",
+        "single-product retail"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Community claims feel hollow without current repository and contributor evidence."
+      ],
+      "density": "medium",
+      "firstViewport": "Community-led project grid with an adoption statement, repository proof, contributor paths, and ecosystem examples.",
+      "layoutRules": [
+        "Show real projects, contributors, and extension categories early.",
+        "Keep contribution and documentation paths equally visible."
+      ],
+      "typography": "Confident technical headings with friendly metadata and compact repository labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "expo",
+          "label": "Expo",
+          "role": "friendly framework community and project pathways"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "supabase",
+          "label": "Supabase",
+          "role": "open-source ecosystem energy and technical credibility"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "voltagent",
+          "label": "VoltAgent",
+          "role": "agent ecosystem organization and contributor focus"
+        }
+      ]
+    },
+    {
+      "id": "developer-product-minimal",
+      "name": "Developer Product Minimal",
+      "legacyStyleIds": [
+        "developer-product-minimal"
+      ],
+      "family": "developer",
+      "pageTypes": [
+        "api-platform",
+        "docs",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "developers",
+        "engineering-teams",
+        "technical-founders"
+      ],
+      "goals": [
+        "docs-adoption",
+        "explain-product",
+        "signup"
+      ],
+      "tones": [
+        "clean",
+        "credible",
+        "precise",
+        "technical"
+      ],
+      "keywords": [
+        "ai",
+        "api",
+        "developer",
+        "docs",
+        "github",
+        "open source",
+        "platform",
+        "sdk",
+        "terminal",
+        "tool"
+      ],
+      "bestFor": [
+        "AI SDKs",
+        "API platforms",
+        "developer tools",
+        "open-source launches"
+      ],
+      "avoidFor": [
+        "luxury consumer brands",
+        "visual-heavy event pages"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Can feel generic if the product preview is weak."
+      ],
+      "density": "medium",
+      "firstViewport": "Sharp headline, terse product explanation, command/code or product preview, direct docs/signup action.",
+      "layoutRules": [
+        "Prioritize product proof over decoration.",
+        "Use code-native UI, docs links, and crisp grid alignment."
+      ],
+      "typography": "Tight, highly legible, technical, with controlled heading scale.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cursor",
+          "label": "Cursor",
+          "role": "AI developer-tool presentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "resend",
+          "label": "Resend",
+          "role": "developer-focused dark UI and monospace detail"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vercel",
+          "label": "Vercel",
+          "role": "monochrome precision and product proof"
+        }
+      ]
+    },
+    {
+      "id": "docs-api-reference-workbench",
+      "name": "API Reference Workbench",
+      "legacyStyleIds": [
+        "docs-api-reference-workbench"
+      ],
+      "family": "docs",
+      "pageTypes": [
+        "api-reference",
+        "developer-portal",
+        "docs",
+        "sdk-guide"
+      ],
+      "audiences": [
+        "developers",
+        "solution-engineers",
+        "technical-integrators"
+      ],
+      "goals": [
+        "docs-adoption",
+        "first-success",
+        "integration"
+      ],
+      "tones": [
+        "navigable",
+        "practical",
+        "precise",
+        "technical"
+      ],
+      "keywords": [
+        "api reference",
+        "authentication",
+        "code",
+        "endpoint",
+        "integration",
+        "request",
+        "response",
+        "sdk"
+      ],
+      "bestFor": [
+        "API references",
+        "developer onboarding",
+        "integration portals",
+        "SDK documentation"
+      ],
+      "avoidFor": [
+        "Brand-only launch pages",
+        "image-first portfolios"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "A visually polished reference still fails if examples and errors are incomplete."
+      ],
+      "density": "high",
+      "firstViewport": "Three-pane reference workbench with endpoint navigation, parameter documentation, runnable request, and response output.",
+      "layoutRules": [
+        "Keep navigation, explanation, and runnable code synchronized.",
+        "Make prerequisites and error responses as discoverable as happy paths."
+      ],
+      "typography": "Reading-first sans serif with dense monospace tables and code samples.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mintlify",
+          "label": "Mintlify",
+          "role": "navigable API documentation and readable reference"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "resend",
+          "label": "Resend",
+          "role": "clear request examples and developer-focused polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "supabase",
+          "label": "Supabase",
+          "role": "complete integration pathways and code proof"
+        }
+      ]
+    },
+    {
+      "id": "docs-knowledge-base-help-center",
+      "name": "Knowledge Base Help Center",
+      "legacyStyleIds": [
+        "docs-knowledge-base-help-center"
+      ],
+      "family": "docs",
+      "pageTypes": [
+        "help-center",
+        "knowledge-base",
+        "learning-hub",
+        "support-site"
+      ],
+      "audiences": [
+        "customers",
+        "new-users",
+        "support-teams"
+      ],
+      "goals": [
+        "issue-resolution",
+        "onboarding",
+        "self-service"
+      ],
+      "tones": [
+        "approachable",
+        "clear",
+        "reassuring",
+        "supportive"
+      ],
+      "keywords": [
+        "answers",
+        "customer",
+        "help center",
+        "learning",
+        "onboarding",
+        "resolution",
+        "support",
+        "troubleshooting"
+      ],
+      "bestFor": [
+        "Customer help centers",
+        "service knowledge bases",
+        "support onboarding",
+        "troubleshooting hubs"
+      ],
+      "avoidFor": [
+        "high-density trading terminals",
+        "Technical benchmark publications"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Friendly visuals cannot compensate for weak search vocabulary or stale answers."
+      ],
+      "density": "medium",
+      "firstViewport": "Friendly support path with prominent search, issue categories, guided resolution progress, and escalation context.",
+      "layoutRules": [
+        "Lead with the language customers use when describing problems.",
+        "Offer guided steps before exposing the full article archive."
+      ],
+      "typography": "Warm instructional type with clear step labels and highly readable answers.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured self-service categories"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "customer-language help paths and guided support"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "slack",
+          "label": "Slack",
+          "role": "friendly troubleshooting and approachable guidance"
+        }
+      ]
+    },
+    {
+      "id": "docs-product-guides-library",
+      "name": "Product Guides Library",
+      "legacyStyleIds": [
+        "docs-product-guides-library"
+      ],
+      "family": "docs",
+      "pageTypes": [
+        "docs",
+        "guide-library",
+        "help-center",
+        "knowledge-base"
+      ],
+      "audiences": [
+        "admins",
+        "customers",
+        "operators",
+        "product-teams"
+      ],
+      "goals": [
+        "feature-adoption",
+        "self-service",
+        "support-deflection"
+      ],
+      "tones": [
+        "calm",
+        "friendly",
+        "helpful",
+        "structured"
+      ],
+      "keywords": [
+        "feature",
+        "guides",
+        "help",
+        "how to",
+        "knowledge base",
+        "product education",
+        "setup",
+        "tutorial"
+      ],
+      "bestFor": [
+        "admin manuals",
+        "customer enablement",
+        "help centers",
+        "Product guides"
+      ],
+      "avoidFor": [
+        "flash-sale commerce",
+        "Real-time monitoring"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Too many category cards can recreate the navigation problem instead of solving it."
+      ],
+      "density": "medium",
+      "firstViewport": "Search-led guide library with role-based paths, featured tasks, recently updated content, and clear reading progression.",
+      "layoutRules": [
+        "Organize around user tasks rather than internal feature names.",
+        "Show content freshness and estimated effort."
+      ],
+      "typography": "Comfortable prose hierarchy with restrained labels and generous line height.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "calm document hierarchy and task-oriented knowledge"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "sanity",
+          "label": "Sanity",
+          "role": "structured content guidance and editorial organization"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "webflow",
+          "label": "Webflow",
+          "role": "product education and visual how-to paths"
+        }
+      ]
+    },
+    {
+      "id": "editorial-technical-docs",
+      "name": "Editorial Technical Docs",
+      "legacyStyleIds": [
+        "editorial-technical-docs"
+      ],
+      "family": "docs",
+      "pageTypes": [
+        "docs",
+        "landing",
+        "open-source-site",
+        "technical-blog"
+      ],
+      "audiences": [
+        "developers",
+        "researchers",
+        "technical-founders"
+      ],
+      "goals": [
+        "docs-adoption",
+        "explain-product",
+        "show-expertise"
+      ],
+      "tones": [
+        "authoritative",
+        "clear",
+        "editorial",
+        "technical"
+      ],
+      "keywords": [
+        "agent",
+        "blog",
+        "docs",
+        "documentation",
+        "framework",
+        "open source",
+        "research",
+        "technical"
+      ],
+      "bestFor": [
+        "developer docs homepages",
+        "Open-source frameworks",
+        "technical explainers"
+      ],
+      "avoidFor": [
+        "High-conversion consumer funnels"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Can undersell commercial value if no product outcome is shown."
+      ],
+      "density": "medium",
+      "firstViewport": "Typographic hero, concise explanation, docs entry point, architecture or code sample.",
+      "layoutRules": [
+        "Let typography and information architecture lead.",
+        "Use diagrams and examples instead of generic feature cards."
+      ],
+      "typography": "Editorial hierarchy with readable prose and code-friendly monospace accents.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mintlify",
+          "label": "Mintlify",
+          "role": "reading-optimized documentation shell"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "quiet typography and document rhythm"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wired",
+          "label": "WIRED",
+          "role": "editorial hierarchy and dense prose"
+        }
+      ]
+    },
+    {
+      "id": "education-certification-study-console",
+      "name": "Certification Study Console",
+      "legacyStyleIds": [
+        "education-certification-study-console"
+      ],
+      "family": "education",
+      "pageTypes": [
+        "assessment",
+        "course-platform",
+        "docs",
+        "study-dashboard"
+      ],
+      "audiences": [
+        "certification-candidates",
+        "employees",
+        "professional-learners",
+        "training-managers"
+      ],
+      "goals": [
+        "course-completion",
+        "exam-readiness",
+        "skill-verification"
+      ],
+      "tones": [
+        "clear",
+        "disciplined",
+        "professional",
+        "progressive"
+      ],
+      "keywords": [
+        "assessment",
+        "certification",
+        "exam",
+        "practice",
+        "readiness",
+        "skills",
+        "study",
+        "training"
+      ],
+      "bestFor": [
+        "Certification prep",
+        "compliance learning",
+        "enterprise training",
+        "professional assessments"
+      ],
+      "avoidFor": [
+        "Casual entertainment",
+        "emotion-led consumer campaigns"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Progress percentages can create false confidence without valid assessment evidence."
+      ],
+      "density": "high",
+      "firstViewport": "Study console with readiness score, domain breakdown, current lesson, practice queue, and evidence for completed competencies.",
+      "layoutRules": [
+        "Tie every progress signal to assessed knowledge or practice evidence.",
+        "Keep weak domains and recommended next steps explicit."
+      ],
+      "typography": "Structured professional type with clear scores, domain labels, and readable study content.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "progress tracking and competency organization"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "professional skills and structured learning authority"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mintlify",
+          "label": "Mintlify",
+          "role": "clear study navigation and reference content"
+        }
+      ]
+    },
+    {
+      "id": "education-cohort-learning-workspace",
+      "name": "Cohort Learning Workspace",
+      "legacyStyleIds": [
+        "education-cohort-learning-workspace"
+      ],
+      "family": "education",
+      "pageTypes": [
+        "community-site",
+        "course-platform",
+        "dashboard",
+        "learning-workspace"
+      ],
+      "audiences": [
+        "adult-learners",
+        "cohort-leads",
+        "instructors",
+        "teams"
+      ],
+      "goals": [
+        "collaboration",
+        "course-completion",
+        "daily-operation"
+      ],
+      "tones": [
+        "adult",
+        "collaborative",
+        "motivating",
+        "structured"
+      ],
+      "keywords": [
+        "assignment",
+        "class",
+        "cohort",
+        "discussion",
+        "instructor",
+        "learning",
+        "progress",
+        "workspace"
+      ],
+      "bestFor": [
+        "Cohort courses",
+        "peer learning",
+        "professional bootcamps",
+        "team academies"
+      ],
+      "avoidFor": [
+        "passive marketing pages",
+        "Preschool learning"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Social activity can distract from the learner's next required action."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Learning workspace with current module, cohort activity, assignment queue, instructor feedback, and visible shared progress.",
+      "layoutRules": [
+        "Connect content, practice, feedback, and peer activity in one workflow.",
+        "Keep deadlines and next learning action visible."
+      ],
+      "typography": "Adult learning typography with clear module structure and compact collaboration metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "participatory exercises and collaborative practice"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "shared learning workspace and modular content"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "slack",
+          "label": "Slack",
+          "role": "cohort conversation and peer momentum"
+        }
+      ]
+    },
+    {
+      "id": "education-kids-exploration-path",
+      "name": "Kids Exploration Path",
+      "legacyStyleIds": [
+        "education-kids-exploration-path"
+      ],
+      "family": "education",
+      "pageTypes": [
+        "kids-learning",
+        "learning-game",
+        "mobile-app-site",
+        "parent-portal"
+      ],
+      "audiences": [
+        "children",
+        "parents",
+        "teachers"
+      ],
+      "goals": [
+        "exploration",
+        "parent-trust",
+        "practice"
+      ],
+      "tones": [
+        "curious",
+        "encouraging",
+        "playful",
+        "safe"
+      ],
+      "keywords": [
+        "curiosity",
+        "exploration",
+        "game",
+        "kids",
+        "learning",
+        "parent",
+        "practice",
+        "reward"
+      ],
+      "bestFor": [
+        "Children's learning apps",
+        "educational games",
+        "family learning",
+        "guided practice"
+      ],
+      "avoidFor": [
+        "enterprise training",
+        "Professional certification"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "Overstimulation and manipulative rewards can undermine learning and parent trust."
+      ],
+      "density": "low-medium",
+      "firstViewport": "Colorful learning world with one clear mission, friendly character or artifact, visible progress, and a separate parent trust cue.",
+      "layoutRules": [
+        "Use large targets, short language, and one task per moment.",
+        "Keep reward mechanics supportive and age-appropriate."
+      ],
+      "typography": "Large rounded type for children with plain, calm supporting text for adults.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "approachable color and hands-on activity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nintendo-2001",
+          "label": "Nintendo 2001",
+          "role": "age-friendly exploration and playful missions"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "visual curiosity and collection discovery"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-dashboard-grid-data",
+      "name": "Enterprise Dashboard Grid Data",
+      "legacyStyleIds": [
+        "enterprise-dashboard-grid-data-7e324226",
+        "enterprise-dashboard-grid-data-817068c8"
+      ],
+      "family": "enterprise",
+      "pageTypes": [
+        "analytics",
+        "dashboard",
+        "internal-tool",
+        "monitoring"
+      ],
+      "audiences": [
+        "analysts",
+        "executives",
+        "operators",
+        "platform-teams"
+      ],
+      "goals": [
+        "daily-operation",
+        "decision-support",
+        "monitoring"
+      ],
+      "tones": [
+        "analytical",
+        "controlled",
+        "focused",
+        "professional",
+        "reliable"
+      ],
+      "keywords": [
+        "analytics",
+        "compliance",
+        "dashboard",
+        "enterprise",
+        "kpi",
+        "monitor",
+        "monitoring",
+        "operations",
+        "security"
+      ],
+      "bestFor": [
+        "Analytics interfaces",
+        "Dashboard interfaces",
+        "Internal Tool interfaces",
+        "Monitoring interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "tremor"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence.",
+        "Compact spacing can reduce clarity when too many secondary states are shown."
+      ],
+      "density": "medium",
+      "firstViewport": "Use an ordered metric and workflow grid with visible operational state. Keep metrics, trends, and decision signals visually dominant.",
+      "layoutRules": [
+        "Use an ordered metric and workflow grid with visible operational state.",
+        "Keep metrics, trends, and decision signals visually dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Precise technical sans-serif typography with restrained monospace accents.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/business.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:7e32422680d69a18723671e05d93293714c5ab394d4429a77f4016b48700f43a",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/business.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/corporate.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:817068c851cdf4151cfb9430fff4775c7b10e95728f7ad99ccb1efb66903086b",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/corporate.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/night.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6be14a362f5f527fdaaa334e2c2924f3f3c133782acad56c1f8f740ba371aa36",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/night.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/nord.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:4ab099d9b7f63b6440c80882ea4c3fda91b2a904fcafe625da580b1a02c93db2",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/nord.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "typography-system reference"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-executive-transformation-brief",
+      "name": "Executive Transformation Brief",
+      "legacyStyleIds": [
+        "enterprise-executive-transformation-brief"
+      ],
+      "family": "enterprise",
+      "pageTypes": [
+        "case-study",
+        "executive-brief",
+        "sales-page",
+        "solution-page"
+      ],
+      "audiences": [
+        "business-unit-leaders",
+        "consultants",
+        "enterprise-buyers",
+        "executives"
+      ],
+      "goals": [
+        "book-call",
+        "build-consensus",
+        "show-outcomes"
+      ],
+      "tones": [
+        "confident",
+        "measured",
+        "polished",
+        "strategic"
+      ],
+      "keywords": [
+        "case study",
+        "enterprise",
+        "executive",
+        "outcomes",
+        "roadmap",
+        "strategy",
+        "transformation",
+        "value"
+      ],
+      "bestFor": [
+        "cross-suite platforms",
+        "enterprise consulting",
+        "executive sales narratives",
+        "Transformation programs"
+      ],
+      "avoidFor": [
+        "Low-level API documentation",
+        "youth entertainment brands"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Broad transformation language becomes generic without quantified outcomes."
+      ],
+      "density": "medium",
+      "firstViewport": "Outcome statement followed by a portfolio of initiatives, quantified change, customer proof, and an executive briefing CTA.",
+      "layoutRules": [
+        "Frame the narrative around before, intervention, and measurable after.",
+        "Use a small number of strong proof modules instead of feature grids."
+      ],
+      "typography": "Executive editorial type with large outcome statements and disciplined evidence captions.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "hp",
+          "label": "HP",
+          "role": "broad enterprise transformation storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "meta",
+          "label": "Meta",
+          "role": "portfolio-level platform narrative"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vodafone",
+          "label": "Vodafone",
+          "role": "large-scale customer and service outcomes"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-governance-evidence-room",
+      "name": "Governance Evidence Room",
+      "legacyStyleIds": [
+        "enterprise-governance-evidence-room"
+      ],
+      "family": "enterprise",
+      "pageTypes": [
+        "audit-room",
+        "compliance-portal",
+        "docs",
+        "solution-page"
+      ],
+      "audiences": [
+        "auditors",
+        "compliance-teams",
+        "enterprise-buyers",
+        "security-leaders"
+      ],
+      "goals": [
+        "build-trust",
+        "prove-compliance",
+        "reduce-procurement-friction"
+      ],
+      "tones": [
+        "authoritative",
+        "measured",
+        "secure",
+        "transparent"
+      ],
+      "keywords": [
+        "audit",
+        "compliance",
+        "control",
+        "evidence",
+        "governance",
+        "policy",
+        "risk",
+        "security"
+      ],
+      "bestFor": [
+        "compliance portals",
+        "regulated software",
+        "Trust centers",
+        "vendor security reviews"
+      ],
+      "avoidFor": [
+        "Viral launches",
+        "visual-art portfolios"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Stale dates or vague certification labels will damage credibility."
+      ],
+      "density": "high",
+      "firstViewport": "Document-led evidence room with control domains, current certifications, policy updates, and gated audit materials.",
+      "layoutRules": [
+        "Expose evidence freshness, ownership, and scope.",
+        "Organize controls for retrieval rather than marketing drama."
+      ],
+      "typography": "Formal document typography with compact tables, dates, and control identifiers.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "dell-1996",
+          "label": "Dell 1996",
+          "role": "dense document retrieval and explicit navigation cues"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "formal information architecture and enterprise authority"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "measured assurance and institutional trust"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-infrastructure-blueprint",
+      "name": "Enterprise Infrastructure Blueprint",
+      "legacyStyleIds": [
+        "enterprise-infrastructure-blueprint"
+      ],
+      "family": "enterprise",
+      "pageTypes": [
+        "architecture-page",
+        "product-site",
+        "solution-page",
+        "technical-brief"
+      ],
+      "audiences": [
+        "architects",
+        "enterprise-buyers",
+        "platform-leaders",
+        "security-teams"
+      ],
+      "goals": [
+        "book-call",
+        "build-trust",
+        "explain-architecture"
+      ],
+      "tones": [
+        "architectural",
+        "controlled",
+        "credible",
+        "technical"
+      ],
+      "keywords": [
+        "architecture",
+        "cloud",
+        "deployment",
+        "governance",
+        "infrastructure",
+        "platform",
+        "scale",
+        "security"
+      ],
+      "bestFor": [
+        "Cloud platforms",
+        "data platforms",
+        "enterprise developer products",
+        "infrastructure software"
+      ],
+      "avoidFor": [
+        "impulse-purchase commerce",
+        "Playful consumer apps"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Architecture density can obscure the decision narrative for nontechnical buyers."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Architecture-led solution brief with system boundaries, deployment proof, reliability figures, and a technical consultation CTA.",
+      "layoutRules": [
+        "Use a real system model instead of generic cloud illustrations.",
+        "Connect every technical claim to an operational or business outcome."
+      ],
+      "typography": "Measured technical hierarchy with diagram labels optimized for executive scanning.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "hashicorp",
+          "label": "HashiCorp",
+          "role": "infrastructure architecture and governed platform clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mongodb",
+          "label": "MongoDB",
+          "role": "developer-facing data platform structure"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "nvidia",
+          "label": "NVIDIA",
+          "role": "technical system proof at enterprise scale"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-trust-solution",
+      "name": "Enterprise Trust Solution",
+      "legacyStyleIds": [
+        "enterprise-trust-solution"
+      ],
+      "family": "enterprise",
+      "pageTypes": [
+        "landing",
+        "product-site",
+        "sales-page"
+      ],
+      "audiences": [
+        "enterprise-buyers",
+        "executives",
+        "security-teams"
+      ],
+      "goals": [
+        "book-call",
+        "build-trust",
+        "explain-product"
+      ],
+      "tones": [
+        "measured",
+        "professional",
+        "stable",
+        "trustworthy"
+      ],
+      "keywords": [
+        "audit",
+        "b2b",
+        "compliance",
+        "enterprise",
+        "sales",
+        "security",
+        "solution",
+        "trust"
+      ],
+      "bestFor": [
+        "compliance tools",
+        "enterprise AI platforms",
+        "sales-led SaaS",
+        "Security products"
+      ],
+      "avoidFor": [
+        "Playful consumer products or experimental portfolios"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Can become bland if no specific proof points are included."
+      ],
+      "density": "medium",
+      "firstViewport": "Clear value proposition, trust proof, architecture or workflow diagram, sales CTA.",
+      "layoutRules": [
+        "Use proof, governance, and flow diagrams.",
+        "Keep visuals polished but conservative."
+      ],
+      "typography": "Executive-readable hierarchy with measured display type and clean body copy.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "hashicorp",
+          "label": "HashiCorp",
+          "role": "infrastructure credibility and product clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ibm",
+          "label": "IBM",
+          "role": "structured enterprise information design"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "measured trust and premium warmth"
+        }
+      ]
+    },
+    {
+      "id": "finance-consumer-money-companion",
+      "name": "Consumer Money Companion",
+      "legacyStyleIds": [
+        "finance-consumer-money-companion"
+      ],
+      "family": "finance",
+      "pageTypes": [
+        "dashboard",
+        "mobile-app",
+        "personal-finance",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "families",
+        "travelers",
+        "young-professionals"
+      ],
+      "goals": [
+        "build-trust",
+        "habit-adoption",
+        "money-management"
+      ],
+      "tones": [
+        "clear",
+        "empowering",
+        "friendly",
+        "reassuring"
+      ],
+      "keywords": [
+        "budget",
+        "goals",
+        "mobile",
+        "money",
+        "personal finance",
+        "saving",
+        "spending",
+        "transfer"
+      ],
+      "bestFor": [
+        "Budgeting apps",
+        "consumer payments",
+        "financial wellness",
+        "saving tools"
+      ],
+      "avoidFor": [
+        "Institutional trading",
+        "technical compliance portals"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Friendly styling must not trivialize risk, fees, or account limitations."
+      ],
+      "density": "medium",
+      "firstViewport": "Friendly money overview with available balance, spending context, a clear next action, and visible progress toward a goal.",
+      "layoutRules": [
+        "Translate financial state into understandable actions.",
+        "Use positive guidance without hiding fees, risk, or constraints."
+      ],
+      "typography": "Approachable numeric typography with plain-language guidance and strong accessibility.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "mastercard",
+          "label": "Mastercard",
+          "role": "trusted everyday payment context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "revolut",
+          "label": "Revolut",
+          "role": "consumer money overview and mobile polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wise",
+          "label": "Wise",
+          "role": "plain-language financial outcomes and accessible action"
+        }
+      ]
+    },
+    {
+      "id": "finance-investment-research-terminal",
+      "name": "Investment Research Terminal",
+      "legacyStyleIds": [
+        "finance-investment-research-terminal"
+      ],
+      "family": "finance",
+      "pageTypes": [
+        "analytics",
+        "market-dashboard",
+        "report",
+        "research-terminal"
+      ],
+      "audiences": [
+        "analysts",
+        "investors",
+        "portfolio-managers",
+        "research-teams"
+      ],
+      "goals": [
+        "compare-assets",
+        "decision-support",
+        "market-research"
+      ],
+      "tones": [
+        "analytical",
+        "disciplined",
+        "fast",
+        "technical"
+      ],
+      "keywords": [
+        "asset",
+        "chart",
+        "investment",
+        "markets",
+        "portfolio",
+        "research",
+        "terminal",
+        "valuation"
+      ],
+      "bestFor": [
+        "asset comparison",
+        "Investment research",
+        "market intelligence",
+        "portfolio analysis"
+      ],
+      "avoidFor": [
+        "community storytelling",
+        "Simple consumer onboarding"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Visual urgency can encourage false confidence when uncertainty is not explicit."
+      ],
+      "density": "high",
+      "firstViewport": "Research terminal with market context, thesis note, comparative chart, catalysts, risks, and linked source evidence.",
+      "layoutRules": [
+        "Separate observed data, analyst interpretation, and scenario assumptions.",
+        "Keep sources and timestamps adjacent to decision inputs."
+      ],
+      "typography": "Dense analytical typography with tabular market data and readable research prose.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "binance",
+          "label": "Binance",
+          "role": "fast market data and asset comparison"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "analytical query and chart density"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "institutional market research presentation"
+        }
+      ]
+    },
+    {
+      "id": "finance-treasury-operations-console",
+      "name": "Treasury Operations Console",
+      "legacyStyleIds": [
+        "finance-treasury-operations-console"
+      ],
+      "family": "finance",
+      "pageTypes": [
+        "finance-operations",
+        "internal-tool",
+        "monitoring",
+        "treasury-dashboard"
+      ],
+      "audiences": [
+        "controllers",
+        "finance-teams",
+        "operators",
+        "treasurers"
+      ],
+      "goals": [
+        "cash-monitoring",
+        "daily-operation",
+        "risk-control"
+      ],
+      "tones": [
+        "controlled",
+        "institutional",
+        "operational",
+        "precise"
+      ],
+      "keywords": [
+        "accounts",
+        "cash",
+        "forecast",
+        "liquidity",
+        "payments",
+        "reconciliation",
+        "risk",
+        "treasury"
+      ],
+      "bestFor": [
+        "cash forecasting",
+        "financial controls",
+        "payment operations",
+        "Treasury management"
+      ],
+      "avoidFor": [
+        "creative portfolios",
+        "Youth consumer brands"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Ambiguous currency or settlement state can create operational risk."
+      ],
+      "density": "high",
+      "firstViewport": "Institutional console with cash position, account movements, forecast variance, approvals, and reconciliation exceptions.",
+      "layoutRules": [
+        "Keep balances, currency, timing, and approval state unambiguous.",
+        "Separate expected movement from reconciled fact."
+      ],
+      "typography": "Tabular institutional typography with precise currencies, dates, and approval labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "coinbase",
+          "label": "Coinbase",
+          "role": "institutional balances and transaction clarity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "kraken",
+          "label": "Kraken",
+          "role": "dense financial operations and risk context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "stripe",
+          "label": "Stripe",
+          "role": "payment operations precision and platform polish"
+        }
+      ]
+    },
+    {
+      "id": "fintech-precision-trust",
+      "name": "Fintech Precision Trust",
+      "legacyStyleIds": [
+        "fintech-precision-trust"
+      ],
+      "family": "finance",
+      "pageTypes": [
+        "dashboard",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "executives",
+        "finance-teams",
+        "investors",
+        "operators"
+      ],
+      "goals": [
+        "book-call",
+        "build-trust",
+        "decision-support"
+      ],
+      "tones": [
+        "calm",
+        "precise",
+        "premium",
+        "trustworthy"
+      ],
+      "keywords": [
+        "finance",
+        "fintech",
+        "investment",
+        "market",
+        "portfolio",
+        "report",
+        "risk",
+        "trading"
+      ],
+      "bestFor": [
+        "Finance tools",
+        "investor products",
+        "market dashboards",
+        "risk platforms"
+      ],
+      "avoidFor": [
+        "Playful creator products"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Needs careful chart semantics; fake finance data looks untrustworthy."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Financial outcome, trust proof, high-quality chart or report preview, controlled CTA.",
+      "layoutRules": [
+        "Use clear numeric hierarchy and cautious color semantics.",
+        "Do not use noisy speculative visuals."
+      ],
+      "typography": "Precise numeric typography and conservative headings.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "revolut",
+          "label": "Revolut",
+          "role": "dark financial product polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "stripe",
+          "label": "Stripe",
+          "role": "premium fintech gradients and precision"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wise",
+          "label": "Wise",
+          "role": "clear financial outcomes and accessibility"
+        }
+      ]
+    },
+    {
+      "id": "launch-centered-hero-story",
+      "name": "Launch Centered Hero Story",
+      "legacyStyleIds": [
+        "launch-centered-hero-story-cff58e59"
+      ],
+      "family": "launch",
+      "pageTypes": [
+        "landing",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "creators",
+        "early-adopters",
+        "founders"
+      ],
+      "goals": [
+        "brand-awareness",
+        "launch",
+        "signup"
+      ],
+      "tones": [
+        "energetic",
+        "expressive",
+        "modern",
+        "playful"
+      ],
+      "keywords": [
+        "creative",
+        "launch",
+        "new product",
+        "startup",
+        "waitlist"
+      ],
+      "bestFor": [
+        "Landing interfaces",
+        "Launch Page interfaces",
+        "Product Site interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "magic-ui"
+      ],
+      "risks": [
+        "Expressive motion can distract from product evidence when overused.",
+        "Spacious composition can hide important comparison context when content grows."
+      ],
+      "density": "low",
+      "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorable visual moments dominant.",
+      "layoutRules": [
+        "Use a centered opening statement followed by one concrete proof surface.",
+        "Keep narrative progression and memorable visual moments dominant.",
+        "Use spacious grouping and limit each viewport to a small number of focal elements.",
+        "Use expressive motion only for hierarchy and product-state transitions."
+      ],
+      "typography": "Expressive display typography constrained by a calm supporting text system.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/acid.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:cff58e59f5a05854b05ba21a4f93a49084cc17eef725c14f1b07a7f5a39394c0",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/acid.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/cyberpunk.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:c5d2e36a943035fad0b1e320b20f53414d5f8306e701686452174f32c2185c19",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/cyberpunk.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "launch-centered-hero-trust",
+      "name": "Launch Centered Hero Trust",
+      "legacyStyleIds": [
+        "launch-centered-hero-trust-dc16f9c6"
+      ],
+      "family": "launch",
+      "pageTypes": [
+        "landing",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "creators",
+        "early-adopters",
+        "founders"
+      ],
+      "goals": [
+        "brand-awareness",
+        "launch",
+        "signup"
+      ],
+      "tones": [
+        "energetic",
+        "modern",
+        "trustworthy",
+        "warm"
+      ],
+      "keywords": [
+        "brand",
+        "community",
+        "launch",
+        "startup",
+        "waitlist"
+      ],
+      "bestFor": [
+        "Landing interfaces",
+        "Launch Page interfaces",
+        "Product Site interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Balanced visual treatment still requires domain-specific content and evidence."
+      ],
+      "density": "medium",
+      "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep evidence, governance, and credibility signals visually dominant.",
+      "layoutRules": [
+        "Use a centered opening statement followed by one concrete proof surface.",
+        "Keep evidence, governance, and credibility signals visually dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use restrained motion for continuity, feedback, and state changes only."
+      ],
+      "typography": "Humanist sans-serif typography with approachable rhythm and clear labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "path": "design-md/framer/DESIGN.md",
+          "slug": "framer",
+          "repo": "VoltAgent/awesome-design-md",
+          "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+          "contentHash": "sha256:a5d47dddacf5a04577cec0be6fe0fc53b7402254c7686874af3e59bcc7588cb4",
+          "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/blob/664b3e78fd1a298ba11973822da988483256d4b4/design-md/framer/DESIGN.md",
+          "label": "Awesome Design Md reference 3",
+          "role": "interaction-pattern reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/bumblebee.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:dc16f9c6a580962b814b679ff04dd5106b329a962111d49b62afee62fed4a8a7",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/bumblebee.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/light.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:ac5ca5ba366661dba1aa43872d32c12a7ae495a1e4ba8c05c1a6537478d32a3c",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/light.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "content-hierarchy reference"
+        }
+      ]
+    },
+    {
+      "id": "launch-cinematic-product-reveal",
+      "name": "Cinematic Product Reveal",
+      "legacyStyleIds": [
+        "launch-cinematic-product-reveal"
+      ],
+      "family": "launch",
+      "pageTypes": [
+        "campaign",
+        "event-page",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "creators",
+        "early-adopters",
+        "media-teams"
+      ],
+      "goals": [
+        "brand-awareness",
+        "launch",
+        "waitlist"
+      ],
+      "tones": [
+        "cinematic",
+        "dramatic",
+        "immersive",
+        "premium"
+      ],
+      "keywords": [
+        "campaign",
+        "cinematic",
+        "creative",
+        "launch",
+        "premiere",
+        "reveal",
+        "video",
+        "waitlist"
+      ],
+      "bestFor": [
+        "Creative software launches",
+        "event premieres",
+        "hardware reveals",
+        "media products"
+      ],
+      "avoidFor": [
+        "Compliance portals",
+        "dense back-office tools"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "Large media and motion can harm performance and accessibility if not carefully constrained."
+      ],
+      "density": "low",
+      "firstViewport": "Full-bleed reveal moment with one striking artifact, a short promise, launch timing, and a single invitation.",
+      "layoutRules": [
+        "Sequence motion around one product reveal.",
+        "Keep copy and interaction sparse enough to preserve cinematic focus."
+      ],
+      "typography": "Large display typography paired with minimal, quiet interface labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "elevenlabs",
+          "label": "ElevenLabs",
+          "role": "immersive media product storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "playstation",
+          "label": "PlayStation",
+          "role": "dramatic entertainment launch pacing"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "runwayml",
+          "label": "Runway",
+          "role": "cinematic creative-tool reveal"
+        }
+      ]
+    },
+    {
+      "id": "launch-community-countdown-campaign",
+      "name": "Community Countdown Campaign",
+      "legacyStyleIds": [
+        "launch-community-countdown-campaign"
+      ],
+      "family": "launch",
+      "pageTypes": [
+        "campaign",
+        "community-site",
+        "event-page",
+        "launch-page"
+      ],
+      "audiences": [
+        "communities",
+        "consumers",
+        "creators",
+        "fans"
+      ],
+      "goals": [
+        "anticipation",
+        "community-growth",
+        "launch"
+      ],
+      "tones": [
+        "anticipatory",
+        "bold",
+        "playful",
+        "social"
+      ],
+      "keywords": [
+        "campaign",
+        "community",
+        "countdown",
+        "drop",
+        "event",
+        "fan",
+        "launch",
+        "social"
+      ],
+      "bestFor": [
+        "Community launches",
+        "entertainment releases",
+        "festival announcements",
+        "limited drops"
+      ],
+      "avoidFor": [
+        "Security procurement",
+        "serious clinical tools"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "Novelty styling can date quickly or obscure essential launch details."
+      ],
+      "density": "low-medium",
+      "firstViewport": "Bold countdown chapter with a collectible visual, community activity, release milestones, and a share or reminder action.",
+      "layoutRules": [
+        "Turn time and participation into the visual rhythm.",
+        "Use social proof and milestones without cluttering the reveal."
+      ],
+      "typography": "Playful display type balanced by clear timing and participation labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "nintendo-2001",
+          "label": "Nintendo 2001",
+          "role": "playful campaign energy and fan anticipation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "pinterest",
+          "label": "Pinterest",
+          "role": "collectible inspiration and shareable discovery"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "spotify",
+          "label": "Spotify",
+          "role": "community culture and bold media color"
+        }
+      ]
+    },
+    {
+      "id": "launch-proof-led-early-access",
+      "name": "Proof Led Early Access",
+      "legacyStyleIds": [
+        "launch-proof-led-early-access"
+      ],
+      "family": "launch",
+      "pageTypes": [
+        "developer-landing",
+        "launch-page",
+        "product-site",
+        "waitlist"
+      ],
+      "audiences": [
+        "developers",
+        "early-adopters",
+        "founders",
+        "product-teams"
+      ],
+      "goals": [
+        "early-access",
+        "show-capability",
+        "signup"
+      ],
+      "tones": [
+        "credible",
+        "direct",
+        "energetic",
+        "product-led"
+      ],
+      "keywords": [
+        "beta",
+        "builder",
+        "demo",
+        "early access",
+        "launch",
+        "product proof",
+        "prototype",
+        "signup"
+      ],
+      "bestFor": [
+        "AI builders",
+        "developer betas",
+        "Early-stage SaaS",
+        "product-led waitlists"
+      ],
+      "avoidFor": [
+        "formal annual reports",
+        "Heritage luxury brands"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "A weak or noninteractive product proof makes the launch feel premature."
+      ],
+      "density": "medium",
+      "firstViewport": "Direct launch claim beside a working product proof, a short beta contract, and immediate access or waitlist action.",
+      "layoutRules": [
+        "Let a believable product interaction carry the launch.",
+        "State access conditions, maturity, and expected outcome plainly."
+      ],
+      "typography": "Crisp product typography with monospace proof and compact beta labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "lovable",
+          "label": "Lovable",
+          "role": "immediate builder proof and early product momentum"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "replicate",
+          "label": "Replicate",
+          "role": "working technical demo and accessible experimentation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vercel",
+          "label": "Vercel",
+          "role": "direct product contract and confident action"
+        }
+      ]
+    },
+    {
+      "id": "learning-platform-friendly",
+      "name": "Learning Platform Friendly",
+      "legacyStyleIds": [
+        "learning-platform-friendly"
+      ],
+      "family": "education",
+      "pageTypes": [
+        "dashboard",
+        "landing",
+        "product-site"
+      ],
+      "audiences": [
+        "parents",
+        "students",
+        "teachers",
+        "teams"
+      ],
+      "goals": [
+        "daily-operation",
+        "explain-product",
+        "signup"
+      ],
+      "tones": [
+        "approachable",
+        "clear",
+        "organized",
+        "supportive"
+      ],
+      "keywords": [
+        "course",
+        "education",
+        "knowledge",
+        "learning",
+        "student",
+        "study",
+        "teacher",
+        "training"
+      ],
+      "bestFor": [
+        "course platforms",
+        "knowledge tools",
+        "Learning products",
+        "training dashboards"
+      ],
+      "avoidFor": [
+        "High-finance or security procurement pages"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Can become too soft for professional training unless density is tuned."
+      ],
+      "density": "medium",
+      "firstViewport": "Outcome-oriented headline, product/course preview, friendly progress or lesson state.",
+      "layoutRules": [
+        "Show progress, lessons, outcomes, and guidance.",
+        "Avoid childish visuals unless the audience is children."
+      ],
+      "typography": "Warm but structured hierarchy with readable learning content.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured but friendly progress views"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "approachable collaborative color"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "friendly knowledge organization"
+        }
+      ]
+    },
+    {
+      "id": "motion-rich-launch",
+      "name": "Motion Rich Launch",
+      "legacyStyleIds": [
+        "motion-rich-launch"
+      ],
+      "family": "launch",
+      "pageTypes": [
+        "landing",
+        "launch-page",
+        "product-site"
+      ],
+      "audiences": [
+        "consumers",
+        "creators",
+        "developers",
+        "founders"
+      ],
+      "goals": [
+        "launch",
+        "signup",
+        "social-proof"
+      ],
+      "tones": [
+        "energetic",
+        "expressive",
+        "modern"
+      ],
+      "keywords": [
+        "animation",
+        "creator",
+        "launch",
+        "motion",
+        "new product",
+        "startup",
+        "viral",
+        "waitlist"
+      ],
+      "bestFor": [
+        "AI demos",
+        "creator tools",
+        "New product launches",
+        "waitlist pages"
+      ],
+      "avoidFor": [
+        "Conservative enterprise procurement pages"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Can become gimmicky if every section animates."
+      ],
+      "density": "low-medium",
+      "firstViewport": "Strong visual hook, animated proof or product reveal, short CTA path.",
+      "layoutRules": [
+        "Use motion as hierarchy, not filler.",
+        "Keep core copy short and readable."
+      ],
+      "typography": "Display-forward but readable, with restrained UI text.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "framer",
+          "label": "Framer",
+          "role": "motion-first product launch"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "raycast",
+          "label": "Raycast",
+          "role": "polished gradients and energetic UI"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "runwayml",
+          "label": "Runway",
+          "role": "cinematic product reveal"
+        }
+      ]
+    },
+    {
+      "id": "operational-saas-console",
+      "name": "Operational SaaS Console",
+      "legacyStyleIds": [
+        "operational-saas-console"
+      ],
+      "family": "saas",
+      "pageTypes": [
+        "app-redesign",
+        "dashboard",
+        "internal-tool",
+        "product-site"
+      ],
+      "audiences": [
+        "enterprise-buyers",
+        "operators",
+        "product-managers",
+        "teams"
+      ],
+      "goals": [
+        "book-call",
+        "daily-operation",
+        "explain-product"
+      ],
+      "tones": [
+        "calm",
+        "focused",
+        "operational",
+        "precise"
+      ],
+      "keywords": [
+        "admin",
+        "agent",
+        "crm",
+        "dashboard",
+        "monitor",
+        "project",
+        "saas",
+        "task",
+        "team",
+        "workflow"
+      ],
+      "bestFor": [
+        "agent control panels",
+        "B2B operations products",
+        "team SaaS",
+        "Workflow tools"
+      ],
+      "avoidFor": [
+        "Consumer launches that need emotional storytelling"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "May feel too restrained if the brief expects a big launch moment."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Product UI is the hero: sidebar, rows, status, selected state, and clear primary action.",
+      "layoutRules": [
+        "Favor app shell, compact rows, and real states.",
+        "Do not turn dense workflows into card-only marketing sections."
+      ],
+      "typography": "Product UI typography with compact labels and strong information hierarchy.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "friendly operational product surfaces"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "linear.app",
+          "label": "Linear",
+          "role": "compact app shell, rows, and selected states"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "calm workspace hierarchy"
+        }
+      ]
+    },
+    {
+      "id": "portfolio-case-study-narrative",
+      "name": "Case Study Narrative",
+      "legacyStyleIds": [
+        "portfolio-case-study-narrative"
+      ],
+      "family": "portfolio",
+      "pageTypes": [
+        "agency-site",
+        "case-study",
+        "personal-site",
+        "portfolio"
+      ],
+      "audiences": [
+        "clients",
+        "creative-directors",
+        "hiring-managers",
+        "peers"
+      ],
+      "goals": [
+        "hire",
+        "show-impact",
+        "show-process"
+      ],
+      "tones": [
+        "crafted",
+        "credible",
+        "editorial",
+        "reflective"
+      ],
+      "keywords": [
+        "case study",
+        "design",
+        "impact",
+        "narrative",
+        "outcomes",
+        "portfolio",
+        "process",
+        "research"
+      ],
+      "bestFor": [
+        "consultant portfolios",
+        "design leadership",
+        "Detailed case studies",
+        "research-led work"
+      ],
+      "avoidFor": [
+        "Rapid ecommerce checkout",
+        "real-time operations"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Long narratives lose credibility when process detail is not tied to outcomes."
+      ],
+      "density": "medium",
+      "firstViewport": "Editorial case opening with problem, role, constraints, a flagship artifact, and a clear impact summary.",
+      "layoutRules": [
+        "Structure each story around decisions and evidence, not a gallery dump.",
+        "Keep role, collaborators, timeline, and outcomes explicit."
+      ],
+      "typography": "Editorial long-form hierarchy with disciplined captions and pull metrics.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clay",
+          "label": "Clay",
+          "role": "art-directed case-study composition"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "webflow",
+          "label": "Webflow",
+          "role": "visual process explanation and project outcomes"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wired",
+          "label": "WIRED",
+          "role": "editorial narrative and evidence hierarchy"
+        }
+      ]
+    },
+    {
+      "id": "portfolio-centered-hero-story",
+      "name": "Portfolio Centered Hero Story",
+      "legacyStyleIds": [
+        "portfolio-centered-hero-story-d5726f45"
+      ],
+      "family": "portfolio",
+      "pageTypes": [
+        "creative-lab",
+        "portfolio",
+        "studio-site"
+      ],
+      "audiences": [
+        "creative-directors",
+        "designers",
+        "developers"
+      ],
+      "goals": [
+        "brand-awareness",
+        "express-identity",
+        "show-work"
+      ],
+      "tones": [
+        "bold",
+        "dramatic",
+        "energetic",
+        "experimental"
+      ],
+      "keywords": [
+        "art direction",
+        "brand",
+        "creative",
+        "interactive",
+        "portfolio"
+      ],
+      "bestFor": [
+        "Creative Lab interfaces",
+        "Portfolio interfaces",
+        "Studio Site interfaces"
+      ],
+      "avoidFor": [
+        "Interfaces whose primary emphasis conflicts with this direction.",
+        "Projects that require a different information-density policy."
+      ],
+      "componentKits": [
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Expressive motion can distract from product evidence when overused."
+      ],
+      "density": "medium",
+      "firstViewport": "Use a centered opening statement followed by one concrete proof surface. Keep narrative progression and memorable visual moments dominant.",
+      "layoutRules": [
+        "Use a centered opening statement followed by one concrete proof surface.",
+        "Keep narrative progression and memorable visual moments dominant.",
+        "Use balanced spacing with clear grouping and moderate information density.",
+        "Use expressive motion only for hierarchy and product-state transitions."
+      ],
+      "typography": "Expressive display typography constrained by a calm supporting text system.",
+      "legacyReferences": [
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/abyss.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:6ced14277553732371f4ef2e4d9a4904408270c8d9925e87cccd33fee42ba334",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/abyss.css",
+          "label": "Daisyui Themes reference 3",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/dark.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d871d880af5f3c3113d2384772f8bce0e8e4959479266fef7b55ec38daefc4ec",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/dark.css",
+          "label": "Daisyui Themes reference 2",
+          "role": "color-system reference"
+        },
+        {
+          "provider": "daisyui-themes",
+          "path": "packages/daisyui/src/themes/synthwave.css",
+          "repo": "saadeghi/daisyui",
+          "revision": "374d63758f997317e92e93e547569a5f9ad11250",
+          "contentHash": "sha256:d5726f45f0f0a7d4e4f360b3b1d88819284c5de659c73ebd39de82dee6e31b8f",
+          "sourceUrl": "https://github.com/saadeghi/daisyui/blob/374d63758f997317e92e93e547569a5f9ad11250/packages/daisyui/src/themes/synthwave.css",
+          "label": "Daisyui Themes reference 1",
+          "role": "color-system reference"
+        }
+      ]
+    },
+    {
+      "id": "portfolio-experimental-creative-canvas",
+      "name": "Experimental Creative Canvas",
+      "legacyStyleIds": [
+        "portfolio-experimental-creative-canvas"
+      ],
+      "family": "portfolio",
+      "pageTypes": [
+        "creative-lab",
+        "personal-site",
+        "portfolio",
+        "studio-site"
+      ],
+      "audiences": [
+        "collaborators",
+        "creative-directors",
+        "culture-clients",
+        "peers"
+      ],
+      "goals": [
+        "collaborate",
+        "express-identity",
+        "show-work"
+      ],
+      "tones": [
+        "art-directed",
+        "bold",
+        "experimental",
+        "playful"
+      ],
+      "keywords": [
+        "art direction",
+        "canvas",
+        "creative",
+        "experimental",
+        "interactive",
+        "motion",
+        "portfolio",
+        "studio"
+      ],
+      "bestFor": [
+        "art collectives",
+        "Creative technologists",
+        "experimental designers",
+        "motion studios"
+      ],
+      "avoidFor": [
+        "accessibility-critical public services",
+        "Conservative procurement"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "Experimental interaction can become inaccessible or difficult to navigate."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Asymmetric project canvas with overlapping artifacts, active cursor or motion cues, and a compact identity statement.",
+      "layoutRules": [
+        "Break the grid intentionally while preserving project labels and navigation.",
+        "Use interaction to reveal relationships, not to hide content."
+      ],
+      "typography": "Expressive display type with rigorous project metadata and navigation labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "figma",
+          "label": "Figma",
+          "role": "playful creative systems and multiplayer energy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "framer",
+          "label": "Framer",
+          "role": "interactive project presentation and motion"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "runwayml",
+          "label": "Runway",
+          "role": "experimental media and cinematic artifacts"
+        }
+      ]
+    },
+    {
+      "id": "portfolio-studio-grid",
+      "name": "Portfolio Studio Grid",
+      "legacyStyleIds": [
+        "portfolio-studio-grid"
+      ],
+      "family": "portfolio",
+      "pageTypes": [
+        "agency-site",
+        "personal-site",
+        "portfolio"
+      ],
+      "audiences": [
+        "clients",
+        "creative-directors",
+        "recruiters"
+      ],
+      "goals": [
+        "book-call",
+        "hire",
+        "show-work"
+      ],
+      "tones": [
+        "confident",
+        "curated",
+        "editorial",
+        "visual"
+      ],
+      "keywords": [
+        "agency",
+        "case study",
+        "designer",
+        "personal",
+        "portfolio",
+        "studio",
+        "work"
+      ],
+      "bestFor": [
+        "agency sites",
+        "case-study collections",
+        "Designer portfolios"
+      ],
+      "avoidFor": [
+        "Transactional SaaS or ecommerce catalogs"
+      ],
+      "componentKits": [
+        "magic-ui",
+        "origin-ui"
+      ],
+      "risks": [
+        "Can obscure conversion if contact path is too subtle."
+      ],
+      "density": "medium",
+      "firstViewport": "Name or studio mark, sharp positioning, large work preview, restrained navigation.",
+      "layoutRules": [
+        "Let work samples carry the page.",
+        "Use consistent image ratios and editorial spacing."
+      ],
+      "typography": "Confident editorial type with disciplined captions and metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clay",
+          "label": "Clay",
+          "role": "art-directed studio composition"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "figma",
+          "label": "Figma",
+          "role": "creative color and professional structure"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "framer",
+          "label": "Framer",
+          "role": "design-forward project presentation"
+        }
+      ]
+    },
+    {
+      "id": "portfolio-technical-builder-showcase",
+      "name": "Technical Builder Showcase",
+      "legacyStyleIds": [
+        "portfolio-technical-builder-showcase"
+      ],
+      "family": "portfolio",
+      "pageTypes": [
+        "developer-portfolio",
+        "personal-site",
+        "project-index",
+        "technical-blog"
+      ],
+      "audiences": [
+        "developers",
+        "engineering-leads",
+        "recruiters",
+        "technical-founders"
+      ],
+      "goals": [
+        "hire",
+        "show-expertise",
+        "show-projects"
+      ],
+      "tones": [
+        "credible",
+        "direct",
+        "independent",
+        "technical"
+      ],
+      "keywords": [
+        "builder",
+        "code",
+        "developer portfolio",
+        "experiments",
+        "github",
+        "open source",
+        "projects",
+        "writing"
+      ],
+      "bestFor": [
+        "Engineer portfolios",
+        "independent builders",
+        "open-source maintainers",
+        "technical consultants"
+      ],
+      "avoidFor": [
+        "children's education",
+        "Lifestyle retail"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Repository counts without project context read as vanity metrics."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Technical identity, selected shipped projects, repository proof, concise writing index, and a direct contact path.",
+      "layoutRules": [
+        "Show what was built, why it matters, and what is live.",
+        "Use code and system artifacts selectively as proof."
+      ],
+      "typography": "Tight technical sans serif with monospace project metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cursor",
+          "label": "Cursor",
+          "role": "builder identity and product craft"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "expo",
+          "label": "Expo",
+          "role": "open projects and accessible developer storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "vercel",
+          "label": "Vercel",
+          "role": "precise technical project proof"
+        }
+      ]
+    },
+    {
+      "id": "research-benchmark-evaluation-board",
+      "name": "Benchmark Evaluation Board",
+      "legacyStyleIds": [
+        "research-benchmark-evaluation-board"
+      ],
+      "family": "research",
+      "pageTypes": [
+        "benchmark",
+        "dashboard",
+        "leaderboard",
+        "research-site"
+      ],
+      "audiences": [
+        "machine-learning-engineers",
+        "researchers",
+        "technical-buyers"
+      ],
+      "goals": [
+        "compare-results",
+        "decision-support",
+        "show-evidence"
+      ],
+      "tones": [
+        "analytical",
+        "competitive",
+        "rigorous",
+        "transparent"
+      ],
+      "keywords": [
+        "benchmark",
+        "comparison",
+        "dataset",
+        "evaluation",
+        "leaderboard",
+        "methodology",
+        "model",
+        "score"
+      ],
+      "bestFor": [
+        "evaluation suites",
+        "Model benchmarks",
+        "research leaderboards",
+        "technical comparisons"
+      ],
+      "avoidFor": [
+        "Lifestyle brand launches",
+        "simple local services"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Rankings without uncertainty and methodology invite misleading conclusions."
+      ],
+      "density": "high",
+      "firstViewport": "Evaluation dashboard with task filters, ranked results, confidence context, methodology access, and selected model detail.",
+      "layoutRules": [
+        "Expose methodology, uncertainty, and dataset scope beside rankings.",
+        "Separate comparable results from marketing claims."
+      ],
+      "typography": "Dense analytical type with tabular numerals, compact labels, and readable footnotes.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "cohere",
+          "label": "Cohere",
+          "role": "clear enterprise model evaluation"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "mistral.ai",
+          "label": "Mistral AI",
+          "role": "technical benchmark storytelling"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "together.ai",
+          "label": "Together AI",
+          "role": "model comparison and infrastructure evidence"
+        }
+      ]
+    },
+    {
+      "id": "research-experiment-control-workbench",
+      "name": "Experiment Control Workbench",
+      "legacyStyleIds": [
+        "research-experiment-control-workbench"
+      ],
+      "family": "research",
+      "pageTypes": [
+        "experiment-tracker",
+        "internal-tool",
+        "lab-dashboard",
+        "research-tool"
+      ],
+      "audiences": [
+        "lab-operators",
+        "machine-learning-engineers",
+        "researchers"
+      ],
+      "goals": [
+        "compare-results",
+        "reproducibility",
+        "run-experiments"
+      ],
+      "tones": [
+        "controlled",
+        "experimental",
+        "methodical",
+        "technical"
+      ],
+      "keywords": [
+        "artifact",
+        "dataset",
+        "experiment",
+        "lab",
+        "model",
+        "parameters",
+        "reproducibility",
+        "run"
+      ],
+      "bestFor": [
+        "Experiment trackers",
+        "model training tools",
+        "research operations",
+        "simulation workbenches"
+      ],
+      "avoidFor": [
+        "Consumer campaign pages",
+        "premium retail"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Missing provenance and version context makes results difficult to reproduce."
+      ],
+      "density": "high",
+      "firstViewport": "Run-oriented workbench with experiment queue, parameter set, artifact preview, comparison state, and reproducibility metadata.",
+      "layoutRules": [
+        "Keep inputs, versioned context, outputs, and status traceable.",
+        "Support side-by-side comparison without hiding failed runs."
+      ],
+      "typography": "Compact technical UI with monospace run identifiers and tabular parameters.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "clickhouse",
+          "label": "ClickHouse",
+          "role": "high-volume run analytics and traceability"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "ollama",
+          "label": "Ollama",
+          "role": "local experiment control and technical simplicity"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "replicate",
+          "label": "Replicate",
+          "role": "runnable model experiments and artifact output"
+        }
+      ]
+    },
+    {
+      "id": "research-scientific-publication-archive",
+      "name": "Scientific Publication Archive",
+      "legacyStyleIds": [
+        "research-scientific-publication-archive"
+      ],
+      "family": "research",
+      "pageTypes": [
+        "docs",
+        "publication-archive",
+        "research-site",
+        "technical-blog"
+      ],
+      "audiences": [
+        "journalists",
+        "researchers",
+        "scientific-leaders",
+        "students"
+      ],
+      "goals": [
+        "citation",
+        "knowledge-discovery",
+        "show-expertise"
+      ],
+      "tones": [
+        "accessible",
+        "authoritative",
+        "editorial",
+        "scholarly"
+      ],
+      "keywords": [
+        "archive",
+        "authors",
+        "citation",
+        "journal",
+        "paper",
+        "publication",
+        "research",
+        "topic"
+      ],
+      "bestFor": [
+        "institutional knowledge",
+        "lab publications",
+        "Research archives",
+        "science communication"
+      ],
+      "avoidFor": [
+        "live dispatch",
+        "Transactional checkout"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Editorial treatment must not obscure archival completeness or citation details."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Editorial publication index with a featured finding, topic navigation, author and date metadata, and citation-ready records.",
+      "layoutRules": [
+        "Optimize for scanning title, abstract, authors, venue, and date.",
+        "Use figures to support findings, not as decorative thumbnails."
+      ],
+      "typography": "Scholarly editorial hierarchy with comfortable abstracts and compact citation metadata.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "nvidia",
+          "label": "NVIDIA",
+          "role": "technical publication and figure polish"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "wired",
+          "label": "WIRED",
+          "role": "accessible science editorial hierarchy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "x.ai",
+          "label": "xAI",
+          "role": "stark research statement and lab identity"
+        }
+      ]
+    },
+    {
+      "id": "saas-automation-flow-builder",
+      "name": "Automation Flow Builder",
+      "legacyStyleIds": [
+        "saas-automation-flow-builder"
+      ],
+      "family": "saas",
+      "pageTypes": [
+        "app-redesign",
+        "internal-tool",
+        "product-site",
+        "workflow-builder"
+      ],
+      "audiences": [
+        "automation-specialists",
+        "developers",
+        "operations-teams",
+        "product-managers"
+      ],
+      "goals": [
+        "daily-operation",
+        "integration-adoption",
+        "workflow-creation"
+      ],
+      "tones": [
+        "capable",
+        "clear",
+        "systematic",
+        "technical"
+      ],
+      "keywords": [
+        "action",
+        "agent",
+        "automation",
+        "connector",
+        "integration",
+        "orchestration",
+        "trigger",
+        "workflow"
+      ],
+      "bestFor": [
+        "agent builders",
+        "business process tools",
+        "integration platforms",
+        "Workflow automation"
+      ],
+      "avoidFor": [
+        "editorial portfolios",
+        "Lifestyle brands"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "Abstract node diagrams need realistic labels to communicate actual value."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Node-based workflow proof with trigger, policy, and action stages plus an integration picker and run status.",
+      "layoutRules": [
+        "Make data flow and branching explicit.",
+        "Separate configuration, execution status, and error recovery."
+      ],
+      "typography": "Compact operational typography with clear node titles and parameter labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "airtable",
+          "label": "Airtable",
+          "role": "structured operational configuration"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "composio",
+          "label": "Composio",
+          "role": "integration-led automation and technical connectors"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "zapier",
+          "label": "Zapier",
+          "role": "clear trigger-action workflow language"
+        }
+      ]
+    },
+    {
+      "id": "saas-collaborative-workspace-canvas",
+      "name": "Collaborative Workspace Canvas",
+      "legacyStyleIds": [
+        "saas-collaborative-workspace-canvas"
+      ],
+      "family": "saas",
+      "pageTypes": [
+        "app-redesign",
+        "dashboard",
+        "product-site",
+        "workspace"
+      ],
+      "audiences": [
+        "designers",
+        "facilitators",
+        "product-teams",
+        "remote-teams"
+      ],
+      "goals": [
+        "collaboration",
+        "daily-operation",
+        "team-adoption"
+      ],
+      "tones": [
+        "approachable",
+        "collaborative",
+        "flexible",
+        "organized"
+      ],
+      "keywords": [
+        "canvas",
+        "collaboration",
+        "comments",
+        "presence",
+        "team",
+        "templates",
+        "whiteboard",
+        "workspace"
+      ],
+      "bestFor": [
+        "Collaborative canvases",
+        "planning workspaces",
+        "team ideation",
+        "visual project tools"
+      ],
+      "avoidFor": [
+        "minimal single-action landing pages",
+        "Read-only corporate reports"
+      ],
+      "componentKits": [
+        "origin-ui",
+        "shadcn-ui"
+      ],
+      "risks": [
+        "A crowded toolbar can overwhelm the primary collaborative surface."
+      ],
+      "density": "medium-high",
+      "firstViewport": "Live workspace shell with a flexible canvas, participant presence, contextual toolbar, comments, and a template rail.",
+      "layoutRules": [
+        "Let the canvas dominate while keeping tools reachable at the edge.",
+        "Use presence and comments to make collaboration tangible."
+      ],
+      "typography": "Neutral workspace typography with concise tool labels and readable object text.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "figma",
+          "label": "Figma",
+          "role": "multiplayer context and flexible creative controls"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "miro",
+          "label": "Miro",
+          "role": "collaborative canvas, presence, and approachable tools"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "notion",
+          "label": "Notion",
+          "role": "calm shared workspace hierarchy"
+        }
+      ]
+    },
+    {
+      "id": "saas-customer-success-inbox",
+      "name": "Customer Success Inbox",
+      "legacyStyleIds": [
+        "saas-customer-success-inbox"
+      ],
+      "family": "saas",
+      "pageTypes": [
+        "crm",
+        "dashboard",
+        "inbox",
+        "internal-tool"
+      ],
+      "audiences": [
+        "customer-success-managers",
+        "operators",
+        "support-teams"
+      ],
+      "goals": [
+        "daily-operation",
+        "response-speed",
+        "service-quality"
+      ],
+      "tones": [
+        "calm",
+        "human",
+        "operational",
+        "responsive"
+      ],
+      "keywords": [
+        "conversation",
+        "crm",
+        "customer",
+        "inbox",
+        "queue",
+        "resolution",
+        "sla",
+        "support"
+      ],
+      "bestFor": [
+        "conversation analytics",
+        "customer success platforms",
+        "service operations",
+        "Support inboxes"
+      ],
+      "avoidFor": [
+        "cinematic product launches",
+        "Pure content publishing"
+      ],
+      "componentKits": [
+        "shadcn-ui",
+        "tremor"
+      ],
+      "risks": [
+        "Metric-heavy layouts can make a human support workflow feel mechanical."
+      ],
+      "density": "high",
+      "firstViewport": "Queue-oriented dashboard with workload metrics, prioritized conversations, customer context, and resolution states.",
+      "layoutRules": [
+        "Keep conversation urgency and ownership visible at a glance.",
+        "Balance operational density with enough customer context to respond well."
+      ],
+      "typography": "Friendly compact UI text with strong timestamps, ownership, and status labels.",
+      "legacyReferences": [
+        {
+          "provider": "awesome-design-md",
+          "slug": "intercom",
+          "label": "Intercom",
+          "role": "human support operations and conversation context"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "slack",
+          "label": "Slack",
+          "role": "friendly team communication hierarchy"
+        },
+        {
+          "provider": "awesome-design-md",
+          "slug": "superhuman",
+          "label": "Superhuman",
+          "role": "fast inbox workflow and keyboard efficiency"
+        }
+      ]
+    }
+  ]
+}

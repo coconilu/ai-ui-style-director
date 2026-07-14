@@ -1,0 +1,1316 @@
+{
+  "schemaVersion": 2,
+  "previewSpecs": [
+    {
+      "directionId": "ai-lab-research-notebook",
+      "legacyVariant": "research",
+      "layoutArchetype": "research-workbench",
+      "contentPattern": "ai-lab-research-notebook",
+      "emphasis": "evidence",
+      "contentBlocks": [
+        "research-question",
+        "evidence",
+        "benchmark",
+        "methodology"
+      ],
+      "hierarchy": {
+        "primary": "research-question",
+        "secondary": [
+          "evidence",
+          "benchmark"
+        ],
+        "supporting": [
+          "methodology"
+        ]
+      }
+    },
+    {
+      "directionId": "commerce-direct-response-product-detail",
+      "legacyVariant": "brand",
+      "layoutArchetype": "narrative-landing",
+      "contentPattern": "commerce-direct-response-product-detail",
+      "emphasis": "story",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "commerce-marketplace-discovery-grid",
+      "legacyVariant": "commerce",
+      "layoutArchetype": "catalog-grid",
+      "contentPattern": "commerce-marketplace-discovery-grid",
+      "emphasis": "conversion",
+      "contentBlocks": [
+        "product-discovery",
+        "product-detail",
+        "trust-signal",
+        "purchase-action"
+      ],
+      "hierarchy": {
+        "primary": "product-discovery",
+        "secondary": [
+          "product-detail",
+          "trust-signal"
+        ],
+        "supporting": [
+          "purchase-action"
+        ]
+      }
+    },
+    {
+      "directionId": "commerce-premium-catalog",
+      "legacyVariant": "commerce",
+      "layoutArchetype": "catalog-grid",
+      "contentPattern": "commerce-premium-catalog",
+      "emphasis": "conversion",
+      "contentBlocks": [
+        "product-discovery",
+        "product-detail",
+        "trust-signal",
+        "purchase-action"
+      ],
+      "hierarchy": {
+        "primary": "product-discovery",
+        "secondary": [
+          "product-detail",
+          "trust-signal"
+        ],
+        "supporting": [
+          "purchase-action"
+        ]
+      }
+    },
+    {
+      "directionId": "commerce-wholesale-order-workbench",
+      "legacyVariant": "app-shell",
+      "layoutArchetype": "app-shell",
+      "contentPattern": "commerce-wholesale-order-workbench",
+      "emphasis": "workflow",
+      "contentBlocks": [
+        "navigation",
+        "work-queue",
+        "detail-panel",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "work-queue",
+        "secondary": [
+          "navigation",
+          "detail-panel"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-brand-story",
+      "legacyVariant": "brand",
+      "layoutArchetype": "narrative-landing",
+      "contentPattern": "consumer-brand-story",
+      "emphasis": "story",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-centered-hero-community",
+      "legacyVariant": "brand",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "participation-proof",
+      "emphasis": "community",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-centered-hero-story",
+      "legacyVariant": "brand",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "narrative-proof",
+      "emphasis": "story",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-centered-hero-trust",
+      "legacyVariant": "brand",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "trust-evidence",
+      "emphasis": "trust",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-local-service-concierge",
+      "legacyVariant": "commerce",
+      "layoutArchetype": "catalog-grid",
+      "contentPattern": "consumer-local-service-concierge",
+      "emphasis": "conversion",
+      "contentBlocks": [
+        "product-discovery",
+        "product-detail",
+        "trust-signal",
+        "purchase-action"
+      ],
+      "hierarchy": {
+        "primary": "product-discovery",
+        "secondary": [
+          "product-detail",
+          "trust-signal"
+        ],
+        "supporting": [
+          "purchase-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-media-discovery-playground",
+      "legacyVariant": "portfolio",
+      "layoutArchetype": "portfolio-grid",
+      "contentPattern": "consumer-media-discovery-playground",
+      "emphasis": "work",
+      "contentBlocks": [
+        "selected-work",
+        "case-study",
+        "creator-story",
+        "contact-action"
+      ],
+      "hierarchy": {
+        "primary": "selected-work",
+        "secondary": [
+          "case-study",
+          "creator-story"
+        ],
+        "supporting": [
+          "contact-action"
+        ]
+      }
+    },
+    {
+      "directionId": "consumer-wellness-companion-soft",
+      "legacyVariant": "brand",
+      "layoutArchetype": "narrative-landing",
+      "contentPattern": "wellness-daily-ritual",
+      "emphasis": "story",
+      "contentBlocks": [
+        "daily-ritual",
+        "human-moment",
+        "progress",
+        "membership-action"
+      ],
+      "hierarchy": {
+        "primary": "daily-ritual",
+        "secondary": [
+          "human-moment",
+          "progress"
+        ],
+        "supporting": [
+          "membership-action"
+        ]
+      }
+    },
+    {
+      "directionId": "dashboard-executive-kpi-briefing",
+      "legacyVariant": "enterprise",
+      "layoutArchetype": "evidence-grid",
+      "contentPattern": "dashboard-executive-kpi-briefing",
+      "emphasis": "trust",
+      "contentBlocks": [
+        "solution-claim",
+        "evidence",
+        "governance",
+        "sales-action"
+      ],
+      "hierarchy": {
+        "primary": "solution-claim",
+        "secondary": [
+          "evidence",
+          "governance"
+        ],
+        "supporting": [
+          "sales-action"
+        ]
+      }
+    },
+    {
+      "directionId": "dashboard-field-operations-mapboard",
+      "legacyVariant": "app-shell",
+      "layoutArchetype": "app-shell",
+      "contentPattern": "dashboard-field-operations-mapboard",
+      "emphasis": "workflow",
+      "contentBlocks": [
+        "navigation",
+        "work-queue",
+        "detail-panel",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "work-queue",
+        "secondary": [
+          "navigation",
+          "detail-panel"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "dashboard-incident-response-wallboard",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "dashboard-incident-response-wallboard",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "data-dashboard-command-center",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "data-dashboard-command-center",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "developer-api-observability-lab",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "developer-api-observability-lab",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "developer-cli-workbench",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "developer-cli-workbench",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "developer-dashboard-grid-data",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "metrics-and-workflows",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "developer-editorial-stack-content",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "reading-hierarchy",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "developer-open-source-community-hub",
+      "legacyVariant": "portfolio",
+      "layoutArchetype": "portfolio-grid",
+      "contentPattern": "developer-open-source-community-hub",
+      "emphasis": "work",
+      "contentBlocks": [
+        "selected-work",
+        "case-study",
+        "creator-story",
+        "contact-action"
+      ],
+      "hierarchy": {
+        "primary": "selected-work",
+        "secondary": [
+          "case-study",
+          "creator-story"
+        ],
+        "supporting": [
+          "contact-action"
+        ]
+      }
+    },
+    {
+      "directionId": "developer-product-minimal",
+      "legacyVariant": "developer",
+      "layoutArchetype": "developer-workbench",
+      "contentPattern": "developer-product-minimal",
+      "emphasis": "capability",
+      "contentBlocks": [
+        "technical-claim",
+        "code-sample",
+        "capability-proof",
+        "docs-action"
+      ],
+      "hierarchy": {
+        "primary": "technical-claim",
+        "secondary": [
+          "code-sample",
+          "capability-proof"
+        ],
+        "supporting": [
+          "docs-action"
+        ]
+      }
+    },
+    {
+      "directionId": "docs-api-reference-workbench",
+      "legacyVariant": "developer",
+      "layoutArchetype": "developer-workbench",
+      "contentPattern": "docs-api-reference-workbench",
+      "emphasis": "capability",
+      "contentBlocks": [
+        "technical-claim",
+        "code-sample",
+        "capability-proof",
+        "docs-action"
+      ],
+      "hierarchy": {
+        "primary": "technical-claim",
+        "secondary": [
+          "code-sample",
+          "capability-proof"
+        ],
+        "supporting": [
+          "docs-action"
+        ]
+      }
+    },
+    {
+      "directionId": "docs-knowledge-base-help-center",
+      "legacyVariant": "learning",
+      "layoutArchetype": "learning-workspace",
+      "contentPattern": "docs-knowledge-base-help-center",
+      "emphasis": "progress",
+      "contentBlocks": [
+        "lesson-content",
+        "progress",
+        "practice",
+        "continue-action"
+      ],
+      "hierarchy": {
+        "primary": "lesson-content",
+        "secondary": [
+          "progress",
+          "practice"
+        ],
+        "supporting": [
+          "continue-action"
+        ]
+      }
+    },
+    {
+      "directionId": "docs-product-guides-library",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "docs-product-guides-library",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "editorial-technical-docs",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "editorial-technical-docs",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "education-certification-study-console",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "education-certification-study-console",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "education-cohort-learning-workspace",
+      "legacyVariant": "app-shell",
+      "layoutArchetype": "app-shell",
+      "contentPattern": "education-cohort-learning-workspace",
+      "emphasis": "workflow",
+      "contentBlocks": [
+        "navigation",
+        "work-queue",
+        "detail-panel",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "work-queue",
+        "secondary": [
+          "navigation",
+          "detail-panel"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "education-kids-exploration-path",
+      "legacyVariant": "brand",
+      "layoutArchetype": "narrative-landing",
+      "contentPattern": "education-kids-exploration-path",
+      "emphasis": "story",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "enterprise-dashboard-grid-data",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "metrics-and-workflows",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "enterprise-executive-transformation-brief",
+      "legacyVariant": "portfolio",
+      "layoutArchetype": "portfolio-grid",
+      "contentPattern": "enterprise-executive-transformation-brief",
+      "emphasis": "work",
+      "contentBlocks": [
+        "selected-work",
+        "case-study",
+        "creator-story",
+        "contact-action"
+      ],
+      "hierarchy": {
+        "primary": "selected-work",
+        "secondary": [
+          "case-study",
+          "creator-story"
+        ],
+        "supporting": [
+          "contact-action"
+        ]
+      }
+    },
+    {
+      "directionId": "enterprise-governance-evidence-room",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "enterprise-governance-evidence-room",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "enterprise-infrastructure-blueprint",
+      "legacyVariant": "research",
+      "layoutArchetype": "research-workbench",
+      "contentPattern": "enterprise-infrastructure-blueprint",
+      "emphasis": "evidence",
+      "contentBlocks": [
+        "research-question",
+        "evidence",
+        "benchmark",
+        "methodology"
+      ],
+      "hierarchy": {
+        "primary": "research-question",
+        "secondary": [
+          "evidence",
+          "benchmark"
+        ],
+        "supporting": [
+          "methodology"
+        ]
+      }
+    },
+    {
+      "directionId": "enterprise-trust-solution",
+      "legacyVariant": "enterprise",
+      "layoutArchetype": "evidence-grid",
+      "contentPattern": "enterprise-trust-solution",
+      "emphasis": "trust",
+      "contentBlocks": [
+        "solution-claim",
+        "evidence",
+        "governance",
+        "sales-action"
+      ],
+      "hierarchy": {
+        "primary": "solution-claim",
+        "secondary": [
+          "evidence",
+          "governance"
+        ],
+        "supporting": [
+          "sales-action"
+        ]
+      }
+    },
+    {
+      "directionId": "finance-consumer-money-companion",
+      "legacyVariant": "learning",
+      "layoutArchetype": "learning-workspace",
+      "contentPattern": "finance-consumer-money-companion",
+      "emphasis": "progress",
+      "contentBlocks": [
+        "lesson-content",
+        "progress",
+        "practice",
+        "continue-action"
+      ],
+      "hierarchy": {
+        "primary": "lesson-content",
+        "secondary": [
+          "progress",
+          "practice"
+        ],
+        "supporting": [
+          "continue-action"
+        ]
+      }
+    },
+    {
+      "directionId": "finance-investment-research-terminal",
+      "legacyVariant": "research",
+      "layoutArchetype": "research-workbench",
+      "contentPattern": "finance-investment-research-terminal",
+      "emphasis": "evidence",
+      "contentBlocks": [
+        "research-question",
+        "evidence",
+        "benchmark",
+        "methodology"
+      ],
+      "hierarchy": {
+        "primary": "research-question",
+        "secondary": [
+          "evidence",
+          "benchmark"
+        ],
+        "supporting": [
+          "methodology"
+        ]
+      }
+    },
+    {
+      "directionId": "finance-treasury-operations-console",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "finance-treasury-operations-console",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "fintech-precision-trust",
+      "legacyVariant": "fintech",
+      "layoutArchetype": "finance-dashboard",
+      "contentPattern": "fintech-precision-trust",
+      "emphasis": "data",
+      "contentBlocks": [
+        "account-summary",
+        "financial-data",
+        "risk-context",
+        "decision-action"
+      ],
+      "hierarchy": {
+        "primary": "financial-data",
+        "secondary": [
+          "account-summary",
+          "risk-context"
+        ],
+        "supporting": [
+          "decision-action"
+        ]
+      }
+    },
+    {
+      "directionId": "launch-centered-hero-story",
+      "legacyVariant": "launch",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "narrative-proof",
+      "emphasis": "story",
+      "contentBlocks": [
+        "launch-claim",
+        "product-proof",
+        "release-milestone",
+        "signup-action"
+      ],
+      "hierarchy": {
+        "primary": "launch-claim",
+        "secondary": [
+          "product-proof",
+          "release-milestone"
+        ],
+        "supporting": [
+          "signup-action"
+        ]
+      }
+    },
+    {
+      "directionId": "launch-centered-hero-trust",
+      "legacyVariant": "brand",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "trust-evidence",
+      "emphasis": "trust",
+      "contentBlocks": [
+        "hero-message",
+        "story-proof",
+        "brand-moment",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "hero-message",
+        "secondary": [
+          "story-proof",
+          "brand-moment"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "launch-cinematic-product-reveal",
+      "legacyVariant": "launch",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "launch-cinematic-product-reveal",
+      "emphasis": "story",
+      "contentBlocks": [
+        "launch-claim",
+        "product-proof",
+        "release-milestone",
+        "signup-action"
+      ],
+      "hierarchy": {
+        "primary": "launch-claim",
+        "secondary": [
+          "product-proof",
+          "release-milestone"
+        ],
+        "supporting": [
+          "signup-action"
+        ]
+      }
+    },
+    {
+      "directionId": "launch-community-countdown-campaign",
+      "legacyVariant": "brand",
+      "layoutArchetype": "narrative-landing",
+      "contentPattern": "community-countdown-campaign",
+      "emphasis": "story",
+      "contentBlocks": [
+        "campaign-message",
+        "countdown",
+        "community-proof",
+        "reminder-action"
+      ],
+      "hierarchy": {
+        "primary": "campaign-message",
+        "secondary": [
+          "countdown",
+          "community-proof"
+        ],
+        "supporting": [
+          "reminder-action"
+        ]
+      }
+    },
+    {
+      "directionId": "launch-proof-led-early-access",
+      "legacyVariant": "developer",
+      "layoutArchetype": "developer-workbench",
+      "contentPattern": "launch-proof-led-early-access",
+      "emphasis": "capability",
+      "contentBlocks": [
+        "technical-claim",
+        "code-sample",
+        "capability-proof",
+        "docs-action"
+      ],
+      "hierarchy": {
+        "primary": "technical-claim",
+        "secondary": [
+          "code-sample",
+          "capability-proof"
+        ],
+        "supporting": [
+          "docs-action"
+        ]
+      }
+    },
+    {
+      "directionId": "learning-platform-friendly",
+      "legacyVariant": "learning",
+      "layoutArchetype": "learning-workspace",
+      "contentPattern": "learning-platform-friendly",
+      "emphasis": "progress",
+      "contentBlocks": [
+        "lesson-content",
+        "progress",
+        "practice",
+        "continue-action"
+      ],
+      "hierarchy": {
+        "primary": "lesson-content",
+        "secondary": [
+          "progress",
+          "practice"
+        ],
+        "supporting": [
+          "continue-action"
+        ]
+      }
+    },
+    {
+      "directionId": "motion-rich-launch",
+      "legacyVariant": "launch",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "motion-rich-launch",
+      "emphasis": "story",
+      "contentBlocks": [
+        "launch-claim",
+        "product-proof",
+        "release-milestone",
+        "signup-action"
+      ],
+      "hierarchy": {
+        "primary": "launch-claim",
+        "secondary": [
+          "product-proof",
+          "release-milestone"
+        ],
+        "supporting": [
+          "signup-action"
+        ]
+      }
+    },
+    {
+      "directionId": "operational-saas-console",
+      "legacyVariant": "app-shell",
+      "layoutArchetype": "app-shell",
+      "contentPattern": "operational-saas-console",
+      "emphasis": "workflow",
+      "contentBlocks": [
+        "navigation",
+        "work-queue",
+        "detail-panel",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "work-queue",
+        "secondary": [
+          "navigation",
+          "detail-panel"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "portfolio-case-study-narrative",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "portfolio-case-study-narrative",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "portfolio-centered-hero-story",
+      "legacyVariant": "portfolio",
+      "layoutArchetype": "centered-hero",
+      "contentPattern": "narrative-proof",
+      "emphasis": "story",
+      "contentBlocks": [
+        "selected-work",
+        "case-study",
+        "creator-story",
+        "contact-action"
+      ],
+      "hierarchy": {
+        "primary": "selected-work",
+        "secondary": [
+          "case-study",
+          "creator-story"
+        ],
+        "supporting": [
+          "contact-action"
+        ]
+      }
+    },
+    {
+      "directionId": "portfolio-experimental-creative-canvas",
+      "legacyVariant": "portfolio",
+      "layoutArchetype": "portfolio-grid",
+      "contentPattern": "portfolio-experimental-creative-canvas",
+      "emphasis": "work",
+      "contentBlocks": [
+        "selected-work",
+        "case-study",
+        "creator-story",
+        "contact-action"
+      ],
+      "hierarchy": {
+        "primary": "selected-work",
+        "secondary": [
+          "case-study",
+          "creator-story"
+        ],
+        "supporting": [
+          "contact-action"
+        ]
+      }
+    },
+    {
+      "directionId": "portfolio-studio-grid",
+      "legacyVariant": "portfolio",
+      "layoutArchetype": "portfolio-grid",
+      "contentPattern": "portfolio-studio-grid",
+      "emphasis": "work",
+      "contentBlocks": [
+        "selected-work",
+        "case-study",
+        "creator-story",
+        "contact-action"
+      ],
+      "hierarchy": {
+        "primary": "selected-work",
+        "secondary": [
+          "case-study",
+          "creator-story"
+        ],
+        "supporting": [
+          "contact-action"
+        ]
+      }
+    },
+    {
+      "directionId": "portfolio-technical-builder-showcase",
+      "legacyVariant": "developer",
+      "layoutArchetype": "developer-workbench",
+      "contentPattern": "portfolio-technical-builder-showcase",
+      "emphasis": "capability",
+      "contentBlocks": [
+        "technical-claim",
+        "code-sample",
+        "capability-proof",
+        "docs-action"
+      ],
+      "hierarchy": {
+        "primary": "technical-claim",
+        "secondary": [
+          "code-sample",
+          "capability-proof"
+        ],
+        "supporting": [
+          "docs-action"
+        ]
+      }
+    },
+    {
+      "directionId": "research-benchmark-evaluation-board",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "research-benchmark-evaluation-board",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    },
+    {
+      "directionId": "research-experiment-control-workbench",
+      "legacyVariant": "app-shell",
+      "layoutArchetype": "app-shell",
+      "contentPattern": "research-experiment-control-workbench",
+      "emphasis": "workflow",
+      "contentBlocks": [
+        "navigation",
+        "work-queue",
+        "detail-panel",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "work-queue",
+        "secondary": [
+          "navigation",
+          "detail-panel"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "research-scientific-publication-archive",
+      "legacyVariant": "docs",
+      "layoutArchetype": "editorial-stack",
+      "contentPattern": "research-scientific-publication-archive",
+      "emphasis": "content",
+      "contentBlocks": [
+        "navigation-tree",
+        "article-content",
+        "code-example",
+        "next-step"
+      ],
+      "hierarchy": {
+        "primary": "article-content",
+        "secondary": [
+          "navigation-tree",
+          "code-example"
+        ],
+        "supporting": [
+          "next-step"
+        ]
+      }
+    },
+    {
+      "directionId": "saas-automation-flow-builder",
+      "legacyVariant": "enterprise",
+      "layoutArchetype": "evidence-grid",
+      "contentPattern": "saas-automation-flow-builder",
+      "emphasis": "trust",
+      "contentBlocks": [
+        "solution-claim",
+        "evidence",
+        "governance",
+        "sales-action"
+      ],
+      "hierarchy": {
+        "primary": "solution-claim",
+        "secondary": [
+          "evidence",
+          "governance"
+        ],
+        "supporting": [
+          "sales-action"
+        ]
+      }
+    },
+    {
+      "directionId": "saas-collaborative-workspace-canvas",
+      "legacyVariant": "app-shell",
+      "layoutArchetype": "app-shell",
+      "contentPattern": "saas-collaborative-workspace-canvas",
+      "emphasis": "workflow",
+      "contentBlocks": [
+        "navigation",
+        "work-queue",
+        "detail-panel",
+        "primary-action"
+      ],
+      "hierarchy": {
+        "primary": "work-queue",
+        "secondary": [
+          "navigation",
+          "detail-panel"
+        ],
+        "supporting": [
+          "primary-action"
+        ]
+      }
+    },
+    {
+      "directionId": "saas-customer-success-inbox",
+      "legacyVariant": "dashboard",
+      "layoutArchetype": "dashboard-grid",
+      "contentPattern": "saas-customer-success-inbox",
+      "emphasis": "data",
+      "contentBlocks": [
+        "metric-summary",
+        "data-grid",
+        "status-panel",
+        "workflow-action"
+      ],
+      "hierarchy": {
+        "primary": "data-grid",
+        "secondary": [
+          "metric-summary",
+          "status-panel"
+        ],
+        "supporting": [
+          "workflow-action"
+        ]
+      }
+    }
+  ]
+}
