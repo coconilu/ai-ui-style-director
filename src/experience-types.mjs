@@ -9,7 +9,14 @@ export const EXPERIENCE_TYPE_DEFINITIONS = Object.freeze([
     id: "marketing-site",
     label: "Marketing Site",
     labelZh: "营销前台",
-    aliases: Object.freeze(["marketing", "marketing site", "landing page", "营销站点", "品牌官网"])
+    aliases: Object.freeze([
+      "marketing",
+      "marketing site",
+      "marketing website",
+      "landing page",
+      "营销站点",
+      "品牌官网"
+    ])
   }),
   Object.freeze({
     id: "commerce",
@@ -27,7 +34,15 @@ export const EXPERIENCE_TYPE_DEFINITIONS = Object.freeze([
     id: "business-app",
     label: "Business App",
     labelZh: "B 端业务系统",
-    aliases: Object.freeze(["business", "business app", "b2b", "b端", "业务系统"])
+    aliases: Object.freeze([
+      "business",
+      "business app",
+      "management system",
+      "b2b",
+      "b端",
+      "业务系统",
+      "管理系统"
+    ])
   }),
   Object.freeze({
     id: "admin-console",

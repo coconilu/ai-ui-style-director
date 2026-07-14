@@ -136,8 +136,12 @@ one linked Theme for each result. Theme selection is deterministic and does not
 change Direction scores or order. The curation model is not called at
 consumption time: AI participates in supply-side curation, while matching,
 ranking, Theme selection, and rerolls are implemented in testable Node.js code.
+Explicit Chinese or English experience intent participates in scoring. Near-score
+alternatives may add a new experience type, but Top 1 and clearly stronger
+candidates remain protected by deterministic thresholds.
 
-Each recommendation contains a Direction, selected Theme, matching PreviewSpec,
+Each recommendation contains a Direction with its visible experience type, a
+selected Theme, matching PreviewSpec,
 a brand-neutral SVG card, fit rationale, first-viewport guidance, component
 suggestions, risks, narrowly scoped Direction references, Theme provenance, and
 a self-contained HTML comparison gallery. `again` excludes Directions already

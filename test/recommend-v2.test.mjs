@@ -206,9 +206,11 @@ test("recommendation ranks unique Directions before selecting Themes and writes 
   const gallery = renderRecommendationGalleryHtml(light);
   const first = light.recommendations[0];
   assert.match(terminal, new RegExp(`Direction ID: ${first.directionId}`, "u"));
+  assert.match(terminal, new RegExp(`Experience type: .+ \\(${first.experienceType}\\)`, "u"));
   assert.match(terminal, new RegExp(`Appearance: ${first.theme.appearance}`, "u"));
   assert.doesNotMatch(terminal, /legacy name:/iu);
   assert.match(gallery, /Direction ID:/u);
+  assert.match(gallery, new RegExp(`Experience type</dt><dd>.+ · <code>${first.experienceType}</code>`, "u"));
   assert.match(gallery, new RegExp(`· ${first.theme.appearance} · <code>${first.themeId}</code>`, "u"));
 });
 

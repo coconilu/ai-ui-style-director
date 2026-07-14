@@ -150,7 +150,7 @@ projection:
 immutable records remain available for audit and compatibility. The current v2
 snapshot contains 57 Directions and 77 linked Theme selections; neither number
 is a configured limit. A separate `catalog/recommendation-benchmarks.json` file
-protects intent coverage.
+protects family and experience-type intent plus relevance guards.
 
 `catalog/providers.json` describes upstream repositories. `catalog/generated/*`
 records scan results. The recommendation core does not read those generated
@@ -182,8 +182,10 @@ intake, selection, and confirmation around this programmatic result.
 
 `normalizeBrief` expands common Chinese scenario terms into English keywords,
 lowercases the input, removes non-alphanumeric characters, and normalizes
-whitespace. `isBriefInsufficient` requires at least one recognized product or
-page scenario before ranking Directions.
+whitespace. It derives explicit experience intent from the shared governed
+aliases, including spaced Chinese forms such as `C 端` and `B 端`.
+`isBriefInsufficient` accepts an explicit experience type as a scenario signal;
+otherwise it requires a recognized product or page scenario before ranking.
 
 ### Weighted scoring
 
@@ -198,6 +200,12 @@ governed semantic aliases such as `docs`/`documentation`,
 while generic words such as `website`, `product`, and `team` do not qualify a
 brief by themselves. Identical inputs and Catalog data produce identical
 ordering, which keeps recommendation testable and reproducible.
+An explicitly requested experience type adds one fixed score to matching
+Directions; matching multiple aliases for the same type cannot accumulate the
+bonus. Broad topic or audience words such as `content`, `documentation`,
+`B2B`, and `dashboard` remain ordinary weighted signals; only shape-specific
+phrases such as `consumer app`, `marketing website`, `management system`, and
+`admin console` activate the fixed experience score.
 
 Only after Direction ranking, `selectThemeForDirection` scores linked Themes
 against the same brief. Stable ties prefer the default link and then Theme ID.
@@ -207,15 +215,18 @@ scores, diversification, or ordering.
 ### Diversification and rerolling
 
 Diversification first discards zero-score entries and results below 15% of the
-best score. Before ranking the requested result set, it limits one `family` to
-60% of the candidate pool when enough relevant alternatives exist; overflow is
-used only when the pool would otherwise be too small. It then keeps score order,
-promoting a new `family` only when its score is at least 80% of the best
-remaining candidate. This prevents Catalog growth from crowding an intent out
-of the Top 5 while keeping relevance primary.
+best score. Top 1 is never moved. For each later slot, the core may prefer an
+unseen `experienceType`, then an unseen `family`, then a family below the soft
+60% share target. A candidate can be promoted only when it scores at least 80%
+of the best remaining item and at least 50% of the original Top-1 score. These
+are soft preferences, not hard quotas, so weak alternatives cannot replace a
+clearly stronger set.
 
-The 12-case benchmark asserts the expected Top-1 family, required Top-5 family
-coverage, and identical Direction IDs and scores across repeated runs.
+The schema-v2 12-case benchmark asserts expected Top-1 and required Top-5
+family and experience-type coverage. Every governed experience type has at
+least one singleton Top-1 case. Tests also lock raw Top 1, reject a selected
+candidate that displaces an omitted candidate by more than the 80% window, and
+require identical Direction IDs, experience types, and scores across runs.
 
 Session state lives in `.ui-style-director/session.json`. Schema v2 stores
 `shownDirectionIds` and the last Direction/Theme selections. With `--again`,

@@ -90,7 +90,7 @@ npm run catalog:build
 5. 运行 `npm run catalog:curated:validate`，先修复结构、来源或预览缺失问题。
 6. 如果新增 taxonomy、family 或修改评分规则，相应更新
    `catalog/recommendation-benchmarks.json`；现有 12 个场景仍须保持合理的
-   Top 1、Top 5 覆盖和确定性。
+   Top 1/Top 5 family 与体验类型覆盖、相关性护栏和确定性。
 7. 最后运行 `npm run check`，确保预览、目录检索、推荐和完整回归全部通过。
 
 目录浏览器会从已审查的 Direction/Theme 数据动态生成 schema v5、倒排索引、

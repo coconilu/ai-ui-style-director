@@ -20,6 +20,7 @@ import {
   loadCatalogV2,
   resolveCatalogSelection
 } from "./catalog-v2.mjs";
+import { EXPERIENCE_TYPE_DEFINITIONS } from "./experience-types.mjs";
 import { startLoopbackServer } from "./loopback-server.mjs";
 import {
   expandVisualReferences,
@@ -86,10 +87,40 @@ const GENERIC_BRIEF_TERMS = new Set([
   "website"
 ]);
 
+const AMBIGUOUS_EXPERIENCE_TYPE_ALIASES = new Set([
+  "admin",
+  "b2b",
+  "business",
+  "consumer",
+  "content",
+  "dashboard",
+  "docs",
+  "documentation",
+  "内容",
+  "文档",
+  "marketing"
+]);
+
+const EXPERIENCE_TYPE_INTENT_HINTS = Object.freeze(EXPERIENCE_TYPE_DEFINITIONS.flatMap((definition) => (
+  [definition.id, definition.label, definition.labelZh, ...definition.aliases]
+    .filter((alias) => !AMBIGUOUS_EXPERIENCE_TYPE_ALIASES.has(alias.toLowerCase()))
+    .map((alias) => Object.freeze({ alias, id: definition.id }))
+)));
+
+const EXPERIENCE_TYPE_EXPANSIONS = new Map(EXPERIENCE_TYPE_DEFINITIONS.map((definition) => [
+  definition.id,
+  [definition.id, definition.label, ...definition.aliases].join(" ")
+]));
+const EXPERIENCE_TYPE_DEFINITION_BY_ID = new Map(
+  EXPERIENCE_TYPE_DEFINITIONS.map((definition) => [definition.id, definition])
+);
+
 const SCENARIO_PROFILE_ARRAY_FIELDS = ["pageTypes", "audiences", "goals", "keywords", "bestFor"];
 const DIVERSITY_RELEVANCE_RATIO = 0.15;
 const DIVERSITY_PROMOTION_RATIO = 0.8;
+const DIVERSITY_GLOBAL_PROMOTION_RATIO = 0.5;
 const DIVERSITY_MAX_FAMILY_SHARE = 0.6;
+const EXPERIENCE_TYPE_EXPLICIT_MATCH_SCORE = 36;
 const THEME_COLOR_SCORE_MAX = 30;
 const THEME_COLOR_HINTS = Object.freeze([
   { words: ["red"], chinese: ["红色", "红系", "红调"], color: "#EF4444" },
@@ -133,9 +164,26 @@ export function loadProviders() {
 }
 
 function includesHint(text, needle) {
-  if (!/^[a-z0-9]+$/iu.test(needle)) return text.includes(needle);
-  const tokens = text.toLowerCase().split(/[^a-z0-9]+/u).filter(Boolean);
-  return tokens.includes(needle.toLowerCase());
+  const foldedText = String(text || "").normalize("NFKC").toLowerCase();
+  const foldedNeedle = String(needle || "").normalize("NFKC").toLowerCase().trim();
+  if (!foldedNeedle) return false;
+  if (/\p{Script=Han}/u.test(foldedNeedle)) {
+    return foldedText.replace(/\s+/gu, "").includes(foldedNeedle.replace(/\s+/gu, ""));
+  }
+  const normalizedText = foldedText.replace(/[^a-z0-9]+/gu, " ").replace(/\s+/gu, " ").trim();
+  const normalizedNeedle = foldedNeedle
+    .replace(/[^a-z0-9]+/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
+  return ` ${normalizedText} `.includes(` ${normalizedNeedle} `);
+}
+
+function requestedExperienceTypes(brief) {
+  const requested = new Set();
+  for (const hint of EXPERIENCE_TYPE_INTENT_HINTS) {
+    if (includesHint(brief, hint.alias)) requested.add(hint.id);
+  }
+  return requested;
 }
 
 function normalizeBrief(brief) {
@@ -143,6 +191,9 @@ function normalizeBrief(brief) {
   const expansions = new Set();
   for (const [needle, expansion] of CHINESE_HINTS) {
     if (includesHint(original, needle)) expansions.add(expansion);
+  }
+  for (const experienceType of requestedExperienceTypes(original)) {
+    expansions.add(EXPERIENCE_TYPE_EXPANSIONS.get(experienceType));
   }
   const text = `${original} ${[...expansions].join(" ")}`;
   return text.toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
@@ -208,6 +259,7 @@ function scenarioTermsFromProfiles(profiles) {
     profiles
       .flatMap((profile) => [
         profile?.family || "",
+        profile?.experienceType || "",
         ...SCENARIO_PROFILE_ARRAY_FIELDS.flatMap((field) => profileArray(profile, field))
       ])
       .flatMap((value) => normalizeForMatching(value).split(" ").filter(Boolean))
@@ -216,6 +268,7 @@ function scenarioTermsFromProfiles(profiles) {
 }
 
 export function isBriefInsufficient(brief, profiles = loadStyleProfiles()) {
+  if (requestedExperienceTypes(brief).size > 0) return false;
   const normalized = normalizeForMatching(brief);
   if (!normalized) return true;
   const terms = new Set(normalized.split(" ").filter(Boolean));
@@ -225,6 +278,7 @@ export function isBriefInsufficient(brief, profiles = loadStyleProfiles()) {
 
 export function scoreProfile(profile, brief) {
   const normalized = normalizeForMatching(brief);
+  const requestedTypes = requestedExperienceTypes(brief);
   const keywords = profileArray(profile, "keywords");
   const pageTypes = profileArray(profile, "pageTypes");
   const audiences = profileArray(profile, "audiences");
@@ -251,6 +305,7 @@ export function scoreProfile(profile, brief) {
   score += countMatches(normalized, normalizedPhrases(goals)) * 2;
   score += countMatches(normalized, normalizedPhrases(keywords)) * 2;
   score += countMatches(normalized, normalizedPhrases([profile?.family || ""])) * 4;
+  if (requestedTypes.has(profile?.experienceType)) score += EXPERIENCE_TYPE_EXPLICIT_MATCH_SCORE;
 
   if (countMatches(normalized, ["redesign"]) && pageTypes.includes("app-redesign")) score += 8;
   if (countMatches(normalized, ["new"]) && pageTypes.includes("landing")) score += 2;
@@ -455,9 +510,17 @@ function compareScoredProfiles(left, right) {
   );
 }
 
+export function scoreDirectionCandidates(profiles, brief, themes = []) {
+  const rankingBrief = directionRankingBrief(brief, themes);
+  return (Array.isArray(profiles) ? profiles : [])
+    .map((profile) => ({ profile, score: scoreProfile(profile, rankingBrief) }))
+    .sort(compareScoredProfiles);
+}
+
 export function diversifyScoredProfiles(scored, count, {
   relevanceRatio = DIVERSITY_RELEVANCE_RATIO,
   diversityPromotionRatio = DIVERSITY_PROMOTION_RATIO,
+  globalPromotionRatio = DIVERSITY_GLOBAL_PROMOTION_RATIO,
   maxFamilyShare = DIVERSITY_MAX_FAMILY_SHARE
 } = {}) {
   const limit = Math.max(0, Number.isFinite(count) ? Math.floor(count) : 0);
@@ -473,50 +536,84 @@ export function diversifyScoredProfiles(scored, count, {
   const promotionRatio = Number.isFinite(diversityPromotionRatio)
     ? Math.max(0, Math.min(1, diversityPromotionRatio))
     : DIVERSITY_PROMOTION_RATIO;
+  const globalRatio = Number.isFinite(globalPromotionRatio)
+    ? Math.max(0, Math.min(1, globalPromotionRatio))
+    : DIVERSITY_GLOBAL_PROMOTION_RATIO;
   const familyShare = Number.isFinite(maxFamilyShare)
     ? Math.max(0, Math.min(1, maxFamilyShare))
     : DIVERSITY_MAX_FAMILY_SHARE;
   const minimumScore = Math.max(1, Math.ceil(ordered[0].score * ratio));
-  const eligible = ordered.filter((item) => item.score >= minimumScore);
+  const remaining = ordered.filter((item) => item.score >= minimumScore);
   const maxFamilyItems = Math.max(1, Math.ceil(limit * familyShare));
-  const balanced = [];
-  const overflow = [];
-  const familyCounts = new Map();
-
-  for (const item of eligible) {
-    const family = item.profile.family;
-    if (!family) {
-      balanced.push(item);
-      continue;
-    }
-    const familyCount = familyCounts.get(family) || 0;
-    if (familyCount < maxFamilyItems) {
-      balanced.push(item);
-      familyCounts.set(family, familyCount + 1);
-    } else {
-      overflow.push(item);
-    }
-  }
-
-  const remaining = balanced.slice(0, limit);
-  if (remaining.length < limit) {
-    remaining.push(...overflow.slice(0, limit - remaining.length));
-    remaining.sort(compareScoredProfiles);
-  }
   const selected = [];
   const families = new Set();
+  const experienceTypes = new Set();
+  const selectedFamilyCounts = new Map();
 
   while (selected.length < limit && remaining.length > 0) {
     const best = remaining[0];
-    const diverseIndex = remaining.findIndex((item) => !families.has(item.profile.family));
-    const canPromoteDiversity = diverseIndex > 0
-      && remaining[diverseIndex].score >= best.score * promotionRatio;
-    const selectedIndex = canPromoteDiversity ? diverseIndex : 0;
+    let selectedIndex = 0;
+
+    if (selected.length > 0) {
+      const promotionScore = Math.max(
+        best.score * promotionRatio,
+        ordered[0].score * globalRatio
+      );
+      const isPromotable = (item) => item.score >= promotionScore;
+      const bestExperienceType = best.profile.experienceType;
+      const bestIntroducesExperienceType = Boolean(
+        bestExperienceType && !experienceTypes.has(bestExperienceType)
+      );
+
+      if (!bestIntroducesExperienceType) {
+        const experienceIndex = remaining.findIndex((item, index) => (
+          index > 0
+          && isPromotable(item)
+          && item.profile.experienceType
+          && !experienceTypes.has(item.profile.experienceType)
+        ));
+        if (experienceIndex > 0) {
+          selectedIndex = experienceIndex;
+        } else {
+          const bestFamily = best.profile.family;
+          const bestIntroducesFamily = Boolean(bestFamily && !families.has(bestFamily));
+          if (!bestIntroducesFamily) {
+            const familyIndex = remaining.findIndex((item, index) => (
+              index > 0
+              && isPromotable(item)
+              && item.profile.family
+              && !families.has(item.profile.family)
+            ));
+            if (familyIndex > 0) {
+              selectedIndex = familyIndex;
+            } else if (
+              bestFamily
+              && (selectedFamilyCounts.get(bestFamily) || 0) >= maxFamilyItems
+            ) {
+              const balancedFamilyIndex = remaining.findIndex((item, index) => (
+                index > 0
+                && isPromotable(item)
+                && item.profile.family
+                && item.profile.family !== bestFamily
+                && (selectedFamilyCounts.get(item.profile.family) || 0) < maxFamilyItems
+              ));
+              if (balancedFamilyIndex > 0) selectedIndex = balancedFamilyIndex;
+            }
+          }
+        }
+      }
+    }
+
     const [item] = remaining.splice(selectedIndex, 1);
     selected.push(item);
     if (item.profile.family) {
       families.add(item.profile.family);
+      selectedFamilyCounts.set(
+        item.profile.family,
+        (selectedFamilyCounts.get(item.profile.family) || 0) + 1
+      );
     }
+    if (item.profile.experienceType) experienceTypes.add(item.profile.experienceType);
   }
 
   return selected;
@@ -592,6 +689,7 @@ function galleryCopy(brief) {
       subtitle: "比较布局、密度、视觉层级与组件模型，然后回到终端回复编号或方向 ID。",
       brief: "项目需求",
       directionId: "方向 ID",
+      experienceType: "体验类型",
       fit: "适用场景",
       theme: "主题",
       viewport: "首屏结构",
@@ -612,6 +710,7 @@ function galleryCopy(brief) {
     subtitle: "Compare layout, density, visual hierarchy, and component models, then return to the terminal with a number or Direction ID.",
     brief: "Project brief",
     directionId: "Direction ID",
+    experienceType: "Experience type",
     fit: "Best for",
     theme: "Theme",
     viewport: "First viewport",
@@ -648,6 +747,13 @@ export function renderRecommendationGalleryHtml(result) {
     const primaryReference = item.visual.references[0] || null;
     const fit = item.bestFor.slice(0, 3).join(" · ");
     const risk = item.risks[0] || "—";
+    const experienceDefinition = EXPERIENCE_TYPE_DEFINITION_BY_ID.get(item.experienceType);
+    const experienceLabel = copy.lang === "zh-CN"
+      ? experienceDefinition?.labelZh
+      : experienceDefinition?.label;
+    const experienceRow = item.experienceType
+      ? `<div><dt>${copy.experienceType}</dt><dd>${escapeHtml(experienceLabel || item.experienceType)} · <code>${escapeHtml(item.experienceType)}</code></dd></div>`
+      : "";
     const themeRow = item.theme?.name && item.themeId
       ? `<div><dt>${copy.theme}</dt><dd>${escapeHtml(item.theme.name)} · ${escapeHtml(item.theme.appearance || "—")} · <code>${escapeHtml(item.themeId)}</code></dd></div>`
       : "";
@@ -663,6 +769,7 @@ export function renderRecommendationGalleryHtml(result) {
             <span>${copy.directionId}: <code>${escapeHtml(item.directionId || item.id)}</code></span>
           </div>
           <dl>
+            ${experienceRow}
             ${themeRow}
             <div><dt>${copy.fit}</dt><dd>${escapeHtml(fit)}</dd></div>
             <div><dt>${copy.viewport}</dt><dd>${escapeHtml(item.firstViewport)}</dd></div>
@@ -956,11 +1063,8 @@ export function recommendStyles({
   const session = readSession(sessionPath);
   const history = normalizedSessionHistory(session, catalog);
   const excluded = new Set(again ? history.shownDirectionIds : []);
-  const rankingBrief = directionRankingBrief(brief, catalog.themes);
-  const scored = directions
-    .map((profile) => ({ profile, score: scoreProfile(profile, rankingBrief) }))
-    .filter((item) => !excluded.has(item.profile.id))
-    .sort(compareScoredProfiles);
+  const scored = scoreDirectionCandidates(directions, brief, catalog.themes)
+    .filter((item) => !excluded.has(item.profile.id));
 
   const selected = diversifyScoredProfiles(scored, count);
   const exhausted = selected.length < count;
@@ -1060,6 +1164,10 @@ export function renderRecommendations(result) {
     const primaryReference = item.visual?.references?.[0];
     lines.push(`${item.rank}. ${item.name}`);
     lines.push(`   Direction ID: ${item.directionId || item.id}`);
+    if (item.experienceType) {
+      const experienceLabel = EXPERIENCE_TYPE_DEFINITION_BY_ID.get(item.experienceType)?.label;
+      lines.push(`   Experience type: ${experienceLabel || item.experienceType} (${item.experienceType})`);
+    }
     if (item.theme?.name && item.themeId) {
       lines.push(`   Theme: ${item.theme.name} (${item.themeId}) · Appearance: ${item.theme.appearance || "—"}`);
     }
