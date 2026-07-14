@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { loadCatalogV2 } from "../src/catalog-v2.mjs";
-import { renderDirectionPreviewSvg } from "../src/preview.mjs";
+import {
+  renderDirectionPreviewSvg,
+  renderDirectionProjectDraftSvg
+} from "../src/preview.mjs";
 
 const catalog = loadCatalogV2();
 
@@ -235,5 +238,36 @@ test("rejects incomplete, extra, or injectable Direction Theme tokens", () => {
   assert.throws(
     () => renderDirectionPreviewSvg({ ...selection, theme: injectableTheme }),
     /invalid accent color token/u
+  );
+});
+
+test("renders a deterministic project draft with the Direction title and an escaped brief", () => {
+  const selection = defaultSelection("dashboard-incident-response-wallboard");
+  const brief = `<script>alert("preview")<\/script> ${"x".repeat(140)}`;
+  const first = renderDirectionProjectDraftSvg({ ...selection, brief });
+  const second = renderDirectionProjectDraftSvg({ ...selection, brief });
+
+  assert.equal(second, first);
+  assert.match(
+    first,
+    new RegExp(`<title id="title">${escapeRegExp(selection.direction.name)} draft direction preview<\\/title>`, "u")
+  );
+  assert.match(first, /<desc id="description">&lt;script&gt;alert\(&quot;preview&quot;\)&lt;\/script&gt; x+…<\/desc>/u);
+  assert.doesNotMatch(first, /<script>/u);
+  assert.match(first, new RegExp(`data-direction-id="${selection.direction.id}"`, "u"));
+  assert.match(first, new RegExp(`data-theme-id="${selection.theme.id}"`, "u"));
+  assert.match(first, /data-layout-signature="semantic-dashboard-grid"/u);
+});
+
+test("Direction project drafts delegate missing-argument validation to the v2 renderer", () => {
+  const selection = defaultSelection("dashboard-incident-response-wallboard");
+
+  assert.throws(
+    () => renderDirectionProjectDraftSvg(),
+    /Direction, theme, and preview specification are required/u
+  );
+  assert.throws(
+    () => renderDirectionProjectDraftSvg({ direction: selection.direction }),
+    /Direction, theme, and preview specification are required/u
   );
 });

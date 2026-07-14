@@ -42,7 +42,7 @@ Commands:
   recommend --brief <text> [--count 5] [--again] [--session <path>] [--open] [--json]
   browse [--open] [--json]
   preview [--path <recommendations.html>] [--open] [--serve] [--port <number>] [--json]
-  apply --style <id> --project <path> [--brief <text>] [--force] [--json]
+  apply --style <direction-or-legacy-id> [--theme <theme-id>] --project <path> [--brief <text>] [--force] [--json]
   sync [--cache-dir <path>] [--clone] [--json]
   refresh-catalog [--cache-dir <path>] [--generated-dir <path>] [--clone] [--json]
   questions [--json]
@@ -59,7 +59,7 @@ Examples:
   ai-ui-style-director preview --open
   ai-ui-style-director preview --serve
   ai-ui-style-director preview --serve --port 4173 --open
-  ai-ui-style-director apply --style developer-product-minimal --project ./my-site --brief "AI SDK landing page"
+  ai-ui-style-director apply --style <direction-id> --theme <theme-id> --project ./my-site --brief "AI SDK landing page"
   ai-ui-style-director refresh-catalog --clone
 `;
 }
@@ -204,6 +204,7 @@ async function main() {
     if (command === "apply") {
       const result = applyStyle({
         styleId: args.style,
+        themeId: args.theme,
         projectDir: args.project || process.cwd(),
         brief: args.brief || "",
         force: Boolean(args.force)
@@ -214,7 +215,11 @@ async function main() {
         process.stdout.write(`Generated ${result.designPath}\n`);
         process.stdout.write(`First-viewport draft: ${result.draftMarkdownPath}\n`);
         process.stdout.write(`State directory: ${result.stateDir}\n`);
-        process.stdout.write(`Selected style: ${result.style.name} (${result.style.id})\n`);
+        process.stdout.write(`Selected direction: ${result.direction.name} (${result.direction.id})\n`);
+        process.stdout.write(
+          `Selected theme: ${result.theme.name} (${result.theme.id})`
+          + `${result.theme.appearance ? ` · ${result.theme.appearance}` : ""}\n`
+        );
       }
       return;
     }

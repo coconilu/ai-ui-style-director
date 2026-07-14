@@ -4,12 +4,21 @@ AI UI Style Director has six layers.
 
 ## 1. Catalog
 
-The catalog contains normalized design knowledge:
+The catalog contains normalized design knowledge. Runtime consumers read the
+canonical v2 projection:
 
-- `catalog/style-profiles.json`: reviewed style directions governed by 12
-  baseline families; the initial baseline contains four profiles per family.
-- `catalog/style-visuals.json`: preview variants, themes, and real visual references.
-- `catalog/previews/`: generated brand-neutral SVG cards.
+- `catalog/style-directions.json`: reviewed structural Directions, product fit,
+  layout guidance, typography, component suggestions, and Direction references.
+- `catalog/style-themes.json`: reusable appearance, semantic color tokens, and
+  pinned Theme sources.
+- `catalog/style-direction-themes.json`: allowed Direction/Theme pairs and one
+  default link per Direction.
+- `catalog/style-preview-specs.json`: one structural PreviewSpec per Direction.
+- `catalog/style-aliases.json`: legacy style IDs mapped to historical
+  Direction/Theme pairs.
+- `catalog/style-profiles.json`, `catalog/style-visuals.json`, and
+  `catalog/previews/*.svg`: legacy curation, audit, migration, and preview
+  compatibility artifacts; they are not the runtime recommendation source.
 - `catalog/component-kits.json`: implementation kits that can support each style.
 - `catalog/providers.json`: 7 upstream repositories used as style or component providers.
 - `catalog/generated/style-sources.json`: an index of upstream style-source
@@ -27,6 +36,9 @@ The catalog contains normalized design knowledge:
 - `catalog/recommendation-benchmarks.json`: 12 representative briefs used to
   protect intent coverage and deterministic ranking.
 
+The current canonical snapshot contains 57 Directions and 77 linked Theme
+selections. These values describe checked-in data, not configured limits.
+
 The catalog is intentionally structured. Agents should not load large upstream repositories into context just to choose a style.
 
 Supply-side curation is separate from consumer-side recommendation. The
@@ -38,9 +50,15 @@ a maintainer reviews and merges it manually.
 
 ## 2. Visual Preview Layer
 
-`src/preview.mjs` turns normalized visual metadata into deterministic SVG
-wireframes. `scripts/generate-style-previews.mjs` generates and verifies one
-committed card per curated style. The same renderer creates a project-level
+`src/preview.mjs` renders deterministic SVG wireframes from a Direction,
+PreviewSpec, and Theme. The PreviewSpec controls layout archetype, content
+pattern, blocks, and hierarchy; the Theme supplies appearance and semantic
+tokens, so changing only Theme preserves structure.
+
+`scripts/generate-style-previews.mjs` continues to generate and verify committed
+legacy cards for compatibility, and renders every linked Direction/Theme pair
+in memory to verify deterministic v2 completeness. The same semantic renderer
+creates recommendation cards and the project-level
 `first-viewport-draft.svg` after selection.
 
 `src/core.mjs` packages each recommendation set into a self-contained
@@ -61,12 +79,14 @@ to vendor or ship.
 
 ## 3. Catalog Browser
 
-`src/catalog-browser.mjs` builds a schema-v3 browser view model from the curated
-style profiles, visual metadata, profile component-kit tags, and the upstream
-style-source count. Each entry carries a lightweight `previewUrl` instead of
-an embedded SVG. `scripts/build-catalog-site.mjs` writes the complete static
-site to `dist/pages`, including HTML, JSON, CSS, JavaScript, favicon, and one
-preview SVG per curated style.
+`src/catalog-browser.mjs` builds a schema-v4 browser view model from canonical
+Directions, linked Themes, PreviewSpecs, component-kit tags, and the upstream
+style-source count. Each entry represents one Direction and carries linked
+Theme choices with lightweight `previewUrl` values instead of embedded SVG.
+`scripts/build-catalog-site.mjs` writes the complete static site to `dist/pages`,
+including HTML, JSON, CSS, JavaScript, favicon, canonical previews at
+`previews/v2/<direction-id>/<theme-id>.svg`, and compatible historical previews
+at `previews/<legacy-style-id>.svg`.
 
 All site references are relative, so the artifact works under the GitHub
 project-site subpath. `.github/workflows/pages.yml` builds the artifact for pull
@@ -79,14 +99,17 @@ and a direct ID-to-entry index. Numeric postings avoid repeating long style IDs
 for every searchable term. Exact query tokens use postings intersections;
 unknown or partial tokens fall back to substring matching. The page keeps the
 full match count but adds cards to the DOM in progressive batches of 24, which
-limits initial layout and image work as the catalog grows. Entries in
+limits initial layout and image work as the catalog grows. Theme switching
+updates the preview inside a Direction card rather than duplicating cards.
+Entries in
 `catalog/generated/style-sources.json` remain a provenance index and are shown
-only as a current count, never promoted into unreviewed style profiles.
+only as a current count, never promoted into unreviewed Direction cards.
 
 The model also carries a deterministic `catalogRevision`, derived from the
-curated profiles and visual metadata. The CLI adds its local expected revision
-to the Pages URL. The browser compares that value with the deployed HTML and
-JSON revisions and shows a non-blocking warning if deployment is stale.
+canonical Direction, Theme, link, PreviewSpec, and alias documents. The CLI
+adds its local expected revision to the Pages URL. The browser compares that
+value with the deployed HTML and JSON revisions and shows a non-blocking warning
+if deployment is stale.
 
 This surface is intentionally distinct from `preview --serve`: the former
 browses the publicly hosted complete reviewed Catalog, while the latter serves
@@ -94,7 +117,7 @@ one generated recommendation batch on `127.0.0.1`.
 
 ## 4. Recommendation Core
 
-`src/core.mjs` scores style profiles against the user's brief using:
+`src/core.mjs` scores Directions against the user's brief using:
 
 - page type
 - audience
@@ -104,31 +127,38 @@ one generated recommendation batch on `127.0.0.1`.
 - keywords
 - important scenario hints
 
-Matching is deterministic and programmatic. The Agent gathers context,
-presents results, and enforces the selection gate; it does not replace the
-ranking algorithm with an ad hoc judgment. Embeddings can be added later, but
-the selection gate does not need them to be useful.
+Matching is deterministic and programmatic. After Direction ranking and
+diversification, `selectThemeForDirection` scores only the linked Themes against
+the same brief. Stable ties prefer the default link and then Theme ID; this
+second stage does not change Direction scores or order. The Agent gathers
+context, presents results, and enforces the selection gate; it does not replace
+the ranking algorithm with an ad hoc judgment.
 
-`scripts/validate-curated-catalog.mjs` checks the one-to-one profile, visual,
-and preview relationship, the baseline of at least four profiles and three
-visual variants in each required family, taxonomy fields, supported render
-variants, theme colors, and the three reviewed upstream references for every style. The
-12-case recommendation benchmark verifies expected family coverage and
-identical rankings across repeated runs.
+`scripts/validate-curated-catalog.mjs` retains the legacy Profile/Visual/preview
+curation gate. `scripts/migrate-direction-theme-catalog.mjs --check` verifies
+that the canonical projection is deterministic, while
+`scripts/validate-direction-theme-catalog.mjs` checks Direction, Theme, link,
+PreviewSpec, alias, provenance, and token integrity. The 12-case recommendation
+benchmark verifies expected family coverage and identical Direction rankings
+across repeated runs.
 
-Recommendations include the local SVG card and expanded visual-reference URLs
-alongside the scored profile.
+Session schema v2 tracks `shownDirectionIds`; `--again` excludes Directions,
+while legacy `shownStyleIds` remain readable through aliases. Recommendations
+include the scored Direction, selected Theme, PreviewSpec, local SVG card,
+Direction-reference URLs, and Theme provenance.
 
 ## 5. Project Contract
 
-After the user chooses a style, `apply` writes a project-specific `DESIGN.md`
-and `.ui-style-director/first-viewport-draft.svg`.
+After the user chooses a Direction/Theme pair, the recommendation flow passes
+both IDs to `apply`, which writes a project-specific `DESIGN.md` and
+`.ui-style-director/first-viewport-draft.svg`.
 
 The generated `DESIGN.md` is the implementation contract. It records:
 
-- selected style
-- source provider and source slug
-- real visual-reference links
+- selected Direction and Theme IDs
+- Direction structure and matching PreviewSpec
+- Direction-reference links
+- Theme appearance, semantic tokens, and pinned Theme sources
 - project brief
 - first-viewport architecture
 - layout rules
@@ -145,7 +175,8 @@ contract instead of improvising a new direction.
 `skills/web-style-director/SKILL.md` wraps the CLI in an agent workflow:
 
 1. Gather missing context.
-2. Recommend five styles with local SVG cards and Light/Dark references.
+2. Rank five Directions, select one linked Theme for each, and show local SVG
+   cards with Light/Dark references.
 3. Wait for selection.
 4. Reroll if the user rejects the options.
 5. Generate `DESIGN.md` and a project first-viewport draft.
@@ -174,7 +205,8 @@ hashing and bounded curation-model input. Raw CSS instructions are never promote
 the consumer catalog.
 
 Provider inventory, style-source, and component-source artifacts use generated
-schema v4. The hosted browser view model remains its independent schema v3.
+schema v4. The hosted browser view model independently uses schema v4 as well;
+the matching number does not make their contracts interchangeable.
 
 This keeps the project legally and technically cleaner:
 

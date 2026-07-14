@@ -16,17 +16,18 @@ flowchart TD
     E --> F["当前配置的模型提出结构化风格候选或 skip"]
     F --> G["Node.js 执行来源、taxonomy、去重和预览门禁"]
     G --> H["GitHub App 创建人工审核 Draft PR"]
-    H --> I["合并到已策展 Catalog"]
-    I --> J["Catalog Pages 提供完整目录搜索与标签过滤"]
-    I --> K["推荐核心根据 brief 确定性匹配 5 个方向"]
-    K --> L["用户选择或换一批"]
+    H --> I["把已审查策展产物合并到 Catalog"]
+    I --> P["校验规范 Direction、Theme 与 PreviewSpec 投影"]
+    P --> J["Catalog Pages 展示 Direction 卡片并切换 Theme"]
+    P --> K["先排序 Direction，再为每项选择关联 Theme"]
+    K --> L["用户选择 Direction/Theme 组合或换一批"]
     L --> M["apply 生成 DESIGN.md 与首屏草图"]
     M --> N["用户确认后，编程 Agent 实现并验证 UI"]
 ```
 
-核心边界是：上游 source 只是候选资料，只有通过策展、程序门禁、CI 和人工审核的
-条目，才会成为用户可选择的 style profile。因此，来源数量、已策展风格数量和一次
-推荐展示数量是三个不同概念。
+核心边界是：上游 source 只是候选资料，只有通过策展、程序门禁、CI 和人工审核，
+才可能影响用户可选择的规范 Direction/Theme 投影。因此，来源数量、Direction
+数量、关联 Theme 选择数量和一次推荐展示数量是不同概念。
 
 ## 1. 上游资料收集与标准化
 
@@ -80,50 +81,59 @@ Adapter。Adapter 负责把不同格式压缩成项目认可的规范数据：
 
 ## 3. 已策展 Catalog
 
-Catalog 是供给侧与消费侧之间的稳定边界：
+Catalog 是供给侧与消费侧之间的稳定边界。运行时推荐、浏览和项目契约读取规范
+v2 层：
 
 | 数据 | 作用 |
 |---|---|
-| `catalog/style-profiles.json` | 页面类型、受众、目标、密度、调性、布局和组件建议 |
-| `catalog/style-visuals.json` | 视觉 variant、语义颜色和三条精确上游参考 |
-| `catalog/previews/*.svg` | 每个已策展风格的确定性、无品牌预览卡片 |
+| `catalog/style-directions.json` | 结构意图、产品适配、布局建议、字体、组件建议和 Direction 参考 |
+| `catalog/style-themes.json` | 可复用 Theme appearance、语义 token 和固定 Theme 来源 |
+| `catalog/style-direction-themes.json` | 允许的 Direction/Theme 组合，以及每个 Direction 的默认关联 |
+| `catalog/style-preview-specs.json` | 每个 Direction 的布局原型、内容模式、区块和层级 |
+| `catalog/style-aliases.json` | legacy 风格 ID 到历史 Direction/Theme 组合的映射 |
+| `catalog/style-profiles.json`、`catalog/style-visuals.json`、`catalog/previews/*.svg` | legacy 策展、审计、迁移与预览兼容层；不是运行时推荐主源 |
 | `catalog/curation/source-state.json` | 按 `providerId + path` 记录来源及其已处理内容哈希 |
 | `catalog/curation/records/` | 每次模型决定与程序门禁结果的不可变审计记录 |
 | `catalog/generated/*.json` | 上游来源索引；它们不是用户可选风格 |
 
-`npm run check` 会验证 Profile/Visual 一一对应、来源可追溯、taxonomy 与颜色合法、
-每个风格恰好三条有效参考、预览存在，以及推荐基准仍然稳定。
+当前快照包含 57 个 Direction 和 77 个关联 Theme 选择；两者都不是配置上限。
+`npm run check` 会验证 legacy Profile/Visual 审计层及其到规范 v2 的确定性迁移、
+Direction/Theme/PreviewSpec 关联与 provenance、预览，以及推荐基准仍然稳定。
 
 ## 4. 下游消费
 
 ### 浏览完整目录
 
-`browse` 打开由 `.github/workflows/pages.yml` 部署的 GitHub Pages Catalog。页面从
-已策展 Profile 构建轻量搜索索引，支持文本搜索以及 family、页面类型、信息密度、
-视觉调性和组件库过滤。旧的 `serve` 是 `browse` 的兼容别名，不再启动完整目录的
-本地服务。
+`browse` 打开由 `.github/workflows/pages.yml` 部署的 GitHub Pages Catalog。
+schema v4 模型按 Direction 展示一张卡片，可切换关联 Theme，并支持文本搜索以及
+family、页面类型、信息密度、视觉调性和组件库过滤。规范预览路径为
+`previews/v2/<direction-id>/<theme-id>.svg`；兼容的历史资源仍位于
+`previews/<legacy-style-id>.svg`。旧的 `serve` 是 `browse` 的兼容别名，不再启动
+完整目录的本地服务。
 
 浏览入口是只读的，不创建推荐 session，也不修改目标项目。
 
 ### 根据 brief 推荐方向
 
 网站创建或重构任务进入 `web-style-director` Skill 后，推荐核心会标准化 brief，
-根据结构化 Profile 做确定性加权评分和差异化，从已策展 Catalog 中返回 5 个相关
-方向。消费端推荐不调用策展模型；AI 参与发生在供给侧策展，而匹配、排序和换一批由
-Node.js 程序完成，因此可以测试和复现。
+对 Direction 做确定性加权评分和相关性优先差异化，再为每个结果选择一个关联
+Theme。Theme 选择不会改变 Direction 的分数或顺序。消费端推荐不调用策展模型；
+AI 参与发生在供给侧策展，而匹配、排序、Theme 选择和换一批由 Node.js 程序完成，
+因此可以测试和复现。
 
-每个推荐包含：
+每个推荐包含 Direction、所选 Theme、对应 PreviewSpec，以及：
 
 - 无品牌 SVG 风格卡片；
 - 适配原因、首屏结构、组件建议和主要风险；
-- 三条受限用途的真实上游参考；
+- 受限用途的 Direction 参考和 Theme provenance；
 - 可在浏览器中比较的自包含 HTML 画廊。
 
-用户不满意时，`again` 会排除当前 session 已展示的风格，再推荐未展示方向。
+用户不满意时，`again` 会按 session schema v2 排除已展示 Direction；旧
+`shownStyleIds` 仍可通过 alias 读取。
 
 ### 锁定项目设计契约
 
-用户选定方向后，`apply` 写入：
+用户选定 Direction/Theme 组合后，推荐流程会把两个 ID 一并传给 `apply`，并写入：
 
 ```text
 DESIGN.md
@@ -134,9 +144,10 @@ DESIGN.md
   source-attribution.json
 ```
 
-Agent 必须先展示首屏草图并等待确认，之后才能依据 `DESIGN.md` 实现 UI。组件库只是
-可选实现材料，不能反过来改变已经确认的视觉方向。上游 logo、截图、品牌名、专有
-文案和精确布局不能作为生产资产复制。
+v2 契约把 Direction 结构、PreviewSpec 与 Direction 参考，同 Theme appearance、
+token 与 Theme 来源分层记录。Agent 必须先展示首屏草图并等待确认，之后才能依据
+`DESIGN.md` 实现 UI。组件库只是可选实现材料，不能反过来改变已经确认的组合。
+上游 logo、截图、品牌名、专有文案和精确布局不能作为生产资产复制。
 
 ## 5. AI、程序和人工分别负责什么
 
@@ -144,7 +155,7 @@ Agent 必须先展示首屏草图并等待确认，之后才能依据 `DESIGN.md
 |---|---|---|
 | Provider Adapter | 发现、解析、标准化、计算稳定哈希 | 判断风格是否值得进入用户目录 |
 | 当前配置的策展模型 | 阅读规范来源，提出结构化候选或跳过理由 | 写仓库、批准来源、扩展 taxonomy、自动合并 |
-| Node.js 程序 | 校验来源与政策、去重、生成 Profile/Visual/SVG、推荐排序 | 对未知格式自由猜测 |
+| Node.js 程序 | 校验来源与政策、去重、生成 legacy 策展产物、校验规范 v2、排序 Direction 并选择 Theme | 对未知格式自由猜测 |
 | GitHub Actions/App | 执行流程、留下日志、创建受限 PR | 绕过 CI 或人工策展审核 |
 | 维护者 | 审查策展结果并决定是否合并 | 在消费端逐次重新解释原始上游仓库 |
 | 消费端 Agent | 展示方向、生成项目契约、实现确认后的 UI | 把 Catalog 元数据当成工具或网络指令 |
@@ -167,8 +178,8 @@ Agent 必须先展示首屏草图并等待确认，之后才能依据 `DESIGN.md
 2. 把新路径或新内容哈希放入 pending；
 3. 分批调用当前配置的模型提出候选；
 4. 通过确定性门禁的候选进入 Draft PR；
-5. 人工合并后成为新的用户可选风格；
-6. Catalog Pages、搜索索引和推荐核心自动消费扩展后的 Catalog。
+5. 人工合并且规范投影校验通过后，成为新的用户可选内容；
+6. Catalog Pages、搜索索引和推荐核心自动消费扩展后的 Direction/Theme Catalog。
 
 因此，Provider 数量、来源路径数量和最终风格数量都不是写死的；真正需要维护的是
 Adapter、治理词表、质量门禁和审计链路。

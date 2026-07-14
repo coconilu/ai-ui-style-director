@@ -34,6 +34,20 @@ function pairKey(directionId, themeId) {
   return JSON.stringify([directionId, themeId]);
 }
 
+function assertCatalogV2Index(catalog) {
+  if (
+    !catalog?.aliasByLegacyStyleId
+    || !catalog?.directionById
+    || !catalog?.themeById
+    || !catalog?.linkByKey
+    || !catalog?.linksByDirectionId
+    || !catalog?.previewSpecByDirectionId
+    || !Array.isArray(catalog.aliases)
+  ) {
+    throw new TypeError("catalog must be a validated catalog v2 index.");
+  }
+}
+
 function readDocument(path, fileName) {
   if (!existsSync(path)) {
     throw new CatalogV2Error(
@@ -270,15 +284,7 @@ export function loadCatalogV2({ catalogDir = join(ROOT_DIR, "catalog") } = {}) {
  * Resolve a historical style id into the canonical direction/theme selection.
  */
 export function resolveLegacyStyleId(catalog, legacyStyleId) {
-  if (
-    !catalog?.aliasByLegacyStyleId
-    || !catalog?.directionById
-    || !catalog?.themeById
-    || !catalog?.linkByKey
-    || !catalog?.previewSpecByDirectionId
-  ) {
-    throw new TypeError("catalog must be a validated catalog v2 index.");
-  }
+  assertCatalogV2Index(catalog);
   if (!isNonEmptyString(legacyStyleId)) {
     throw new TypeError("legacyStyleId must be a non-empty string.");
   }
@@ -295,4 +301,120 @@ export function resolveLegacyStyleId(catalog, legacyStyleId) {
   const link = catalog.linkByKey.get(pairKey(alias.directionId, alias.themeId));
   const previewSpec = catalog.previewSpecByDirectionId.get(alias.directionId);
   return { direction, theme, link, previewSpec, alias };
+}
+
+/**
+ * Return every historical alias for a Direction in stable legacy-style-id
+ * order. A fresh array is returned so callers cannot mutate the catalog.
+ */
+export function legacyAliasesForDirection(catalog, directionId) {
+  assertCatalogV2Index(catalog);
+  if (!isNonEmptyString(directionId)) {
+    throw new TypeError("directionId must be a non-empty string.");
+  }
+
+  return catalog.aliases
+    .filter((alias) => alias.directionId === directionId)
+    .slice()
+    .sort((left, right) => left.legacyStyleId.localeCompare(right.legacyStyleId));
+}
+
+/**
+ * Return the stable historical alias for an exact Direction/Theme selection,
+ * or null when the selection has no legacy representation.
+ */
+export function legacyAliasForSelection(catalog, directionId, themeId) {
+  assertCatalogV2Index(catalog);
+  if (!isNonEmptyString(directionId)) {
+    throw new TypeError("directionId must be a non-empty string.");
+  }
+  if (!isNonEmptyString(themeId)) {
+    throw new TypeError("themeId must be a non-empty string.");
+  }
+
+  return legacyAliasesForDirection(catalog, directionId)
+    .find((alias) => alias.themeId === themeId) || null;
+}
+
+/**
+ * Resolve a canonical Direction/Theme selection while preserving historical
+ * style-id behavior. Without an explicit Theme, aliases intentionally win over
+ * same-named Directions. With an explicit Theme, the input is interpreted as a
+ * Direction whenever possible; an alias-only input may still identify its
+ * canonical Direction.
+ */
+export function resolveCatalogSelection(catalog, { inputId, themeId } = {}) {
+  assertCatalogV2Index(catalog);
+  if (!isNonEmptyString(inputId)) {
+    throw new TypeError("inputId must be a non-empty string.");
+  }
+
+  const inputAlias = catalog.aliasByLegacyStyleId.get(inputId) || null;
+  const directDirection = catalog.directionById.get(inputId) || null;
+  const hasExplicitTheme = themeId !== undefined;
+
+  if (!hasExplicitTheme && inputAlias) {
+    const resolved = resolveLegacyStyleId(catalog, inputId);
+    return {
+      inputKind: "legacy-style",
+      legacyStyleId: inputId,
+      ...resolved
+    };
+  }
+
+  const direction = directDirection
+    || (hasExplicitTheme && inputAlias
+      ? catalog.directionById.get(inputAlias.directionId)
+      : null);
+  if (!direction) {
+    throw new CatalogV2Error(
+      `Unknown catalog selection id: ${inputId}.`,
+      { code: "unknown_catalog_selection_id" }
+    );
+  }
+
+  const inputKind = directDirection ? "direction" : "legacy-style";
+  const legacyStyleId = inputKind === "legacy-style" ? inputId : null;
+  let link;
+
+  if (hasExplicitTheme) {
+    if (!isNonEmptyString(themeId)) {
+      throw new TypeError("themeId must be a non-empty string when provided.");
+    }
+    if (!catalog.themeById.has(themeId)) {
+      throw new CatalogV2Error(
+        `Unknown theme id: ${themeId}.`,
+        { code: "unknown_theme_id" }
+      );
+    }
+    link = catalog.linkByKey.get(pairKey(direction.id, themeId));
+    if (!link) {
+      throw new CatalogV2Error(
+        `Theme ${themeId} is not linked to direction ${direction.id}.`,
+        { code: "theme_not_linked_to_direction" }
+      );
+    }
+  } else {
+    link = (catalog.linksByDirectionId.get(direction.id) || [])
+      .find((candidate) => candidate.isDefault === true);
+    if (!link) {
+      throw new CatalogV2Error(
+        `Direction ${direction.id} has no default theme link.`,
+        { code: "missing_default_theme" }
+      );
+    }
+  }
+
+  const theme = catalog.themeById.get(link.themeId);
+  const previewSpec = catalog.previewSpecByDirectionId.get(direction.id);
+  const alias = legacyAliasForSelection(catalog, direction.id, theme.id);
+  return {
+    inputKind,
+    legacyStyleId,
+    direction,
+    theme,
+    link,
+    previewSpec,
+    alias
+  };
 }

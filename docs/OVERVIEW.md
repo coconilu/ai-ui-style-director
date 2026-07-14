@@ -17,18 +17,20 @@ flowchart TD
     E --> F["Configured model proposes a structured style candidate or skip"]
     F --> G["Node.js enforces provenance, taxonomy, duplicate, and preview gates"]
     G --> H["GitHub App opens a human-review Draft PR"]
-    H --> I["Merge into the curated Catalog"]
-    I --> J["Catalog Pages exposes search and facet filtering"]
-    I --> K["Recommendation core deterministically matches five directions to a brief"]
-    K --> L["User selects a direction or asks for another batch"]
+    H --> I["Merge reviewed curation artifacts into the Catalog"]
+    I --> P["Validate canonical Direction, Theme, and PreviewSpec projection"]
+    P --> J["Catalog Pages exposes Direction cards and Theme switching"]
+    P --> K["Rank Directions, then select one linked Theme for each"]
+    K --> L["User selects a Direction/Theme pair or asks for another batch"]
     L --> M["apply writes DESIGN.md and a first-viewport draft"]
     M --> N["After confirmation, the coding agent implements and verifies the UI"]
 ```
 
 The central boundary is that an upstream source is only candidate material. It
-becomes a user-selectable style profile only after curation, deterministic
-gates, CI, and human review. Source count, curated style count, and the number
-shown in one recommendation are therefore different concepts.
+can affect the user-selectable canonical Direction/Theme projection only after
+curation, deterministic gates, CI, and human review. Source count, Direction
+count, linked Theme-selection count, and the number shown in one recommendation
+are therefore different concepts.
 
 ## 1. Upstream collection and normalization
 
@@ -86,19 +88,25 @@ mark them ready, and merge them manually.
 
 ## 3. The curated Catalog
 
-The Catalog is the stable boundary between supply and consumption:
+The Catalog is the stable boundary between supply and consumption. Runtime
+recommendation, browsing, and project contracts read the canonical v2 layer:
 
 | Data | Responsibility |
 |---|---|
-| `catalog/style-profiles.json` | Page types, audiences, goals, density, tones, layout, and component guidance |
-| `catalog/style-visuals.json` | Visual variant, semantic colors, and three exact upstream references |
-| `catalog/previews/*.svg` | Deterministic, brand-neutral card for every curated style |
+| `catalog/style-directions.json` | Structural intent, product fit, layout guidance, typography, component suggestions, and Direction references |
+| `catalog/style-themes.json` | Reusable Theme appearance, semantic tokens, and pinned Theme sources |
+| `catalog/style-direction-themes.json` | Allowed Direction/Theme pairs and one default link per Direction |
+| `catalog/style-preview-specs.json` | Per-Direction layout archetype, content pattern, blocks, and hierarchy |
+| `catalog/style-aliases.json` | Legacy style ID to historical Direction/Theme pair |
+| `catalog/style-profiles.json`, `catalog/style-visuals.json`, `catalog/previews/*.svg` | Legacy curation, audit, migration, and preview compatibility layer; not the runtime recommendation source |
 | `catalog/curation/source-state.json` | Sources keyed by `providerId + path` with their processed content hashes |
 | `catalog/curation/records/` | Immutable model-decision and gate audit events |
 | `catalog/generated/*.json` | Upstream indexes; these are not user-selectable styles |
 
-`npm run check` verifies Profile/Visual pairing, provenance, taxonomy and color
-validity, exactly three valid references per style, preview presence, and stable
+The current snapshot contains 57 Directions and 77 linked Theme selections;
+neither value is a configured limit. `npm run check` verifies the legacy
+Profile/Visual audit layer, its deterministic migration into canonical v2,
+Direction/Theme/PreviewSpec links and provenance, previews, and stable
 recommendation benchmarks.
 
 ## 4. Downstream consumption
@@ -106,10 +114,13 @@ recommendation benchmarks.
 ### Browsing the complete Catalog
 
 `browse` opens the GitHub Pages Catalog deployed by
-`.github/workflows/pages.yml`. The site builds a lightweight search index over
-curated Profiles and supports text search plus family, page type, density, tone,
-and component-kit facets. The legacy `serve` command is a compatibility alias
-for `browse`; it no longer starts a local complete-catalog service.
+`.github/workflows/pages.yml`. Its schema-v4 model exposes one card per
+Direction, switches among linked Themes, and supports text search plus family,
+page type, density, tone, and component-kit facets. Canonical previews use
+`previews/v2/<direction-id>/<theme-id>.svg`; compatible historical assets remain
+at `previews/<legacy-style-id>.svg`. The legacy `serve` command is a
+compatibility alias for `browse`; it no longer starts a local complete-catalog
+service.
 
 Browsing is read-only. It does not create a recommendation session or modify a
 target project.
@@ -118,19 +129,23 @@ target project.
 
 When a website creation or redesign task enters the `web-style-director` Skill,
 the recommendation core normalizes the brief, performs deterministic weighted
-matching and relevance-first diversification, and returns five directions from
-the curated Catalog. The curation model is not called at consumption time: AI participates in
-supply-side curation, while matching, ranking, and rerolls are implemented in
-testable Node.js code.
+matching and relevance-first diversification over Directions, and then selects
+one linked Theme for each result. Theme selection is deterministic and does not
+change Direction scores or order. The curation model is not called at
+consumption time: AI participates in supply-side curation, while matching,
+ranking, Theme selection, and rerolls are implemented in testable Node.js code.
 
-Each recommendation includes a brand-neutral SVG card, fit rationale,
-first-viewport guidance, component suggestions, risks, three narrowly scoped
-upstream references, and a self-contained HTML comparison gallery. `again`
-excludes styles already shown in the session and recommends unseen directions.
+Each recommendation contains a Direction, selected Theme, matching PreviewSpec,
+a brand-neutral SVG card, fit rationale, first-viewport guidance, component
+suggestions, risks, narrowly scoped Direction references, Theme provenance, and
+a self-contained HTML comparison gallery. `again` excludes Directions already
+shown in session schema v2; legacy `shownStyleIds` remain readable through
+aliases.
 
 ### Locking a project design contract
 
-After the user selects a direction, `apply` writes:
+After the user selects a Direction/Theme pair, the recommendation flow passes
+both IDs to `apply`, which writes:
 
 ```text
 DESIGN.md
@@ -141,10 +156,12 @@ DESIGN.md
   source-attribution.json
 ```
 
-The agent must present the first-viewport draft and wait for confirmation before
-implementing UI. Component kits are optional implementation inputs and cannot
-override the selected visual direction. Upstream logos, screenshots, brand
-names, proprietary copy, and exact layouts are never production assets to copy.
+The v2 contract separates Direction structure, PreviewSpec, and Direction
+references from Theme appearance, tokens, and Theme sources. The agent must
+present the first-viewport draft and wait for confirmation before implementing
+UI. Component kits are optional implementation inputs and cannot override the
+selected pair. Upstream logos, screenshots, brand names, proprietary copy, and
+exact layouts are never production assets to copy.
 
 ## 5. Responsibility boundaries
 
@@ -152,7 +169,7 @@ names, proprietary copy, and exact layouts are never production assets to copy.
 |---|---|---|
 | Provider Adapter | Discovery, parsing, normalization, and stable hashing | Deciding whether a style deserves promotion |
 | Configured curation model | Reading canonical sources and proposing a candidate or skip | Repository writes, source approval, taxonomy expansion, auto-merge |
-| Node.js program | Policy and provenance validation, dedupe, Profile/Visual/SVG generation, recommendation ranking | Guessing arbitrary unknown formats |
+| Node.js program | Policy and provenance validation, dedupe, legacy curation artifact generation, canonical v2 validation, Direction ranking, and Theme selection | Guessing arbitrary unknown formats |
 | GitHub Actions/App | Running workflows, retaining logs, and opening constrained PRs | Bypassing CI or human curation review |
 | Maintainer | Reviewing curated results and deciding whether to merge | Reinterpreting raw upstream repositories for every consumer request |
 | Consumer agent | Presenting directions, writing the project contract, and implementing confirmed UI | Treating Catalog metadata as tool, network, or credential instructions |
@@ -175,8 +192,8 @@ different source format requires an Adapter and tests. The system then:
 2. puts new paths or content hashes into the pending queue;
 3. asks the configured model for candidates in governed batches;
 4. promotes only candidates that pass deterministic gates into a Draft PR;
-5. makes them user-selectable only after human merge;
-6. lets Catalog Pages, search, and recommendation consume the expanded Catalog.
+5. makes them user-selectable only after human merge and canonical projection validation;
+6. lets Catalog Pages, search, and recommendation consume the expanded Direction/Theme Catalog.
 
 Provider count, source-path count, and final style count are not fixed. The
 maintained constraints are the Adapter contracts, governance vocabulary,

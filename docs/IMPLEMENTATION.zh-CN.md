@@ -6,7 +6,7 @@
 
 1. 把项目 brief 匹配到一组可比较的视觉方向；
 2. 让用户通过 SVG 卡片、HTML 画廊和外部参考完成选择；
-3. 把选定方向固化成项目内的 `DESIGN.md` 与机器可读状态。
+3. 把选定 Direction 和 Theme 固化成项目内的 `DESIGN.md` 与机器可读状态。
 
 ## 运行架构
 
@@ -15,11 +15,12 @@ flowchart LR
   U[用户需求] --> S[Agent Skill]
   S --> W[Skill wrapper]
   W --> C[Node.js CLI]
-  K[已策展 profile] --> C
-  C --> R[recommend]
+  K[Direction 与 Theme Catalog] --> C
+  C --> R[排序 Direction]
+  R --> RT[选择关联 Theme]
   C --> B[browse 托管目录]
   C --> A[apply]
-  R --> H[recommendations.html]
+  RT --> H[recommendations.html]
   H -. preview --serve .-> L[本机回环服务]
   L --> V[本地浏览器]
   K --> X[静态目录构建]
@@ -28,7 +29,7 @@ flowchart LR
   A --> D[DESIGN.md 与项目状态]
   P[上游 Provider 仓库] --> G[clone/pull 与 Adapter 规范化]
   G --> I[catalog/generated]
-  I -. 109 条来源路径统计 .-> X
+  I -. 来源索引统计 .-> X
   I --> Q[受限 AI 候选]
   Q --> T[程序化溯源与去重门禁]
   T -. 可审计 App PR .-> K
@@ -49,16 +50,16 @@ style source 和 600 条 component source。原有 74 条 `DESIGN.md` 来源是 
 `skills/web-style-director/SKILL.md` 是面向 Codex、Claude Code 等编程 Agent 的流程入口。它规定：
 
 - 信息不足时只追问必要上下文；
-- 默认展示五个方向；
-- 用户不满意时使用 `--again` 排除本会话已展示的方向；
-- 用户选定后执行 `apply`；
+- 默认展示五个 Direction/Theme 结果；
+- 用户不满意时使用 `--again` 排除本会话已展示的 Direction；
+- 用户选定后用 Direction 和 Theme 两个 ID 执行 `apply`；
 - 用户确认首屏草图之前不编写 UI 代码。
 
 Skill 负责流程和行为约束，不包含推荐算法。
 
 明确的 `browse`、旧 `serve` 或完整目录浏览需求会通过
 `references/catalog-browser.md` 进入独立的顶层路由。Agent 只打开 Pages 托管地址，
-不会收集网站 brief、推荐五个风格、运行 `apply` 或修改目标项目。
+不会收集网站 brief、推荐五个 Direction/Theme 结果、运行 `apply` 或修改目标项目。
 
 ### 2. Skill wrapper：定位真正的 CLI
 
@@ -81,7 +82,7 @@ Skill 负责流程和行为约束，不包含推荐算法。
 | 命令 | 职责 |
 | --- | --- |
 | `questions` | 输出 brief 缺失时的场景问题 |
-| `recommend` | 推荐方向、写入会话并生成 HTML 画廊 |
+| `recommend` | 排序 Direction、选择关联 Theme、写入会话并生成 HTML 画廊 |
 | `browse` | 打开支持搜索和标签过滤的托管目录 |
 | `serve` | `browse` 的兼容别名 |
 | `preview` | 查看或打开某一次生成的推荐画廊 |
@@ -95,8 +96,8 @@ Skill 负责流程和行为约束，不包含推荐算法。
 
 `src/catalog-browser.mjs` 提供目录模型与浏览器资源：
 
-- `buildStyleCatalog`：把已策展 profile、视觉元数据、生成式 SVG 预览和
-  来源索引统计及确定性的 revision 组合成 schema v3 浏览器视图模型；
+- `buildStyleCatalog`：把规范 Direction、关联 Theme、生成式 SVG 预览 URL、
+  索引、来源索引统计及确定性的 revision 组合成 schema v4 浏览器视图模型；
 - `hostedCatalogInfo`：把本地预期 revision 附在 Pages 地址上，并返回 CLI
   所需信息；
 - `searchCatalogEntries`：使用倒排索引查询候选风格，并在必要时做子串回退；
@@ -105,17 +106,16 @@ Skill 负责流程和行为约束，不包含推荐算法。
 - `renderCatalogBrowserPage`：渲染浏览器页面外壳；
 - `buildStyleCatalogStaticAssets`：组装所有可部署的静态文件。
 
-`scripts/build-catalog-site.mjs` 把这些资源写入 `dist/pages`。HTML 使用
-`catalog.json`、`styles.css` 和 `previews/<style-id>.svg` 等相对引用，因此能
-在 GitHub 项目子路径下正确工作。页面状态编码在 URL query 中，因此筛选结果
-无需服务端状态即可在刷新后保留。
+`scripts/build-catalog-site.mjs` 把这些资源写入 `dist/pages`。`catalog.json`、
+`styles.css`、规范路径 `previews/v2/<direction-id>/<theme-id>.svg` 以及兼容路径
+`previews/<legacy-style-id>.svg` 都使用相对引用，因此能在 GitHub 项目子路径下
+正确工作。页面状态编码在 URL query 中，因此筛选结果无需服务端状态即可在
+刷新后保留。
 
-`catalog.json` 使用 schema v3。条目不再内嵌 SVG data URI，只携带轻量的
-`previewUrl`；响应中的 `entryIndex` 支持按 ID 定位条目，`searchIndex` 则把
-标准化词项映射到有序数字条目下标 postings。多词查询对精确 postings 求交集，
-未知或前缀词回退到 `searchText` 子串匹配，兼顾常见查询速度和宽松搜索体验。
-客户端每次最多追加 24 张卡片；搜索、过滤或清空条件会重置分页，但状态栏
-始终显示全部匹配数量。
+浏览器模型包含词项到数字条目下标的 postings 索引，以及 ID 到条目的索引。
+数字 postings 避免在搜索索引里重复存储风格 ID。多词查询对精确 postings 求
+交集；精确词项未命中时回退到子串匹配，使部分词仍然可搜。客户端每次渲染
+24 张匹配 Direction 卡片，限制首屏 DOM 与图片开销，但不会改变全部匹配数量。
 
 HTML 与 JSON 都携带 `catalogRevision`，CLI 还会把本地预期 revision 附到托管
 URL 上；三者不一致时页面显示提示，但继续允许搜索和过滤。
@@ -128,28 +128,33 @@ GitHub Pages environment 部署。
 
 ## Catalog：真正的运行时知识源
 
-推荐与项目契约运行时读取四组已策展数据：
+推荐、浏览和项目契约运行时读取规范 v2 投影：
 
 | 文件 | 用途 |
 | --- | --- |
-| `catalog/style-profiles.json` | 页面类型、受众、目标、密度、调性、布局、配色和组件建议 |
-| `catalog/style-visuals.json` | SVG 变体、主题色和真实视觉参考 slug |
+| `catalog/style-directions.json` | Direction 的结构、意图、密度、字体和组件建议 |
+| `catalog/style-themes.json` | 可复用 Theme token、appearance 与 Theme 来源 |
+| `catalog/style-direction-themes.json` | 允许的 Direction/Theme 组合，以及每个 Direction 的默认 Theme |
+| `catalog/style-preview-specs.json` | 布局原型、内容模式、区块和层级 |
+| `catalog/style-aliases.json` | legacy 风格 ID 到历史 Direction/Theme 选择的映射 |
 | `catalog/component-kits.json` | 组件库适用场景与使用边界 |
 | `catalog/scenario-questions.json` | brief 信息不足时的问题 |
 
+`style-profiles.json`、`style-visuals.json`、已提交的旧预览和不可变记录继续保留，
+用于审计与兼容。当前 v2 快照包含 57 个 Direction 和 77 个已关联 Theme 选择；
+这两个数字都不是配置上限。独立的 `catalog/recommendation-benchmarks.json`
+用于保护意图覆盖。
+
 `catalog/providers.json` 描述上游仓库；`catalog/generated/*` 记录上游扫描结果。
 推荐核心不会直接读取生成索引，因此上游内容变化不能直接进入用户推荐。供给侧
-Curator 只读取新来源或变化哈希并创建受治理 PR；消费侧仍只读取已合并的 Profile。
-
-`style-profiles.json` 与 `style-visuals.json` 始终一一对应；初始基线覆盖 12 个
-family、每组 4 个方向。`style-sources.json` 当前有 109 条 Provider 路径；它们
-没有完整的适用场景、风险、视觉主题和经过审查的参考关系，因此不会自动晋升为
-profile。
+Curator 只读取新来源或变化哈希并创建受治理 PR；消费侧仍只读取已合并的规范
+Catalog 数据。
 
 目录浏览器读取 `catalog/generated/style-sources.json` 的唯一目的是显示当前
-来源索引数量。里面的 109 条路径不会作为完整风格卡片返回；浏览器条目仍然只来自
-`catalog/style-profiles.json` 中经过审查的 profile。托管浏览器 payload 继续使用
-schema v3，与生成 Provider 索引的 schema 版本彼此独立。
+来源索引数量。生成索引当前包含 7 个 Provider、109 条 style source 和 600 条
+component source，但 109 条风格路径不会作为完整 Direction 卡片返回。浏览器
+条目来自经过审查的 Direction/Theme 投影。托管浏览器 payload 使用 schema v4，
+与生成 Provider 索引的 schema 版本彼此独立。
 
 ## 推荐算法
 
@@ -173,7 +178,7 @@ schema v3，与生成 Provider 索引的 schema 版本彼此独立。
 
 ### 加权评分
 
-每个 profile 的字段按三档参与词项匹配：
+Direction 字段按三档参与词项匹配：
 
 - 高权重：family、关键词、页面类型、受众和目标；
 - 中权重：调性、密度和适用场景；
@@ -185,6 +190,10 @@ schema v3，与生成 Provider 索引的 schema 版本彼此独立。
 分数相同时按名称和 ID 稳定排序，因此相同输入和 Catalog 会得到相同的
 ID、分数和顺序。
 
+只有在 Direction 排名完成后，`selectThemeForDirection` 才会用同一 brief 为其
+关联 Theme 评分。稳定并列时优先默认关联，再按 Theme ID 排序。这个第二阶段只
+选择展示 token，不会改变 Direction 分数、差异化结果或顺序。
+
 ### 差异化与换一批
 
 `diversifyScoredProfiles` 先移除零分结果，并只保留达到最高分 15% 相关性阈值
@@ -193,22 +202,30 @@ ID、分数和顺序。
 `family` 候选至少达到当前最佳剩余候选 80% 的分数时，才把它提前作为近似相关
 的差异化方向。这样 Catalog 扩容不会把相关意图完全挤出 Top 5，同时保持相关性优先。
 
-会话状态保存在 `.ui-style-director/session.json`。使用 `--again` 时，核心排除 `shownStyleIds`，并将新结果追加到会话。未展示方向不足时返回 `exhausted`。
+会话状态保存在 `.ui-style-director/session.json`。schema v2 保存
+`shownDirectionIds` 和上一次的 Direction/Theme 选择。使用 `--again` 时，核心
+排除已展示 Direction。legacy `shownStyleIds` 仍可读取并通过 alias 解析；写入
+v2 状态时也保留该兼容字段。未展示 Direction 不足时返回 `exhausted`。
 
 ## 视觉预览和推荐画廊
 
 ### SVG 预览
 
-`src/preview.mjs` 将标准化视觉配置渲染为确定性的 SVG。每个 `variant` 对应一种页面骨架，例如 app shell、dashboard、docs、commerce 或 portfolio。
+`src/preview.mjs` 根据 Direction、PreviewSpec 和 Theme token 渲染确定性的 SVG
+线框。布局原型控制外层骨架，内容模式、区块和层级控制可见模块；只更换 Theme
+时结构保持不变。
 
-`scripts/generate-style-previews.mjs` 为 Catalog 中的全部 profile 生成 `catalog/previews/*.svg`。`--check` 模式不会改文件，而是确认已提交 SVG 与当前渲染结果完全一致。
+`scripts/generate-style-previews.mjs` 保留并验证全部已提交的 legacy
+`catalog/previews/*.svg`，再在内存中渲染所有已关联 Direction/Theme 组合，执行
+确定性完整性检查。
 
 ### 每次推荐生成的 HTML
 
 推荐成功后，`writeRecommendationGallery` 在 session 文件旁写入 `.ui-style-director/recommendations.html`：
 
 - 五张 SVG 会编码为 data URI；
-- CSS、中文或英文文案以及推荐数据都内嵌在单个文件中；
+- Direction/Theme 的 ID、名称、CSS、本地化文案和渲染后的结果数据会保存在
+  同一文件中；机器可读推荐输出另行携带 Theme appearance 与 tokens；
 - Light/Dark 上游预览仍然是外部链接；
 - `preview --open` 根据平台调用 `rundll32.exe`、`open` 或 `xdg-open`；
 - `preview --serve` 在 `127.0.0.1` 启动一个禁用缓存的前台 HTTP 服务，
@@ -221,14 +238,15 @@ ID、分数和顺序。
 
 `browse` 不创建推荐 session，也不写入项目文件。它会输出带 revision 的
 GitHub Pages 地址，按需自动打开，然后立即返回。`--json` 输出托管地址、
-revision、已策展风格数量、来源数量和打开状态。`serve` 保留为带迁移提示的
-兼容别名；两者都不接受 `--port`。
+revision、Direction、Theme、关联和来源数量，以及打开状态。`serve` 保留为带
+迁移提示的兼容别名；两者都不接受 `--port`。
 
-客户端从相对路径 `catalog.json` 读取轻量 schema v3 视图模型，用倒排索引执行精确
-词项查询、在索引未命中时回退子串搜索，再与标签过滤组合。首屏只创建 24 张
-卡片，继续浏览时每批追加 24 张；每张 SVG 通过独立同源 `previewUrl` 按需
-请求。生成式 SVG 预览与上游参考继续遵循推荐画廊相同的中性资产和外部链接
-边界。
+客户端从相对路径 `catalog.json` 读取经过审查的 schema v4 Direction/Theme
+视图模型，用倒排索引和标签执行搜索与过滤。它每批渐进渲染 24 张匹配的
+Direction 卡片，并在卡片内切换关联 Theme，而不是复制卡片。生成预览从同源
+相对路径 `previews/v2/<direction-id>/<theme-id>.svg` 加载；兼容的 legacy 资源
+仍位于 `previews/<legacy-style-id>.svg`。当前 57 个 Direction 和 77 个关联只是
+快照，不是上限。
 
 ## Catalog 质量门禁与推荐基准
 
@@ -251,7 +269,10 @@ Top 1 family、Top 5 必要 family，以及重复运行得到完全相同的 ID 
 
 ## `apply` 与项目设计契约
 
-用户选择风格后，`applyStyle` 会在目标项目写入：
+规范推荐流程会把 Direction ID 和 Theme ID 一并传给 `applyStyle`。直接使用
+CLI 并省略 Theme 时，legacy 风格 ID 会优先通过 alias 恢复历史组合；只有不与
+legacy alias 同名的规范 Direction ID 才使用声明的默认 Theme。选择后，
+`applyStyle` 会在目标项目写入：
 
 ```text
 DESIGN.md
@@ -262,7 +283,10 @@ DESIGN.md
   source-attribution.json
 ```
 
-`DESIGN.md` 包含来源意图、项目 brief、视觉参考、首屏结构、布局规则、色彩角色、字体、组件建议、风险和实现约束。JSON 文件则为后续 Agent 或自动化提供结构化数据。
+v2 `DESIGN.md`、`selected-style.json` 和 `source-attribution.json` 保持两层独立
+信息：Direction 结构、PreviewSpec 与 Direction 参考；Theme appearance、token
+与 Theme 来源。两个 ID 也会写入项目草图。JSON 文件为后续 Agent 或自动化提供
+结构化状态。
 
 如果目标项目已经存在 `DESIGN.md`，默认会拒绝覆盖；只有显式传入 `--force` 才会替换。
 

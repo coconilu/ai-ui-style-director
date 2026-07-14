@@ -2,12 +2,15 @@
 
 [English](README.md)
 
-AI UI Style Director 是面向编程 agent 的 UI 风格决策工作流。在新建或重构网站之前，它会先推荐 5 个合适的视觉方向；你选定后，它会生成项目专属的 `DESIGN.md`，再让 agent 开始实现。
+AI UI Style Director 是面向编程 agent 的 UI 风格决策工作流。在新建或重构网站
+之前，它会先排序合适的结构 Direction，再为每个 Direction 确定性选择一个关联
+Theme；你选定一组 Direction/Theme 后，它会生成项目专属的 `DESIGN.md`，再让
+agent 开始实现。
 
-Catalog 从 12 个 family、每组 4 个方向的已审查基线开始，并可通过可审计策展 PR
-继续增长。推荐排序由 Node.js 程序根据结构化字段做确定性匹配；agent
-负责收集需求、调用命令、展示结果和执行选择门禁，不在运行时凭主观判断替换
-排序。
+Catalog 可通过可审计策展 PR 继续增长。推荐由 Node.js 程序根据结构化字段先对
+Direction 做确定性匹配与排序，再选择关联 Theme；Theme 不会改变 Direction 的
+分数或顺序。agent 负责收集需求、调用命令、展示结果和执行选择门禁，不在运行时
+凭主观判断替换排序。
 
 当前一等支持 Codex 与 Claude Code，可运行在 Windows、macOS 和 Linux。其他兼容 Agent Skills 的工具按 best-effort 方式支持。
 
@@ -38,7 +41,9 @@ Claude Code：
 /web-style-director 我想做一个面向开发者的 AI 工具网站
 ```
 
-agent 会为 5 个方向分别展示一张无品牌 SVG 草图和上游 Light/Dark 实时预览链接。选定后，它会生成项目专属的 `DESIGN.md` 与首屏草图，确认后再实现网站。
+agent 会为默认的 5 个结果分别展示 Direction、所选 Theme、无品牌 SVG 草图和
+上游 Light/Dark 参考链接。选定后，它会生成项目专属的 `DESIGN.md` 与首屏草图，
+确认后再实现网站。
 
 ## 浏览已策展风格目录
 
@@ -67,19 +72,22 @@ node bin/ai-ui-style-director.mjs browse --open
 托管。旧的 `serve` 指令保留为 `browse` 的兼容别名，但不再启动完整目录的本地
 服务。
 
-页面会列出全部已审查的风格 profile，并支持文本搜索以及 family、页面类型、
-密度、调性和组件库过滤。目录接口使用轻量 schema v3：卡片只携带
-`previewUrl`，SVG 通过独立的同源路由按需加载；搜索优先使用倒排索引的精确
-词项 postings，未命中时回退到子串匹配，结果再以每批 24 张卡片渐进渲染。
+当前已提交 Catalog 包含 57 个 Direction 和 77 个关联 Theme 选择；这只是当前
+快照，不是数量上限。页面按 Direction 展示一张卡片，并可切换其关联 Theme，
+同时支持文本搜索以及 family、页面类型、密度、调性和组件库过滤。目录接口使用
+轻量 schema v4，规范预览从
+`previews/v2/<direction-id>/<theme-id>.svg` 按需加载，历史链接继续使用
+`previews/<legacy-style-id>.svg`；结果以每批 24 张 Direction 卡片渐进渲染。
 命令会把确定性的 Catalog revision 附在页面 URL 上；若 Pages 部署仍是旧版，
 页面会给出提示，但不会阻止继续浏览。
 
 当前生成索引包含 7 个 Provider、109 条上游 style source 和 600 条 component
 source。109 条 style source 只构成候选素材池，不等于 109 个完整风格：原有
 74 条 `DESIGN.md` 来源保留为零模型费用 baseline，新增的 35 条 daisyUI theme
-CSS 来源进入可审计的 AI 策展队列。只有经过 profile、视觉配置、3 条参考和 SVG
-校验的条目才进入已策展方向；当前基线为 48 个，后续可通过可审计策展 PR 继续
-增长。`daisyui-themes` Provider 会先通过格式专用 Adapter，把受治理的 CSS token
+CSS 来源进入可审计的 AI 策展队列。只有经过审查的数据才会进入面向用户的
+Direction/Theme 投影；legacy `style-profiles.json`、`style-visuals.json` 及其已
+提交预览继续作为策展审计和兼容层，而不是运行时推荐主源。
+`daisyui-themes` Provider 会先通过格式专用 Adapter，把受治理的 CSS token
 与 OKLCH 颜色转换成规范 JSON，再进行内容哈希和受限策展模型处理。`browse` 是只读
 操作，不会创建或修改项目中的 `.ui-style-director/` 状态。
 

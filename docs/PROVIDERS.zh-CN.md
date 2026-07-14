@@ -43,8 +43,8 @@ primary 表达主题的主导品牌色/行动色；daisyUI 自身的 `--color-ac
 也会变化；稳定身份仍是 `providerId + path`，但当前哈希与 source state 不一致，
 因此该来源会重新进入 pending。
 
-Provider/style/component 生成索引使用 schema v4；托管浏览器相互独立的
-schema-v3 `catalog.json` 契约保持不变。
+Provider/style/component 生成索引使用 schema v4；托管浏览器使用相互独立的
+schema-v4 `catalog.json` 契约来承载 Direction/Theme 视图模型。
 
 定时 GitHub workflow 每天执行相同的刷新和仓库检查，只在生成索引发生变化时创建 PR。
 
