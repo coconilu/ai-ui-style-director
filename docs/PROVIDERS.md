@@ -57,8 +57,9 @@ map as a secondary highlight. When a governed upstream value changes, the
 canonical JSON and its hash change. The stable `providerId + path` source then
 becomes pending again because its current hash no longer matches source state.
 
-The generated provider/style/component indexes use schema v4. This does not
-change the hosted browser's independent schema-v3 `catalog.json` contract.
+The generated provider/style/component indexes use schema v4. The hosted
+browser has an independent schema-v4 `catalog.json` contract for its
+Direction/Theme view model.
 
 The scheduled GitHub workflow performs the same refresh daily, runs repository
 checks, and opens a pull request only when generated indexes change.

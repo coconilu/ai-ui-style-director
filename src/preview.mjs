@@ -823,3 +823,13 @@ export function renderProjectDraftSvg({ style, visual, brief } = {}) {
     subtitle: `${style.name} · project first-viewport draft`
   });
 }
+
+export function renderDirectionProjectDraftSvg({ direction, theme, previewSpec, brief } = {}) {
+  return renderDirectionPreviewSvg({
+    direction,
+    theme,
+    previewSpec,
+    title: direction?.name,
+    subtitle: brief || direction?.firstViewport
+  });
+}

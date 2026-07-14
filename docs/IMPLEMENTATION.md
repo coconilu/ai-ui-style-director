@@ -6,7 +6,7 @@ It is not a frontend component aggregator and does not automatically install com
 
 1. match a project brief to comparable visual directions;
 2. let the user choose through SVG cards, an HTML gallery, and external references;
-3. lock the selected direction into a project `DESIGN.md` and machine-readable state.
+3. lock the selected Direction and Theme into a project `DESIGN.md` and machine-readable state.
 
 ## Runtime architecture
 
@@ -15,11 +15,12 @@ flowchart LR
   U[User request] --> S[Agent Skill]
   S --> W[Skill wrapper]
   W --> C[Node.js CLI]
-  K[Curated Catalog] --> C
-  C --> R[recommend]
+  K[Direction and Theme Catalog] --> C
+  C --> R[rank Directions]
+  R --> RT[select linked Themes]
   C --> B[browse hosted catalog]
   C --> A[apply]
-  R --> H[recommendations.html]
+  RT --> H[recommendations.html]
   H -. preview --serve .-> L[local loopback server]
   L --> V[local browser]
   K --> X[static catalog build]
@@ -43,12 +44,16 @@ behavior changes only after deterministic gates and its protected PR merge.
 
 ### 1. Agent Skill: control when UI implementation may begin
 
-`skills/web-style-director/SKILL.md` is the workflow entrypoint for coding agents such as Codex and Claude Code. It requires the agent to gather missing context, present five directions, support rerolling with `--again`, run `apply` after selection, and wait for first-viewport confirmation before writing UI code.
+`skills/web-style-director/SKILL.md` is the workflow entrypoint for coding
+clients. It requires the workflow to gather missing context, present five
+Direction/Theme results, support Direction-level rerolling with `--again`, run
+`apply` with both canonical IDs, and wait for first-viewport confirmation before
+writing UI code.
 
 An explicit `browse`, legacy `serve`, or complete-catalog browsing request
 takes a separate top-level route through `references/catalog-browser.md`. The
 agent opens the hosted Pages URL and does not gather a website brief, recommend
-five styles, run `apply`, or modify a target project.
+five Direction/Theme results, run `apply`, or modify a target project.
 
 The Skill defines behavior and gates. It does not contain or improvise the
 recommendation algorithm; the deterministic Node.js core performs matching.
@@ -69,7 +74,7 @@ the complete-catalog command obtains its revision-aware Pages URL from
 | Command | Responsibility |
 | --- | --- |
 | `questions` | Return intake questions for an underspecified brief |
-| `recommend` | Rank directions, update session state, and generate an HTML gallery |
+| `recommend` | Rank Directions, select linked Themes, update session state, and generate an HTML gallery |
 | `browse` | Open the hosted catalog with search and tag filters |
 | `serve` | Compatibility alias for `browse` |
 | `preview` | Inspect or open one generated recommendation gallery |
@@ -83,10 +88,9 @@ the complete-catalog command obtains its revision-aware Pages URL from
 
 `src/catalog-browser.mjs` provides the catalog model and browser assets:
 
-- `buildStyleCatalog`: join curated profiles, visual metadata, generated SVG
+- `buildStyleCatalog`: join canonical Directions, linked Themes, generated SVG
   preview URLs, indexes, source-index statistics, and a deterministic revision
-  into the schema-v3 browser
-  view model;
+  into the schema-v4 browser view model;
 - `hostedCatalogInfo`: add the local expected revision to the configured Pages
   URL and return the CLI contract;
 - `filterCatalogEntries`: apply text search and family, page type, density,
@@ -95,10 +99,11 @@ the complete-catalog command obtains its revision-aware Pages URL from
 - `buildStyleCatalogStaticAssets`: assemble the deployable static files.
 
 `scripts/build-catalog-site.mjs` writes those assets to `dist/pages`.
-References such as `catalog.json`, `styles.css`, and
-`previews/<style-id>.svg` are relative so the artifact works at the GitHub
-project subpath. Page state is encoded in the URL query, allowing a filtered
-view to survive refresh without server-side state.
+References such as `catalog.json`, `styles.css`, canonical
+`previews/v2/<direction-id>/<theme-id>.svg`, and compatible
+`previews/<legacy-style-id>.svg` are relative so the artifact works at the
+GitHub project subpath. Page state is encoded in the URL query, allowing a
+filtered view to survive refresh without server-side state.
 
 The browser model includes a token-to-numeric-entry postings index and an
 ID-to-entry index. Numeric postings keep repeated style IDs out of the search
@@ -119,31 +124,37 @@ for tests and local static-site QA, not as a user-facing CLI surface.
 
 ## Catalog: the runtime knowledge source
 
-Recommendation and project-contract behavior read four curated datasets:
+Recommendation, browsing, and project contracts consume the canonical v2
+projection:
 
 | File | Purpose |
 | --- | --- |
-| `catalog/style-profiles.json` | Page types, audiences, goals, density, tone, layout, palette, and component suggestions |
-| `catalog/style-visuals.json` | SVG variants, theme colors, and real-reference slugs |
+| `catalog/style-directions.json` | Direction structure, intent, density, typography, and component suggestions |
+| `catalog/style-themes.json` | Reusable Theme tokens, appearance, and Theme provenance |
+| `catalog/style-direction-themes.json` | Allowed Direction/Theme pairs and one default per Direction |
+| `catalog/style-preview-specs.json` | Layout archetype, content pattern, blocks, and hierarchy |
+| `catalog/style-aliases.json` | Legacy style ID to historical Direction/Theme selection |
 | `catalog/component-kits.json` | Component-library fit and usage boundaries |
 | `catalog/scenario-questions.json` | Questions for an underspecified brief |
 
-The reviewed baseline begins with four profiles in each of 12 families and may
-grow through audited curation PRs. A separate `catalog/recommendation-benchmarks.json` file contains 12 representative
-briefs used by the test suite to protect family-level intent coverage.
+`style-profiles.json`, `style-visuals.json`, their committed previews, and
+immutable records remain available for audit and compatibility. The current v2
+snapshot contains 57 Directions and 77 linked Theme selections; neither number
+is a configured limit. A separate `catalog/recommendation-benchmarks.json` file
+protects intent coverage.
 
 `catalog/providers.json` describes upstream repositories. `catalog/generated/*`
 records scan results. The recommendation core does not read those generated
 indexes, so upstream changes cannot enter user-facing recommendations directly.
 The supply-side curator reads only new/changed hashes and writes a governed PR;
-the consumer continues to read only merged profiles.
+the consumer continues to read only merged canonical catalog data.
 
 The catalog browser reads `catalog/generated/style-sources.json` only to show
 its current source-index count. The generated indexes currently contain 7
 providers, 109 style sources, and 600 component sources, but the 109 style paths
-are not returned as complete style cards. Browser entries still come only from
-reviewed profiles in `catalog/style-profiles.json`. The hosted browser payload
-remains schema v3 independently of the generated provider-index schema.
+are not returned as complete Direction cards. Browser entries come from the
+reviewed Direction/Theme projection. The hosted browser payload is schema v4,
+independent of the generated provider-index schema.
 
 `scripts/validate-curated-catalog.mjs` applies `catalog/curation-policy.json`,
 which requires at least four profiles and three distinct visual variants in
@@ -160,11 +171,14 @@ intake, selection, and confirmation around this programmatic result.
 
 ### Brief normalization
 
-`normalizeBrief` expands common Chinese scenario terms into English keywords, lowercases the input, removes non-alphanumeric characters, and normalizes whitespace. `isBriefInsufficient` requires at least one recognized product or page scenario before ranking profiles.
+`normalizeBrief` expands common Chinese scenario terms into English keywords,
+lowercases the input, removes non-alphanumeric characters, and normalizes
+whitespace. `isBriefInsufficient` requires at least one recognized product or
+page scenario before ranking Directions.
 
 ### Weighted scoring
 
-Profile fields use three weight groups:
+Direction fields use three weight groups:
 
 - high: family, keywords, page types, audiences, and goals;
 - medium: tones, density, and best-fit scenarios;
@@ -175,6 +189,11 @@ governed semantic aliases such as `docs`/`documentation`,
 while generic words such as `website`, `product`, and `team` do not qualify a
 brief by themselves. Identical inputs and Catalog data produce identical
 ordering, which keeps recommendation testable and reproducible.
+
+Only after Direction ranking, `selectThemeForDirection` scores linked Themes
+against the same brief. Stable ties prefer the default link and then Theme ID.
+This second stage chooses presentation tokens but never changes Direction
+scores, diversification, or ordering.
 
 ### Diversification and rerolling
 
@@ -187,24 +206,35 @@ remaining candidate. This prevents Catalog growth from crowding an intent out
 of the Top 5 while keeping relevance primary.
 
 The 12-case benchmark asserts the expected Top-1 family, required Top-5 family
-coverage, and identical style IDs and scores across repeated runs.
+coverage, and identical Direction IDs and scores across repeated runs.
 
-Session state lives in `.ui-style-director/session.json`. With `--again`, the core excludes `shownStyleIds` and appends the next results. It reports `exhausted` when fewer unseen styles remain than requested.
+Session state lives in `.ui-style-director/session.json`. Schema v2 stores
+`shownDirectionIds` and the last Direction/Theme selections. With `--again`,
+the core excludes shown Directions. Legacy `shownStyleIds` remain readable and
+are resolved through aliases; the compatibility field is retained when writing
+v2 state. The result is `exhausted` when too few unseen Directions remain.
 
 ## Visual previews and recommendation galleries
 
 ### SVG previews
 
-`src/preview.mjs` renders normalized visual metadata into deterministic SVG wireframes. Each `variant` represents a page structure such as an app shell, dashboard, docs, commerce, or portfolio.
+`src/preview.mjs` renders deterministic SVG wireframes from a Direction,
+PreviewSpec, and Theme tokens. Layout archetype controls the outer skeleton;
+content pattern, blocks, and hierarchy control visible modules. Changing only
+the Theme preserves structure.
 
-`scripts/generate-style-previews.mjs` generates `catalog/previews/*.svg` for every profile. Its `--check` mode verifies committed previews without writing files.
+`scripts/generate-style-previews.mjs` preserves and verifies every committed
+legacy `catalog/previews/*.svg`, then renders all linked Direction/Theme
+combinations in memory for deterministic completeness checks.
 
 ### Per-recommendation HTML gallery
 
 After a successful recommendation, `writeRecommendationGallery` writes `.ui-style-director/recommendations.html` next to the session file:
 
 - all five SVG cards are embedded as data URIs;
-- CSS, localized copy, and result data are stored in one file;
+- Direction/Theme IDs and names, CSS, localized copy, and rendered result data
+  are stored in one file; machine-readable recommendation output separately
+  carries Theme appearance and tokens;
 - upstream Light/Dark previews remain external links;
 - `preview --open` selects `rundll32.exe`, `open`, or `xdg-open` for the current platform;
 - `preview --serve` starts a foreground, no-cache HTTP server on
@@ -217,20 +247,26 @@ to visit upstream references. The server stops on Ctrl+C.
 
 `browse` creates no recommendation session and writes no project files. It
 prints the revision-aware GitHub Pages URL, optionally opens it, and returns
-immediately. `--json` emits the hosted URL, revision, curated style count,
-source count, and opened state. `serve` remains an alias with a migration
+immediately. `--json` emits the hosted URL, revision, Direction, Theme, link and
+source counts, and opened state. `serve` remains an alias with a migration
 notice; neither command accepts `--port`.
 
-The client loads the reviewed schema-v3 view model from relative
-`catalog.json`, uses
+The client loads the reviewed schema-v4 Direction/Theme view model from
+relative `catalog.json`, uses
 the inverted search index and facet tags in the page, and progressively renders
-24 matching cards at a time. Generated SVG previews load independently from
-relative same-origin paths, while upstream references remain subject to the same
-neutral-asset and external-link boundaries as recommendation galleries.
+24 matching Direction cards at a time and switches linked Themes without
+duplicating cards. Generated previews load from relative same-origin
+`previews/v2/<direction-id>/<theme-id>.svg`; compatible legacy assets remain at
+`previews/<legacy-style-id>.svg`. The current 57 Direction and 77 link counts
+are a snapshot, not a limit.
 
 ## `apply` and the project design contract
 
-After selection, `applyStyle` writes:
+Canonical recommendation flows call `applyStyle` with both a Direction ID and
+Theme ID. At the raw CLI level, an omitted Theme resolves a legacy style ID
+alias-first to its historical pair. An ID that identifies only a canonical
+Direction, and is not also a legacy alias, resolves to its declared default
+Theme. After selection, `applyStyle` writes:
 
 ```text
 DESIGN.md
@@ -241,7 +277,11 @@ DESIGN.md
   source-attribution.json
 ```
 
-`DESIGN.md` records source intent, project brief, visual references, first viewport, layout rules, color roles, typography, component guidance, risks, and implementation constraints. The JSON files provide structured state for later agents and automation.
+The v2 `DESIGN.md`, `selected-style.json`, and `source-attribution.json` keep
+two independent layers: Direction structure, PreviewSpec, and Direction
+references; Theme appearance, tokens, and Theme sources. Both IDs are also
+embedded in the project draft. The JSON files provide structured state for
+later automation.
 
 An existing `DESIGN.md` is protected by default and is replaced only when `--force` is supplied.
 

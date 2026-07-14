@@ -6,7 +6,10 @@ import { test } from "node:test";
 import {
   CATALOG_V2_FILES,
   CatalogV2Error,
+  legacyAliasForSelection,
+  legacyAliasesForDirection,
   loadCatalogV2,
+  resolveCatalogSelection,
   resolveLegacyStyleId,
   validateCatalogV2
 } from "../src/catalog-v2.mjs";
@@ -54,6 +57,11 @@ function documents() {
           legacyStyleId: "developer-dashboard-dark-def456",
           directionId: "direction-dashboard",
           themeId: "theme-dark"
+        },
+        {
+          legacyStyleId: "direction-dashboard",
+          directionId: "direction-dashboard",
+          themeId: "theme-dark"
         }
       ]
     }
@@ -89,7 +97,7 @@ test("loads all versioned catalog files from an explicit directory", () => {
 
   assert.equal(catalog.directionById.size, 2);
   assert.equal(catalog.themeById.size, 2);
-  assert.equal(catalog.aliasByLegacyStyleId.size, 2);
+  assert.equal(catalog.aliasByLegacyStyleId.size, 3);
 });
 
 test("reports the exact missing catalog v2 file", () => {
@@ -187,4 +195,158 @@ test("reports an unknown legacy style id separately from catalog validation", ()
       return true;
     }
   );
+});
+
+test("resolves a same-named legacy style before its Direction when Theme is omitted", () => {
+  const catalog = validateCatalogV2(documents());
+  const resolved = resolveCatalogSelection(catalog, { inputId: "direction-dashboard" });
+
+  assert.equal(resolved.inputKind, "legacy-style");
+  assert.equal(resolved.legacyStyleId, "direction-dashboard");
+  assert.equal(resolved.direction.id, "direction-dashboard");
+  assert.equal(resolved.theme.id, "theme-dark");
+  assert.equal(resolved.link.isDefault, false);
+  assert.equal(resolved.alias.legacyStyleId, "direction-dashboard");
+});
+
+test("uses explicit Theme with Direction semantics even when the id is also a legacy alias", () => {
+  const catalog = validateCatalogV2(documents());
+  const resolved = resolveCatalogSelection(catalog, {
+    inputId: "direction-dashboard",
+    themeId: "theme-light"
+  });
+
+  assert.equal(resolved.inputKind, "direction");
+  assert.equal(resolved.legacyStyleId, null);
+  assert.equal(resolved.direction.id, "direction-dashboard");
+  assert.equal(resolved.theme.id, "theme-light");
+  assert.equal(resolved.link.isDefault, true);
+  assert.equal(resolved.alias.legacyStyleId, "developer-dashboard-light-abc123");
+});
+
+test("maps an alias-only input to its Direction before applying an explicit Theme", () => {
+  const catalog = validateCatalogV2(documents());
+  const resolved = resolveCatalogSelection(catalog, {
+    inputId: "developer-dashboard-light-abc123",
+    themeId: "theme-dark"
+  });
+
+  assert.equal(resolved.inputKind, "legacy-style");
+  assert.equal(resolved.legacyStyleId, "developer-dashboard-light-abc123");
+  assert.equal(resolved.direction.id, "direction-dashboard");
+  assert.equal(resolved.theme.id, "theme-dark");
+  assert.equal(resolved.alias.legacyStyleId, "developer-dashboard-dark-def456");
+});
+
+test("uses the unique default Theme for a Direction without a same-named alias", () => {
+  const catalog = validateCatalogV2(documents());
+  const resolved = resolveCatalogSelection(catalog, { inputId: "direction-story" });
+
+  assert.equal(resolved.inputKind, "direction");
+  assert.equal(resolved.legacyStyleId, null);
+  assert.equal(resolved.theme.id, "theme-light");
+  assert.equal(resolved.link.isDefault, true);
+  assert.equal(resolved.alias, null);
+  assert.equal(resolved.previewSpec.contentPattern, "story");
+});
+
+test("returns stable Direction aliases and the exact selection alias", () => {
+  const catalog = validateCatalogV2(documents());
+  const aliases = legacyAliasesForDirection(catalog, "direction-dashboard");
+
+  assert.deepEqual(
+    aliases.map((alias) => alias.legacyStyleId),
+    [
+      "developer-dashboard-dark-def456",
+      "developer-dashboard-light-abc123",
+      "direction-dashboard"
+    ]
+  );
+  assert.equal(
+    legacyAliasForSelection(catalog, "direction-dashboard", "theme-light").legacyStyleId,
+    "developer-dashboard-light-abc123"
+  );
+  assert.equal(legacyAliasForSelection(catalog, "direction-story", "theme-light"), null);
+  assert.deepEqual(legacyAliasesForDirection(catalog, "direction-missing"), []);
+});
+
+test("reports unknown selection, unknown Theme, and unlinked Theme separately", () => {
+  const catalog = validateCatalogV2(documents());
+
+  assert.throws(
+    () => resolveCatalogSelection(catalog, { inputId: "missing-selection" }),
+    (error) => {
+      assert.equal(error.code, "unknown_catalog_selection_id");
+      assert.match(error.message, /missing-selection/u);
+      return true;
+    }
+  );
+  assert.throws(
+    () => resolveCatalogSelection(catalog, {
+      inputId: "direction-dashboard",
+      themeId: "theme-missing"
+    }),
+    (error) => {
+      assert.equal(error.code, "unknown_theme_id");
+      assert.match(error.message, /theme-missing/u);
+      return true;
+    }
+  );
+  assert.throws(
+    () => resolveCatalogSelection(catalog, {
+      inputId: "direction-story",
+      themeId: "theme-dark"
+    }),
+    (error) => {
+      assert.equal(error.code, "theme_not_linked_to_direction");
+      assert.match(error.message, /theme-dark.*direction-story/u);
+      return true;
+    }
+  );
+});
+
+test("real catalog preserves same-id aliases and aggregated compatibility selections", () => {
+  const catalog = loadCatalogV2();
+  const overlappingAliases = catalog.aliases.filter((alias) => (
+    alias.legacyStyleId === alias.directionId
+  ));
+  const aggregatedAlias = catalog.aliases.find((alias) => (
+    alias.legacyStyleId !== alias.directionId
+  ));
+
+  assert.equal(overlappingAliases.length, 48);
+  for (const alias of overlappingAliases) {
+    const resolved = resolveCatalogSelection(catalog, { inputId: alias.legacyStyleId });
+    assert.equal(resolved.inputKind, "legacy-style");
+    assert.equal(resolved.direction.id, alias.directionId);
+    assert.equal(resolved.theme.id, alias.themeId);
+  }
+
+  assert.ok(aggregatedAlias);
+  const aggregated = resolveCatalogSelection(catalog, {
+    inputId: aggregatedAlias.legacyStyleId
+  });
+  assert.equal(aggregated.direction.id, aggregatedAlias.directionId);
+  assert.equal(aggregated.theme.id, aggregatedAlias.themeId);
+
+  const defaultLink = catalog.linksByDirectionId
+    .get(aggregatedAlias.directionId)
+    .find((link) => link.isDefault);
+  const canonical = resolveCatalogSelection(catalog, {
+    inputId: aggregatedAlias.directionId
+  });
+  assert.equal(canonical.inputKind, "direction");
+  assert.equal(canonical.theme.id, defaultLink.themeId);
+
+  const alternateLink = catalog.linksByDirectionId
+    .get(aggregatedAlias.directionId)
+    .find((link) => link.themeId !== defaultLink.themeId);
+  assert.ok(alternateLink);
+  const explicit = resolveCatalogSelection(catalog, {
+    inputId: aggregatedAlias.directionId,
+    themeId: alternateLink.themeId
+  });
+  assert.equal(explicit.inputKind, "direction");
+  assert.equal(explicit.theme.id, alternateLink.themeId);
+  assert.equal(explicit.link, alternateLink);
 });

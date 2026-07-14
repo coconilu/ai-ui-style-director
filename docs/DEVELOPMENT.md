@@ -72,11 +72,12 @@ Build the deployable catalog site with:
 npm run catalog:build
 ```
 
-The command recreates `dist/pages` with schema-v3 `catalog.json`, the browser
-shell and assets, and one preview SVG per curated profile. The output is
-deterministic, uses only relative references for the GitHub project subpath,
-and is intentionally not committed. `.github/workflows/pages.yml` runs this
-build for pull requests and deploys it from `main` through GitHub Pages.
+The command recreates `dist/pages` with schema-v4 `catalog.json`, the browser
+shell and assets, one canonical SVG per Direction/Theme link, and legacy alias
+preview paths. The output is deterministic, uses only relative references for
+the GitHub project subpath, and is intentionally not committed.
+`.github/workflows/pages.yml` runs this build for pull requests and deploys it
+from `main` through GitHub Pages.
 
 ## Adding or changing a curated style
 
@@ -93,11 +94,11 @@ build for pull requests and deploys it from `main` through GitHub Pages.
 5. Run `npm run catalog:curated:validate`.
 6. Run `npm run check` before committing.
 
-The catalog model derives schema v3, the inverted search index, facets, and
-`catalogRevision` from reviewed data, so there is no second hand-maintained
-search index. Each entry carries a relative `previewUrl`; the client renders 24
-cards at a time, keeping initial DOM and image work bounded as the catalog
-grows.
+The catalog model derives schema v4, the inverted search index, facets, and
+`catalogRevision` from reviewed Direction/Theme data, so there is no second
+hand-maintained search index. Each Direction entry carries linked Theme preview
+URLs; the client renders 24 Direction cards at a time, keeping initial DOM and
+image work bounded as the catalog grows.
 
 `catalog/recommendation-benchmarks.json` contains 12 representative briefs.
 When taxonomy or scoring changes, update or extend those cases deliberately;

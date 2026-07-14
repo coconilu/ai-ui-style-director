@@ -22,9 +22,9 @@ Use this skill as the style-selection gate before website UI implementation.
 
 ## Core Rule
 
-Do not write UI code until the user has selected one recommended style,
-`DESIGN.md` and the project first-viewport draft have been generated or
-updated, and the user has confirmed the draft direction.
+Do not write UI code until the user has selected one recommended Direction and
+its Theme, `DESIGN.md` and the project first-viewport draft have been generated
+or updated, and the user has confirmed the draft.
 
 ## Workflow
 
@@ -36,8 +36,9 @@ updated, and the user has confirmed the draft direction.
    node skills/web-style-director/scripts/style-director.mjs recommend --brief "<brief>" --count 5
    ```
 
-4. Present exactly five UI style options when available. For each option, show
-   its local SVG preview card, primary Light/Dark live-reference links, fit
+4. Present exactly five UI Direction options when available. For each option,
+   show its `directionId`, recommended `themeId`, Direction name, Theme name and
+   appearance, local SVG preview card, primary live-reference links, fit
    reason, first-viewport shape, component kits, and risk. The command also
    generates a self-contained recommendation gallery. If the client cannot
    render local images, start the foreground loopback preview server in a
@@ -50,12 +51,15 @@ updated, and the user has confirmed the draft direction.
    Give the user the printed `http://127.0.0.1:<port>/` link and keep the
    process alive while they review the options. Stop it after selection, when
    the task ends, or before replacing the gallery with another batch. If the
-   agent cannot keep a terminal process alive, fall back to the printed
+   long-running terminal session is unavailable, fall back to the printed
    `file://` URL or `preview --open`. Visual-capable clients should continue to
    render the local SVG cards directly and do not need the server. Follow
    `references/recommendation-format.md`.
-5. Wait for the user's selection. The user may choose by number or style id.
-6. If the user rejects the options, rerun with `--again`:
+5. Wait for the user's selection. The user may choose by number or exact
+   Direction ID. In both cases, use the Theme paired with that Direction in the
+   recommendation result.
+6. If the user rejects the options, rerun with `--again`; it excludes Directions
+   already shown in the current session:
 
    ```bash
    node skills/web-style-director/scripts/style-director.mjs recommend --brief "<brief>" --again --count 5
@@ -65,12 +69,15 @@ updated, and the user has confirmed the draft direction.
    `.ui-style-director/first-viewport-draft.svg`:
 
    ```bash
-   node skills/web-style-director/scripts/style-director.mjs apply --style <style-id> --project <project-path> --brief "<brief>"
+   node skills/web-style-director/scripts/style-director.mjs apply --style <direction-id> --theme <theme-id> --project <project-path> --brief "<brief>"
    ```
 
+   Only for manual legacy compatibility, `--style <legacy-style-id>` may omit
+   `--theme`; this restores the historical Direction and Theme selection.
+
 8. Read the generated `DESIGN.md`, present the project first-viewport draft,
-   and wait for confirmation. If the user requests another style, return to
-   recommendation. If they request a project-specific adjustment, record it in
+   and wait for confirmation. If the user requests another Direction or Theme,
+   return to recommendation. If they request a project-specific adjustment, record it in
    `DESIGN.md` and update the draft before asking again.
 9. After confirmation, implement the UI using the target repo's framework. Use
    the recommended component kits only when they fit the repo stack and user
@@ -88,7 +95,7 @@ For new websites, the minimum useful brief is:
 - desired density
 - required stack or target project path, if any
 
-If the user gives enough context, do not ask more questions before recommending styles.
+If the user gives enough context, do not ask more questions before recommending Directions.
 
 ## Redesign Intake
 
@@ -113,10 +120,13 @@ present it as a public URL.
 
 ## Selection Rules
 
-- Accept a number, exact style id, or clear natural-language selection.
-- If the user asks for a hybrid direction, pick the dominant style and record secondary inspiration in the brief before applying.
-- If the user says "not satisfied", "change another batch", "reroll", or similar, use `--again`.
-- If fewer than five unseen styles remain, say that the catalog is exhausted for this session and show the remaining options.
+- Accept a number, exact Direction ID, or clear natural-language selection.
+- A number or Direction ID selects the Theme shown with that recommendation.
+- Accept a legacy style ID without a Theme only as an explicit manual
+  compatibility input; resolve it to its historical Direction and Theme.
+- If the user asks for a hybrid direction, pick the dominant Direction and record secondary inspiration in the brief before applying.
+- If the user says "not satisfied", "change another batch", "reroll", or similar, use `--again` to exclude previously shown Directions.
+- If fewer than five unseen Directions remain, say that the catalog is exhausted for this session and show the remaining options.
 
 ## Implementation Rules
 
@@ -125,10 +135,11 @@ present it as a public URL.
   references, never as assets to ship.
 - Show the project first-viewport draft and obtain confirmation before editing
   UI code.
-- Preserve the selected visual direction's density, first viewport, component model, typography, and palette.
+- Preserve the Direction's density, first viewport, component model, and
+  typography, and preserve the Theme's appearance and palette.
 - Do not copy upstream logos, screenshots, brand names, or exact proprietary layouts.
-- Do not introduce a new visual direction during coding unless the user selects a new style.
-- For multi-section sites, keep section rhythm consistent with the selected style instead of mixing unrelated UI kits.
+- Do not introduce a new Direction or Theme during coding unless the user selects it.
+- For multi-section sites, keep section rhythm consistent with the selected Direction instead of mixing unrelated UI kits.
 
 ## Resources
 

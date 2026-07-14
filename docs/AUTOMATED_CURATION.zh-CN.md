@@ -83,8 +83,8 @@ Authorization Header 或原始请求。
 的颜色、圆角、边框、深度和噪点声明，确定性转换 OKLCH 颜色，再序列化为规范 JSON。
 这份规范 JSON 同时作为内容哈希与策展模型输入；任意 CSS、import、注释或指令不会被
 直接透传成消费端文案。
-通用来源契约对应的 Provider/style/component 生成索引使用 schema v4；托管浏览器
-的 `catalog.json` 继续使用 schema v3。
+通用来源契约对应的 Provider/style/component 生成索引使用 schema v4；独立构建的
+托管浏览器 `catalog.json` 也使用 schema v4，承载 Direction/Theme 视图模型。
 
 这个 Adapter 只接受精确 29 个声明：1 个 `color-scheme`、20 个受治理颜色属性和
 8 个几何属性。未知、缺失、重复或格式非法的声明都会 fail closed。支持上游新增或

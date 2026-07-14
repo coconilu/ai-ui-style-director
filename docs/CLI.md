@@ -21,7 +21,7 @@ node bin/ai-ui-style-director.mjs recommend \
 
 Options:
 
-- `--again`: exclude styles already shown in the current session.
+- `--again`: exclude Directions already shown in the current session.
 - `--session <path>`: choose the session-state file.
 - `--count <number>`: choose the maximum number of results.
 - `--open`: open the generated recommendation gallery in the default browser.
@@ -30,15 +30,18 @@ Options:
 If the brief lacks essential context, the command returns targeted questions
 instead of recommendations.
 
-Ranking is performed by the deterministic Node.js recommendation core. The
-Agent is responsible for collecting context and presenting the selection gate,
-not for inventing a different ranking at runtime.
+Direction ranking is performed by the deterministic Node.js recommendation
+core. After ranking, the core selects one linked Theme for each Direction using
+the brief, the default-link flag, and a stable Theme-ID tie break. Theme
+selection does not change Direction scores or ordering.
 
-Each recommendation also returns the absolute path to a generated local SVG
-card, the primary upstream Light/Dark live previews, and two additional visual
-reference labels. A self-contained gallery is written next to the session file
-as `.ui-style-director/recommendations.html`; the text output includes both its
-local path and a `file://` URL.
+Each text result and its generated gallery show the Direction ID and name
+together with the selected Theme ID and name. Machine-readable results also
+carry Theme appearance and tokens. Results include a local SVG card, upstream
+Light/Dark references, and component guidance. Session schema v2 stores
+`shownDirectionIds` and the last Direction/Theme selections. It still reads
+legacy `shownStyleIds`, resolving known IDs through the alias catalog, so
+`--again` excludes the corresponding Directions.
 
 ## `browse`
 
@@ -54,29 +57,27 @@ Options:
 - `--json`: emit machine-readable hosted-catalog information.
 
 The JSON object contains `catalogUrl`, `hosted`, `catalogRevision`,
-`styleCount`, `sourceCount`, and `opened`. The command returns immediately and
-does not start a local server. `serve` remains a compatibility alias that emits
-a migration notice and otherwise has the same behavior. `--port` is rejected
-for both commands; use it only with `preview --serve`.
+`directionCount`, `themeCount`, `linkCount`, the compatibility `styleCount`,
+`sourceCount`, and `opened`. The command returns immediately and does not start
+a local server. `serve` remains a compatibility alias that emits a migration
+notice and otherwise has the same behavior. `--port` is rejected for both
+commands; use it only with `preview --serve`.
 
-The page lists every curated entry from `catalog/style-profiles.json`. The
-checked-in baseline begins with four profiles in each of 12 families. Each entry includes reviewed
-metadata, component-kit suggestions, upstream Light/Dark references, and a
-generated SVG preview. It supports text search plus filters for family, page
-type, density, tone, and component kit. Search recognizes common Chinese
-aliases such as `后台`. Multiple values within one filter group use OR;
-different groups and the search query combine with AND. Search and filter
-state is kept in the page URL so a filtered view survives refresh and can be
-copied.
+The page shows one card per curated Direction and lets the user switch among
+its linked Themes. The current checked-in snapshot contains 57 Directions and
+77 Direction/Theme links; these numbers describe current data, not a product
+limit or future cap. Each card includes reviewed metadata, component guidance,
+references, and generated previews. Search and existing filters remain
+available, including common Chinese aliases such as `后台`.
 
-The hosted `catalog.json` uses schema version 3. It contains lightweight `previewUrl`
-values, an inverted token-to-numeric-entry postings index, and an ID-to-entry index rather than
-embedding SVG data. Exact query tokens use postings intersections; partial or
-unknown tokens use a substring fallback. The client progressively renders 24
-matching cards at a time while preserving the total match count. Preview
-images are fetched from validated, relative same-origin
-`previews/<style-id>.svg` paths so the site works under the GitHub project
-subpath.
+The hosted `catalog.json` uses schema version 4. It contains Direction entries,
+linked Theme choices, lightweight `previewUrl` values, an inverted postings
+index, and an ID-to-entry index rather than embedded SVG data. Exact tokens use
+postings intersections; partial or unknown tokens use substring fallback. The
+client progressively renders 24 matching Direction cards at a time. Canonical
+previews use validated same-origin paths
+`previews/v2/<direction-id>/<theme-id>.svg`; historical URLs remain available
+as `previews/<legacy-style-id>.svg`.
 
 The schema also carries a deterministic `catalogRevision`. The CLI adds its
 local expected revision to the hosted URL, and the page compares it with the
@@ -87,7 +88,7 @@ warning; search and filtering remain available.
 source paths from 7 providers; the component index contains 600 paths. The
 original 74 `DESIGN.md` sources remain the baseline and the 35 daisyUI themes
 begin as pending. The browser reports the source-pool count for context but does
-not turn those paths into style cards; only reviewed profiles appear as full
+not turn those paths into style cards; only reviewed Directions appear as full
 entries.
 
 `browse` and its `serve` alias do not create or modify a target project's
@@ -122,18 +123,22 @@ forwarding to use the loopback HTTP link remotely.
 
 ## `apply`
 
-Generate the project design contract after the user selects a style:
+Generate the project design contract after the user selects a Direction and
+Theme:
 
 ```bash
 node bin/ai-ui-style-director.mjs apply \
   --style operational-saas-console \
+  --theme theme-a1ba3ddb542f \
   --project ./my-site \
   --brief "B2B SaaS workflow dashboard"
 ```
 
 Options:
 
-- `--style <id>`: required style ID.
+- `--style <id>`: required Direction ID or legacy style ID.
+- `--theme <id>`: Theme ID linked to the Direction. Recommendation flows must
+  pass it explicitly.
 - `--project <path>`: target project; defaults to the current directory.
 - `--brief <text>`: project brief recorded in the contract.
 - `--force`: replace an existing generated contract when appropriate.
@@ -153,6 +158,18 @@ my-site/
 
 `first-viewport-draft.svg` is the project-level first-viewport draft. The agent
 shows it and waits for confirmation before implementation.
+
+At the raw CLI level, omitting `--theme` is supported for compatibility. A
+legacy style ID resolves alias-first to its historical Direction/Theme pair.
+An ID that identifies only a canonical Direction, and is not also a legacy
+alias, falls back to its declared default Theme. Recommendation flows still
+pass both IDs explicitly so the applied pair is exactly the pair
+the user reviewed.
+
+The v2 `DESIGN.md`, `selected-style.json`, and `source-attribution.json` record
+Direction structure and Theme color provenance as separate layers. The project
+draft carries both IDs and uses the selected semantic structure and Theme
+tokens.
 
 ## `questions`
 
@@ -203,7 +220,7 @@ catalog/generated/
 
 `daisyui-theme-css` restricts discovery to the 35 theme CSS files and emits
 canonical JSON after deterministic OKLCH conversion. This generated-index
-schema is separate from the hosted browser's schema-v3 `catalog.json`.
+schema is separate from the hosted browser's schema-v4 `catalog.json`.
 
 `update` remains a compatibility alias for `refresh-catalog`. It does **not**
 update an installed Web Style Director skill. User-facing tool updates follow

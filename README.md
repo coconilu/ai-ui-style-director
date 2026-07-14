@@ -2,7 +2,11 @@
 
 [简体中文](README.zh-CN.md)
 
-AI UI Style Director is a UI-direction workflow for coding agents. Before a new website or redesign is implemented, it recommends five relevant visual directions. After you choose one, it generates a project-specific `DESIGN.md` and lets the agent start building from that contract.
+AI UI Style Director is a UI-direction workflow for coding agents. Before a
+new website or redesign is implemented, it ranks relevant structural
+Directions and selects one linked Theme for each. After you choose a reviewed
+Direction/Theme pair, it generates a project-specific `DESIGN.md` and lets the
+agent start building from that contract.
 
 Codex and Claude Code have first-class support on Windows, macOS, and Linux. Other Agent Skills-compatible tools are supported on a best-effort basis.
 
@@ -33,11 +37,15 @@ Claude Code:
 /web-style-director I want to build an AI developer tool website
 ```
 
-The agent shows a brand-neutral SVG draft and upstream Light/Dark live-preview links for each of the five directions. After selection, it generates a project-specific `DESIGN.md` and first-viewport draft, then implements only after confirmation.
+The agent shows the Direction and selected Theme together with a brand-neutral
+SVG draft and upstream Light/Dark reference links for each of the five default
+results. After selection, it generates a project-specific `DESIGN.md` and
+first-viewport draft, then implements only after confirmation.
 
 The agent orchestrates this workflow, but it does not improvise the match. The
-Node.js core ranks the reviewed catalog with deterministic, testable rules, so
-the same brief and catalog produce the same result.
+Node.js core first ranks reviewed Directions with deterministic, testable
+rules, then deterministically selects a linked Theme without changing Direction
+scores or order. The same brief and catalog therefore produce the same result.
 
 ## Browse the curated catalog
 
@@ -67,21 +75,26 @@ The catalog is hosted at
 The legacy `serve` command remains a compatibility alias for `browse`; it no
 longer starts a local complete-catalog server.
 
-The catalog starts from a reviewed baseline of 48 profiles: four directions in
-each of 12 families, and it can grow through audited curation PRs. The page
-supports text search plus family, page type, density, tone, and component-kit
-filters. It loads a lightweight schema-v3 catalog, fetches previews from
-independent same-origin SVG paths, and progressively renders 24 cards at a
-time. A deterministic catalog revision is attached to the URL and assets so
-the page can warn about a stale deployment without blocking browsing.
+The current checked-in catalog contains 57 Directions and 77 linked Theme
+selections. These are snapshot counts, not limits. The page shows one card per
+Direction, lets the user switch its linked Themes, and supports text search
+plus family, page type, density, tone, and component-kit filters. It loads a
+lightweight schema-v4 catalog, fetches canonical previews from
+`previews/v2/<direction-id>/<theme-id>.svg`, and progressively renders 24
+Direction cards at a time. Historical preview URLs remain available at
+`previews/<legacy-style-id>.svg`. A deterministic catalog revision lets the
+page warn about a stale deployment without blocking browsing.
 
 The generated indexes currently describe 7 providers, 109 upstream style
 sources, and 600 component sources. The 109 style-source paths remain a
 governed source pool; they are not 109 additional styles. The original 74
 `DESIGN.md` sources remain the no-cost baseline, while 35 daisyUI theme CSS
-sources enter the audited AI-assisted curation queue. Only passing candidates
-become user-facing profiles. The page reports the current source count without
-misrepresenting unreviewed paths as style cards.
+sources enter the audited AI-assisted curation queue. Only reviewed data reaches
+the user-facing Direction/Theme projection. Legacy `style-profiles.json`,
+`style-visuals.json`, and their committed previews remain as curation audit and
+compatibility artifacts rather than the runtime recommendation source. The page
+reports the current source count without misrepresenting unreviewed paths as
+Direction cards.
 The `daisyui-themes` Provider uses a format-specific adapter that converts
 governed CSS tokens and OKLCH colors into canonical JSON before hashing and
 bounded processing by the configured curation model.

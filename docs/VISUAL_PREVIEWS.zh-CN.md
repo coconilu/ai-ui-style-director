@@ -2,19 +2,28 @@
 
 Web Style Director 使用两层互补预览，让用户在选择前看见方向，同时避免复制受保护的品牌截图。
 
-## 生成式风格卡片
+## 生成式 Direction/Theme 卡片
 
-`catalog/previews/` 为 `catalog/style-profiles.json` 中的每个风格保存一张确定性
-生成的 SVG 线框草图。初始基线对应 12 个 family、每个 family 4 个方向；之后
-每个新增的已策展 Profile 也必须有一张卡片。草图快速表达布局、密度、层级和配色，并刻意使用通用标签与
-图形，不包含上游 logo、文案、截图或专有资产。
+运行时预览由三类规范输入共同渲染：
 
-源元数据位于 `catalog/style-visuals.json`：
+- `catalog/style-directions.json`：结构、意图、密度、字体、组件建议和 Direction
+  参考；
+- `catalog/style-preview-specs.json`：布局原型、内容模式、内容区块和层级；
+- `catalog/style-themes.json`，通过 `catalog/style-direction-themes.json` 关联：
+  appearance、语义 token 和固定 Theme 来源。
 
-- `styleId`：对应的标准化风格 profile。
-- `variant`：`src/preview.mjs` 中的一种 SVG 布局渲染器。
-- `theme`：草图使用的语义色彩。
-- `references`：3 个真实上游风格 slug，以及各自的标签和有限参考角色。
+PreviewSpec 控制可见结构，Theme 控制颜色 token，因此同一 Direction 只切换
+Theme 时会保持相同布局。每张 SVG 都刻意使用通用标签和图形，不包含上游 logo、
+文案、截图或专有资产。
+
+当前快照包含 57 个 Direction 和 77 个关联 Theme 选择；这些数字不是上限。
+Catalog Pages 在 `previews/v2/<direction-id>/<theme-id>.svg` 生成规范资源；推荐
+session 则把所选组合写入
+`.ui-style-director/recommendation-previews/<direction-id>--<theme-id>.svg`。
+
+已提交的 `catalog/previews/<legacy-style-id>.svg` 及其
+`style-profiles.json` / `style-visuals.json` 元数据继续作为策展审计、迁移和 URL
+兼容层；它们不是运行时推荐主源。
 
 重新生成并验证：
 
@@ -23,23 +32,28 @@ npm run previews
 npm run previews:check
 ```
 
-生成的 SVG 会提交到仓库，因此推荐流程可以离线工作，agent 也不需要为了展示 5 个方案而临时运行浏览器。
+这些命令继续确定性检查全部已提交 legacy SVG，并在内存中渲染每个规范
+Direction/Theme 关联。运行时推荐卡片写入本地并内嵌到画廊，因此推荐可以离线
+工作，agent 也不需要为了展示默认 5 个方案而临时运行浏览器。
 
 ## 上游实时预览
 
-对于 `awesome-design-md` 参考，推荐核心会派生 getdesign.md 托管的 overview、Light 和 Dark 公共地址，方便用户进一步查看 token、字体、组件样式和表面处理。
+Direction 参考保留有限用途的结构 provenance。对于 `awesome-design-md` 参考，
+推荐核心会派生 getdesign.md 托管的 overview、Light 和 Dark 公共地址；Theme
+记录则单独保留固定 token 来源。用户可以借此进一步查看结构、字体、组件样式和
+表面处理。
 
 实时预览属于外部参考资料，可能独立变化、需要网络访问，也绝不能被复制到生成网站中。
 
 ## 推荐行为
 
-支持视觉展示的 agent 会嵌入 5 张本地 SVG 卡片并附上主要 Light/Dark
-链接。每次成功推荐还会生成自包含的
-`.ui-style-director/recommendations.html` 画廊，把 5 张卡片作为 data URI
-内嵌其中。纯终端客户端会启动 `preview --serve`、把输出的本机回环 HTTP 链接
-给用户，并在用户选择期间保持进程运行。服务只监听 `127.0.0.1`、只提供该
-画廊，按 Ctrl+C 后停止；`file://` 和 `preview --open` 仍是降级方式。当用户
-需要更多比较时，还可以查看另外两个参考标签。
+支持视觉展示的 agent 会为每个结果展示排序后的 Direction 与所选 Theme，嵌入
+本地 SVG 卡片并附上主要 Light/Dark 链接。每次成功推荐还会生成自包含的
+`.ui-style-director/recommendations.html` 画廊，把生成卡片作为 data URI 内嵌。
+纯终端客户端可以启动 `preview --serve`、把输出的本机回环 HTTP 链接给用户，
+并在用户选择期间保持进程运行。服务只监听 `127.0.0.1`、只提供该画廊，按
+Ctrl+C 后停止；`file://` 和 `preview --open` 仍是降级方式。画廊保留 Direction
+与 Theme ID，使所选组合可以显式传给 `apply`。
 
 画廊是 TUI、SSH 与无图形界面工作流的可移植降级方案，不依赖 Kitty
 graphics、Sixel 等特定终端图片协议。如果浏览器不在同一台机器，可以转发
@@ -48,9 +62,9 @@ graphics、Sixel 等特定终端图片协议。如果浏览器不在同一台机
 
 ## 完整目录浏览器
 
-GitHub Pages 目录会在另一个浏览入口中复用已经提交的中性 SVG 卡片。它不只
-展示某次推荐的五个方向，而是列出全部已策展 profile，并支持文本搜索以及
-family、页面类型、密度、调性和组件库过滤：
+GitHub Pages 目录会在另一个浏览入口中使用生成的规范 SVG 卡片。它不只展示
+某次推荐中默认的五个 Direction，而是按已策展 Direction 展示一张卡片、切换其
+关联 Theme，并支持文本搜索以及 family、页面类型、密度、调性和组件库过滤：
 
 ```bash
 node bin/ai-ui-style-director.mjs browse --open
@@ -60,10 +74,11 @@ node bin/ai-ui-style-director.mjs browse --open
 启动完整目录的本地服务。两者都是只读入口，不会创建推荐 session 状态，也
 不会修改目标项目。
 
-目录的 `catalog.json` 使用轻量 schema v3，卡片只保存相对 `previewUrl`，不会把
-全部 SVG 作为 data URI 一次塞进 JSON。预览通过
-`previews/<style-id>.svg` 独立同源路径按需加载；搜索优先使用倒排索引的精确
-词项 postings，未命中时回退到子串匹配，页面则按 24 张卡片一批渐进渲染。
+目录的 `catalog.json` 使用轻量 schema v4。每张 Direction 卡片携带关联 Theme
+选择和相对 `previewUrl`，不会把 SVG 作为 data URI 塞进 JSON。规范预览通过
+`previews/v2/<direction-id>/<theme-id>.svg` 独立同源路径按需加载，历史 URL
+继续由 `previews/<legacy-style-id>.svg` 提供。搜索优先使用倒排索引的精确词项
+postings，未命中时回退到子串匹配，页面则按 24 张 Direction 卡片一批渐进渲染。
 确定性的 revision 会在已部署 HTML 或 JSON 落后于 CLI 所期待的本地 Catalog
 时显示提示。这与单次推荐的自包含 HTML 画廊是两种有意不同的交付方式。
 
@@ -74,18 +89,22 @@ node bin/ai-ui-style-director.mjs browse --open
 
 ## 项目草图
 
-用户选定后，`apply` 会写入 `.ui-style-director/first-viewport-draft.svg`。该草图沿用选定方向的中性布局与配色，并记录项目 brief。agent 会展示草图，把项目特定调整同步记录到 `DESIGN.md`，并在实现 UI 前等待用户确认。
+用户选定后，`apply` 会写入 `.ui-style-director/first-viewport-draft.svg`。该草图
+组合所选 Direction、对应 PreviewSpec 与 Theme token，并记录两个 ID 和项目
+brief。agent 会展示草图，把项目特定调整同步记录到 `DESIGN.md`，并在实现 UI
+前等待用户确认。
 
 项目草图用于确认方向与信息架构，不是像素级最终 mockup。
 
-## 新增或修改风格
+## 新增或修改 Catalog 材料
 
-1. 在 `catalog/style-profiles.json` 新增或更新标准化 profile。
-2. 在 `catalog/style-visuals.json` 增加唯一对应项。
-3. 使用真实上游 slug，并说明每条参考的有限角色。
-4. 运行 `npm run previews`。
-5. 目视检查生成的 SVG。
-6. 运行 `npm run catalog:curated:validate`，检查 profile/visual 一一对应、主题
-   色、恰好 3 条有效参考及预览文件。
-7. 运行 `npm run check`；如果改变 taxonomy 或评分逻辑，同时确认 12 场景推荐
-   benchmark 仍通过。
+供给侧策展仍可能写入 legacy Profile/Visual/preview 审计产物。在这些材料影响
+运行时消费前，需要重建并校验规范投影：
+
+1. 分别审查 Direction 结构、Direction 参考和 PreviewSpec。
+2. 独立审查 Theme token 与固定 Theme 来源。
+3. 确认每个允许的 Direction/Theme 关联及其唯一默认项。
+4. 运行 `npm run previews` 并目视检查兼容预览。
+5. 已批准的 legacy 策展层发生变化时，运行 `npm run catalog:v2:migrate`。
+6. 运行 `npm run catalog:v2:validate` 和 `npm run previews:check`。
+7. 运行 `npm run check`。

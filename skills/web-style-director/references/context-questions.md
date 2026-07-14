@@ -17,5 +17,4 @@ For redesigns, also ask for one source:
 - local project path
 - existing brand/style assets
 
-If the user already supplied enough context, do not ask these questions. Recommend styles immediately.
-
+If the user already supplied enough context, do not ask these questions. Recommend Direction/Theme results immediately.

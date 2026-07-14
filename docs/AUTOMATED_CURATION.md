@@ -108,7 +108,8 @@ colors deterministically, and serializes canonical JSON. That canonical JSON is
 both the hash input and the bounded material sent to the curation model. Arbitrary CSS,
 imports, comments, and instructions are not passed through as catalog prose.
 The generated provider/style/component indexes use schema v4 for this generic
-source contract; the hosted browser's `catalog.json` remains schema v3.
+source contract; the independently built hosted browser `catalog.json` also
+uses schema v4 for its Direction/Theme view model.
 
 This adapter requires exactly 29 declarations: one `color-scheme`, 20 governed
 color properties, and eight geometry properties. Unknown, missing, duplicate,
