@@ -81,6 +81,18 @@ v2 可能产生以下 action：
 Direction ID 由受治理的结构原语确定性生成，Theme ID 由规范 Theme token 确定性生成。
 新 Theme 的溯源固定到本次事件处理的 Provider 仓库、revision、路径和内容哈希。
 
+### 为新 Direction 分类
+
+受控候选 Profile 必须从共享的六值 taxonomy 中选择一个 `experienceType`：
+`consumer-app`、`marketing-site`、`commerce`、`content-docs`、
+`business-app` 或 `admin-console`。策展 Agent 结合首屏主要用户任务、页面类型、
+目标和受众进行判断；`family` 本身绝不是分类规则。
+
+只有真正创建新 Direction 时才持久化候选值。匹配到既有 Direction 时保留已经审阅的
+`experienceType`；仅 Theme Provider 既不能创建 Direction，也不能修改其分类。
+Prompt `direction-theme-curation-v2` 引入该候选字段，但处理政策版本保持不变，
+因此不会重放 109 条历史来源，也不会改写不可变 record。
+
 ## Capability 边界
 
 每个 Adapter 都有不可突破的 capability 上限。Provider 可以用 `capabilities` 显式

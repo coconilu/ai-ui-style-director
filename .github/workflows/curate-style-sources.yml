@@ -8,6 +8,7 @@ on:
     paths:
       - catalog/providers.json
       - src/curation.mjs
+      - src/experience-types.mjs
       - src/provider-adapters.mjs
       - catalog/generated/provider-inventory.json
       - catalog/generated/style-sources.json

@@ -96,6 +96,21 @@ and canonical theme tokens respectively. New Theme provenance is pinned to the
 exact provider repository, revision, path, and content hash processed by the
 event.
 
+### Classifying new Directions
+
+The controlled candidate Profile includes one `experienceType` from the shared
+six-value taxonomy: `consumer-app`, `marketing-site`, `commerce`,
+`content-docs`, `business-app`, or `admin-console`. The curator uses the
+primary first-viewport user task, page types, goals, and audiences; `family`
+alone is never a classification rule.
+
+Only a newly created Direction persists the candidate value. Matching an
+existing Direction keeps its reviewed `experienceType`, and a Theme-only
+Provider can neither create a Direction nor change its classification. Prompt
+version `direction-theme-curation-v2` introduces this candidate field. The
+processing-policy version remains unchanged, so the Prompt update does not
+replay the 109 historical sources or rewrite immutable records.
+
 ## Capability boundary
 
 Each Adapter has a hard capability ceiling. A Provider may explicitly narrow

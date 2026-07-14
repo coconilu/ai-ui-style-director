@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { resolveLegacyDirectionId } from "../scripts/migrate-direction-theme-catalog.mjs";
 import { validateDirectionThemeCatalog } from "../scripts/validate-direction-theme-catalog.mjs";
 import { validateGeneratedCatalog } from "../scripts/validate-generated-catalog.mjs";
+import { EXPERIENCE_TYPE_IDS } from "../src/experience-types.mjs";
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 const catalogDir = join(rootDir, "catalog");
@@ -22,6 +23,78 @@ const DOCUMENTS = Object.freeze({
   aliases: ["style-aliases.json", "aliasesPath"],
   legacyProfiles: ["style-profiles.json", "legacyProfilesPath"],
   legacyVisuals: ["style-visuals.json", "legacyVisualsPath"]
+});
+
+const EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE = Object.freeze({
+  "consumer-app": Object.freeze([
+    "consumer-local-service-concierge",
+    "consumer-media-discovery-playground",
+    "consumer-wellness-companion-soft",
+    "education-kids-exploration-path",
+    "finance-consumer-money-companion",
+    "learning-platform-friendly"
+  ]),
+  "marketing-site": Object.freeze([
+    "consumer-brand-story",
+    "consumer-centered-hero-community",
+    "consumer-centered-hero-story",
+    "consumer-centered-hero-trust",
+    "developer-open-source-community-hub",
+    "developer-product-minimal",
+    "enterprise-executive-transformation-brief",
+    "enterprise-infrastructure-blueprint",
+    "enterprise-trust-solution",
+    "fintech-precision-trust",
+    "launch-centered-hero-story",
+    "launch-centered-hero-trust",
+    "launch-cinematic-product-reveal",
+    "launch-community-countdown-campaign",
+    "launch-proof-led-early-access",
+    "motion-rich-launch",
+    "portfolio-case-study-narrative",
+    "portfolio-centered-hero-story",
+    "portfolio-experimental-creative-canvas",
+    "portfolio-studio-grid",
+    "portfolio-technical-builder-showcase"
+  ]),
+  commerce: Object.freeze([
+    "commerce-direct-response-product-detail",
+    "commerce-marketplace-discovery-grid",
+    "commerce-premium-catalog",
+    "commerce-wholesale-order-workbench"
+  ]),
+  "content-docs": Object.freeze([
+    "ai-lab-research-notebook",
+    "developer-cli-workbench",
+    "developer-editorial-stack-content",
+    "docs-api-reference-workbench",
+    "docs-knowledge-base-help-center",
+    "docs-product-guides-library",
+    "editorial-technical-docs",
+    "enterprise-governance-evidence-room",
+    "research-benchmark-evaluation-board",
+    "research-scientific-publication-archive"
+  ]),
+  "business-app": Object.freeze([
+    "education-certification-study-console",
+    "education-cohort-learning-workspace",
+    "finance-investment-research-terminal",
+    "operational-saas-console",
+    "research-experiment-control-workbench",
+    "saas-automation-flow-builder",
+    "saas-collaborative-workspace-canvas",
+    "saas-customer-success-inbox"
+  ]),
+  "admin-console": Object.freeze([
+    "dashboard-executive-kpi-briefing",
+    "dashboard-field-operations-mapboard",
+    "dashboard-incident-response-wallboard",
+    "data-dashboard-command-center",
+    "developer-api-observability-lab",
+    "developer-dashboard-grid-data",
+    "enterprise-dashboard-grid-data",
+    "finance-treasury-operations-console"
+  ])
 });
 
 function readJson(path) {
@@ -191,6 +264,57 @@ test("real v2 catalog preserves all legacy styles and the five approved Theme cl
   );
 });
 
+test("real catalog has the reviewed 57-Direction experience type backfill without family inference", () => {
+  const directions = readJson(join(catalogDir, "style-directions.json")).directions;
+  const result = validateDirectionThemeCatalog();
+  const allExpectedIds = EXPERIENCE_TYPE_IDS.flatMap(
+    (experienceType) => EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE[experienceType]
+  );
+
+  assert.deepEqual(Object.keys(EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE), EXPERIENCE_TYPE_IDS);
+  assert.equal(allExpectedIds.length, 57);
+  assert.equal(new Set(allExpectedIds).size, 57);
+  assert.equal(directions.length, 57);
+  assert.deepEqual(
+    [...new Set(allExpectedIds)].sort(),
+    directions.map((direction) => direction.id).sort()
+  );
+
+  for (const experienceType of EXPERIENCE_TYPE_IDS) {
+    assert.deepEqual(
+      directions
+        .filter((direction) => direction.experienceType === experienceType)
+        .map((direction) => direction.id)
+        .sort(),
+      [...EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE[experienceType]].sort()
+    );
+  }
+  assert.deepEqual(result.experienceTypeCounts, {
+    "consumer-app": 6,
+    "marketing-site": 21,
+    commerce: 4,
+    "content-docs": 10,
+    "business-app": 8,
+    "admin-console": 8
+  });
+
+  const developerExperienceTypes = new Set(
+    directions
+      .filter((direction) => direction.family === "developer")
+      .map((direction) => direction.experienceType)
+  );
+  assert.deepEqual(
+    developerExperienceTypes,
+    new Set(["marketing-site", "content-docs", "admin-console"])
+  );
+  const marketingFamilies = new Set(
+    directions
+      .filter((direction) => direction.experienceType === "marketing-site")
+      .map((direction) => direction.family)
+  );
+  assert.ok(marketingFamilies.size > 1);
+});
+
 test("legacy Direction resolution uses an explicit allowlist and preserves unknown future ids", () => {
   assert.equal(
     resolveLegacyDirectionId("developer-dashboard-grid-data-184a9fda"),
@@ -212,6 +336,29 @@ test("v2 validator is executable as a CLI", () => {
   );
   assert.ok(result.stdout.includes(`${validated.pinnedSourceCount} pinned`));
   assert.ok(result.stdout.includes(`${validated.legacySourceCount} legacy provenance entries`));
+  assert.ok(
+    result.stdout.includes(
+      "experience coverage: consumer-app=6, marketing-site=21, commerce=4, content-docs=10, business-app=8, admin-console=8"
+    )
+  );
+});
+
+test("strict v2 validator rejects a missing or uncontrolled Direction experienceType", () => {
+  const missing = writeFixture(({ directions }) => {
+    delete directions.directions[0].experienceType;
+  });
+  assert.throws(
+    () => validateDirectionThemeCatalog(missing),
+    /experienceType must be one of/u
+  );
+
+  const invalid = writeFixture(({ directions }) => {
+    directions.directions[0].experienceType = "developer-tool";
+  });
+  assert.throws(
+    () => validateDirectionThemeCatalog(invalid),
+    /experienceType must be one of/u
+  );
 });
 
 test("v2 validator rejects incomplete legacy coverage and invalid defaults", () => {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "promptVersion": "direction-theme-curation-v1",
+  "promptVersion": "direction-theme-curation-v2",
   "sources": [
     {
       "providerId": "awesome-design-md",

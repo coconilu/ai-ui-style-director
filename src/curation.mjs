@@ -13,6 +13,10 @@ import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createOpenAICompatibleClient } from "./openai-compatible.mjs";
 import {
+  EXPERIENCE_TYPE_IDS,
+  isExperienceType
+} from "./experience-types.mjs";
+import {
   planCatalogV2Promotion,
   resolveHistoricalSelection
 } from "./curation-catalog-v2.mjs";
@@ -26,7 +30,7 @@ import {
 
 export const CURATION_SCHEMA_VERSION = 2;
 export const CURATION_RECORD_SCHEMA_VERSION = 2;
-export const CURATION_PROMPT_VERSION = "direction-theme-curation-v1";
+export const CURATION_PROMPT_VERSION = "direction-theme-curation-v2";
 export const CURATION_PROCESSING_POLICY_VERSION = 1;
 export const DEFAULT_DUPLICATE_THRESHOLD = 0.85;
 // At the pinned 35-theme daisyUI snapshot, 0.04 admits only the closest of 595
@@ -39,6 +43,7 @@ const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const CANDIDATE_PROFILE_FIELDS = Object.freeze([
   "family",
+  "experienceType",
   "pageTypes",
   "audiences",
   "goals",
@@ -472,7 +477,13 @@ export function selectReferencePool(primarySource, sources, content, limit = DEF
 }
 
 function profileSearchText(profile) {
-  return [profile.name, profile.family, profile.density, ...PROFILE_ARRAY_FIELDS.flatMap((field) => profile[field] || [])].join(" ");
+  return [
+    profile.name,
+    profile.family,
+    profile.experienceType,
+    profile.density,
+    ...PROFILE_ARRAY_FIELDS.flatMap((field) => profile[field] || [])
+  ].join(" ");
 }
 
 export function selectProfileContext(
@@ -506,6 +517,7 @@ export function selectProfileContext(
       id: profile.id,
       name: profile.name,
       family: profile.family,
+      experienceType: profile.experienceType,
       pageTypes: profile.pageTypes,
       audiences: profile.audiences,
       goals: profile.goals,
@@ -549,6 +561,8 @@ export function buildCurationMessages({
       : "This source is Theme-only. It can never create a Direction; use decision=promote only when its Theme can be classified confidently against one of the supplied existing Direction IDs.",
     "When sourceWasTruncated is true, prefer decision=skip unless the visible portion is already clearly sufficient for the allowed Direction or Theme decision.",
     "For decision=promote, choose only the supplied taxonomy and design-primitive enum values. Use exactly three unique references from the allowed reference pool, including the primary source.",
+    "Classify profile.experienceType as exactly one governed page-experience category based on the product surface described by the source, not merely its color Theme.",
+    "For Theme-only material, never infer experienceType from palette alone and never use it to reclassify an existing Direction.",
     "When requiredTheme is present, copy all seven colors exactly; they were derived deterministically by the trusted source adapter.",
     "Do not write user-facing prose, labels, names, layout instructions, risks, IDs, URLs, hashes, status, scores, or audit metadata; the program generates those fields from controlled templates."
   ].join(" ");
@@ -557,6 +571,7 @@ export function buildCurationMessages({
     rationale: "short audit-only explanation",
     profile: {
       family: "allowed family",
+      experienceType: "allowed experience type",
       pageTypes: ["allowed page type"],
       audiences: ["allowed audience"],
       goals: ["allowed goal"],
@@ -582,6 +597,7 @@ export function buildCurationMessages({
     sourceWasTruncated: truncated,
     governance: {
       allowedFamilies: policy.requiredFamilies,
+      allowedExperienceTypes: EXPERIENCE_TYPE_IDS,
       allowedVariants: [...VISUAL_VARIANTS].sort(),
       allowedComponentKits: componentKitIds,
       allowedDensity: [...DENSITY_TOKENS].sort(),
@@ -661,10 +677,13 @@ export function validateCandidate(candidate, {
   if (!hasExactKeys(candidate.profile, CANDIDATE_PROFILE_FIELDS)) {
     errors.push(`profile must contain exactly: ${CANDIDATE_PROFILE_FIELDS.join(", ")}`);
   } else {
-    for (const field of ["family", "density", "composition", "emphasis", "typographyStyle", "spacing", "motion"]) {
+    for (const field of ["family", "experienceType", "density", "composition", "emphasis", "typographyStyle", "spacing", "motion"]) {
       if (!SAFE_TOKEN.test(candidate.profile[field] || "")) errors.push(`profile.${field} must be lowercase kebab-case`);
     }
     if (!policy.requiredFamilies.includes(candidate.profile.family)) errors.push("profile.family is outside the governed family taxonomy");
+    if (!isExperienceType(candidate.profile.experienceType)) {
+      errors.push("profile.experienceType is outside the governed experience-type taxonomy");
+    }
     if (!DENSITY_TOKENS.has(candidate.profile.density)) errors.push("profile.density is outside the governed density taxonomy");
     if (!(candidate.profile.composition in COMPOSITIONS)) errors.push("profile.composition is outside the governed composition taxonomy");
     if (!(candidate.profile.emphasis in EMPHASES)) errors.push("profile.emphasis is outside the governed emphasis taxonomy");

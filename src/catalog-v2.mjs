@@ -1,6 +1,10 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  EXPERIENCE_TYPE_IDS,
+  isExperienceType
+} from "./experience-types.mjs";
 
 const ROOT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -165,6 +169,15 @@ export function validateCatalogV2({
   });
   const linkByKey = new Map();
   const linksByDirectionId = new Map();
+
+  directions.forEach((direction, position) => {
+    if (!isObject(direction)) return;
+    if (!isExperienceType(direction.experienceType)) {
+      errors.push(
+        `directions[${position}].experienceType must be one of: ${EXPERIENCE_TYPE_IDS.join(", ")}.`
+      );
+    }
+  });
 
   links.forEach((link, position) => {
     const path = `links[${position}]`;

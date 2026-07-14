@@ -39,6 +39,31 @@ canonical v2 projection:
 The current canonical snapshot contains 57 Directions and 77 linked Theme
 selections. These values describe checked-in data, not configured limits.
 
+### Experience type taxonomy
+
+Every canonical Direction has exactly one governed `experienceType`:
+
+| ID | Meaning |
+| --- | --- |
+| `consumer-app` | A product or service that an end user returns to use |
+| `marketing-site` | Brand, launch, acquisition, portfolio, or conversion frontage |
+| `commerce` | Product discovery, comparison, ordering, or purchasing |
+| `content-docs` | Reading, learning, reference, evidence, or knowledge consumption |
+| `business-app` | Domain work and collaboration for employees or professional users |
+| `admin-console` | System monitoring, control, governance, operations, or administration |
+
+`experienceType` answers “what is the primary first-viewport user task?” It is
+independent from `family` (design/product family), `pageTypes` (supported page
+forms), and `goals` (desired outcomes). The 57 existing Directions use an
+explicit maintainer-reviewed classification based on page types, goals, and
+audiences; there is no runtime family-to-experience shortcut. For example,
+consumer Directions span consumer apps and marketing sites, while developer
+Directions span marketing, documentation, and admin experiences.
+
+The field belongs to Direction only. A Theme changes appearance, not the
+experience category. Legacy style IDs inherit the value through their immutable
+Direction/Theme alias instead of duplicating it in legacy Profiles.
+
 The catalog is intentionally structured. Agents should not load large upstream repositories into context just to choose a style.
 
 Supply-side curation is separate from consumer-side recommendation. The

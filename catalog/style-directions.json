@@ -3,6 +3,7 @@
   "directions": [
     {
       "id": "ai-lab-research-notebook",
+      "experienceType": "content-docs",
       "name": "AI Lab Research Notebook",
       "legacyStyleIds": [
         "ai-lab-research-notebook"
@@ -86,6 +87,7 @@
     },
     {
       "id": "commerce-direct-response-product-detail",
+      "experienceType": "commerce",
       "name": "Direct Response Product Detail",
       "legacyStyleIds": [
         "commerce-direct-response-product-detail"
@@ -170,6 +172,7 @@
     },
     {
       "id": "commerce-marketplace-discovery-grid",
+      "experienceType": "commerce",
       "name": "Marketplace Discovery Grid",
       "legacyStyleIds": [
         "commerce-marketplace-discovery-grid"
@@ -255,6 +258,7 @@
     },
     {
       "id": "commerce-premium-catalog",
+      "experienceType": "commerce",
       "name": "Commerce Premium Catalog",
       "legacyStyleIds": [
         "commerce-premium-catalog"
@@ -337,6 +341,7 @@
     },
     {
       "id": "commerce-wholesale-order-workbench",
+      "experienceType": "commerce",
       "name": "Wholesale Order Workbench",
       "legacyStyleIds": [
         "commerce-wholesale-order-workbench"
@@ -422,6 +427,7 @@
     },
     {
       "id": "consumer-brand-story",
+      "experienceType": "marketing-site",
       "name": "Consumer Brand Story",
       "legacyStyleIds": [
         "consumer-brand-story"
@@ -502,6 +508,7 @@
     },
     {
       "id": "consumer-centered-hero-community",
+      "experienceType": "marketing-site",
       "name": "Consumer Centered Hero Community",
       "legacyStyleIds": [
         "consumer-centered-hero-community-4ab63e7f",
@@ -682,6 +689,7 @@
     },
     {
       "id": "consumer-centered-hero-story",
+      "experienceType": "marketing-site",
       "name": "Consumer Centered Hero Story",
       "legacyStyleIds": [
         "consumer-centered-hero-story-2f0b340c"
@@ -774,6 +782,7 @@
     },
     {
       "id": "consumer-centered-hero-trust",
+      "experienceType": "marketing-site",
       "name": "Consumer Centered Hero Trust",
       "legacyStyleIds": [
         "consumer-centered-hero-trust-1884cccb",
@@ -902,6 +911,7 @@
     },
     {
       "id": "consumer-local-service-concierge",
+      "experienceType": "consumer-app",
       "name": "Local Service Concierge",
       "legacyStyleIds": [
         "consumer-local-service-concierge"
@@ -987,6 +997,7 @@
     },
     {
       "id": "consumer-media-discovery-playground",
+      "experienceType": "consumer-app",
       "name": "Media Discovery Playground",
       "legacyStyleIds": [
         "consumer-media-discovery-playground"
@@ -1072,6 +1083,7 @@
     },
     {
       "id": "consumer-wellness-companion-soft",
+      "experienceType": "consumer-app",
       "name": "Wellness Companion Soft",
       "legacyStyleIds": [
         "consumer-wellness-companion-soft"
@@ -1156,6 +1168,7 @@
     },
     {
       "id": "dashboard-executive-kpi-briefing",
+      "experienceType": "admin-console",
       "name": "Executive KPI Briefing",
       "legacyStyleIds": [
         "dashboard-executive-kpi-briefing"
@@ -1241,6 +1254,7 @@
     },
     {
       "id": "dashboard-field-operations-mapboard",
+      "experienceType": "admin-console",
       "name": "Field Operations Mapboard",
       "legacyStyleIds": [
         "dashboard-field-operations-mapboard"
@@ -1326,6 +1340,7 @@
     },
     {
       "id": "dashboard-incident-response-wallboard",
+      "experienceType": "admin-console",
       "name": "Incident Response Wallboard",
       "legacyStyleIds": [
         "dashboard-incident-response-wallboard"
@@ -1410,6 +1425,7 @@
     },
     {
       "id": "data-dashboard-command-center",
+      "experienceType": "admin-console",
       "name": "Data Dashboard Command Center",
       "legacyStyleIds": [
         "data-dashboard-command-center"
@@ -1494,6 +1510,7 @@
     },
     {
       "id": "developer-api-observability-lab",
+      "experienceType": "admin-console",
       "name": "Developer API Observability Lab",
       "legacyStyleIds": [
         "developer-api-observability-lab"
@@ -1578,6 +1595,7 @@
     },
     {
       "id": "developer-cli-workbench",
+      "experienceType": "content-docs",
       "name": "Developer CLI Workbench",
       "legacyStyleIds": [
         "developer-cli-workbench"
@@ -1662,6 +1680,7 @@
     },
     {
       "id": "developer-dashboard-grid-data",
+      "experienceType": "admin-console",
       "name": "Developer Dashboard Grid Data",
       "legacyStyleIds": [
         "developer-dashboard-grid-data-184a9fda",
@@ -1954,6 +1973,7 @@
     },
     {
       "id": "developer-editorial-stack-content",
+      "experienceType": "content-docs",
       "name": "Developer Editorial Stack Content",
       "legacyStyleIds": [
         "developer-editorial-stack-content-0b8eb8d8",
@@ -2149,6 +2169,7 @@
     },
     {
       "id": "developer-open-source-community-hub",
+      "experienceType": "marketing-site",
       "name": "Open Source Community Hub",
       "legacyStyleIds": [
         "developer-open-source-community-hub"
@@ -2235,6 +2256,7 @@
     },
     {
       "id": "developer-product-minimal",
+      "experienceType": "marketing-site",
       "name": "Developer Product Minimal",
       "legacyStyleIds": [
         "developer-product-minimal"
@@ -2321,6 +2343,7 @@
     },
     {
       "id": "docs-api-reference-workbench",
+      "experienceType": "content-docs",
       "name": "API Reference Workbench",
       "legacyStyleIds": [
         "docs-api-reference-workbench"
@@ -2405,6 +2428,7 @@
     },
     {
       "id": "docs-knowledge-base-help-center",
+      "experienceType": "content-docs",
       "name": "Knowledge Base Help Center",
       "legacyStyleIds": [
         "docs-knowledge-base-help-center"
@@ -2489,6 +2513,7 @@
     },
     {
       "id": "docs-product-guides-library",
+      "experienceType": "content-docs",
       "name": "Product Guides Library",
       "legacyStyleIds": [
         "docs-product-guides-library"
@@ -2574,6 +2599,7 @@
     },
     {
       "id": "editorial-technical-docs",
+      "experienceType": "content-docs",
       "name": "Editorial Technical Docs",
       "legacyStyleIds": [
         "editorial-technical-docs"
@@ -2656,6 +2682,7 @@
     },
     {
       "id": "education-certification-study-console",
+      "experienceType": "business-app",
       "name": "Certification Study Console",
       "legacyStyleIds": [
         "education-certification-study-console"
@@ -2741,6 +2768,7 @@
     },
     {
       "id": "education-cohort-learning-workspace",
+      "experienceType": "business-app",
       "name": "Cohort Learning Workspace",
       "legacyStyleIds": [
         "education-cohort-learning-workspace"
@@ -2826,6 +2854,7 @@
     },
     {
       "id": "education-kids-exploration-path",
+      "experienceType": "consumer-app",
       "name": "Kids Exploration Path",
       "legacyStyleIds": [
         "education-kids-exploration-path"
@@ -2910,6 +2939,7 @@
     },
     {
       "id": "enterprise-dashboard-grid-data",
+      "experienceType": "admin-console",
       "name": "Enterprise Dashboard Grid Data",
       "legacyStyleIds": [
         "enterprise-dashboard-grid-data-7e324226",
@@ -3042,6 +3072,7 @@
     },
     {
       "id": "enterprise-executive-transformation-brief",
+      "experienceType": "marketing-site",
       "name": "Executive Transformation Brief",
       "legacyStyleIds": [
         "enterprise-executive-transformation-brief"
@@ -3127,6 +3158,7 @@
     },
     {
       "id": "enterprise-governance-evidence-room",
+      "experienceType": "content-docs",
       "name": "Governance Evidence Room",
       "legacyStyleIds": [
         "enterprise-governance-evidence-room"
@@ -3212,6 +3244,7 @@
     },
     {
       "id": "enterprise-infrastructure-blueprint",
+      "experienceType": "marketing-site",
       "name": "Enterprise Infrastructure Blueprint",
       "legacyStyleIds": [
         "enterprise-infrastructure-blueprint"
@@ -3297,6 +3330,7 @@
     },
     {
       "id": "enterprise-trust-solution",
+      "experienceType": "marketing-site",
       "name": "Enterprise Trust Solution",
       "legacyStyleIds": [
         "enterprise-trust-solution"
@@ -3379,6 +3413,7 @@
     },
     {
       "id": "finance-consumer-money-companion",
+      "experienceType": "consumer-app",
       "name": "Consumer Money Companion",
       "legacyStyleIds": [
         "finance-consumer-money-companion"
@@ -3464,6 +3499,7 @@
     },
     {
       "id": "finance-investment-research-terminal",
+      "experienceType": "business-app",
       "name": "Investment Research Terminal",
       "legacyStyleIds": [
         "finance-investment-research-terminal"
@@ -3549,6 +3585,7 @@
     },
     {
       "id": "finance-treasury-operations-console",
+      "experienceType": "admin-console",
       "name": "Treasury Operations Console",
       "legacyStyleIds": [
         "finance-treasury-operations-console"
@@ -3634,6 +3671,7 @@
     },
     {
       "id": "fintech-precision-trust",
+      "experienceType": "marketing-site",
       "name": "Fintech Precision Trust",
       "legacyStyleIds": [
         "fintech-precision-trust"
@@ -3717,6 +3755,7 @@
     },
     {
       "id": "launch-centered-hero-story",
+      "experienceType": "marketing-site",
       "name": "Launch Centered Hero Story",
       "legacyStyleIds": [
         "launch-centered-hero-story-cff58e59"
@@ -3810,6 +3849,7 @@
     },
     {
       "id": "launch-centered-hero-trust",
+      "experienceType": "marketing-site",
       "name": "Launch Centered Hero Trust",
       "legacyStyleIds": [
         "launch-centered-hero-trust-dc16f9c6"
@@ -3903,6 +3943,7 @@
     },
     {
       "id": "launch-cinematic-product-reveal",
+      "experienceType": "marketing-site",
       "name": "Cinematic Product Reveal",
       "legacyStyleIds": [
         "launch-cinematic-product-reveal"
@@ -3988,6 +4029,7 @@
     },
     {
       "id": "launch-community-countdown-campaign",
+      "experienceType": "marketing-site",
       "name": "Community Countdown Campaign",
       "legacyStyleIds": [
         "launch-community-countdown-campaign"
@@ -4073,6 +4115,7 @@
     },
     {
       "id": "launch-proof-led-early-access",
+      "experienceType": "marketing-site",
       "name": "Proof Led Early Access",
       "legacyStyleIds": [
         "launch-proof-led-early-access"
@@ -4158,6 +4201,7 @@
     },
     {
       "id": "learning-platform-friendly",
+      "experienceType": "consumer-app",
       "name": "Learning Platform Friendly",
       "legacyStyleIds": [
         "learning-platform-friendly"
@@ -4241,6 +4285,7 @@
     },
     {
       "id": "motion-rich-launch",
+      "experienceType": "marketing-site",
       "name": "Motion Rich Launch",
       "legacyStyleIds": [
         "motion-rich-launch"
@@ -4323,6 +4368,7 @@
     },
     {
       "id": "operational-saas-console",
+      "experienceType": "business-app",
       "name": "Operational SaaS Console",
       "legacyStyleIds": [
         "operational-saas-console"
@@ -4410,6 +4456,7 @@
     },
     {
       "id": "portfolio-case-study-narrative",
+      "experienceType": "marketing-site",
       "name": "Case Study Narrative",
       "legacyStyleIds": [
         "portfolio-case-study-narrative"
@@ -4495,6 +4542,7 @@
     },
     {
       "id": "portfolio-centered-hero-story",
+      "experienceType": "marketing-site",
       "name": "Portfolio Centered Hero Story",
       "legacyStyleIds": [
         "portfolio-centered-hero-story-d5726f45"
@@ -4587,6 +4635,7 @@
     },
     {
       "id": "portfolio-experimental-creative-canvas",
+      "experienceType": "marketing-site",
       "name": "Experimental Creative Canvas",
       "legacyStyleIds": [
         "portfolio-experimental-creative-canvas"
@@ -4672,6 +4721,7 @@
     },
     {
       "id": "portfolio-studio-grid",
+      "experienceType": "marketing-site",
       "name": "Portfolio Studio Grid",
       "legacyStyleIds": [
         "portfolio-studio-grid"
@@ -4752,6 +4802,7 @@
     },
     {
       "id": "portfolio-technical-builder-showcase",
+      "experienceType": "marketing-site",
       "name": "Technical Builder Showcase",
       "legacyStyleIds": [
         "portfolio-technical-builder-showcase"
@@ -4837,6 +4888,7 @@
     },
     {
       "id": "research-benchmark-evaluation-board",
+      "experienceType": "content-docs",
       "name": "Benchmark Evaluation Board",
       "legacyStyleIds": [
         "research-benchmark-evaluation-board"
@@ -4921,6 +4973,7 @@
     },
     {
       "id": "research-experiment-control-workbench",
+      "experienceType": "business-app",
       "name": "Experiment Control Workbench",
       "legacyStyleIds": [
         "research-experiment-control-workbench"
@@ -5005,6 +5058,7 @@
     },
     {
       "id": "research-scientific-publication-archive",
+      "experienceType": "content-docs",
       "name": "Scientific Publication Archive",
       "legacyStyleIds": [
         "research-scientific-publication-archive"
@@ -5090,6 +5144,7 @@
     },
     {
       "id": "saas-automation-flow-builder",
+      "experienceType": "business-app",
       "name": "Automation Flow Builder",
       "legacyStyleIds": [
         "saas-automation-flow-builder"
@@ -5175,6 +5230,7 @@
     },
     {
       "id": "saas-collaborative-workspace-canvas",
+      "experienceType": "business-app",
       "name": "Collaborative Workspace Canvas",
       "legacyStyleIds": [
         "saas-collaborative-workspace-canvas"
@@ -5260,6 +5316,7 @@
     },
     {
       "id": "saas-customer-success-inbox",
+      "experienceType": "business-app",
       "name": "Customer Success Inbox",
       "legacyStyleIds": [
         "saas-customer-success-inbox"
