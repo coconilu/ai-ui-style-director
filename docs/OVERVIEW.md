@@ -114,9 +114,11 @@ recommendation benchmarks.
 ### Browsing the complete Catalog
 
 `browse` opens the GitHub Pages Catalog deployed by
-`.github/workflows/pages.yml`. Its schema-v4 model exposes one card per
-Direction, switches among linked Themes, and supports text search plus family,
-page type, density, tone, and component-kit facets. Canonical previews use
+`.github/workflows/pages.yml`. Its schema-v5 model exposes one card per
+Direction, switches among linked Themes, and supports text search plus
+experience-type, family, page-type, density, tone, and component-kit facets.
+The unfiltered first batch round-robins the six experience types while search
+and filtered views keep canonical order. Canonical previews use
 `previews/v2/<direction-id>/<theme-id>.svg`; compatible historical assets remain
 at `previews/<legacy-style-id>.svg`. The legacy `serve` command is a
 compatibility alias for `browse`; it no longer starts a local complete-catalog

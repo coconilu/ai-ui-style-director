@@ -74,8 +74,9 @@ node bin/ai-ui-style-director.mjs browse --open
 
 当前已提交 Catalog 包含 57 个 Direction 和 77 个关联 Theme 选择；这只是当前
 快照，不是数量上限。页面按 Direction 展示一张卡片，并可切换其关联 Theme，
-同时支持文本搜索以及 family、页面类型、密度、调性和组件库过滤。目录接口使用
-轻量 schema v4，规范预览从
+同时支持文本搜索以及体验类型、family、页面类型、密度、调性和组件库过滤。
+默认无筛选的首批结果按六种体验类型做确定性轮转；搜索和筛选结果仍保持规范
+顺序。目录接口使用轻量 schema v5，规范预览从
 `previews/v2/<direction-id>/<theme-id>.svg` 按需加载，历史链接继续使用
 `previews/<legacy-style-id>.svg`；结果以每批 24 张 Direction 卡片渐进渲染。
 命令会把确定性的 Catalog revision 附在页面 URL 上；若 Pages 部署仍是旧版，

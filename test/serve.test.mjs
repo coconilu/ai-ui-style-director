@@ -6,8 +6,11 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import {
+  CATALOG_BROWSER_SCHEMA_VERSION,
   CATALOG_PAGE_SIZE,
+  DEFAULT_CATALOG_ORDER_STRATEGY,
   DEFAULT_HOSTED_CATALOG_URL,
+  buildBalancedCatalogEntryOrder,
   buildStyleCatalog,
   buildStyleCatalogStaticAssets,
   computeCatalogRevision,
@@ -18,9 +21,14 @@ import {
   startStyleCatalogServer
 } from "../src/catalog-browser.mjs";
 import { loadCatalogV2 } from "../src/catalog-v2.mjs";
+import {
+  EXPERIENCE_TYPE_DEFINITIONS,
+  EXPERIENCE_TYPE_IDS
+} from "../src/experience-types.mjs";
 import { writeCatalogSite } from "../scripts/build-catalog-site.mjs";
 
 const binPath = fileURLToPath(new URL("../bin/ai-ui-style-director.mjs", import.meta.url));
+const FACET_GROUPS = ["experienceType", "family", "pageTypes", "density", "tones", "componentKits"];
 
 function valuesForTag(entry, group) {
   const value = entry.tags[group];
@@ -64,7 +72,7 @@ test("buildStyleCatalog exposes one card per direction with searchable theme cho
   const canonical = loadCatalogV2();
   const directionCount = canonical.directions.length;
 
-  assert.equal(catalog.schemaVersion, 4);
+  assert.equal(catalog.schemaVersion, CATALOG_BROWSER_SCHEMA_VERSION);
   assert.match(catalog.catalogRevision, /^[a-f0-9]{16}$/);
   assert.equal(catalog.directionCount, directionCount);
   assert.equal(catalog.themeCount, canonical.themes.length);
@@ -83,6 +91,7 @@ test("buildStyleCatalog exposes one card per direction with searchable theme cho
     assert.notEqual(entry.id, "");
     assert.equal(typeof entry.name, "string");
     assert.notEqual(entry.name, "");
+    assert.equal(EXPERIENCE_TYPE_IDS.includes(entry.experienceType), true);
     assert.equal(typeof entry.searchText, "string");
     assert.notEqual(entry.searchText.trim(), "");
     assert.equal(entry.searchText, entry.searchText.toLowerCase());
@@ -116,7 +125,7 @@ test("buildStyleCatalog exposes one card per direction with searchable theme cho
     }
 
     assert.equal(typeof entry.tags, "object");
-    for (const group of ["family", "pageTypes", "density", "tones", "componentKits"]) {
+    for (const group of FACET_GROUPS) {
       const values = valuesForTag(entry, group);
       assert.equal(values.length > 0, true, `${entry.id} must expose ${group} tags`);
       assert.equal(values.every((value) => typeof value === "string" && value.length > 0), true);
@@ -139,13 +148,20 @@ test("buildStyleCatalog exposes one card per direction with searchable theme cho
   }
 
   assert.equal(typeof catalog.facets, "object");
-  for (const group of ["family", "pageTypes", "density", "tones", "componentKits"]) {
+  for (const group of FACET_GROUPS) {
     assert.equal(Array.isArray(catalog.facets[group]), true, `Missing ${group} facet group`);
     assert.equal(catalog.facets[group].length > 0, true);
     assert.deepEqual(catalog.facets[group], [...new Set(catalog.facets[group])]);
 
     const entryValues = new Set(catalog.entries.flatMap((entry) => valuesForTag(entry, group)));
     assert.equal([...entryValues].every((value) => catalog.facets[group].includes(value)), true);
+  }
+  assert.deepEqual(catalog.facets.experienceType, EXPERIENCE_TYPE_IDS);
+  assert.deepEqual(catalog.experienceTypes.map((definition) => definition.id), EXPERIENCE_TYPE_IDS);
+  assert.deepEqual(Object.keys(catalog.facetLabels.experienceType), EXPERIENCE_TYPE_IDS);
+  for (const experienceType of EXPERIENCE_TYPE_IDS) {
+    assert.equal(typeof catalog.facetLabels.experienceType[experienceType].zh, "string");
+    assert.equal(typeof catalog.facetLabels.experienceType[experienceType].en, "string");
   }
 
   assert.equal(catalog.searchIndexMeta.documentCount, directionCount);
@@ -167,6 +183,71 @@ test("buildStyleCatalog exposes one card per direction with searchable theme cho
   const serialized = JSON.stringify(catalog);
   assert.doesNotMatch(serialized, /data:image\/svg\+xml/i);
   assert.deepEqual(JSON.parse(serialized), catalog);
+});
+
+test("default browsing round-robins experience types without changing canonical search order", () => {
+  const catalog = buildStyleCatalog();
+  const defaultEntries = catalog.defaultEntryOrder.map((index) => catalog.entries[index]);
+  const firstPage = defaultEntries.slice(0, CATALOG_PAGE_SIZE);
+  const firstPageCounts = Object.fromEntries(EXPERIENCE_TYPE_IDS.map((experienceType) => [
+    experienceType,
+    firstPage.filter((entry) => entry.experienceType === experienceType).length
+  ]));
+
+  assert.deepEqual(catalog.defaultOrderMeta, {
+    strategy: DEFAULT_CATALOG_ORDER_STRATEGY,
+    field: "experienceType"
+  });
+  assert.equal(catalog.defaultEntryOrder.length, catalog.entries.length);
+  assert.equal(new Set(catalog.defaultEntryOrder).size, catalog.entries.length);
+  assert.deepEqual(sortedIds(defaultEntries), sortedIds(catalog.entries));
+  assert.deepEqual(firstPageCounts, Object.fromEntries(
+    EXPERIENCE_TYPE_IDS.map((experienceType) => [experienceType, 4])
+  ));
+  assert.equal(
+    firstPage.every((entry, index) => index === 0 || entry.experienceType !== firstPage[index - 1].experienceType),
+    true
+  );
+
+  for (const experienceType of EXPERIENCE_TYPE_IDS) {
+    assert.deepEqual(
+      defaultEntries.filter((entry) => entry.experienceType === experienceType).map((entry) => entry.id),
+      catalog.entries.filter((entry) => entry.experienceType === experienceType).map((entry) => entry.id)
+    );
+  }
+
+  const canonicalAdminOrder = catalog.entries
+    .filter((entry) => entry.experienceType === "admin-console")
+    .map((entry) => entry.id);
+  assert.deepEqual(
+    filterCatalogEntries(catalog, {
+      filters: { experienceType: ["admin-console"] }
+    }).map((entry) => entry.id),
+    canonicalAdminOrder
+  );
+  assert.throws(
+    () => buildBalancedCatalogEntryOrder([{ id: "uncontrolled", experienceType: "desktop-game" }]),
+    /uncontrolled experienceType/u
+  );
+
+  const sparseEntries = [
+    { id: "marketing-a", experienceType: "marketing-site" },
+    { id: "admin-a", experienceType: "admin-console" },
+    { id: "marketing-b", experienceType: "marketing-site" },
+    { id: "consumer-a", experienceType: "consumer-app" },
+    { id: "admin-b", experienceType: "admin-console" },
+    { id: "marketing-c", experienceType: "marketing-site" },
+    { id: "admin-c", experienceType: "admin-console" },
+    { id: "marketing-d", experienceType: "marketing-site" }
+  ];
+  const originalSparseEntries = structuredClone(sparseEntries);
+  const sparseOrder = buildBalancedCatalogEntryOrder(sparseEntries);
+  assert.deepEqual(sparseOrder, [3, 0, 1, 2, 4, 5, 6, 7]);
+  assert.deepEqual(sparseEntries, originalSparseEntries);
+  assert.deepEqual(
+    sparseOrder.map((index) => sparseEntries[index].id).sort(),
+    sparseEntries.map((entry) => entry.id).sort()
+  );
 });
 
 test("catalog revision and hosted URL are deterministic and detect catalog changes", () => {
@@ -248,6 +329,9 @@ test("static catalog assets are project-subpath safe and complete", () => {
   assert.match(html, new RegExp(`styles\\.css\\?v=${catalog.catalogRevision}`));
   assert.match(appScript, /expectedRevision/);
   assert.match(appScript, /catalog\.json/);
+  assert.match(appScript, /FACET_ORDER = \["experienceType"/u);
+  assert.match(appScript, /defaultEntryOrder/u);
+  assert.match(appScript, /group \+ ":" \+ value/u);
   assert.match(styles, new RegExp(`\\.theme-palette-${catalog.entries[0].themes[0].id}\\{`));
   assert.equal(payload.catalogRevision, catalog.catalogRevision);
 });
@@ -287,6 +371,7 @@ test("filterCatalogEntries supports English queries, Chinese aliases, and case f
   const chineseAlias = filterCatalogEntries(catalog, { query: "后台" });
   const prefixFallback = searchCatalogEntries(catalog, "dashbo");
   const indexedIntersection = searchCatalogEntries(catalog, "dashboard high");
+  const consumerApps = filterCatalogEntries(catalog, { query: "C端应用" });
 
   assert.equal(dashboard.length > 0, true);
   assert.deepEqual(sortedIds(uppercase), sortedIds(dashboard));
@@ -300,6 +385,22 @@ test("filterCatalogEntries supports English queries, Chinese aliases, and case f
   assert.equal(dashboard.some((entry) => entry.id === "data-dashboard-command-center"), true);
   assert.equal(chineseAlias.some((entry) => entry.id === "data-dashboard-command-center"), true);
   assert.equal(chineseAlias.some((entry) => entry.id === "operational-saas-console"), true);
+  assert.equal(consumerApps.length > 0, true);
+  assert.equal(consumerApps.every((entry) => entry.experienceType === "consumer-app"), true);
+
+  for (const definition of EXPERIENCE_TYPE_DEFINITIONS) {
+    const expectedIds = new Set(catalog.entries
+      .filter((entry) => entry.experienceType === definition.id)
+      .map((entry) => entry.id));
+    for (const term of [definition.id, definition.label, definition.labelZh, ...definition.aliases]) {
+      const matchedIds = new Set(searchCatalogEntries(catalog, term).map((entry) => entry.id));
+      assert.equal(
+        [...expectedIds].every((id) => matchedIds.has(id)),
+        true,
+        `${term} must find every ${definition.id} Direction`
+      );
+    }
+  }
 });
 
 test("legacy style ids search their canonical Direction without adding cards", () => {
@@ -351,6 +452,14 @@ test("filterCatalogEntries uses OR within a facet group and AND between groups",
     true
   );
   assert.deepEqual(filterCatalogEntries(catalog, { query: "", filters: {} }), entries);
+  const consumerOrCommerce = filterCatalogEntries(catalog, {
+    filters: { experienceType: ["consumer-app", "commerce"] }
+  });
+  assert.equal(consumerOrCommerce.length > 0, true);
+  assert.equal(
+    consumerOrCommerce.every((entry) => ["consumer-app", "commerce"].includes(entry.experienceType)),
+    true
+  );
 });
 
 test("renderCatalogBrowserPage exposes accessible search and batched-result controls", () => {
@@ -365,6 +474,7 @@ test("renderCatalogBrowserPage exposes accessible search and batched-result cont
   assert.match(html, /\bid="revision-warning"[^>]*\bhidden/i);
   assert.match(html, /<main\b/i);
   assert.match(html, /\baria-live="polite"/i);
+  assert.match(html, /体验类型/u);
 
   const searchInput = html.match(/<input\b[^>]*\btype="search"[^>]*>/i)?.[0];
   assert.ok(searchInput, "The catalog page must include a search input");
@@ -419,7 +529,7 @@ test("catalog development server mirrors the Pages project subpath securely", { 
     const catalogText = await catalogResponse.text();
     assert.doesNotMatch(catalogText, /data:image\/svg\+xml/i);
     const payload = JSON.parse(catalogText);
-    assert.equal(payload.schemaVersion, 4);
+    assert.equal(payload.schemaVersion, CATALOG_BROWSER_SCHEMA_VERSION);
     assert.equal(payload.directionCount, canonical.directions.length);
     assert.equal(payload.themeCount, canonical.themes.length);
     assert.equal(payload.linkCount, canonical.links.length);

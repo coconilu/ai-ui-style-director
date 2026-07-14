@@ -64,7 +64,8 @@ graphics、Sixel 等特定终端图片协议。如果浏览器不在同一台机
 
 GitHub Pages 目录会在另一个浏览入口中使用生成的规范 SVG 卡片。它不只展示
 某次推荐中默认的五个 Direction，而是按已策展 Direction 展示一张卡片、切换其
-关联 Theme，并支持文本搜索以及 family、页面类型、密度、调性和组件库过滤：
+关联 Theme，并支持文本搜索以及体验类型、family、页面类型、密度、调性和组件库
+过滤。无筛选首批结果按六种体验类型确定性轮转，搜索和筛选结果保持规范顺序：
 
 ```bash
 node bin/ai-ui-style-director.mjs browse --open
@@ -74,7 +75,7 @@ node bin/ai-ui-style-director.mjs browse --open
 启动完整目录的本地服务。两者都是只读入口，不会创建推荐 session 状态，也
 不会修改目标项目。
 
-目录的 `catalog.json` 使用轻量 schema v4。每张 Direction 卡片携带关联 Theme
+目录的 `catalog.json` 使用轻量 schema v5。每张 Direction 卡片携带关联 Theme
 选择和相对 `previewUrl`，不会把 SVG 作为 data URI 塞进 JSON。规范预览通过
 `previews/v2/<direction-id>/<theme-id>.svg` 独立同源路径按需加载，历史 URL
 继续由 `previews/<legacy-style-id>.svg` 提供。搜索优先使用倒排索引的精确词项

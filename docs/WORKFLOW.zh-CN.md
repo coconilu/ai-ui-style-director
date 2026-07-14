@@ -79,7 +79,7 @@ PreviewSpec 和 Direction 参考，同 Theme appearance、token 和 Theme 来源
 - 上游 Light/Dark 链接只用于比较设计语言，不能作为最终网站资产。
 - 每个 legacy Visual 保留 3 条已审查参考；规范 Direction 可以聚合并去重多个
   legacy 条目的来源，避免把内部抽象方向伪装成某个品牌的精确克隆。
-- Catalog Browser schema v4 当前展示 57 个 Direction 卡片和 77 个关联 Theme
+- Catalog Browser schema v5 当前展示 57 个 Direction 卡片和 77 个关联 Theme
   预览；这只是快照，不是数量限制。规范预览路径为
   `previews/v2/<direction-id>/<theme-id>.svg`，旧链接继续使用
   `previews/<legacy-style-id>.svg`。

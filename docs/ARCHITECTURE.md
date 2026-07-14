@@ -104,7 +104,7 @@ to vendor or ship.
 
 ## 3. Catalog Browser
 
-`src/catalog-browser.mjs` builds a schema-v4 browser view model from canonical
+`src/catalog-browser.mjs` builds a schema-v5 browser view model from canonical
 Directions, linked Themes, PreviewSpecs, component-kit tags, and the upstream
 style-source count. Each entry represents one Direction and carries linked
 Theme choices with lightweight `previewUrl` values instead of embedded SVG.
@@ -126,12 +126,18 @@ unknown or partial tokens fall back to substring matching. The page keeps the
 full match count but adds cards to the DOM in progressive batches of 24, which
 limits initial layout and image work as the catalog grows. Theme switching
 updates the preview inside a Direction card rather than duplicating cards.
+The first unfiltered batch consumes a build-time numeric order that stably
+round-robins the six governed experience types while retaining canonical order
+inside each type. At the current snapshot, the first 24 cards contain four of
+each type. Any query or Facet selection uses canonical/search-index order, so
+balancing never hides or promotes filtered results.
 Entries in
 `catalog/generated/style-sources.json` remain a provenance index and are shown
 only as a current count, never promoted into unreviewed Direction cards.
 
 The model also carries a deterministic `catalogRevision`, derived from the
-canonical Direction, Theme, link, PreviewSpec, and alias documents. The CLI
+browser schema/asset contract, the shared experience taxonomy, and canonical
+Direction, Theme, link, PreviewSpec, and alias documents. The CLI
 adds its local expected revision to the Pages URL. The browser compares that
 value with the deployed HTML and JSON revisions and shows a non-blocking warning
 if deployment is stale.
@@ -230,8 +236,8 @@ hashing and bounded curation-model input. Raw CSS instructions are never promote
 the consumer catalog.
 
 Provider inventory, style-source, and component-source artifacts use generated
-schema v4. The hosted browser view model independently uses schema v4 as well;
-the matching number does not make their contracts interchangeable.
+schema v4. The hosted browser view model independently uses schema v5; the two
+contracts remain unrelated.
 
 This keeps the project legally and technically cleaner:
 

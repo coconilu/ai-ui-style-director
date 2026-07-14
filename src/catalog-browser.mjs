@@ -3,12 +3,19 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { readCatalog, repoRoot } from "./core.mjs";
 import { loadCatalogV2 } from "./catalog-v2.mjs";
+import {
+  EXPERIENCE_TYPE_DEFINITIONS,
+  EXPERIENCE_TYPE_IDS
+} from "./experience-types.mjs";
 import { startLoopbackServer } from "./loopback-server.mjs";
 import { expandVisualReferences, renderDirectionPreviewSvg } from "./preview.mjs";
 
-const FACET_GROUPS = ["family", "pageTypes", "density", "tones", "componentKits"];
+const FACET_GROUPS = ["experienceType", "family", "pageTypes", "density", "tones", "componentKits"];
 const DENSITY_ORDER = ["low", "low-medium", "medium", "medium-high", "high"];
 export const CATALOG_PAGE_SIZE = 24;
+export const CATALOG_BROWSER_SCHEMA_VERSION = 5;
+export const CATALOG_BROWSER_ASSET_VERSION = 2;
+export const DEFAULT_CATALOG_ORDER_STRATEGY = "experience-type-round-robin-v1";
 export const DEFAULT_HOSTED_CATALOG_URL = "https://coconilu.github.io/ai-ui-style-director/";
 const CATALOG_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const THEME_COLOR_PATTERN = /^#[0-9a-f]{6}$/iu;
@@ -49,6 +56,22 @@ const SEARCH_ALIASES = new Map([
   ["magic-ui", ["动效组件", "magic ui"]],
   ["tremor", ["图表组件", "数据图表"]]
 ]);
+
+for (const definition of EXPERIENCE_TYPE_DEFINITIONS) {
+  SEARCH_ALIASES.set(definition.id, [...new Set([
+    ...(SEARCH_ALIASES.get(definition.id) || []),
+    definition.label,
+    definition.labelZh,
+    ...definition.aliases
+  ])]);
+}
+
+const EXPERIENCE_TYPE_FACET_LABELS = Object.freeze(Object.fromEntries(
+  EXPERIENCE_TYPE_DEFINITIONS.map((definition) => [
+    definition.id,
+    Object.freeze({ en: definition.label, zh: definition.labelZh })
+  ])
+));
 
 function normalizeSearchText(value) {
   return String(value ?? "")
@@ -92,6 +115,14 @@ function aliasesFor(values) {
 
 function uniqueSorted(values, group) {
   const unique = [...new Set(values.filter(Boolean))];
+  if (group === "experienceType") {
+    return unique.sort((left, right) => {
+      const leftIndex = EXPERIENCE_TYPE_IDS.indexOf(left);
+      const rightIndex = EXPERIENCE_TYPE_IDS.indexOf(right);
+      if (leftIndex === -1 || rightIndex === -1) return left.localeCompare(right);
+      return leftIndex - rightIndex;
+    });
+  }
   if (group === "density") {
     return unique.sort((left, right) => {
       const leftIndex = DENSITY_ORDER.indexOf(left);
@@ -114,6 +145,35 @@ function buildSearchIndex(entries) {
   return Object.fromEntries([...postings.entries()].sort(([left], [right]) => left.localeCompare(right)));
 }
 
+export function buildBalancedCatalogEntryOrder(entries = []) {
+  if (!Array.isArray(entries)) throw new TypeError("entries must be an array.");
+
+  const buckets = new Map(EXPERIENCE_TYPE_IDS.map((experienceType) => [experienceType, []]));
+  for (const [entryIndex, entry] of entries.entries()) {
+    const bucket = buckets.get(entry?.experienceType);
+    if (!bucket) {
+      throw new Error(`Catalog entry ${entry?.id || entryIndex} has an uncontrolled experienceType.`);
+    }
+    bucket.push(entryIndex);
+  }
+
+  const offsets = new Map(EXPERIENCE_TYPE_IDS.map((experienceType) => [experienceType, 0]));
+  const order = [];
+  while (order.length < entries.length) {
+    let appended = false;
+    for (const experienceType of EXPERIENCE_TYPE_IDS) {
+      const bucket = buckets.get(experienceType);
+      const offset = offsets.get(experienceType);
+      if (offset >= bucket.length) continue;
+      order.push(bucket[offset]);
+      offsets.set(experienceType, offset + 1);
+      appended = true;
+    }
+    if (!appended) break;
+  }
+  return order;
+}
+
 export function computeCatalogRevision({
   directions,
   themes,
@@ -130,9 +190,15 @@ export function computeCatalogRevision({
       "Catalog revision requires canonical direction/theme arrays or legacy profile/visual arrays."
     );
   }
+  const browserContract = {
+    schemaVersion: CATALOG_BROWSER_SCHEMA_VERSION,
+    assetVersion: CATALOG_BROWSER_ASSET_VERSION,
+    defaultOrderStrategy: DEFAULT_CATALOG_ORDER_STRATEGY,
+    experienceTypes: EXPERIENCE_TYPE_DEFINITIONS
+  };
   const value = isV2Catalog
-    ? { schemaVersion: 2, directions, themes, links, previewSpecs, aliases }
-    : { profiles, visuals };
+    ? { browserContract, canonicalSchemaVersion: 2, directions, themes, links, previewSpecs, aliases }
+    : { browserContract, profiles, visuals };
   return createHash("sha256")
     .update(JSON.stringify(value))
     .digest("hex")
@@ -182,6 +248,7 @@ export function buildStyleCatalog() {
       };
     });
     const tags = {
+      experienceType: [direction.experienceType],
       family: [direction.family],
       pageTypes: [...direction.pageTypes],
       density: [direction.density],
@@ -196,6 +263,7 @@ export function buildStyleCatalog() {
       direction.id,
       direction.name,
       ...legacyStyleIds,
+      direction.experienceType,
       direction.family,
       ...direction.pageTypes,
       ...direction.audiences,
@@ -224,6 +292,7 @@ export function buildStyleCatalog() {
       id: direction.id,
       name: direction.name,
       legacyStyleIds,
+      experienceType: direction.experienceType,
       family: direction.family,
       pageTypes: [...direction.pageTypes],
       audiences: [...direction.audiences],
@@ -257,9 +326,10 @@ export function buildStyleCatalog() {
   ]));
 
   const searchIndex = buildSearchIndex(entries);
+  const defaultEntryOrder = buildBalancedCatalogEntryOrder(entries);
 
   return {
-    schemaVersion: 4,
+    schemaVersion: CATALOG_BROWSER_SCHEMA_VERSION,
     catalogRevision,
     directionCount: entries.length,
     themeCount: themes.length,
@@ -269,7 +339,16 @@ export function buildStyleCatalog() {
     pageSize: CATALOG_PAGE_SIZE,
     links: links.map((link) => ({ ...link })),
     aliases: aliases.map((alias) => ({ ...alias })),
+    experienceTypes: structuredClone(EXPERIENCE_TYPE_DEFINITIONS),
     facets,
+    facetLabels: {
+      experienceType: structuredClone(EXPERIENCE_TYPE_FACET_LABELS)
+    },
+    defaultEntryOrder,
+    defaultOrderMeta: {
+      strategy: DEFAULT_CATALOG_ORDER_STRATEGY,
+      field: "experienceType"
+    },
     entryIndex: Object.fromEntries(entries.map((entry, index) => [entry.id, index])),
     searchIndex,
     searchIndexMeta: {
@@ -385,7 +464,7 @@ export function renderCatalogBrowserPage(catalog = buildStyleCatalog()) {
       <div class="hero-copy">
         <p class="eyebrow">WEB STYLE DIRECTOR · CATALOG</p>
         <h1 id="page-title">浏览 UI 风格目录</h1>
-        <p id="page-subtitle" class="subtitle">搜索 ${escapeHtml(catalog.directionCount)} 个已策展方向和 ${escapeHtml(catalog.themeCount)} 个主题，并按页面类型、密度、调性和组件库过滤。</p>
+        <p id="page-subtitle" class="subtitle">搜索 ${escapeHtml(catalog.directionCount)} 个已策展方向和 ${escapeHtml(catalog.themeCount)} 个主题，并按体验类型、页面类型、密度、调性和组件库过滤。</p>
       </div>
       <div class="catalog-stat" aria-label="Catalog coverage">
         <strong>${escapeHtml(catalog.directionCount)}</strong>
@@ -519,6 +598,7 @@ h1 { margin: 0; font-size: clamp(36px, 5vw, 64px); line-height: .98; letter-spac
 .card-title-row code { flex: none; color: var(--faint); font-size: 9px; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 13px 0 16px; }
 .style-tag { padding: 5px 7px; border: 1px solid var(--line-soft); border-radius: 7px; color: var(--muted); background: var(--tag); font-size: 9px; }
+.experience-type-tag { border-color: #b8c9b5; color: var(--tag-active-ink); background: var(--tag-active); font-weight: 760; }
 .theme-selector { margin: 0 0 16px; padding: 0; border: 0; }
 .theme-selector legend { width: 100%; margin-bottom: 8px; color: var(--faint); font-size: 9px; font-weight: 780; letter-spacing: .06em; text-transform: uppercase; }
 .theme-options { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -619,7 +699,7 @@ const CATALOG_APP_JS = String.raw`
 (function () {
   "use strict";
 
-  var FACET_ORDER = ["family", "pageTypes", "density", "tones", "componentKits"];
+  var FACET_ORDER = ${JSON.stringify(FACET_GROUPS)};
   var DEFAULT_PAGE_SIZE = ${CATALOG_PAGE_SIZE};
   var THEME_STORAGE_PREFIX = "web-style-director:themes:";
   var COPY = {
@@ -640,7 +720,7 @@ const CATALOG_APP_JS = String.raw`
       revisionTitle: "目录版本不一致",
       revisionMismatch: "在线目录版本为 {online}，当前工具期望 {expected}。页面仍可浏览；应用风格前请刷新页面，并确认 Pages 已部署或 Web Style Director 已更新。",
       pageRevisionMismatch: "页面资源与目录数据版本不一致，请强制刷新页面后重试。",
-      facet: { family: "风格家族", pageTypes: "页面类型", density: "信息密度", tones: "视觉调性", componentKits: "组件库" },
+      facet: { experienceType: "体验类型", family: "风格家族", pageTypes: "页面类型", density: "信息密度", tones: "视觉调性", componentKits: "组件库" },
       loadError: "目录载入失败，请刷新页面或检查 Pages 部署状态。"
     },
     en: {
@@ -660,7 +740,7 @@ const CATALOG_APP_JS = String.raw`
       revisionTitle: "Catalog version mismatch",
       revisionMismatch: "The hosted catalog is {online}, while the current tool expects {expected}. Browsing remains available; before applying a style, refresh the page and confirm Pages has deployed or Web Style Director is updated.",
       pageRevisionMismatch: "The page assets and catalog data use different revisions. Force-refresh the page and try again.",
-      facet: { family: "Family", pageTypes: "Page type", density: "Density", tones: "Tone", componentKits: "Component kits" },
+      facet: { experienceType: "Experience type", family: "Family", pageTypes: "Page type", density: "Density", tones: "Tone", componentKits: "Component kits" },
       loadError: "Could not load the catalog. Refresh the page or check the Pages deployment."
     }
   };
@@ -703,7 +783,7 @@ const CATALOG_APP_JS = String.raw`
       var value = tag.slice(separator + 1);
       if (!FACET_ORDER.includes(group) || !value) return;
       if (!state.filters[group]) state.filters[group] = [];
-      state.filters[group].push(value);
+      if (!state.filters[group].includes(value)) state.filters[group].push(value);
     });
     search.value = state.query;
   }
@@ -781,9 +861,37 @@ const CATALOG_APP_JS = String.raw`
     state.visibleCount = pageSize();
   }
 
+  function hasActiveFilters() {
+    return FACET_ORDER.some(function (group) {
+      return (state.filters[group] || []).length > 0;
+    });
+  }
+
+  function defaultBrowseEntries() {
+    var order = state.catalog.defaultEntryOrder;
+    if (!Array.isArray(order) || order.length !== state.catalog.entries.length) {
+      return state.catalog.entries;
+    }
+    var seen = new Set();
+    var isValid = order.every(function (index) {
+      if (!Number.isInteger(index) || index < 0 || index >= state.catalog.entries.length || seen.has(index)) {
+        return false;
+      }
+      seen.add(index);
+      return true;
+    });
+    if (!isValid) return state.catalog.entries;
+    var entries = order.map(function (index) {
+      return state.catalog.entries[index];
+    });
+    return entries;
+  }
+
   function searchCandidates() {
     var terms = normalize(state.query).split(" ").filter(Boolean);
-    if (terms.length === 0) return state.catalog.entries;
+    if (terms.length === 0) {
+      return hasActiveFilters() ? state.catalog.entries : defaultBrowseEntries();
+    }
 
     var candidateIndexes = null;
     terms.forEach(function (term) {
@@ -828,9 +936,28 @@ const CATALOG_APP_JS = String.raw`
     return wrapper;
   }
 
+  function sanitizeFilterState() {
+    FACET_ORDER.forEach(function (group) {
+      var allowed = state.catalog.facets[group] || [];
+      var values = [...new Set(state.filters[group] || [])].filter(function (value) {
+        return allowed.includes(value);
+      });
+      if (values.length > 0) state.filters[group] = values;
+      else delete state.filters[group];
+    });
+  }
+
+  function facetValueLabel(group, value) {
+    var labels = state.catalog.facetLabels
+      && state.catalog.facetLabels[group]
+      && state.catalog.facetLabels[group][value];
+    return labels && (labels[locale] || labels.en) || value;
+  }
+
   function createCard(entry) {
     var article = element("article", "style-card");
     article.dataset.directionId = entry.id;
+    article.dataset.experienceType = entry.experienceType;
     var preview = element("div", "preview");
     var image = document.createElement("img");
     var activeTheme = selectedTheme(entry);
@@ -844,6 +971,11 @@ const CATALOG_APP_JS = String.raw`
     titleRow.append(element("h2", "", entry.name), element("code", "", entry.id));
 
     var tags = element("div", "tag-row");
+    tags.append(element(
+      "span",
+      "style-tag experience-type-tag",
+      facetValueLabel("experienceType", entry.experienceType)
+    ));
     [entry.density].concat(entry.pageTypes.slice(0, 3), entry.tones.slice(0, 2)).forEach(function (value) {
       tags.append(element("span", "style-tag", value));
     });
@@ -957,7 +1089,7 @@ const CATALOG_APP_JS = String.raw`
       details.append(element("summary", "", copy.facet[group] + (selected ? " · " + selected : "")));
       var options = element("div", "facet-options");
       state.catalog.facets[group].forEach(function (value) {
-        var button = element("button", "filter-chip", value);
+        var button = element("button", "filter-chip", facetValueLabel(group, value));
         button.type = "button";
         button.dataset.group = group;
         button.dataset.value = value;
@@ -1032,6 +1164,8 @@ const CATALOG_APP_JS = String.raw`
     .then(function (catalog) {
       state.catalog = catalog;
       state.selectedThemeIds = readThemeSelections();
+      sanitizeFilterState();
+      writeUrlState();
       renderRevisionWarning(catalog);
       resetPagination();
       render();

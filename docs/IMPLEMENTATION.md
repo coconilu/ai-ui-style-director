@@ -90,11 +90,13 @@ the complete-catalog command obtains its revision-aware Pages URL from
 
 - `buildStyleCatalog`: join canonical Directions, linked Themes, generated SVG
   preview URLs, indexes, source-index statistics, and a deterministic revision
-  into the schema-v4 browser view model;
+  into the schema-v5 browser view model;
+- `buildBalancedCatalogEntryOrder`: create a stable numeric round-robin order
+  across the six experience types without reordering canonical entries;
 - `hostedCatalogInfo`: add the local expected revision to the configured Pages
   URL and return the CLI contract;
-- `filterCatalogEntries`: apply text search and family, page type, density,
-  tone, and component-kit filters;
+- `filterCatalogEntries`: apply text search and experience-type, family,
+  page-type, density, tone, and component-kit filters;
 - `renderCatalogBrowserPage`: render the browser shell;
 - `buildStyleCatalogStaticAssets`: assemble the deployable static files.
 
@@ -104,6 +106,10 @@ References such as `catalog.json`, `styles.css`, canonical
 `previews/<legacy-style-id>.svg` are relative so the artifact works at the
 GitHub project subpath. Page state is encoded in the URL query, allowing a
 filtered view to survive refresh without server-side state.
+Facet URLs store governed IDs such as `tag=experienceType:consumer-app`;
+localized labels and aliases never become URL identity. Unknown values are
+removed after the catalog loads, while unrelated parameters such as
+`expectedRevision` are retained.
 
 The browser model includes a token-to-numeric-entry postings index and an
 ID-to-entry index. Numeric postings keep repeated style IDs out of the search
@@ -111,6 +117,9 @@ index. Exact tokens are intersected through the postings lists; a missing
 exact token falls back to substring search so partial terms still work. The
 client renders the current result set in batches of 24 cards, limiting initial
 DOM and image work without changing the total match count.
+With no query or active Facet, it applies the build-time experience-type round
+robin; the current first 24 cards contain four of each type. Search or any
+Facet selection retains canonical/search-index order.
 
 The HTML and JSON both carry `catalogRevision`; the CLI also adds its local
 expected revision to the hosted URL. The browser warns when those values differ
@@ -153,7 +162,7 @@ The catalog browser reads `catalog/generated/style-sources.json` only to show
 its current source-index count. The generated indexes currently contain 7
 providers, 109 style sources, and 600 component sources, but the 109 style paths
 are not returned as complete Direction cards. Browser entries come from the
-reviewed Direction/Theme projection. The hosted browser payload is schema v4,
+reviewed Direction/Theme projection. The hosted browser payload is schema v5,
 independent of the generated provider-index schema.
 
 `scripts/validate-curated-catalog.mjs` applies `catalog/curation-policy.json`,
@@ -251,7 +260,7 @@ immediately. `--json` emits the hosted URL, revision, Direction, Theme, link and
 source counts, and opened state. `serve` remains an alias with a migration
 notice; neither command accepts `--port`.
 
-The client loads the reviewed schema-v4 Direction/Theme view model from
+The client loads the reviewed schema-v5 Direction/Theme view model from
 relative `catalog.json`, uses
 the inverted search index and facet tags in the page, and progressively renders
 24 matching Direction cards at a time and switches linked Themes without
@@ -259,6 +268,9 @@ duplicating cards. Generated previews load from relative same-origin
 `previews/v2/<direction-id>/<theme-id>.svg`; compatible legacy assets remain at
 `previews/<legacy-style-id>.svg`. The current 57 Direction and 77 link counts
 are a snapshot, not a limit.
+The unfiltered first batch uses the catalog's validated numeric
+experience-type round-robin order; query and Facet results continue to use the
+canonical/search-index order.
 
 ## `apply` and the project design contract
 

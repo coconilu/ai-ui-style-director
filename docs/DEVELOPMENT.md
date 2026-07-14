@@ -72,7 +72,7 @@ Build the deployable catalog site with:
 npm run catalog:build
 ```
 
-The command recreates `dist/pages` with schema-v4 `catalog.json`, the browser
+The command recreates `dist/pages` with schema-v5 `catalog.json`, the browser
 shell and assets, one canonical SVG per Direction/Theme link, and legacy alias
 preview paths. The output is deterministic, uses only relative references for
 the GitHub project subpath, and is intentionally not committed.
@@ -94,11 +94,15 @@ from `main` through GitHub Pages.
 5. Run `npm run catalog:curated:validate`.
 6. Run `npm run check` before committing.
 
-The catalog model derives schema v4, the inverted search index, facets, and
+The catalog model derives schema v5, the inverted search index, facets, and
 `catalogRevision` from reviewed Direction/Theme data, so there is no second
 hand-maintained search index. Each Direction entry carries linked Theme preview
 URLs; the client renders 24 Direction cards at a time, keeping initial DOM and
 image work bounded as the catalog grows.
+The default order must remain a complete deterministic permutation; its first
+24 entries round-robin all six experience types. Search and Facet paths must
+retain canonical/search-index order. Update the browser schema/asset
+version whenever a contract or cached asset behavior changes.
 
 `catalog/recommendation-benchmarks.json` contains 12 representative briefs.
 When taxonomy or scoring changes, update or extend those cases deliberately;

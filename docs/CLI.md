@@ -68,13 +68,17 @@ its linked Themes. The current checked-in snapshot contains 57 Directions and
 77 Direction/Theme links; these numbers describe current data, not a product
 limit or future cap. Each card includes reviewed metadata, component guidance,
 references, and generated previews. Search and existing filters remain
-available, including common Chinese aliases such as `后台`.
+available, including the six-value experience-type Facet and common Chinese
+aliases such as `C端应用` and `后台`. URL state stores canonical values such as
+`tag=experienceType:consumer-app`.
 
-The hosted `catalog.json` uses schema version 4. It contains Direction entries,
+The hosted `catalog.json` uses schema version 5. It contains Direction entries,
 linked Theme choices, lightweight `previewUrl` values, an inverted postings
 index, and an ID-to-entry index rather than embedded SVG data. Exact tokens use
 postings intersections; partial or unknown tokens use substring fallback. The
-client progressively renders 24 matching Direction cards at a time. Canonical
+client progressively renders 24 matching Direction cards at a time. The first
+unfiltered batch round-robins the six experience types; search and Facet views
+retain canonical/search-index order. Canonical
 previews use validated same-origin paths
 `previews/v2/<direction-id>/<theme-id>.svg`; historical URLs remain available
 as `previews/<legacy-style-id>.svg`.
@@ -220,7 +224,7 @@ catalog/generated/
 
 `daisyui-theme-css` restricts discovery to the 35 theme CSS files and emits
 canonical JSON after deterministic OKLCH conversion. This generated-index
-schema is separate from the hosted browser's schema-v4 `catalog.json`.
+schema is separate from the hosted browser's schema-v5 `catalog.json`.
 
 `update` remains a compatibility alias for `refresh-catalog`. It does **not**
 update an installed Web Style Director skill. User-facing tool updates follow
