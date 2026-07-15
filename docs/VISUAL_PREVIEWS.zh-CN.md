@@ -88,6 +88,19 @@ postings，未命中时回退到子串匹配，页面则按 24 张 Direction 卡
 35 条 daisyUI 主题从 pending 开始。这些路径缺少完整卡片所需的已审查元数据，
 因此只保留为候选素材池和数量，不会成为额外风格条目。
 
+### 验收 PR 预览
+
+同仓库 PR 的 Catalog Pages 构建会把已校验目录上传为保留七天的 Actions Artifact，
+并在任务摘要中提供下载入口。下载并解压后，在产物根目录运行：
+
+```bash
+python -m http.server --bind 127.0.0.1 --directory . 4173
+```
+
+打开 `http://127.0.0.1:4173/`，即可检查搜索、Facet、Theme 切换和全部生成 SVG。
+该 Artifact 是验收包，不是公开的 PR 临时部署；只有 `main` 更新后才会改变生产
+GitHub Pages。
+
 ## 项目草图
 
 用户选定后，`apply` 会写入 `.ui-style-director/first-viewport-draft.svg`。该草图

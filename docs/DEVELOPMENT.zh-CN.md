@@ -73,6 +73,9 @@ npm run catalog:build
 确定性的，并全部使用适配 GitHub 项目子路径的相对引用；它不提交到仓库。
 `.github/workflows/pages.yml` 会在 PR 中运行构建，并从 `main` 通过 GitHub Pages
 部署。
+对于同仓库 PR，构建会把已校验站点上传为保留七天的 Actions Artifact，并在
+Catalog Pages 任务摘要中提供下载入口。解压后通过 loopback HTTP 提供产物根目录，
+即可在合并前检查全部新增 Direction/Theme 预览；PR 永远不会部署生产 Pages 站点。
 
 ## 新增或修改风格
 

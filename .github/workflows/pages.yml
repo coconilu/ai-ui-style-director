@@ -45,6 +45,39 @@ jobs:
           test "$style_count" -eq "$direction_count"
           test "$actual_v2" -eq "$expected_v2"
           test "$actual_legacy" -eq "$expected_legacy"
+      - name: Upload pull request catalog preview
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        id: pr-preview
+        uses: actions/upload-artifact@v7
+        with:
+          name: catalog-preview-pr-${{ github.event.pull_request.number }}-attempt-${{ github.run_attempt }}
+          path: dist/pages
+          if-no-files-found: error
+          include-hidden-files: false
+          retention-days: 7
+      - name: Summarize pull request catalog preview
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        shell: bash
+        env:
+          ARTIFACT_NAME: catalog-preview-pr-${{ github.event.pull_request.number }}-attempt-${{ github.run_attempt }}
+          ARTIFACT_URL: ${{ steps.pr-preview.outputs.artifact-url }}
+          ARTIFACT_DIGEST: ${{ steps.pr-preview.outputs.artifact-digest }}
+        run: |
+          {
+            echo "### Catalog PR preview"
+            echo
+            printf -- '- Artifact: [%s](%s)\n' "$ARTIFACT_NAME" "$ARTIFACT_URL"
+            echo '- Retention: 7 days'
+            printf -- '- SHA-256: `%s`\n' "$ARTIFACT_DIGEST"
+            echo
+            echo 'Download and extract the artifact, then serve its root directory over loopback HTTP:'
+            echo
+            echo '```bash'
+            echo 'python -m http.server --bind 127.0.0.1 --directory . 4173'
+            echo '```'
+            echo
+            echo 'Open http://127.0.0.1:4173/. Production GitHub Pages is unchanged until `main` is updated.'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5

@@ -419,6 +419,7 @@ jobs:
             "- Changed-file allowlist: passed",
             "- Curated catalog and provenance validation: passed",
             "- Preview generation and repository test suite: passed",
+            "- Pull-request catalog preview: download it from the Catalog Pages build summary",
             "",
             "## Usage",
             "",

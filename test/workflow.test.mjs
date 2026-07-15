@@ -10,6 +10,7 @@ const curationWorkflow = readFileSync(
   "utf8"
 );
 const ciWorkflow = readFileSync(join(rootDir, ".github", "workflows", "ci.yml"), "utf8");
+const pagesWorkflow = readFileSync(join(rootDir, ".github", "workflows", "pages.yml"), "utf8");
 
 const curationAllowlist =
   "^(catalog/style-(directions|themes|direction-themes|preview-specs)\\.json|catalog/curation/source-state\\.json|catalog/curation/records/[0-9a-f]{64}\\.json)$";
@@ -57,6 +58,45 @@ test("curation workflow uses trusted main-only triggers and bounded execution", 
   assert.match(curationWorkflow, /CURATOR_MAX_OUTPUT_TOKENS: "4096"/u);
   assert.match(curationWorkflow, /CURATOR_MAX_RETRIES: "1"/u);
   assert.match(curationWorkflow, /CURATOR_REQUEST_TIMEOUT_MS: "120000"/u);
+});
+
+test("Catalog Pages exposes read-only same-repository PR previews without deploying them", () => {
+  const buildJobIndex = pagesWorkflow.indexOf("  build:");
+  const deployJobIndex = pagesWorkflow.indexOf("\n  deploy:");
+  const buildJob = pagesWorkflow.slice(buildJobIndex, deployJobIndex);
+
+  assert.ok(buildJobIndex >= 0);
+  assert.ok(deployJobIndex > buildJobIndex);
+  assert.doesNotMatch(pagesWorkflow, /pull_request_target/u);
+  assert.match(pagesWorkflow, /permissions:\s*\n\s+contents: read/u);
+  assert.doesNotMatch(buildJob, /pull-requests: write|pages: write|id-token: write/u);
+  assert.equal(
+    [...pagesWorkflow.matchAll(
+      /if: github\.event_name == 'pull_request' && github\.event\.pull_request\.head\.repo\.full_name == github\.repository/gu
+    )].length,
+    2
+  );
+  assert.match(pagesWorkflow, /uses: actions\/upload-artifact@v7/u);
+  assert.match(
+    pagesWorkflow,
+    /name: catalog-preview-pr-\$\{\{ github\.event\.pull_request\.number \}\}-attempt-\$\{\{ github\.run_attempt \}\}/u
+  );
+  assert.match(pagesWorkflow, /path: dist\/pages/u);
+  assert.match(pagesWorkflow, /if-no-files-found: error/u);
+  assert.match(pagesWorkflow, /include-hidden-files: false/u);
+  assert.match(pagesWorkflow, /retention-days: 7/u);
+  assert.match(pagesWorkflow, /steps\.pr-preview\.outputs\.artifact-url/u);
+  assert.match(pagesWorkflow, /steps\.pr-preview\.outputs\.artifact-digest/u);
+  assert.match(pagesWorkflow, /GITHUB_STEP_SUMMARY/u);
+  assert.match(pagesWorkflow, /python -m http\.server --bind 127\.0\.0\.1 --directory \. 4173/u);
+  assert.match(
+    pagesWorkflow,
+    /- name: Upload Pages artifact\s*\n\s+if: github\.event_name != 'pull_request'/u
+  );
+  assert.match(
+    pagesWorkflow,
+    /deploy:\s*\n\s+if: github\.event_name != 'pull_request' && github\.ref == 'refs\/heads\/main'/u
+  );
 });
 
 test("curation workflow defaults to DeepSeek, preserves Kimi fallback, and supports a clean no-op", () => {
@@ -149,6 +189,7 @@ test("curation automation leaves an allowlisted, append-only draft PR for mainta
   assert.match(curationWorkflow, /Added Theme to Direction:/u);
   assert.match(curationWorkflow, /Linked existing Theme:/u);
   assert.match(curationWorkflow, /Duplicate Theme:/u);
+  assert.match(curationWorkflow, /Pull-request catalog preview: download it from the Catalog Pages build summary/u);
   assert.doesNotMatch(curationWorkflow, / — /u);
   assert.match(curationWorkflow, /gh pr create/u);
   assert.match(curationWorkflow, /--head "\$branch" \\\s*\n\s+--draft\)"/u);
