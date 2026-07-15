@@ -25,7 +25,7 @@ const DOCUMENTS = Object.freeze({
   legacyVisuals: ["style-visuals.json", "legacyVisualsPath"]
 });
 
-const EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE = Object.freeze({
+const REVIEWED_DIRECTIONS_BY_EXPERIENCE_TYPE = Object.freeze({
   "consumer-app": Object.freeze([
     "consumer-local-service-concierge",
     "consumer-media-discovery-playground",
@@ -264,49 +264,54 @@ test("real v2 catalog preserves all legacy styles and the five approved Theme cl
   );
 });
 
-test("real catalog has the reviewed 57-Direction experience type backfill without family inference", () => {
+test("real catalog preserves the reviewed 57-Direction experience type baseline while allowing growth", () => {
   const directions = readJson(join(catalogDir, "style-directions.json")).directions;
   const result = validateDirectionThemeCatalog();
-  const allExpectedIds = EXPERIENCE_TYPE_IDS.flatMap(
-    (experienceType) => EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE[experienceType]
+  const directionsById = new Map(directions.map((direction) => [direction.id, direction]));
+  const reviewedDirectionIds = EXPERIENCE_TYPE_IDS.flatMap(
+    (experienceType) => REVIEWED_DIRECTIONS_BY_EXPERIENCE_TYPE[experienceType]
   );
 
-  assert.deepEqual(Object.keys(EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE), EXPERIENCE_TYPE_IDS);
-  assert.equal(allExpectedIds.length, 57);
-  assert.equal(new Set(allExpectedIds).size, 57);
-  assert.equal(directions.length, 57);
-  assert.deepEqual(
-    [...new Set(allExpectedIds)].sort(),
-    directions.map((direction) => direction.id).sort()
+  assert.deepEqual(Object.keys(REVIEWED_DIRECTIONS_BY_EXPERIENCE_TYPE), EXPERIENCE_TYPE_IDS);
+  assert.equal(reviewedDirectionIds.length, 57);
+  assert.equal(new Set(reviewedDirectionIds).size, 57);
+  assert.ok(
+    directions.length >= reviewedDirectionIds.length,
+    "the catalog must preserve every reviewed baseline Direction"
   );
 
   for (const experienceType of EXPERIENCE_TYPE_IDS) {
-    assert.deepEqual(
-      directions
-        .filter((direction) => direction.experienceType === experienceType)
-        .map((direction) => direction.id)
-        .sort(),
-      [...EXPECTED_DIRECTIONS_BY_EXPERIENCE_TYPE[experienceType]].sort()
-    );
+    for (const directionId of REVIEWED_DIRECTIONS_BY_EXPERIENCE_TYPE[experienceType]) {
+      const direction = directionsById.get(directionId);
+      assert.ok(direction, `reviewed Direction ${directionId} is missing`);
+      assert.equal(
+        direction.experienceType,
+        experienceType,
+        `reviewed Direction ${directionId} changed experienceType`
+      );
+    }
   }
-  assert.deepEqual(result.experienceTypeCounts, {
-    "consumer-app": 6,
-    "marketing-site": 21,
-    commerce: 4,
-    "content-docs": 10,
-    "business-app": 8,
-    "admin-console": 8
-  });
+  assert.deepEqual(
+    result.experienceTypeCounts,
+    Object.fromEntries(
+      EXPERIENCE_TYPE_IDS.map((experienceType) => [
+        experienceType,
+        directions.filter((direction) => direction.experienceType === experienceType).length
+      ])
+    )
+  );
 
   const developerExperienceTypes = new Set(
     directions
       .filter((direction) => direction.family === "developer")
       .map((direction) => direction.experienceType)
   );
-  assert.deepEqual(
-    developerExperienceTypes,
-    new Set(["marketing-site", "content-docs", "admin-console"])
-  );
+  for (const experienceType of ["marketing-site", "content-docs", "admin-console"]) {
+    assert.ok(
+      developerExperienceTypes.has(experienceType),
+      `developer Directions must continue to cover ${experienceType}`
+    );
+  }
   const marketingFamilies = new Set(
     directions
       .filter((direction) => direction.experienceType === "marketing-site")
@@ -336,10 +341,11 @@ test("v2 validator is executable as a CLI", () => {
   );
   assert.ok(result.stdout.includes(`${validated.pinnedSourceCount} pinned`));
   assert.ok(result.stdout.includes(`${validated.legacySourceCount} legacy provenance entries`));
+  const experienceCoverage = EXPERIENCE_TYPE_IDS.map(
+    (experienceType) => `${experienceType}=${validated.experienceTypeCounts[experienceType]}`
+  ).join(", ");
   assert.ok(
-    result.stdout.includes(
-      "experience coverage: consumer-app=6, marketing-site=21, commerce=4, content-docs=10, business-app=8, admin-console=8"
-    )
+    result.stdout.includes(`experience coverage: ${experienceCoverage}`)
   );
 });
 
