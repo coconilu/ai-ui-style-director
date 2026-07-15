@@ -78,6 +78,11 @@ preview paths. The output is deterministic, uses only relative references for
 the GitHub project subpath, and is intentionally not committed.
 `.github/workflows/pages.yml` runs this build for pull requests and deploys it
 from `main` through GitHub Pages.
+For same-repository pull requests, the build uploads the validated site as a
+seven-day Actions artifact and links it from the Catalog Pages job summary.
+Extract the artifact and serve its root over loopback HTTP to review every new
+Direction/Theme preview before merge. Pull requests never deploy the production
+Pages site.
 
 ## Adding or changing a curated style
 

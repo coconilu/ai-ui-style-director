@@ -109,6 +109,20 @@ adds matching Direction cards in batches of 24. A deterministic revision lets
 the page warn when its deployed HTML or JSON is older than the local catalog
 expected by the CLI.
 
+### Reviewing a pull request preview
+
+For a same-repository pull request, the Catalog Pages build uploads the
+validated catalog as a seven-day Actions artifact and links it from the job
+summary. Download and extract the artifact, then serve its root directory:
+
+```bash
+python -m http.server --bind 127.0.0.1 --directory . 4173
+```
+
+Open `http://127.0.0.1:4173/` to inspect search, facets, Theme switching, and
+every generated SVG. This artifact is a review package, not a public preview
+deployment; production GitHub Pages changes only after `main` is updated.
+
 ## Project draft
 
 After selection, `apply` writes

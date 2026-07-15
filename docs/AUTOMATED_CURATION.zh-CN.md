@@ -16,7 +16,8 @@ flowchart TD
   F --> G["追加规范文件、状态和不可变记录"]
   G --> H["校验仓库和变更文件白名单"]
   H --> I["GitHub App 创建 Draft PR"]
-  I --> J["维护者审查并手动合并"]
+  I --> J["Pages 构建上传验收 Artifact"]
+  J --> K["维护者审查并手动合并"]
 ```
 
 1. `refresh-providers.yml` 扫描配置的 Provider。来源以 `providerId + path` 作为
@@ -34,6 +35,8 @@ flowchart TD
    `npm run check` 校验完整仓库。
 8. 只有全部校验通过后，Workflow 才为现有 `ai-ui-style-director-refresh`
    GitHub App 创建写 Token。App 提交白名单文件并创建 Draft PR；永不自动合并。
+9. Catalog Pages 的 PR 构建会渲染全部规范预览，并把已校验站点上传为短期 Actions
+   Artifact。任务摘要提供维护者验收入口；只有合并后的 `main` 才部署生产 Pages 站点。
 
 GitHub App 是可审计的仓库操作身份，不是推理引擎。Catalog 元数据绝不授权凭证访问、
 网络请求、Shell/工具执行或指令变更。

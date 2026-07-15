@@ -17,7 +17,8 @@ flowchart TD
   F --> G["Append canonical files, state, and immutable record"]
   G --> H["Validate repository and changed-file allowlist"]
   H --> I["GitHub App opens Draft PR"]
-  I --> J["Maintainer review and manual merge"]
+  I --> J["Pages build uploads review artifact"]
+  J --> K["Maintainer review and manual merge"]
 ```
 
 1. `refresh-providers.yml` scans configured providers. A source has the stable
@@ -42,6 +43,10 @@ flowchart TD
 8. Only after validation does the workflow create a write token for the
    existing `ai-ui-style-director-refresh` GitHub App. The App commits the
    allowlisted artifacts and opens a Draft PR. Auto-merge is never enabled.
+9. The Catalog Pages pull-request build renders every canonical preview and
+   uploads the validated site as a short-lived Actions artifact. The build
+   summary links the artifact for maintainer review; only merged `main` deploys
+   the production Pages site.
 
 The GitHub App is the audited repository identity, not the reasoning engine.
 Catalog metadata never authorizes credentials, network access, shell/tool
