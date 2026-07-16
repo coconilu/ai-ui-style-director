@@ -3,6 +3,16 @@
   "sources": [
     {
       "providerId": "shadcn-ui",
+      "path": ".changeset/fix-registry-header-redirect-leak.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": ".changeset/fix-registry-path-traversal.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
       "sourceType": "registry"
     },
@@ -108,97 +118,12 @@
     },
     {
       "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-luma/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-lyra/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-maia/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-mira/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-nova/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-rhea/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-sera/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/base-vega/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
       "path": "apps/v4/public/r/styles/default/registry.json",
       "sourceType": "registry"
     },
     {
       "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/new-york-v4/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
       "path": "apps/v4/public/r/styles/new-york/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-luma/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-lyra/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-maia/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-mira/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-nova/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-rhea/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-sera/registry.json",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/public/r/styles/radix-vega/registry.json",
       "sourceType": "registry"
     },
     {
@@ -958,7 +883,82 @@
     },
     {
       "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-11/components/app-sidebar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/registry/bases/base/blocks/sidebar-11/page.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-12/components/app-sidebar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-12/components/calendars.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-12/components/date-picker.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-12/components/nav-user.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-12/page.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-13/components/settings-dialog.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-13/page.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-14/components/app-sidebar.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-14/page.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-15/components/calendars.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-15/components/date-picker.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-15/components/nav-favorites.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-15/components/nav-main.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/registry/bases/base/blocks/sidebar-15/page.tsx",
       "sourceType": "registry"
     },
     {
