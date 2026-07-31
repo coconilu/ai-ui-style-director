@@ -38,6 +38,11 @@
     },
     {
       "providerId": "shadcn-ui",
+      "path": "apps/v4/content/docs/registry/dynamic-search.mdx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/content/docs/registry/examples.mdx",
       "sourceType": "registry"
     },
@@ -954,11 +959,6 @@
     {
       "providerId": "shadcn-ui",
       "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/page.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-09/page.tsx",
       "sourceType": "registry"
     },
     {

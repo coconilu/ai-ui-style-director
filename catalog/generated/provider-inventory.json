@@ -10,7 +10,7 @@
       "license": "Check upstream repository",
       "cachePresent": true,
       "branch": "main",
-      "revision": "664b3e78fd1a298ba11973822da988483256d4b4",
+      "revision": "8147538b4226ae41e2487a9179e3bcc1f68e8554",
       "counts": {
         "styleSources": 74,
         "registryFiles": 0,
@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "626321a474ac0c796730e58c83878f5acbf779ea",
+      "revision": "cb2bcd88d93b2f9bddb030e9136f1f8773e7eac4",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -434,6 +434,7 @@
         "apps/v4/content/docs/changelog/2026-05-registry-include.mdx",
         "apps/v4/content/docs/registry/api-reference.mdx",
         "apps/v4/content/docs/registry/authentication.mdx",
+        "apps/v4/content/docs/registry/dynamic-search.mdx",
         "apps/v4/content/docs/registry/examples.mdx",
         "apps/v4/content/docs/registry/faq.mdx",
         "apps/v4/content/docs/registry/getting-started.mdx",
@@ -618,7 +619,6 @@
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-secondary.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-user.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/page.tsx",
-        "apps/v4/registry/bases/aria/blocks/sidebar-09/page.tsx",
         "apps/v4/registry/bases/aria/registry.ts",
         "apps/v4/registry/calendar.test.ts",
         "apps/v4/registry/config.test.ts",
@@ -694,6 +694,7 @@
         "apps/v4/content/docs/changelog/2026-06-chat-components.mdx",
         "apps/v4/content/docs/changelog/2026-06-github-registries.mdx",
         "apps/v4/content/docs/changelog/2026-07-base-ui-default.mdx",
+        "apps/v4/content/docs/changelog/2026-07-dynamic-search.mdx",
         "apps/v4/content/docs/changelog/2026-07-helpers.mdx",
         "apps/v4/content/docs/changelog/2026-07-react-aria.mdx",
         "apps/v4/content/docs/changelog/2026-07-toast.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/aria/dropdown-menu.mdx",
         "apps/v4/content/docs/components/aria/empty.mdx",
         "apps/v4/content/docs/components/aria/field.mdx",
-        "apps/v4/content/docs/components/aria/input-group.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
@@ -962,7 +962,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "8e5e9eb7c2a7e7ac1440f413b847d7ddb9c67e0a",
+      "revision": "0bd8b9fe0e15c4697c8d22dee1d35d88b5152c25",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -1293,7 +1293,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "master",
-      "revision": "bc1f6285dd6d2cce101ac8365c250fc77d3156e0",
+      "revision": "708d58a2425605a043f5c751aa1787b3138dcc2c",
       "counts": {
         "styleSources": 35,
         "registryFiles": 0,
