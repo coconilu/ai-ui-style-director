@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "cb2bcd88d93b2f9bddb030e9136f1f8773e7eac4",
+      "revision": "f0cad1d9f836b56b3705f09c76142861b09ec71c",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -427,6 +427,7 @@
       },
       "styleSources": [],
       "registryFiles": [
+        ".changeset/tidy-registry-titles.md",
         "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
         "apps/v4/content/docs/changelog/2025-07-universal-registry.mdx",
         "apps/v4/content/docs/changelog/2025-09-registry-index.mdx",
@@ -617,7 +618,6 @@
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-main.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-projects.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-secondary.tsx",
-        "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-user.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/page.tsx",
         "apps/v4/registry/bases/aria/registry.ts",
         "apps/v4/registry/calendar.test.ts",
@@ -1293,7 +1293,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "master",
-      "revision": "e840473a2db60556b653d55783654ab0b8c4b93e",
+      "revision": "d231c478074cb5f8f6e07eec09e106d43352a372",
       "counts": {
         "styleSources": 35,
         "registryFiles": 0,

@@ -3,6 +3,11 @@
   "sources": [
     {
       "providerId": "shadcn-ui",
+      "path": ".changeset/tidy-registry-titles.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
       "sourceType": "registry"
     },
@@ -949,11 +954,6 @@
     {
       "providerId": "shadcn-ui",
       "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-secondary.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-user.tsx",
       "sourceType": "registry"
     },
     {
