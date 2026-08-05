@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "607e8a9717fe6ff0d374ba74c651012f9c052534",
+      "revision": "b1c580c637f4666890b25c69cdc315c93a892c5d",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -427,7 +427,6 @@
       },
       "styleSources": [],
       "registryFiles": [
-        ".changeset/tidy-registry-titles.md",
         "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
         "apps/v4/content/docs/changelog/2025-07-universal-registry.mdx",
         "apps/v4/content/docs/changelog/2025-09-registry-index.mdx",
@@ -618,6 +617,7 @@
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-main.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-projects.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-secondary.tsx",
+        "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-user.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-08/page.tsx",
         "apps/v4/registry/bases/aria/registry.ts",
         "apps/v4/registry/calendar.test.ts",
@@ -699,6 +699,7 @@
         "apps/v4/content/docs/changelog/2026-07-react-aria.mdx",
         "apps/v4/content/docs/changelog/2026-07-toast.mdx",
         "apps/v4/content/docs/changelog/2026-07-typeset.mdx",
+        "apps/v4/content/docs/changelog/2026-08-questionnaire.mdx",
         "apps/v4/content/docs/changelog/index.mdx",
         "apps/v4/content/docs/components/aria/accordion.mdx",
         "apps/v4/content/docs/components/aria/alert-dialog.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/aria/drawer.mdx",
         "apps/v4/content/docs/components/aria/dropdown-menu.mdx",
         "apps/v4/content/docs/components/aria/empty.mdx",
-        "apps/v4/content/docs/components/aria/field.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
