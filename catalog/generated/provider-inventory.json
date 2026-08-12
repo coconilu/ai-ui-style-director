@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "dcf56edd57d106825193b5432fdc99c8d3d6b8fa",
+      "revision": "a85299a9edd2a961e32f01ced86963a852652bd2",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -699,6 +699,7 @@
         "apps/v4/content/docs/changelog/2026-07-react-aria.mdx",
         "apps/v4/content/docs/changelog/2026-07-toast.mdx",
         "apps/v4/content/docs/changelog/2026-07-typeset.mdx",
+        "apps/v4/content/docs/changelog/2026-08-helpers-human-in-the-loop.mdx",
         "apps/v4/content/docs/changelog/2026-08-questionnaire.mdx",
         "apps/v4/content/docs/changelog/index.mdx",
         "apps/v4/content/docs/components/aria/accordion.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/aria/direction.mdx",
         "apps/v4/content/docs/components/aria/drawer.mdx",
         "apps/v4/content/docs/components/aria/dropdown-menu.mdx",
-        "apps/v4/content/docs/components/aria/empty.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
