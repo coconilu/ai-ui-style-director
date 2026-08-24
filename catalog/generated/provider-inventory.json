@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "ac60ef5c4db4265d71454dd9ecd3f93e255d7211",
+      "revision": "b9938d94635fca7a4560449713b0b1ba87d77bc6",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -700,6 +700,7 @@
         "apps/v4/content/docs/changelog/2026-07-toast.mdx",
         "apps/v4/content/docs/changelog/2026-07-typeset.mdx",
         "apps/v4/content/docs/changelog/2026-08-helpers-human-in-the-loop.mdx",
+        "apps/v4/content/docs/changelog/2026-08-private-github-registries.mdx",
         "apps/v4/content/docs/changelog/2026-08-questionnaire.mdx",
         "apps/v4/content/docs/changelog/index.mdx",
         "apps/v4/content/docs/components/aria/accordion.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/aria/dialog.mdx",
         "apps/v4/content/docs/components/aria/direction.mdx",
         "apps/v4/content/docs/components/aria/drawer.mdx",
-        "apps/v4/content/docs/components/aria/dropdown-menu.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
@@ -1293,7 +1293,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "master",
-      "revision": "d8ac20948f910759d312eda653f9d244f0aaa11f",
+      "revision": "ae07395d9c27f5b8cef3cb1ff20e12edd3659d6c",
       "counts": {
         "styleSources": 35,
         "registryFiles": 0,
