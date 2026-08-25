@@ -63,6 +63,11 @@
     },
     {
       "providerId": "shadcn-ui",
+      "path": "apps/v4/content/docs/registry/health.mdx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/content/docs/registry/index.mdx",
       "sourceType": "registry"
     },
@@ -104,6 +109,76 @@
     {
       "providerId": "shadcn-ui",
       "path": "apps/v4/hooks/use-search-registry.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-directory.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/blob.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/blob.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/dry-run.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/dry-run.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/monitor.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/monitor.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/network.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/network.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/schema.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/schema.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/score.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/score.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/state.ts",
       "sourceType": "registry"
     },
     {
@@ -883,82 +958,7 @@
     },
     {
       "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-06/components/app-sidebar.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-06/components/nav-main.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-06/components/sidebar-opt-in-form.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
       "path": "apps/v4/registry/bases/aria/blocks/sidebar-06/page.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-07/components/app-sidebar.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-07/components/nav-main.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-07/components/nav-projects.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-07/components/nav-user.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-07/components/team-switcher.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-07/page.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/app-sidebar.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-main.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-projects.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-secondary.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/components/nav-user.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-08/page.tsx",
       "sourceType": "registry"
     },
     {
