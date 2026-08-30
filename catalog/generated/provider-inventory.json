@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "683a5a9b370acdb7785a0529434e6a3b8c7e0441",
+      "revision": "b4a618b97e35f5dadf3a00d51f410c84a2567d4d",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -641,6 +641,7 @@
         "apps/v4/content/docs/(root)/mcp.mdx",
         "apps/v4/content/docs/(root)/monorepo.mdx",
         "apps/v4/content/docs/(root)/new.mdx",
+        "apps/v4/content/docs/(root)/official.mdx",
         "apps/v4/content/docs/(root)/package-imports.mdx",
         "apps/v4/content/docs/(root)/react-19.mdx",
         "apps/v4/content/docs/(root)/skills.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/aria/date-picker.mdx",
         "apps/v4/content/docs/components/aria/dialog.mdx",
         "apps/v4/content/docs/components/aria/direction.mdx",
-        "apps/v4/content/docs/components/aria/drawer.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
