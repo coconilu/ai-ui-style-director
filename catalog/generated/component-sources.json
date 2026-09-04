@@ -2343,6 +2343,16 @@
     },
     {
       "providerId": "magic-ui",
+      "path": "apps/www/registry/example/floating-3d-particles-demo-2.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "path": "apps/www/registry/example/floating-3d-particles-demo.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
       "path": "apps/www/registry/example/glare-hover-demo-alert.tsx",
       "sourceType": "registry"
     },
@@ -2969,16 +2979,6 @@
     {
       "providerId": "magic-ui",
       "path": "apps/www/registry/magicui/confetti.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "magic-ui",
-      "path": "apps/www/registry/magicui/cool-mode.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "magic-ui",
-      "path": "apps/www/registry/magicui/dia-text-reveal.tsx",
       "sourceType": "registry"
     },
     {
