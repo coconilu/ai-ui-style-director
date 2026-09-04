@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "8720dec73f5aebed9f649ea58636f54599fdedf1",
+      "revision": "7c9eaba1c0a6404c990c144a654792e3313c650d",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -703,6 +703,7 @@
         "apps/v4/content/docs/changelog/2026-08-helpers-human-in-the-loop.mdx",
         "apps/v4/content/docs/changelog/2026-08-private-github-registries.mdx",
         "apps/v4/content/docs/changelog/2026-08-questionnaire.mdx",
+        "apps/v4/content/docs/changelog/2026-09-cn.mdx",
         "apps/v4/content/docs/changelog/index.mdx",
         "apps/v4/content/docs/components/aria/accordion.mdx",
         "apps/v4/content/docs/components/aria/alert-dialog.mdx",
@@ -727,7 +728,6 @@
         "apps/v4/content/docs/components/aria/data-table.mdx",
         "apps/v4/content/docs/components/aria/date-picker.mdx",
         "apps/v4/content/docs/components/aria/dialog.mdx",
-        "apps/v4/content/docs/components/aria/direction.mdx",
         "apps/v4/content/docs/components/index.mdx"
       ]
     },
@@ -962,11 +962,11 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "2d671cc6c0e0f40e28682c9cbddd16694dcfe627",
+      "revision": "7f260302299754c50bc5cb8900f1cd5fb4638bd4",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
-        "docsFiles": 91
+        "docsFiles": 92
       },
       "styleSources": [],
       "registryFiles": [
@@ -1038,6 +1038,8 @@
         "apps/www/registry/example/file-tree-demo.tsx",
         "apps/www/registry/example/flickering-grid-demo.tsx",
         "apps/www/registry/example/flickering-grid-rounded-demo.tsx",
+        "apps/www/registry/example/floating-3d-particles-demo-2.tsx",
+        "apps/www/registry/example/floating-3d-particles-demo.tsx",
         "apps/www/registry/example/glare-hover-demo-alert.tsx",
         "apps/www/registry/example/glare-hover-demo-cta.tsx",
         "apps/www/registry/example/glare-hover-demo.tsx",
@@ -1164,8 +1166,6 @@
         "apps/www/registry/magicui/code-comparison.tsx",
         "apps/www/registry/magicui/comic-text.tsx",
         "apps/www/registry/magicui/confetti.tsx",
-        "apps/www/registry/magicui/cool-mode.tsx",
-        "apps/www/registry/magicui/dia-text-reveal.tsx",
         "apps/www/registry/registry-examples.ts",
         "apps/www/registry/registry-lib.ts",
         "apps/www/registry/registry-ui.ts",
@@ -1196,6 +1196,7 @@
         "apps/www/content/docs/components/dotted-map.mdx",
         "apps/www/content/docs/components/file-tree.mdx",
         "apps/www/content/docs/components/flickering-grid.mdx",
+        "apps/www/content/docs/components/floating-3d-particles.mdx",
         "apps/www/content/docs/components/glare-hover.mdx",
         "apps/www/content/docs/components/globe.mdx",
         "apps/www/content/docs/components/glyph-matrix.mdx",
