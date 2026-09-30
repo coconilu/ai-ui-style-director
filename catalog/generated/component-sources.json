@@ -128,6 +128,16 @@
     },
     {
       "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/directory.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/directory.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/lib/registry-health/dry-run.test.ts",
       "sourceType": "registry"
     },
@@ -154,6 +164,16 @@
     {
       "providerId": "shadcn-ui",
       "path": "apps/v4/lib/registry-health/network.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/rank.test.ts",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": "apps/v4/lib/registry-health/rank.ts",
       "sourceType": "registry"
     },
     {
@@ -939,26 +959,6 @@
     {
       "providerId": "shadcn-ui",
       "path": "apps/v4/registry/bases/aria/blocks/sidebar-04/page.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-05/components/app-sidebar.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-05/components/search-form.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-05/page.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-06/page.tsx",
       "sourceType": "registry"
     },
     {
