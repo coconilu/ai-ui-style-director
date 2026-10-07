@@ -419,7 +419,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "e8c3143b1cd191280befcd6c9538284bb43399a8",
+      "revision": "97ddbf4274ed09d02aa7fd34375f2cf1e48cbbf0",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -427,6 +427,8 @@
       },
       "styleSources": [],
       "registryFiles": [
+        ".changeset/deslop-registry.md",
+        ".changeset/flatten-registry-utils.md",
         "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
         "apps/v4/content/docs/changelog/2025-07-universal-registry.mdx",
         "apps/v4/content/docs/changelog/2025-09-registry-index.mdx",
@@ -617,8 +619,6 @@
         "apps/v4/registry/bases/aria/blocks/sidebar-02/page.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-03/components/app-sidebar.tsx",
         "apps/v4/registry/bases/aria/blocks/sidebar-03/page.tsx",
-        "apps/v4/registry/bases/aria/blocks/sidebar-04/components/app-sidebar.tsx",
-        "apps/v4/registry/bases/aria/blocks/sidebar-04/page.tsx",
         "apps/v4/registry/bases/aria/registry.ts",
         "apps/v4/registry/calendar.test.ts",
         "apps/v4/registry/config.test.ts",
