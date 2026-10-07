@@ -3,6 +3,16 @@
   "sources": [
     {
       "providerId": "shadcn-ui",
+      "path": ".changeset/deslop-registry.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
+      "path": ".changeset/flatten-registry-utils.md",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "shadcn-ui",
       "path": "apps/v4/content/docs/changelog/2025-02-registry-schema.mdx",
       "sourceType": "registry"
     },
@@ -949,16 +959,6 @@
     {
       "providerId": "shadcn-ui",
       "path": "apps/v4/registry/bases/aria/blocks/sidebar-03/page.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-04/components/app-sidebar.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "shadcn-ui",
-      "path": "apps/v4/registry/bases/aria/blocks/sidebar-04/page.tsx",
       "sourceType": "registry"
     },
     {
