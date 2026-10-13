@@ -10,13 +10,18 @@
       "license": "Check upstream repository",
       "cachePresent": true,
       "branch": "main",
-      "revision": "13be5c05c63be24b57581162364167028020f043",
+      "revision": "c7c1bada4eda972236d124e06ee58df129a9266b",
       "counts": {
-        "styleSources": 74,
+        "styleSources": 84,
         "registryFiles": 0,
         "docsFiles": 0
       },
       "styleSources": [
+        {
+          "path": "design-md/1win/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:64d02d344cb16d68b6882054f35e3bfb7241ad60dc8b7f84f6636a7d1379496a"
+        },
         {
           "path": "design-md/airbnb/DESIGN.md",
           "sourceType": "design-md",
@@ -26,6 +31,11 @@
           "path": "design-md/airtable/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:1d225e511213044d3c705bde50265ad010932bfd8a15740a144dd4f480128889"
+        },
+        {
+          "path": "design-md/aljazeera/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:37614fc72658ffa30faca01049bd1efa8a9baafa4750501405eeea66f149466a"
         },
         {
           "path": "design-md/apple/DESIGN.md",
@@ -98,6 +108,11 @@
           "contentHash": "sha256:e186c614b1223fe7015670472ac6bc84b5b3fdd5de5325b3ce5bfb7fbe9c8d6e"
         },
         {
+          "path": "design-md/dji/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:c8a57520b87286869a88cdd2c07f21080ebda9fb3eee315b11d95c752582c1a9"
+        },
+        {
           "path": "design-md/elevenlabs/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:3b359acfaafadbb499c7ed3eebe813a76e0be497a7157b77de207fe275068a66"
@@ -143,6 +158,11 @@
           "contentHash": "sha256:962be23cd947e87a86b2ffbc0440e9d0808243a6ef3af2aa04e8e7cc04d48ba3"
         },
         {
+          "path": "design-md/jobright/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:9e682194e3f846915164189538741133ab1e2779730677e92d28f873f782999b"
+        },
+        {
           "path": "design-md/kraken/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:41bcbd5642c926a549f0d50f1151484c5776b4536233240c8415cfb79bcf1f38"
@@ -166,6 +186,11 @@
           "path": "design-md/mastercard/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:e76ceaa187f43bd24b8338d2b2314e71e9225b36492e40f32a55782281a10437"
+        },
+        {
+          "path": "design-md/mercury/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:dabb3683422a9841369b0db53ff13ed375b0b6f019157a5c90e9fca165cc111f"
         },
         {
           "path": "design-md/meta/DESIGN.md",
@@ -198,6 +223,16 @@
           "contentHash": "sha256:4523f10efd5ccd46f9aeac3b98626e24bcf907bc0c1e46500cb0e3920f932e71"
         },
         {
+          "path": "design-md/mydealz/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:598698a1bd0824260d57eb21f728b79cd702916f918de2b6f39b3720ba727872"
+        },
+        {
+          "path": "design-md/nerdwallet/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:478475273beb642f0661fb1aef7107bac5cde69250794bc148b28ee2c61960c7"
+        },
+        {
           "path": "design-md/nike/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:d2a3d363665839e2ddc15c91b8a9f3e92b1962ff55a7ca5d964ab3bb88b8186c"
@@ -226,6 +261,16 @@
           "path": "design-md/opencode.ai/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:d1a8893c4b8ac90b1e86230eee2effa8bd15add3582853477920e32432336dda"
+        },
+        {
+          "path": "design-md/oracle/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:23f03014c1654ff72e9a2185f1c3d1f3b51eabc8124c14f6ddd51b17a36a85a6"
+        },
+        {
+          "path": "design-md/oura/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:8674dbeb48bf7e3ff5271e79a6222084118ba1630db4a2199d1492568850fa08"
         },
         {
           "path": "design-md/pinterest/DESIGN.md",
@@ -276,6 +321,11 @@
           "path": "design-md/sanity/DESIGN.md",
           "sourceType": "design-md",
           "contentHash": "sha256:ea1c442de2b23443f79af46524a81f33951606c8ff043ea9c25ba886264fbdd8"
+        },
+        {
+          "path": "design-md/sap/DESIGN.md",
+          "sourceType": "design-md",
+          "contentHash": "sha256:f14c951d6112efce488f56d189b9bcdf58f5b9f87ae1e2ee68f062e6a6967d97"
         },
         {
           "path": "design-md/sentry/DESIGN.md",
@@ -419,7 +469,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "main",
-      "revision": "02cad61166c4c20edbc8a3f71bd720eed4c1f49b",
+      "revision": "30a58d4498f270af1c1e981a7d78a15cf5740841",
       "counts": {
         "styleSources": 0,
         "registryFiles": 200,
@@ -1294,7 +1344,7 @@
       "license": "MIT",
       "cachePresent": true,
       "branch": "master",
-      "revision": "8c24218588f34a678f48df435950790b57ef2bf7",
+      "revision": "662b54b7533b6b29a8544ee6642a2a109c492b05",
       "counts": {
         "styleSources": 35,
         "registryFiles": 0,
