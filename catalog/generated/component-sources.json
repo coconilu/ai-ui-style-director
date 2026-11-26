@@ -2283,47 +2283,37 @@
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-brand-demo.tsx",
+      "path": "apps/www/registry/example/dither-card-demo.tsx",
       "sourceType": "registry"
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-card-demo.tsx",
+      "path": "apps/www/registry/example/dither-demo.tsx",
       "sourceType": "registry"
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-colors-demo.tsx",
+      "path": "apps/www/registry/example/dither-image-demo.tsx",
       "sourceType": "registry"
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-demo.tsx",
+      "path": "apps/www/registry/example/dither-patterns-demo.tsx",
       "sourceType": "registry"
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-image-demo.tsx",
+      "path": "apps/www/registry/example/dither-pointer-demo.tsx",
       "sourceType": "registry"
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-monochrome-demo.tsx",
+      "path": "apps/www/registry/example/dither-shader-demo.tsx",
       "sourceType": "registry"
     },
     {
       "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-patterns-demo.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-pointer-demo.tsx",
-      "sourceType": "registry"
-    },
-    {
-      "providerId": "magic-ui",
-      "path": "apps/www/registry/example/dither-field-text-demo.tsx",
+      "path": "apps/www/registry/example/dither-text-demo.tsx",
       "sourceType": "registry"
     },
     {
@@ -2979,6 +2969,16 @@
     {
       "providerId": "magic-ui",
       "path": "apps/www/registry/magicui/aurora-text.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "path": "apps/www/registry/magicui/avatar-circles.tsx",
+      "sourceType": "registry"
+    },
+    {
+      "providerId": "magic-ui",
+      "path": "apps/www/registry/magicui/backlight.tsx",
       "sourceType": "registry"
     },
     {
